@@ -1,0 +1,306 @@
+/* Reset basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  // font-family: 'Poppins'
+}
+
+body, html {
+  height: 100%;
+  width: 100%; /* Full width */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.error-message {
+  color: red; /* Couleur du texte d'erreur */
+  margin-bottom: 15px; /* Espacement en bas du message */
+  font-size: 0.9rem; /* Taille de la police */
+  text-align: center; /* Centrer le texte */
+}
+
+
+.login-container {
+  display: flex;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  max-width: none;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  border-radius: 0px; /* No border-radius */
+  overflow: hidden;
+}
+
+/* Left Side (Background image section) */
+.login-image-section {
+  flex: 1;
+  // background-image: url("./assets/images/logimage.jpg");
+  background-size: cover;
+  background-position: center;
+  border-right: #ff0000;
+}
+
+/* Right Side (Form Section) */
+.login-form-section {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.remember {
+  display: flex;
+  align-items: center; /* Aligne verticalement la case à cocher et le texte */
+  gap: 8px; /* Espacement entre la case et le texte */
+  margin-bottom: 10px;
+}
+
+.remember input[type="checkbox"] {
+  margin: 0; /* Supprime les marges par défaut */
+  width: auto; /* Ajuste la largeur pour éviter un comportement inattendu */
+}
+
+.remember label {
+  font-size: 0.9rem; /* Taille de texte ajustée si nécessaire */
+  color: #666; /* Optionnel : couleur pour correspondre au style global */
+  cursor: pointer; /* Permet de cliquer sur le texte pour activer la case */
+}
+
+.information {
+  display: flex;
+  gap: 14px; /* Espacement entre les champs */
+  max-width: 100%;
+  width: 100%;
+}
+
+.information .form-group {
+  flex: 1; /* Champs prennent une largeur égale */
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #000; /* Mettre en évidence au focus */
+}
+
+.form-container {
+  max-width: 550px;
+  width: 100%;
+  padding: 30px;
+  text-align: left;
+}
+
+.form-container .logo {
+  max-width: 120px;
+  margin-bottom: 20px;
+}
+
+.form-container h2 {
+  text-align: left;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-container p {
+  text-align: left;
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+
+/* Form Fields */
+.form-group {
+  margin-bottom: 15px;
+}
+
+
+input {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #000000; /* Change color to blue */
+}
+
+/* Password Field with Toggle */
+.password-container {
+  position: relative;
+}
+
+input[type="password"], input[type="text"] {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  cursor: pointer;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.toggle-password:hover {
+  color: #e51e1e;
+}
+
+/* Form Options (Checkbox & Forgot Password) */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.forgot-password {
+  color: #e51e1e; /* Change color to blue */
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.input-container {
+  margin-top: 8px;
+}
+/* Submit Button */
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  background-color: #f50000; /* Change color to blue */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #3e454d; /* Darker blue */
+}
+
+/* Sign-up Link */
+.signup-link {
+  margin-top: 20px;
+}
+
+.signup-link a {
+  color: #e51e1e;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Style for Select List */
+select {
+  width: 100%; /* Prend toute la largeur du conteneur */
+  padding: 14px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff; /* Couleur de fond blanche */
+  color: #333; /* Couleur du texte */
+  appearance: none; /* Supprime l'apparence par défaut */
+  cursor: pointer; /* Curseur pointeur */
+}
+
+select:focus {
+  outline: none;
+  border-color: #000; /* Couleur de bordure au focus */
+}
+
+select option {
+  padding: 10px; /* Espacement interne pour les options */
+}
+
+/* Responsive Design */
+/* Général : Champs prennent 100% de la largeur sur petits écrans */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 20px; /* Réduire les marges */
+  }
+
+  .information {
+    flex-direction: column; /* Empiler les champs verticalement */
+    gap: 10px; /* Réduire l'espacement entre les champs */
+  }
+
+  input, select {
+    font-size: 1rem; /* Ajuster la taille des polices */
+    padding: 12px; /* Réduire les marges internes */
+  }
+
+  .btn-login {
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .form-container h2 {
+    font-size: 1.5rem; /* Taille réduite pour les titres */
+  }
+
+  .form-container p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-image-section {
+    display: none; /* Masque complètement la section */
+  }
+
+  .login-form-section {
+    flex: none;
+    width: 100%; /* La section formulaire prend toute la largeur */
+  }
+}
+
+/* Pour les très petits écrans (smartphones étroits) */
+@media (max-width: 480px) {
+  .form-container {
+    padding: 15px; /* Encore plus compact */
+  }
+
+  h2, p {
+    text-align: center; /* Centrer les textes */
+  }
+
+  .form-group label {
+    font-size: 0.85rem; /* Plus petit texte pour les étiquettes */
+  }
+
+  input, select {
+    font-size: 0.9rem; /* Texte compact */
+    padding: 10px;
+  }
+
+  .btn-login {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+

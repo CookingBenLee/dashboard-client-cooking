@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-image-section" style="background-image: url('assets/images/logimage.jpg');">
+      <!-- Image de fond ou autre contenu -->
+    </div>
+
+    <div class="login-form-section">
+      <div class="form-container">
+        <h2>Login to Account</h2>
+        <p>Please enter your email and password to continue</p>
+
+        <form id="login">
+          <!-- Email Section -->
+          <div class="form-group">
+            <label for="email">Email address:</label>
+            <div class="input-container">
+              <input type="email" name="login" id="email" placeholder="Adresse email" required />
+            </div>
+          </div>
+
+          <!-- Password Section -->
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <div class="input-container password-container">
+              <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+              <span class="toggle-password" onclick="togglePasswordVisibility()">👁</span>
+            </div>
+          </div>
+
+          <div class="remember">
+            <input type="checkbox" name="remember" id="remember" />
+            <label for="remember">Remember Password</label>
+          </div>
+
+
+          <!-- Reset Password -->
+          <div class="form-options">
+            <a href="#" style="color: red;" class="forgot-password">Forgot password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-group">
+            <button type="submit" class="btn-login">Se connecter</button>
+          </div>
+        </form>
+
+        <div class="err_msg mt-3">
+          <p class="text-danger">
+            <small id="username-help">Don't have an account ? <a href="#" style="color: red;" class="forgot-password"> Create account </a></small>
+          </p>
+        </div>
+        <div class="err_msg mt-3">
+          <p class="text-danger">
+            <small id="username-help">Les accès non autorisés sont strictement interdits.</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
