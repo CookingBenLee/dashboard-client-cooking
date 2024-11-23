@@ -1,15 +1,17 @@
 import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: FullComponent,
+    component: LoginComponent,
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/login',
         pathMatch: 'full',
       },
       {
@@ -29,6 +31,14 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/extra/extra.routes').then((m) => m.ExtraRoutes),
       },
+      {
+        path:"login",
+        component: LoginComponent
+      },
+      {
+        path:"signup",
+        component: SignupComponent
+      }
     ],
   },
   {
