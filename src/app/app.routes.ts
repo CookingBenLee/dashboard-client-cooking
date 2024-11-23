@@ -5,15 +5,27 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 
 export const routes: Routes = [
+  // Routes principales
   {
     path: '',
+    redirectTo: 'login',
+    pathMatch: 'full', // Assurez-vous que Angular sait exactement quel chemin matcher.
+  },
+  {
+    path: 'login',
     component: LoginComponent,
   },
   {
+    path: 'signup',
+    component: SignupComponent,
+  },
+
+  // Routes sécurisées (après authentification)
+  {
     path: 'home',
-    component: FullComponent,
+    component: FullComponent, // Layout principal après connexion
     children: [
-      
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirection par défaut
       {
         path: 'dashboard',
         loadChildren: () =>
@@ -31,16 +43,10 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/extra/extra.routes').then((m) => m.ExtraRoutes),
       },
-      {
-        path:"login",
-        component: LoginComponent
-      },
-      {
-        path:"signup",
-        component: SignupComponent
-      }
     ],
   },
+
+  // Routes spécifiques à un layout vide
   {
     path: '',
     component: BlankComponent,
@@ -54,8 +60,10 @@ export const routes: Routes = [
       },
     ],
   },
+
+  // Route générique (404 ou autre)
   {
     path: '**',
-    redirectTo: 'authentication/error',
+    redirectTo: 'login', // Vous pouvez personnaliser vers une page d'erreur si nécessaire.
   },
 ];
