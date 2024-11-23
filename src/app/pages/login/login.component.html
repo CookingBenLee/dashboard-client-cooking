@@ -16,7 +16,7 @@
         <h2>Login to Account</h2>
         <p>Please enter your email and password to continue</p>
 
-        <form id="login">
+        <!-- <form id="login"> -->
           <!-- Email Section -->
           <div class="form-group">
             <label for="email">Email address:</label>
@@ -47,9 +47,9 @@
 
           <!-- Submit Button -->
           <div class="form-group">
-            <button type="submit" class="btn-login">Se connecter</button>
+            <button [routerLink]="['/home']" class="btn-login">Se connecter</button>
           </div>
-        </form>
+        <!-- </form> -->
 
         <div class="err_msg mt-3">
           <p class="text-danger">
