@@ -8,12 +8,12 @@ export const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+  },
+  {
+    path: 'home',
+    component: FullComponent,
     children: [
-      {
-        path: '',
-        redirectTo: '/login',
-        pathMatch: 'full',
-      },
+      
       {
         path: 'dashboard',
         loadChildren: () =>
