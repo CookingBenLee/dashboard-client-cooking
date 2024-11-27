@@ -20,12 +20,12 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Mes Plats',
-    iconName: 'solar:danger-circle-line-duotone',
+    iconName: 'material-symbols:dining',
     route: 'home/ui-components/chips',
   },
   {
     displayName: 'Mes Recettes',
-    iconName: 'solar:bookmark-square-minimalistic-line-duotone',
+    iconName: 'arcticons:reciper',
     route: 'home/ui-components/lists',
   },
   {
