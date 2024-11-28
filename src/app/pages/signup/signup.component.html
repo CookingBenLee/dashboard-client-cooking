@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Créer un Compte</title>
 </head>
 <body>
   <!-- <p-toast /> -->
@@ -15,13 +15,13 @@
     <div class="login-form-section">
       <div class="form-container">
         <!-- <h3>{{ error }}</h3> -->
-        <h2>Create Account</h2>
-        <p>Please enter your personnal information to continue</p>
+        <h2>Créer un Compte</h2>
+        <p>Veuillez entrer vos informations personnelles pour continuer</p>
 
         <form id="login" #fCreate="ngForm" (ngSubmit)="addUserAccount(fCreate)">
           <div class="information">
             <div class="form-group" style="flex: 1;">
-              <label for="nom">Nom:</label>
+              <label for="nom">Nom :</label>
               <div class="input-container">
                 <input
                   type="text"
@@ -34,54 +34,54 @@
                   #nomInput="ngModel"
                   [ngClass]="{'ng-invalid': nomInput.invalid && nomInput.touched}" />
                 <div *ngIf="nomInput.invalid && nomInput.touched" class="error-message">
-                  Nom est requis et ne doit pas contenir d'espaces.
+                  Le nom est requis et ne doit pas contenir d'espaces.
                 </div>
               </div>
             </div>
 
             <div class="form-group" style="flex: 1;">
-              <label for="prenom">Prenom:</label>
+              <label for="prenom">Prénom :</label>
               <div class="input-container">
                 <input
                   type="text"
                   name="prenom"
                   id="prenom"
-                  placeholder="Prenom"
+                  placeholder="Prénom"
                   required
                   [(ngModel)]="prenom"
                   noWhitespace
                   #prenomInput="ngModel"
                   [ngClass]="{'ng-invalid': prenomInput.invalid && prenomInput.touched}" />
                 <div *ngIf="prenomInput.invalid && prenomInput.touched" class="error-message">
-                  Prenom est requis et ne doit pas contenir d'espaces.
+                  Le prénom est requis et ne doit pas contenir d'espaces.
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Email Section -->
+          <!-- Section Email -->
           <div class="form-group">
-            <label for="email">Email address:</label>
+            <label for="email">Identifiant:</label>
             <div class="input-container">
               <input
                 type="text"
                 name="login"
                 id="login"
-                placeholder="Adresse email"
+                placeholder="Identifiant"
                 required
                 [(ngModel)]="login"
                 noWhitespace
                 #emailInput="ngModel"
                 [ngClass]="{'ng-invalid': emailInput.invalid && emailInput.touched}" />
               <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
-                Une adresse email valide est requise.
+                Un Identifiant valide est requise.
               </div>
             </div>
           </div>
 
-          <!-- Password Section -->
+          <!-- Section Mot de Passe -->
           <div class="form-group">
-            <label for="password">Password:</label>
+            <label for="password">Mot de passe :</label>
             <div class="input-container password-container">
               <input
                 type="password"
@@ -100,52 +100,48 @@
             </div>
           </div>
 
-         <!-- Select List Section -->
-            <div class="form-group">
-              <label for="user-role">Type de compte:</label>
-              <div class="input-container">
-                <select
-                  name="user-role"
-                  id="user-role"
-                  [(ngModel)]="typeCompte"
-                  required
-                  #typeCompteInput="ngModel"
-                  [ngClass]="{'ng-invalid': typeCompteInput.invalid && typeCompteInput.touched}">
-                  <option value="" disabled selected>Choisissez le type de compte</option>
+          <!-- Section Type de Compte -->
+          <div class="form-group">
+            <label for="user-role">Type de compte :</label>
+            <div class="input-container">
+              <select
+                name="user-role"
+                id="user-role"
+                [(ngModel)]="typeCompte"
+                required
+                #typeCompteInput="ngModel"
+                [ngClass]="{'ng-invalid': typeCompteInput.invalid && typeCompteInput.touched}">
+                <option value="" disabled selected>Choisissez le type de compte</option>
 
-                  <!-- Bind the full account object, not just the ID -->
-                  <option *ngFor="let account of typeAccounts" [ngValue]="account">
-                    {{ account.libelle }}
-                  </option>
-                </select>
-                <div *ngIf="typeCompteInput.invalid && typeCompteInput.touched" class="error-message">
-                  Le type de compte est requis.
-                </div>
+                <!-- Liez l'objet de compte complet, pas seulement l'ID -->
+                <option *ngFor="let account of typeAccounts" [ngValue]="account">
+                  {{ account.libelle }}
+                </option>
+              </select>
+              <div *ngIf="typeCompteInput.invalid && typeCompteInput.touched" class="error-message">
+                Le type de compte est requis.
               </div>
             </div>
-
-
+          </div>
 
           <div class="remember">
             <input type="checkbox" name="remember" id="remember" />
-            <label for="remember">Agree to terms and conditions</label>
+            <label for="remember">Accepter les termes et conditions</label>
           </div>
 
-          <!-- Submit Button -->
+          <!-- Bouton de Soumission -->
           <div class="form-group">
-            <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Create account</button>
+            <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Créer un compte</button>
           </div>
         </form>
 
-
         <div class="err_msg mt-3">
           <p class="text-danger">
-            <small id="username-help">Already have account ? <a href="#" [routerLink]="['/login']" style="color: red;" class="forgot-password"> Login </a></small>
+            <small id="username-help">Vous avez déjà un compte ? <a href="#" [routerLink]="['/login']" style="color: red;" class="forgot-password"> Connexion </a></small>
           </p>
         </div>
       </div>
     </div>
   </div>
-
 </body>
 </html>
