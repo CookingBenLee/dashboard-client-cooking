@@ -93,7 +93,6 @@
                 noWhitespace
                 #passwordInput="ngModel"
                 [ngClass]="{'ng-invalid': passwordInput.invalid && passwordInput.touched}" />
-              <span class="toggle-password" onclick="togglePasswordVisibility()">👁</span>
               <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
                 Le mot de passe est requis et ne doit pas contenir d'espaces.
               </div>
