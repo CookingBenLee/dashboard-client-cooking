@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +9,16 @@ import { RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
+  successMessage: string | null = null;
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Get the success message from the query params
+    this.route.queryParams.subscribe(params => {
+      this.successMessage = params['success'] || null;
+    });
+  }
 }

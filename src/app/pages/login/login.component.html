@@ -11,7 +11,12 @@
       <!-- Image de fond ou autre contenu -->
     </div>
 
+
+
     <div class="login-form-section">
+      <div style="background-color: rgb(146, 189, 81); color: black; font-weight: bold;" *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
       <div class="form-container">
         <h2>Login to Account</h2>
         <p>Please enter your email and password to continue</p>

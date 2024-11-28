@@ -11,7 +11,7 @@ export class UserService {
 
   private API_URL = environment.apiUrl;
 
-   readonly END_POINT_ADD = "compteuser/new"
+   readonly END_POINT_ADD = "/compteuser/new"
   constructor( private http: HttpClient) { }
 
   createUser(user: Utilisateur):Observable<Utilisateur>{

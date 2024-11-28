@@ -16,29 +16,64 @@
         <h2>Create Account</h2>
         <p>Please enter your personnal information to continue</p>
 
-        <form id="login">
+        <form id="login" #fCreate="ngForm" (ngSubmit)="addUserAccount(fCreate)">
           <div class="information">
             <div class="form-group" style="flex: 1;">
               <label for="nom">Nom:</label>
               <div class="input-container">
-                <input type="text" name="nom" id="nom" placeholder="Nom" required />
+                <input
+                  type="text"
+                  name="nom"
+                  id="nom"
+                  placeholder="Nom"
+                  required
+                  [(ngModel)]="nom"
+                  noWhitespace
+                  #nomInput="ngModel"
+                  [ngClass]="{'ng-invalid': nomInput.invalid && nomInput.touched}" />
+                <div *ngIf="nomInput.invalid && nomInput.touched" class="error-message">
+                  Nom est requis et ne doit pas contenir d'espaces.
+                </div>
               </div>
             </div>
 
             <div class="form-group" style="flex: 1;">
               <label for="prenom">Prenom:</label>
               <div class="input-container">
-                <input type="text" name="prenom" id="prenom" placeholder="Prenom" required />
+                <input
+                  type="text"
+                  name="prenom"
+                  id="prenom"
+                  placeholder="Prenom"
+                  required
+                  [(ngModel)]="prenom"
+                  noWhitespace
+                  #prenomInput="ngModel"
+                  [ngClass]="{'ng-invalid': prenomInput.invalid && prenomInput.touched}" />
+                <div *ngIf="prenomInput.invalid && prenomInput.touched" class="error-message">
+                  Prenom est requis et ne doit pas contenir d'espaces.
+                </div>
               </div>
             </div>
           </div>
-
 
           <!-- Email Section -->
           <div class="form-group">
             <label for="email">Email address:</label>
             <div class="input-container">
-              <input type="email" name="login" id="email" placeholder="Adresse email" required />
+              <input
+                type="text"
+                name="login"
+                id="login"
+                placeholder="Adresse email"
+                required
+                [(ngModel)]="login"
+                noWhitespace
+                #emailInput="ngModel"
+                [ngClass]="{'ng-invalid': emailInput.invalid && emailInput.touched}" />
+              <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
+                Une adresse email valide est requise.
+              </div>
             </div>
           </div>
 
@@ -46,23 +81,48 @@
           <div class="form-group">
             <label for="password">Password:</label>
             <div class="input-container password-container">
-              <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Mot de passe"
+                required
+                [(ngModel)]="password"
+                noWhitespace
+                #passwordInput="ngModel"
+                [ngClass]="{'ng-invalid': passwordInput.invalid && passwordInput.touched}" />
               <span class="toggle-password" onclick="togglePasswordVisibility()">👁</span>
+              <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
+                Le mot de passe est requis et ne doit pas contenir d'espaces.
+              </div>
             </div>
           </div>
 
-          <!-- Select List Section -->
-          <div class="form-group">
-            <label for="user-role">Type de compte:</label>
-            <div class="input-container">
-              <select name="user-role" id="user-role" required>
-                <option value="" disabled selected>Choisissez un type de compte</option>
-                <option value="admin">Compte Standard</option>
-                <option value="editor">Compte Bussiness</option>
-                <option value="viewer">Compte Restaurant</option>
-              </select>
+         <!-- Select List Section -->
+            <div class="form-group">
+              <label for="user-role">Type de compte:</label>
+              <div class="input-container">
+                <select
+                  name="user-role"
+                  id="user-role"
+                  [(ngModel)]="typeCompte"
+                  required
+                  #typeCompteInput="ngModel"
+                  [ngClass]="{'ng-invalid': typeCompteInput.invalid && typeCompteInput.touched}">
+                  <option value="" disabled selected>Choisissez le type de compte</option>
+
+                  <!-- Bind the full account object, not just the ID -->
+                  <option *ngFor="let account of typeAccounts" [ngValue]="account">
+                    {{ account.libelle }}
+                  </option>
+                </select>
+                <div *ngIf="typeCompteInput.invalid && typeCompteInput.touched" class="error-message">
+                  Le type de compte est requis.
+                </div>
+              </div>
             </div>
-          </div>
+
+
 
           <div class="remember">
             <input type="checkbox" name="remember" id="remember" />
@@ -71,9 +131,10 @@
 
           <!-- Submit Button -->
           <div class="form-group">
-            <button type="submit" [routerLink]="['/home']" class="btn-login">Create account</button>
+            <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Create account</button>
           </div>
         </form>
+
 
         <div class="err_msg mt-3">
           <p class="text-danger">
