@@ -51,11 +51,8 @@
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
     <button mat-menu-item>
       <mat-icon class="d-flex align-items-center"
-        ><i
-          data-icon="solar:shield-user-line-duotone"
-          class="iconify icon-22"
-        ></i></mat-icon
-      >My Profile
+        ><i data-icon="solar:shield-user-line-duotone" class="iconify icon-22"></i></mat-icon>
+        <span>{{ user?.prenom || 'Utilisateur' }}</span>
     </button>
     <button mat-menu-item>
       <mat-icon class="d-flex align-items-center"
@@ -76,7 +73,7 @@
 
     <div class="p-x-12 m-t-12">
       <a
-        [routerLink]="['/authentication/login']"
+        (click)="logout()"
         mat-stroked-button
         color="primary"
         class="w-100"
