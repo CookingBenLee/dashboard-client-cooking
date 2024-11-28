@@ -40,32 +40,26 @@ export class LoginComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.successMessage = params['success'] || null;
 
-      // Si un message existe, afficher le toast et le cacher après 3 secondes
+
       if (this.successMessage) {
         setTimeout(() => {
           this.successMessage = null;
-        }, 3000); // Durée en millisecondes
+        }, 3000);
       }
     });
 
   }
 
 
-   // Soumettre le formulaire de connexion
+
    onSubmit(): void {
     this.userService.login(this.login, this.password).subscribe(
       (response: any) => {
-        // Enregistrer le jeton dans le sessionStorage
         this.tokenService.saveToken(response.token);
-
-        // Optionnellement, enregistrer les informations utilisateur (comme le rôle, etc.)
         this.tokenService.saveUser(response.user);
-
-        // Rediriger l'utilisateur vers la page d'accueil après une connexion réussie
         this.router.navigate(['/home']);
       },
       (error) => {
-        // Afficher un message d'erreur si l'authentification échoue
         console.error('Échec de la connexion', error);
         this.errorMessage = 'Login ou mot de passe incorrect';
       }
