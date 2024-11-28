@@ -7,63 +7,39 @@
 </head>
 <body>
   <div class="login-container">
-    <div class="login-image-section" style="background-image: url('assets/images/logimage.jpg');">
-      <!-- Image de fond ou autre contenu -->
-    </div>
-
-
+    <div class="login-image-section" style="background-image: url('assets/images/logimage.jpg');"></div>
 
     <div class="login-form-section">
-      <div style="background-color: rgb(146, 189, 81); color: black; font-weight: bold;" *ngIf="successMessage" class="success-message">
-        {{ successMessage }}
+      <div style="background-color: rgb(146, 189, 81); color: black; font-weight: bold;" *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
       </div>
       <div class="form-container">
-        <h2>Login to Account</h2>
-        <p>Please enter your email and password to continue</p>
+        <h2>Se connecter à votre compte</h2>
+        <p>Veuillez entrer votre email et votre mot de passe pour continuer</p>
 
-        <!-- <form id="login"> -->
-          <!-- Email Section -->
+        <form (ngSubmit)="onSubmit()">
           <div class="form-group">
-            <label for="email">Email address:</label>
+            <label for="email">Adresse email :</label>
             <div class="input-container">
-              <input type="email" name="login" id="email" placeholder="Adresse email" required />
+              <input type="text" name="login" id="login" [(ngModel)]="login" placeholder="Adresse email" required />
             </div>
           </div>
 
-          <!-- Password Section -->
           <div class="form-group">
-            <label for="password">Password:</label>
+            <label for="password">Mot de passe :</label>
             <div class="input-container password-container">
-              <input type="password" name="password" id="password" placeholder="Mot de passe" required />
-              <span class="toggle-password" onclick="togglePasswordVisibility()">👁</span>
+              <input type="password" name="password" id="password" [(ngModel)]="password" placeholder="Mot de passe" required />
             </div>
           </div>
 
-          <div class="remember">
-            <input type="checkbox" name="remember" id="remember" />
-            <label for="remember">Remember Password</label>
-          </div>
-
-
-          <!-- Reset Password -->
-          <div class="form-options">
-            <a href="#" style="color: red;" class="forgot-password">Forgot password?</a>
-          </div>
-
-          <!-- Submit Button -->
           <div class="form-group">
-            <button [routerLink]="['/home']" class="btn-login">Se connecter</button>
+            <button type="submit" class="btn-login">Se connecter</button>
           </div>
-        <!-- </form> -->
+        </form>
 
         <div class="err_msg mt-3">
           <p class="text-danger">
-            <small id="username-help">Don't have an account ? <a href="#" [routerLink]="['/signup']" style="color: red;" class="forgot-password"> Create account </a></small>
-          </p>
-        </div>
-        <div class="err_msg mt-3">
-          <p class="text-danger">
-            <small id="username-help">Les accès non autorisés sont strictement interdits.</small>
+            <small id="username-help">Pas de compte ? <a href="#" [routerLink]="['/signup']" style="color: red;">Créer un compte</a></small>
           </p>
         </div>
       </div>

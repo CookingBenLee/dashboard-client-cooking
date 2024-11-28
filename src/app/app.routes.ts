@@ -3,6 +3,7 @@ import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   // Routes principales
@@ -24,6 +25,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: FullComponent, // Layout principal après connexion
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirection par défaut
       {
