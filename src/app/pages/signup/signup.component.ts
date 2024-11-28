@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
 import { NoWhitespaceDirective } from 'src/app/directives/no-whitespace.directive';
 import { TypeCompte } from 'src/app/entity/TypeCompte';
 import { Utilisateur } from 'src/app/entity/Utilisateur';
@@ -12,7 +16,10 @@ import { UserService } from 'src/app/services/user/user.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule,RouterModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective],
+  imports: [CommonModule,RouterModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,
+    ToastModule, ButtonModule, RippleModule
+  ],
+  providers: [MessageService],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -22,7 +29,7 @@ export class SignupComponent implements OnInit{
     this.getAllAccountType();
   }
   constructor( private userService: UserService, private typeAccountService: TypeAccountService,
-    private router: Router
+    private router: Router,private messageService: MessageService
   ){}
 
   id: number;
@@ -52,15 +59,12 @@ export class SignupComponent implements OnInit{
       this.userService.createUser(this.utilisateur).subscribe(
         (data: any) => {
           console.log('User created:', data);
-
-          // After successful user creation, redirect to login page with a success message
           this.router.navigate(['/login'], {
-            queryParams: { success: 'Account created successfully!' }
+            queryParams: { success: 'Compte ' + this.utilisateur.prenom + ' ' + this.utilisateur.nom +   ' créé avec succès!' }
           });
         },
         (error) => {
           console.error('Error creating user:', error);
-          // Optionally, show an error message
         }
       );
 

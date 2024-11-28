@@ -205,3 +205,34 @@ input[type="password"], input[type="text"] {
     width: 100%;
   }
 }
+
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #92bd51;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px) translateX(-50%);
+  transition: opacity 0.5s ease, visibility 0.10s ease, transform 0.10s ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) translateX(-50%);
+}
+
+.toast.hide {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px) translateX(-50%);
+}

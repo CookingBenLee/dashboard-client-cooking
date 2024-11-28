@@ -5,11 +5,20 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NoWhitespaceDirective } from 'src/app/directives/no-whitespace.directive';
 import { TokenService } from 'src/app/services/token/token.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+
+// Importation des services de PrimeNG
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { N } from '@angular/cdk/keycodes';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,RouterModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective],
+  imports: [CommonModule,RouterModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective, ToastModule, ButtonModule,RippleModule],
+  providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -24,15 +33,21 @@ export class LoginComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private userService: UserService,
     private tokenService: TokenService,
-    private router: Router
-
+    private router: Router,private messageService: MessageService
    ) {}
 
-  ngOnInit(): void {
-    // Get the success message from the query params
+   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.successMessage = params['success'] || null;
+
+      // Si un message existe, afficher le toast et le cacher après 3 secondes
+      if (this.successMessage) {
+        setTimeout(() => {
+          this.successMessage = null;
+        }, 3000); // Durée en millisecondes
+      }
     });
+
   }
 
 

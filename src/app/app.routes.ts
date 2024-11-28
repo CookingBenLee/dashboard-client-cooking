@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full', // Assurez-vous que Angular sait exactement quel chemin matcher.
+    pathMatch: 'full', 
   },
   {
     path: 'login',
