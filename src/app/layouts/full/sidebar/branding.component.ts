@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule],
   template: `
     <div style="display: inline-flex;" class="branding">
-      <a [routerLink]="['/']">
+      <a [routerLink]="['/home']">
         <img
           height="30px"
           width="auto"

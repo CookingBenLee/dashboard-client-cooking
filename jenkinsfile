@@ -1,0 +1,32 @@
+#!groovy
+pipeline {
+	agent any
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+  }
+  stages {
+    //Build Docker Image
+    stage('Docker Build') {
+    	agent any
+      steps {
+      	sh 'docker build -t balloibrahima/client-dashboard-cooking-ben:test1 .'
+      }
+    }
+
+    stage('Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage('Push') {
+      steps {
+        sh 'docker push balloibrahima/client-dashboard-cooking-ben:test1'
+      }
+    }
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+  }
+}
