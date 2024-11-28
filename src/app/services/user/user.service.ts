@@ -14,6 +14,7 @@ export class UserService {
 
    readonly END_POINT_ADD = "/compteuser/new"
    readonly END_POINT_LOGIN = "/compteuser/login"
+   readonly END_POINT_LOGOUT = "/logout"
   constructor( private http: HttpClient, private tokenService:TokenService) { }
 
   createUser(user: Utilisateur):Observable<Utilisateur>{
@@ -28,5 +29,9 @@ export class UserService {
   }
 
 
+  logout(): Observable<any>{
+    this.tokenService.signOut();
+    return this.http.get(this.API_URL + this.END_POINT_LOGOUT );
+  }
 
 }
