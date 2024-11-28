@@ -5,14 +5,14 @@ export const navItems: NavItem[] = [
     navCap: 'Home',
   },
   {
-    displayName: 'Dashboard',
+    displayName: 'Tableau de bord',
     iconName: 'solar:widget-add-line-duotone',
     route: 'home/dashboard',
   },
-  {
-    navCap: 'Ui Components',
-    divider: true
-  },
+  // {
+  //   navCap: '',
+  //   divider: true
+  // },
   {
     displayName: 'Planification de Repas',
     iconName: 'solar:calendar-mark-outline',
@@ -30,12 +30,12 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Mes Ingrédients',
-    iconName: 'solar:file-text-line-duotone',
+    iconName: 'mingcute:components-line',
     route: 'home/ui-components/menu',
   },
   {
     displayName: 'Les Fournisseurs',
-    iconName: 'solar:text-field-focus-line-duotone',
+    iconName: 'solar:user-hands-bold',
     route: 'home/ui-components/tooltips',
   },
   // {
