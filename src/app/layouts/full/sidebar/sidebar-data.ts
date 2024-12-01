@@ -1,9 +1,9 @@
 import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
-  {
-    navCap: 'Home',
-  },
+  // {
+  //   navCap: 'Home',
+  // },
   {
     displayName: 'Tableau de bord',
     iconName: 'solar:widget-add-line-duotone',
