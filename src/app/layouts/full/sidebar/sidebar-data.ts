@@ -5,7 +5,7 @@ export const navItems: NavItem[] = [
   //   navCap: 'Home',
   // },
   {
-    displayName: 'Tableau de bord',
+    displayName: "Ma page d'accueil",
     iconName: 'solar:widget-add-line-duotone',
     route: 'home/dashboard',
   },
