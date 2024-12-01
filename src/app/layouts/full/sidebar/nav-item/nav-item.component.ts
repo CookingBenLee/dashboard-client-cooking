@@ -23,7 +23,6 @@ export class AppNavItemComponent implements OnChanges {
   @Output() toggleMobileLink: any = new EventEmitter<void>();
   @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  //@HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() item: NavItem | any;
   @Input() depth: any;
 
@@ -38,17 +37,18 @@ export class AppNavItemComponent implements OnChanges {
   }
 
   onItemSelected(item: NavItem) {
-    this.router.navigate([item.route]);
-
-    //scroll
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }
-
-  onSubItemSelected(item: NavItem) {
-    
+    if (item.children) {
+      // Basculer l'état d'expansion
+      item.expanded = !item.expanded;
+    } else {
+      // Navigation normale
+      this.router.navigate([item.route]);
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
   }
 }
+

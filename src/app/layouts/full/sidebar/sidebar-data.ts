@@ -9,14 +9,20 @@ export const navItems: NavItem[] = [
     iconName: 'solar:widget-add-line-duotone',
     route: 'home/dashboard',
   },
-  // {
-  //   navCap: '',
-  //   divider: true
-  // },
   {
     displayName: 'Planification de Repas',
     iconName: 'solar:calendar-mark-outline',
     route: 'home/ui-components/badge',
+    children: [
+      {
+        displayName: 'Planifier un repas',
+        route: 'home/ui-components/badge',
+      },
+      {
+        displayName: 'Liste des planifications',
+        route: 'home/ui-components/badge',
+      },
+    ],
   },
   {
     displayName: 'Mes Plats',
@@ -27,11 +33,38 @@ export const navItems: NavItem[] = [
     displayName: 'Mes Recettes',
     iconName: 'arcticons:reciper',
     route: 'home/ui-components/lists',
+
   },
   {
     displayName: 'Mes Ingrédients',
     iconName: 'mingcute:components-line',
     route: 'home/ui-components/menu',
+    children: [
+      {
+        displayName: 'Mes Produits',
+        route: 'home/ui-components/menu',
+      },
+      {
+        displayName: 'Catégorie',
+        route: 'home/ui-components/menu',
+      },
+      {
+        displayName: 'Unité',
+        route: 'home/ui-components/menu',
+      },
+      {
+        displayName: 'Marque',
+        route: 'home/ui-components/menu',
+      },
+      {
+        displayName: 'Conditionnement',
+        route: 'home/ui-components/menu',
+      },
+      {
+        displayName: 'Catalogue de prix',
+        route: 'home/ui-components/menu',
+      },
+    ],
   },
   {
     displayName: 'Les Fournisseurs',

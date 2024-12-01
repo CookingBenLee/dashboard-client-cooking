@@ -141,3 +141,29 @@
 .side-img {
   margin-right: -30px;
 }
+
+.submenu {
+  margin-left: 20px;
+  padding-left: 15px;
+  border-left: 1px solid #e0e0e0;
+
+  .menu-list-item {
+    margin-bottom: 5px;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+.arrow-icon {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+
+  .mat-icon {
+    font-size: 20px;
+    color: #2a3547;
+  }
+}
+
