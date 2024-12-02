@@ -42,24 +42,24 @@ export const navItems: NavItem[] = [
     children: [
       {
         displayName: 'Mes Produits',
-        route: 'home/ui-components/menu',
+        route: 'home/product',
       },
       {
-        displayName: 'Catégorie',
+        displayName: 'Mes courses',
         route: 'home/ui-components/menu',
       },
-      {
-        displayName: 'Unité',
-        route: 'home/ui-components/menu',
-      },
-      {
-        displayName: 'Marque',
-        route: 'home/ui-components/menu',
-      },
-      {
-        displayName: 'Conditionnement',
-        route: 'home/ui-components/menu',
-      },
+      // {
+      //   displayName: 'Unité',
+      //   route: 'home/ui-components/menu',
+      // },
+      // {
+      //   displayName: 'Marque',
+      //   route: 'home/ui-components/menu',
+      // },
+      // {
+      //   displayName: 'Conditionnement',
+      //   route: 'home/ui-components/menu',
+      // },
       {
         displayName: 'Catalogue de prix',
         route: 'home/ui-components/menu',
