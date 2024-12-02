@@ -4,13 +4,14 @@ import { FullComponent } from './layouts/full/full.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ProductComponent } from './pages/product/product.component';
 
 export const routes: Routes = [
   // Routes principales
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full', 
+    pathMatch: 'full',
   },
   {
     path: 'login',
@@ -28,6 +29,10 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirection par défaut
+      {
+        path:"product",
+        component: ProductComponent
+      },
       {
         path: 'dashboard',
         loadChildren: () =>
