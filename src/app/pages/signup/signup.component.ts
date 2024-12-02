@@ -42,31 +42,38 @@ export class SignupComponent implements OnInit{
   users: Utilisateur[] = [];
   typeAccounts: TypeCompte[] = [];
   utilisateur: Utilisateur = new Utilisateur();
-
+  confirmation: String;
+  errorMessage: string = '';
 
   addUserAccount(form: NgForm){
     if (form.valid) {
-      console.log('Form Data: ', form.value);
-      console.log("valid");
-      this.utilisateur.nom = this.nom;
-      this.utilisateur.prenom = this.prenom;
-      this.utilisateur.login = this.login;
-      this.utilisateur.password =this.password;
-      this.utilisateur.typeCompte = this.typeCompte
+      if (this.password === this.confirmation) {
+        console.log('Form Data: ', form.value);
+        console.log("valid");
+        this.utilisateur.nom = this.nom;
+        this.utilisateur.prenom = this.prenom;
+        this.utilisateur.login = this.login;
+        this.utilisateur.password =this.password;
+        this.utilisateur.typeCompte = this.typeCompte
 
-      console.log(this.utilisateur);
+        console.log(this.utilisateur);
 
-      this.userService.createUser(this.utilisateur).subscribe(
-        (data: any) => {
-          console.log('User created:', data);
-          this.router.navigate(['/login'], {
-            queryParams: { success: 'Compte ' + this.utilisateur.prenom + ' ' + this.utilisateur.nom +   ' créé avec succès!' }
-          });
-        },
-        (error) => {
-          console.error('Error creating user:', error);
-        }
-      );
+        this.userService.createUser(this.utilisateur).subscribe(
+          (data: any) => {
+            console.log('User created:', data);
+            this.router.navigate(['/login'], {
+              queryParams: { success: 'Compte ' + this.utilisateur.prenom + ' ' + this.utilisateur.nom +   ' créé avec succès!' }
+            });
+          },
+          (error) => {
+            console.error('Error creating user:', error);
+          }
+        );
+      } else {
+         this.errorMessage = "Les mots de passe ne correspondent pas."
+
+      }
+
 
 
     }

@@ -94,8 +94,29 @@
                 #passwordInput="ngModel"
                 [ngClass]="{'ng-invalid': passwordInput.invalid && passwordInput.touched}" />
               <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
-                Le mot de passe est requis et ne doit pas contenir d'espaces.
+                Le mot de passe est requis.
               </div>
+              <small style="color: red; margin-top: 5px;">{{ errorMessage }}</small>
+            </div>
+          </div>
+          <!-- confirmation de mot de passe -->
+          <div class="form-group">
+            <label for="password">Confirmation de mot de passe :</label>
+            <div class="input-container password-container">
+              <input
+                type="password"
+                name="confirmation"
+                id="confirmation"
+                placeholder="confirmation de mot de passe"
+                required
+                [(ngModel)]="confirmation"
+                noWhitespace
+                #confirmationInput="ngModel"
+                [ngClass]="{'ng-invalid': confirmationInput.invalid && confirmationInput.touched}" />
+              <div *ngIf="confirmationInput.invalid && confirmationInput.touched" class="error-message">
+                La confirmation de mot de passe est requis.
+              </div>
+              <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
             </div>
           </div>
 
