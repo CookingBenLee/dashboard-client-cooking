@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { CoreService } from 'src/app/services/core.service';
+import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
 
@@ -16,7 +11,9 @@ import { MaterialModule } from '../../../material.module';
   templateUrl: './side-register.component.html',
 })
 export class AppSideRegisterComponent {
-  constructor(private router: Router) {}
+  options = this.settings.getOptions();
+
+  constructor(private settings: CoreService, private router: Router) { }
 
   form = new FormGroup({
     uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -30,6 +27,6 @@ export class AppSideRegisterComponent {
 
   submit() {
     // console.log(this.form.value);
-    this.router.navigate(['/']);
+    this.router.navigate(['/dashboards/dashboard1']);
   }
 }

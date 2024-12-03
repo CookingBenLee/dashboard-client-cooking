@@ -10,6 +10,37 @@
   line-height: 44px;
 }
 
+.bg-gredient {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.3;
+    background: radial-gradient(
+        rgb(237 251 243),
+        rgb(219 242 255),
+        rgb(233 244 255)
+      )
+      0% 0%/400% 400%;
+    animation: 15s ease 0s infinite normal none running gradient;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
 .img-height {
   height: calc(100vh - 83px);
 }
@@ -51,12 +82,12 @@
 
 .boxed-auth {
   width: 100%;
-  max-width: 480px;
+  max-width: 450px;
   margin: 0 auto;
 }
 
 .max-width-form {
-  max-width: 450px;
+  max-width: 460px;
 }
 
 .mat-mdc-form-field.mat-form-field-invalid {
@@ -67,3 +98,45 @@
   }
 }
 
+.error-msg {
+  position: absolute;
+  top: -19px;
+  right: 3px;
+}
+
+.circle-top {
+  position: absolute;
+  top: -33%;
+  left: -14%;
+  border: 120px solid #0b2947; // customize bg - no variable
+  height: 700px;
+  width: 700px;
+  display: block;
+  background: transparent;
+  border-radius: 100%;
+  z-index: 1;
+}
+
+.circle-bottom {
+  position: absolute;
+  bottom: -4%;
+  right: 1%;
+  height: 450px;
+  width: 450px;
+  display: block;
+  background: transparent;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.auth-card {
+  max-width: 460px !important;
+}
+
+.h-n80 {
+  height: calc(100vh - 80px);
+}
+
+.auth-login {
+  max-width: 1160px;
+}

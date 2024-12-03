@@ -12,10 +12,18 @@
   width: 80%;
 }
 
+.w-75 {
+  width: 75%;
+}
+
 .text-hover-primary:hover {
   .hover-text {
     color: $primary;
   }
+}
+
+body .primary-hover-text:hover {
+    color: $primary !important;
 }
 
 .z-1 {
@@ -65,4 +73,14 @@
 .list-unstyled {
   padding-left: 0;
   list-style: none;
+}
+
+.rounded-circle-shape {
+  width: 56px;
+  height: 40px;
+}
+
+.circle-shape {
+  width: 18px;
+  height: 10px;
 }

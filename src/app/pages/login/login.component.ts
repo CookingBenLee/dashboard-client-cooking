@@ -5,20 +5,20 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NoWhitespaceDirective } from 'src/app/directives/no-whitespace.directive';
 import { TokenService } from 'src/app/services/token/token.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToastModule } from 'primeng/toast';
-import { ButtonModule } from 'primeng/button';
+// import { ConfirmDialogModule } from 'primeng/confirmdialog';
+// import { ToastModule } from 'primeng/toast';
+// import { ButtonModule } from 'primeng/button';
 
 // Importation des services de PrimeNG
-import { ConfirmationService, MessageService } from 'primeng/api';
+// import { ConfirmationService, MessageService } from 'primeng/api';
 import { N } from '@angular/cdk/keycodes';
-import { RippleModule } from 'primeng/ripple';
+// import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,RouterModule,FormsModule,ReactiveFormsModule, ToastModule, ButtonModule,RippleModule],
-  providers: [MessageService],
+  imports: [CommonModule,RouterModule,FormsModule,ReactiveFormsModule],
+  providers: [],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private userService: UserService,
     private tokenService: TokenService,
-    private router: Router,private messageService: MessageService
+    private router: Router
    ) {}
 
    ngOnInit(): void {

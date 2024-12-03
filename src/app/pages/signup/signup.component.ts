@@ -1,12 +1,13 @@
-import { productsData } from './../ui-components/tables/tables.component';
+// import { productsData } from './../ui-components/tables/tables.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
+// import { Router, RouterModule } from '@angular/router';
+// import { MessageService } from 'primeng/api';
+// import { ButtonModule } from 'primeng/button';
+// import { RippleModule } from 'primeng/ripple';
+// import { ToastModule } from 'primeng/toast';
 import { NoWhitespaceDirective } from 'src/app/directives/no-whitespace.directive';
 import { TypeCompte } from 'src/app/entity/TypeCompte';
 import { Utilisateur } from 'src/app/entity/Utilisateur';
@@ -16,10 +17,9 @@ import { UserService } from 'src/app/services/user/user.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule,RouterModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,
-    ToastModule, ButtonModule, RippleModule
+  imports: [CommonModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,RouterModule
   ],
-  providers: [MessageService],
+  providers: [],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit{
     this.getAllAccountType();
   }
   constructor( private userService: UserService, private typeAccountService: TypeAccountService,
-    private router: Router,private messageService: MessageService
+    private router: Router
   ){}
 
   id: number;

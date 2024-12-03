@@ -1,0 +1,99 @@
+<mat-card class="cardWithShadow overflow-hidden">
+    <mat-card-content class="p-b-12">
+        <div class="d-flex justify-content-between align-items-center m-b-16">
+            <mat-card-title class="m-b-0 f-s-18">Top Performing Products</mat-card-title>
+            <div>
+                <button class="custom-mdc-button" mat-button [matMenuTriggerFor]="menu">
+                    <i-tabler name="dots-vertical" class="icon-20"></i-tabler>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <a href="javascript:void(0)"
+                        class="d-flex align-items-center text-decoration-none p-y-10 p-x-16 mat-body-1 gap-8">
+                        <span>Action</span>
+                    </a>
+                    <a href="javascript:void(0)"
+                        class="d-flex align-items-center text-decoration-none p-y-10 p-x-16 mat-body-1 gap-8">
+                        <span>Another action</span>
+                    </a>
+                    <a href="javascript:void(0)"
+                        class="d-flex align-items-center text-decoration-none p-y-10 p-x-16 mat-body-1 gap-8">
+                        <span>Something else here</span>
+                    </a>
+                </mat-menu>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="w-100 top-performing-products-table">
+                <!-- Profile Column -->
+                <ng-container matColumnDef="product name">
+                    <th mat-header-cell *matHeaderCellDef class="mat-subtitle-1 f-s-14 p-x-16 p-y-12 p-l-0">
+                        Product Name
+                    </th>
+                    <td class="p-l-0 p-x-16 p-y-12" *matCellDef="let element">
+                        <div class="d-flex align-items-center gap-12">
+                            <span
+                                class="icon-50 rounded-7 d-flex align-items-center justify-content-center {{ element.bgcolor }}">
+                                <img [src]="element.imagePath" alt="users" />
+                            </span>
+                            <div>
+                                <h6 class="mat-subtitle-1 f-s-15 lh-sm f-w-400">
+                                    {{ element.admin }}
+                                </h6>
+                                <h6 class="mat-subtitle-1 f-s-15 lh-sm f-w-400">
+                                    Dashboard Template
+                                </h6>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Hour Rate Column -->
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef class="mat-subtitle-1 f-s-14 p-x-16 p-y-12">
+                        Category
+                    </th>
+                    <td class="p-x-16 p-y-12" *matCellDef="let element">
+                        <span class="{{ element.bgcolor }} f-s-12 f-w-500 p-x-10 p-y-4 rounded-pill">
+                            {{ element.category | titlecase }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="sales">
+                    <th mat-header-cell *matHeaderCellDef class="mat-subtitle-1 f-s-14 p-x-16 p-y-12">
+                        Sales
+                    </th>
+                    <td class="p-x-16 p-y-12" *matCellDef="let element">
+                        <p class="m-b-0 f-s-14 m-t-0 mat-body-1">{{ element.sales }}</p>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="earnings">
+                    <th mat-header-cell *matHeaderCellDef class="mat-subtitle-1 f-s-14 p-x-16 p-y-12">
+                        Earnings
+                    </th>
+                    <td class="p-x-16 p-y-12" *matCellDef="let element">
+                        <p class="m-b-0 f-s-14 m-t-0 mat-body-1">{{ element.earnings }}</p>
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="technology">
+                    <th mat-header-cell *matHeaderCellDef class="mat-subtitle-1 f-s-14 p-x-16 p-y-12 text-right p-r-0">
+                        Technology
+                    </th>
+                    <td class="text-right p-r-0 p-x-16 p-y-12" *matCellDef="let element">
+                        <div class="d-flex align-items-center justify-content-end gap-8">
+                            <img *ngFor="let item of element.technology" [src]="item" alt="users" />
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

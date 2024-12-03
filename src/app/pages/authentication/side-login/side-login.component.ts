@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CoreService } from 'src/app/services/core.service';
 import {
   FormGroup,
   FormControl,
@@ -8,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
-import { MatButtonModule } from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-side-login',
@@ -23,7 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './side-login.component.html',
 })
 export class AppSideLoginComponent {
-  constructor(private router: Router) {}
+  options = this.settings.getOptions();
+
+  constructor(private settings: CoreService, private router: Router) {}
 
   form = new FormGroup({
     uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -36,6 +39,6 @@ export class AppSideLoginComponent {
 
   submit() {
     // console.log(this.form.value);
-    this.router.navigate(['/']);
+    this.router.navigate(['/dashboards/dashboard1']);
   }
 }
