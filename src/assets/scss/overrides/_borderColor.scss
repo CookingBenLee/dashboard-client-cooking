@@ -2,3 +2,15 @@
 .mat-drawer-side {
   border-right: 1px solid $borderColor;
 }
+
+.border-white-50 {
+  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.border-muted {
+  border: 1px solid rgba($muted, 0.1) !important;
+}
+
+.b-r-m {
+  border-right: 1px solid rgba($muted, 0.1) !important;
+}

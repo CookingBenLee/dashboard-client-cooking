@@ -37,6 +37,11 @@
   flex-direction: column;
 }
 
+.contact-apps-icon.mat-mdc-icon-button svg{
+  width: 18px;
+  height: 18px;
+}
+
 .mat-mdc-mini-fab:hover .mat-mdc-button-persistent-ripple::before {
   opacity: 0.2 !important;
 }

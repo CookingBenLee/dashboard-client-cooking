@@ -1,9 +1,13 @@
-.light-theme {
+.light-theme .blue_theme,
+.light-theme .purple_theme,
+.light-theme .orange_theme,
+.light-theme .green_theme,
+.light-theme .aqua_theme,
+.light-theme .cyan_theme,
+.dark-theme {
   @import "./buttons";
   @import "./drawer";
-  @import "./card";
-  @import "./typography";
-  @import "./menu";
+  
   @import "./checkbox";
   @import "./radio";
 
@@ -14,6 +18,13 @@
 
 body {
   @import "./form";
+}
+
+.light-theme,
+.dark-theme {
+  @import "./card";
+  @import "./typography";
+  @import "./menu";
 }
 
 @import "./borderColor";

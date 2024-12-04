@@ -11,8 +11,28 @@ $toolbar: #f8fafd;
 $cardshadow: 0px 1px 4px 0px rgba(133, 146, 173, 0.2);
 $hoverBgColor: #f6f9fc;
 
+// Dark color variable
+$darksidebarbg: #1f2a3d;
+$darkbackground: #1a2537;
+$darkcardbg: #1f2a3d;
+$darktoolbar: #1a2537;
+$darkcardshadow: rgba(145, 158, 171, 0.3) 0px 0px 2px 0px,rgba(145, 158, 171, 0.02) 0px 12px 24px -4px;
+$darkborderColor: #313e54;
+$darkformborderColor: #313e54;
+$darkbordercheckboxColor: #57647a;
+$darkhoverbgcolor: #333f55;
+
+$darkthemelightprimary: #00a1ff1a;
+$darkthemelightaccent: #8965e51a; 
+$darkthemelightwarning: #4d3a2a;
+$darkthemelighterror: #4b313d;
+$darkthemelightsuccess: #1b3c48;
+$darktextPrimary: rgba(255, 255, 255, 0.85);
+$darktextBody: rgba(255, 255, 255, 0.6);
+
 // Sidenav
-$sidenav-desktop: 270px !default;
+$sidenav-desktop: 260px !default;
+$sidenav-mini: 80px !default;
 $header-height: 70px !default;
 
 //BorderColor
@@ -79,8 +99,8 @@ html {
   --mdc-outlined-button-disabled-label-text-color: #7c8fac !important;
   --mat-text-button-disabled-container-color: rgb(226 236 249) !important;
   --mdc-filled-button-disabled-container-color: rgb(226 236 249) !important;
-  --mdc-protected-button-disabled-container-color: rgb(226 236 249) !important;
-  --mat-fab-disabled-state-container-color: rgb(226 236 249) !important;
+  --mdc-protected-button-disabled-container-color:rgb(226 236 249) !important;
+  --mat-fab-disabled-state-container-color:rgb(226 236 249) !important;
   --mdc-list-list-item-leading-icon-color: #526b7a !important;
   --mdc-list-list-item-hover-leading-icon-color: #526b7a !important;
 
@@ -102,7 +122,6 @@ html {
     --mat-form-field-container-height: 45px;
     --mat-form-field-container-vertical-padding: 13px;
   }
-
   .mat-mdc-tab-header {
     --mat-tab-header-inactive-label-text-color: #111c2d;
     --mat-tab-header-label-text-weight: 500;

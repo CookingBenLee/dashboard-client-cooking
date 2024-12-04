@@ -3,11 +3,8 @@ import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
-import { AuthGuard } from './guards/auth.guard';
-import { ProductComponent } from './pages/product/product.component';
 
 export const routes: Routes = [
-  // Routes principales
   {
     path: '',
     redirectTo: 'login',
@@ -21,22 +18,26 @@ export const routes: Routes = [
     path: 'signup',
     component: SignupComponent,
   },
-
-  // Routes sécurisées (après authentification)
   {
-    path: 'home',
-    component: FullComponent, // Layout principal après connexion
-    canActivate: [AuthGuard],
+    path: '',
+    component: FullComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirection par défaut
       {
-        path:"product",
-        component: ProductComponent
+        path: 'home',
+        redirectTo: '/dashboards/dashboard1',
+        pathMatch: 'full',
       },
       {
-        path: 'dashboard',
+        path: 'starter',
         loadChildren: () =>
           import('./pages/pages.routes').then((m) => m.PagesRoutes),
+      },
+      {
+        path: 'dashboards',
+        loadChildren: () =>
+          import('./pages/dashboards/dashboards.routes').then(
+            (m) => m.DashboardsRoutes
+          ),
       },
       {
         path: 'ui-components',
@@ -46,14 +47,46 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'extra',
+        path: 'forms',
         loadChildren: () =>
-          import('./pages/extra/extra.routes').then((m) => m.ExtraRoutes),
+          import('./pages/forms/forms.routes').then((m) => m.FormsRoutes),
+      },
+      {
+        path: 'charts',
+        loadChildren: () =>
+          import('./pages/charts/charts.routes').then((m) => m.ChartsRoutes),
+      },
+      {
+        path: 'apps',
+        loadChildren: () =>
+          import('./pages/apps/apps.routes').then((m) => m.AppsRoutes),
+      },
+      {
+        path: 'widgets',
+        loadChildren: () =>
+          import('./pages/widgets/widgets.routes').then((m) => m.WidgetsRoutes),
+      },
+      {
+        path: 'tables',
+        loadChildren: () =>
+          import('./pages/tables/tables.routes').then((m) => m.TablesRoutes),
+      },
+      {
+        path: 'datatable',
+        loadChildren: () =>
+          import('./pages/datatable/datatable.routes').then(
+            (m) => m.DatatablesRoutes
+          ),
+      },
+      {
+        path: 'theme-pages',
+        loadChildren: () =>
+          import('./pages/theme-pages/theme-pages.routes').then(
+            (m) => m.ThemePagesRoutes
+          ),
       },
     ],
   },
-
-  // Routes spécifiques à un layout vide
   {
     path: '',
     component: BlankComponent,
@@ -65,12 +98,17 @@ export const routes: Routes = [
             (m) => m.AuthenticationRoutes
           ),
       },
+      {
+        path: 'landingpage',
+        loadChildren: () =>
+          import('./pages/theme-pages/landingpage/landingpage.routes').then(
+            (m) => m.LandingPageRoutes
+          ),
+      },
     ],
   },
-
-  // Route générique (404 ou autre)
   {
     path: '**',
-    redirectTo: 'login', // Vous pouvez personnaliser vers une page d'erreur si nécessaire.
+    redirectTo: 'authentication/error',
   },
 ];

@@ -11,8 +11,20 @@
     .d-lg-none {
       display: none !important;
     }
+
     .align-items-lg-center {
       align-items: center !important;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    .mb-lg-0 {
+      margin-bottom: 0 !important;
+    }
+    .d-md-none {
+      display: none !important;
     }
   }
 }
@@ -23,8 +35,20 @@
       display: flex !important;
     }
 
+    .d-md-flex {
+      display: flex !important;
+    }
+
     .mt-lg-0 {
       margin-top: 0 !important;
+    }
+
+    .mb-md-0 {
+      margin-bottom: 0 !important;
+    }
+
+    .d-sm-block {
+      display: block !important;
     }
   }
 }
@@ -47,4 +71,8 @@
 
 .flex-1-auto {
   flex: 1 1 0%;
+}
+
+.white-space{
+  white-space: nowrap;
 }
