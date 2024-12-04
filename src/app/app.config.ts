@@ -4,6 +4,7 @@ import {
   importProvidersFrom,
 } from '@angular/core';
 import {
+  HTTP_INTERCEPTORS,
   HttpClient,
   provideHttpClient,
   withInterceptorsFromDi,
@@ -37,9 +38,17 @@ export function HttpLoaderFactory(http: HttpClient): any {
 }
 
 import { NgxEchartsModule } from 'ngx-echarts';
+import { HttpRequestInterceptor } from './services/Helpers/http.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    {
+      provide:
+      HTTP_INTERCEPTORS,
+        useClass:HttpRequestInterceptor,
+        multi:
+        true
+      },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,

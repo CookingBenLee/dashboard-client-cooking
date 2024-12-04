@@ -56,7 +56,9 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.login, this.password).subscribe(
       (response: any) => {
         this.tokenService.saveToken(response.token);
-        this.tokenService.saveUser(response.user);
+        console.log(response);
+
+        this.tokenService.saveUser(response);
         this.router.navigate(['/home']);
       },
       (error) => {

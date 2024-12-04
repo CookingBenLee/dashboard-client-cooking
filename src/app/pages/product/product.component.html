@@ -5,7 +5,7 @@
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <input
             matInput
-            placeholder="Search Employee"
+            placeholder="Rechercher un produit"
             (keyup)="applyFilter($any($event.target).value)"
           />
           <mat-icon matSuffix>
@@ -27,70 +27,94 @@
       <table mat-table [dataSource]="dataSource" class="w-100">
         <ng-container matColumnDef="#">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">#</th>
-          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          <td mat-cell *matCellDef="let product">{{ product.id }}</td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Name</th>
-          <td mat-cell *matCellDef="let element">
-            <div class="d-flex align-items-center">
-              <img
-                class="rounded-circle"
-                [src]="element.imagePath"
-                width="40"
-              />
-              <div class="m-l-16">
-                <p class="f-w-600 mat-subtitle-1 f-s-16 m-t-0">
-                  {{ element.Name }}
-                </p>
-                <small class="mat-body-1 f-s-14">{{ element.Position }}</small>
-              </div>
-            </div>
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.name }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="email">
+        <ng-container matColumnDef="code">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Email
+            Code
           </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.Email }}
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.code }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="mobile">
+        <ng-container matColumnDef="stock">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Mobile
+            Stock
           </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.Mobile }}
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.stock?.quantity }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="date of joining">
+        <ng-container matColumnDef="unit">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Date of Joining
+            Unite
           </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.DateOfJoining | date : "fullDate" }}
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.unit?.name }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="salary">
+        <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Salary
+            Categorie
           </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.Salary }}
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.category?.name }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="projects">
+        <ng-container matColumnDef="brand">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Projects
+            Marque
           </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.Projects }}
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.brand?.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="conditioning">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Condition
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.conditioning?.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Prix
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.price }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lossPercentage">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Poucentage de perte
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.lossPercentage }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Description
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.description }}
           </td>
         </ng-container>
 
@@ -98,14 +122,14 @@
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Action
           </th>
-          <td mat-cell *matCellDef="let element" class="action-link">
+          <td mat-cell *matCellDef="let product" class="action-link">
             <a
-              (click)="openDialog('Update', element)"
+              (click)="openDialog('Update', product)"
               class="m-r-10 cursor-pointer"
               ><i-tabler name="edit" class="icon-18"></i-tabler
             ></a>
             <a
-              (click)="openDialog('Delete', element)"
+              (click)="openDialog('Delete', product)"
               class="m-r-10 cursor-pointer"
             >
               <i-tabler name="trash" class="icon-18"></i-tabler>
@@ -117,9 +141,12 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
       <mat-paginator
-        [pageSizeOptions]="[5, 10, 20]"
-        showFirstLastButtons
-      ></mat-paginator>
+      [length]="totalRows"
+      [pageSize]="rows"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      (page)="onPageChange($event)">
+      </mat-paginator>
     </div>
   </mat-card-content>
 </mat-card>

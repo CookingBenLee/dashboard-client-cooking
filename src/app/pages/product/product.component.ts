@@ -5,6 +5,7 @@ import {
   Optional,
   ViewChild,
   AfterViewInit,
+  OnInit,
 } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,6 +22,17 @@ import { Employee } from 'src/app/pages/apps/employee/employee';
 import { EmployeeService } from 'src/app/services/apps/employee/employee-service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Product } from 'src/app/entity/Product';
+import { Unit } from 'src/app/services/unit/Unit';
+import { Brand } from 'src/app/services/brand/Brand';
+import { Category } from 'src/app/services/category/Category';
+import { Conditioning } from 'src/app/services/conditioning/Conditioning';
+import { BrandService } from 'src/app/services/brand/brand.service';
+import { ConditioningService } from 'src/app/services/conditioning/conditioning.service';
+import { UnitService } from 'src/app/services/unit/unit.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { PaginateService } from 'src/app/services/paginate/paginate.service';
 
 @Component({
   selector: 'app-product',
@@ -35,42 +47,134 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })
-export class ProductComponent {
+export class ProductComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
   Object.create(null);
 
+  rows=5
+  totalRows=0
+  page=0;
+  count=0;
+  //first: number = 1;
+  //maxS=8;
+  totalPages=0
+  resClient:any
 searchText: any;
+products:Product[]=[]
+brands:Brand[]
+categorys:Category[]
+units:Unit[]
+conditionings:Conditioning[]
+
+positionModalConfirm:any
+motRecherche=''
+onSearch=false
+
+name:string
+code:string
+description:string
+price:number
+lostpercentage:number
+
+unit:Unit
+brand:Brand
+category:Category
+conditioning:Conditioning
+
+product: Product=new Product();
+
+isError:boolean
+isSuccess:boolean
+erreur:string
+sucess:string
+loading: boolean = false;
+
+productClicked: Product=new Product();
+position:string
+isEditproductDialogVisible:boolean=false
+isErrorEdit:boolean
+isSuccessEdit:boolean
+erreurEdit:string
+sucessEdit:string
+
+productSelected:Product
 
 displayedColumns: string[] = [
   '#',
   'name',
-  'email',
-  'mobile',
-  'date of joining',
-  'salary',
-  'projects',
+  'code',
+  'stock',
+  'unit',
+  'category',
+  'brand',
+  'conditioning',
+  'price',
+  'lossPercentage',
+  'description',
   'action',
 ];
 
-dataSource = new MatTableDataSource<Employee>([]);
+dataSource = new MatTableDataSource<Product>([]);
+
 
 @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
   Object.create(null);
 
 constructor(
   public dialog: MatDialog,
-  private employeeService: EmployeeService
+  private employeeService: EmployeeService,
+  private brandService:BrandService,private conditioningService:ConditioningService,private unitService:UnitService,private categoryService:CategoryService,
+  private productService:ProductService ,private paginateService:PaginateService,
 ) {}
 
 ngOnInit(): void {
-  this.loadEmployees();
+  // this.loadEmployees();
+  this.getAll();
 }
 
-loadEmployees(): void {
-  const employee = this.employeeService.getEmployees();
-  this.dataSource.data = employee;
-  this.dataSource = new MatTableDataSource(employee);
+getAll(){
+  const params=this.paginateService.getRequestParams(this.page,this.rows)
+  console.log(params);
+  this.productService.getActivePage(params).then(data =>{
+    console.log(data)
+    //this.menus=data
+    console.log(data)
+    //this.infos=data
+    console.log(data)
+    //this.contenus=data
+
+    this.totalPages=data.totalPages
+    if (this.products.length === 0 || this.page === 0) {
+      this.resClient = data;
+      this.products = data.content;
+      this.totalRows = data.totalElements;
+      this.dataSource.data = this.products; // Ajoutez cette ligne
+    } else if (
+      this.resClient.totalElements < data.totalElements ||
+      this.resClient.number !== data.number
+    ) {
+      this.resClient.number = data.number;
+      this.products = data.content;
+      this.dataSource.data = this.products; // Ajoutez cette ligne
+    }
+  }, error => {
+    //console.log(error)
+  })
 }
+
+onPageChange(event: any): void {
+  this.page = event.pageIndex; // Index de la nouvelle page
+  this.rows = event.pageSize; // Taille de la page
+  console.log(`Page: ${this.page}, Rows per page: ${this.rows}`);
+  this.getAll(); // Charger les données de la nouvelle page
+}
+
+
+// loadEmployees(): void {
+//   const employee = this.employeeService.getEmployees();
+//   this.dataSource.data = employee;
+//   this.dataSource = new MatTableDataSource(employee);
+// }
 ngAfterViewInit(): void {
   this.dataSource.paginator = this.paginator;
 }
@@ -85,10 +189,10 @@ openDialog(action: string, employee: Employee | any): void {
   });
 
   dialogRef.afterClosed().subscribe((result) => {
-    this.dataSource.data = this.employeeService.getEmployees();
-    if (result && result.event === 'Refresh') {
-      this.loadEmployees(); // Refresh the employee list if necessary
-    }
+    // this.dataSource.data = this.employeeService.getEmployees();
+    // if (result && result.event === 'Refresh') {
+    //   this.loadEmployees(); // Refresh the employee list if necessary
+    // }
   });
 }
 }
