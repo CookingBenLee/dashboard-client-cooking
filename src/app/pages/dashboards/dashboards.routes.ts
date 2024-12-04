@@ -14,7 +14,7 @@ export const DashboardsRoutes: Routes = [
         component: AppDashboard1Component,
         data: {
           title: 'Dashboard 1',
-        
+
         },
       },
       {
