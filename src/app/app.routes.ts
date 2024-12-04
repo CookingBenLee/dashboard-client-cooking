@@ -6,6 +6,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { AuthGuard } from './guards/auth.guard';
 import { Component } from '@angular/core';
 import { AcceuilComponent } from './pages/acceuil/acceuil.component';
+import { ProductComponent } from './pages/product/product.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,10 @@ export const routes: Routes = [
       {
         path:"acceuil",
         component: AcceuilComponent
+      },
+      {
+        path: "product",
+        component: ProductComponent
       },
       {
         path: 'starter',

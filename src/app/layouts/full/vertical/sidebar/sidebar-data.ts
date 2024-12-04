@@ -45,7 +45,7 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Mes Produits',
         iconName: 'solar:round-alt-arrow-right-line-duotone',
-        route: '/apps/invoice',
+        route: '/home/product',
       },
       {
         displayName: 'Mes courses',
@@ -413,11 +413,11 @@ export const navItems: NavItem[] = [
   //     },
   //   ],
   // },
-  // {
-  //   displayName: 'Data table',
-  //   iconName: 'solar:database-line-duotone',
-  //   route: '/datatable/kichen-sink',
-  // },
+  {
+    displayName: 'Data table',
+    iconName: 'solar:database-line-duotone',
+    route: 'home/datatable/kichen-sink',
+  },
   // {
   //   divider: true,
   //   navCap: 'Chart',
