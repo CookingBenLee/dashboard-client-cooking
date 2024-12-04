@@ -3,6 +3,9 @@ import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { AuthGuard } from './guards/auth.guard';
+import { Component } from '@angular/core';
+import { AcceuilComponent } from './pages/acceuil/acceuil.component';
 
 export const routes: Routes = [
   {
@@ -19,13 +22,18 @@ export const routes: Routes = [
     component: SignupComponent,
   },
   {
-    path: '',
+    path: 'home',
     component: FullComponent,
+    canActivate: [AuthGuard],
     children: [
       {
-        path: 'home',
-        redirectTo: '/dashboards/dashboard1',
+        path: '',
+        redirectTo: 'acceuil',
         pathMatch: 'full',
+      },
+      {
+        path:"acceuil",
+        component: AcceuilComponent
       },
       {
         path: 'starter',

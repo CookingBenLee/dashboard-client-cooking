@@ -5,19 +5,24 @@ export const navItems: NavItem[] = [
     navCap: 'Dashboards',
   },
   {
+    displayName: 'Acceuil',
+    iconName: 'solar:widget-add-line-duotone',
+    route: 'home/acceuil',
+  },
+  {
     displayName: 'eCommerce',
     iconName: 'solar:widget-add-line-duotone',
-    route: '/dashboards/dashboard2',
+    route: 'home/dashboards/dashboard2',
   },
   {
     displayName: 'Analytics',
     iconName: 'solar:chart-line-duotone',
-    route: '/dashboards/dashboard1',
+    route: 'home/dashboards/dashboard1',
   },
   {
     displayName: 'CRM',
     iconName: 'solar:layers-line-duotone',
-    route: '/dashboards/dashboard3',
+    route: 'home/dashboards/dashboard3',
   },
   {
     divider: true,
