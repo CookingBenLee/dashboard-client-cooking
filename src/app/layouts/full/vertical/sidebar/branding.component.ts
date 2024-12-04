@@ -9,21 +9,27 @@ import { CoreService } from 'src/app/services/core.service';
   template: `
     <div class="branding d-flex align-items-center">
       @if(options.theme === 'light') {
-      <a [routerLink]="['/']">
+        <a [routerLink]="['/home']">
         <img
-          src="./assets/images/logos/dark-logo.svg"
-          class="align-middle"
+          height="30px"
+          width="auto"
+          src="./assets/images/logo.png"
+          class="align-middle m-2"
           alt="logo"
         />
       </a>
+      <h3 style="margin-left: 6px;">Cooking BenLee</h3>
       } @if(options.theme === 'dark') {
-      <a [routerLink]="['/']">
+        <a [routerLink]="['/home']">
         <img
-          src="./assets/images/logos/light-logo.svg"
-          class="align-middle"
+          height="30px"
+          width="auto"
+          src="./assets/images/logo.png"
+          class="align-middle m-2"
           alt="logo"
         />
       </a>
+      <h3 style="margin-left: 6px;">Cooking BenLee</h3>
       }
     </div>
   `,
