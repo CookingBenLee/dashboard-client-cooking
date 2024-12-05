@@ -52,7 +52,7 @@ export class ProductComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
   Object.create(null);
 
-  rows=10
+  rows=5
   totalRows=0
   page=0;
   count=0;
@@ -174,11 +174,11 @@ export class ProductComponent implements OnInit {
 
   onPageChange(event: any): void {
     console.log(event);
-    
-    this.page = event.pageIndex; // Index de la nouvelle page
-    this.rows = event.pageSize; // Taille de la page
+
+    this.page = event.pageIndex;
+    this.rows = event.pageSize;
     console.log(`Page: ${this.page}, Rows per page: ${this.rows}`);
-    this.getAll(); // Charger les données de la nouvelle page
+    this.getAll();
   }
 
 
@@ -198,7 +198,7 @@ export class ProductComponent implements OnInit {
   recherche(){
 
     console.log(this.motRecherche);
-    
+
     if(this.motRecherche==""){
       this.onSearch=false
       this.page=0

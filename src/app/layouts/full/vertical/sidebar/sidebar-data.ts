@@ -55,7 +55,7 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Catalogue de prix',
         iconName: 'solar:round-alt-arrow-right-line-duotone',
-        route: '/apps/viewInvoice/101',
+        route: '/home/catalogue-de-prix',
       }
     ],
   },
@@ -413,11 +413,11 @@ export const navItems: NavItem[] = [
   //     },
   //   ],
   // },
-  {
-    displayName: 'Data table',
-    iconName: 'solar:database-line-duotone',
-    route: 'home/datatable/kichen-sink',
-  },
+  // {
+  //   displayName: 'Data table',
+  //   iconName: 'solar:database-line-duotone',
+  //   route: 'home/datatable/kichen-sink',
+  // },
   // {
   //   divider: true,
   //   navCap: 'Chart',
