@@ -54,6 +54,7 @@ export class ProductComponent implements OnInit {
   Object.create(null);
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   @ViewChild('dialogTemplateDelete') dialogTemplateDelete!: TemplateRef<any>;
+  @ViewChild('dialogTemplateEdit') dialogTemplateEdit!: TemplateRef<any>;
 
   rows=5
   totalRows=0
@@ -84,7 +85,7 @@ export class ProductComponent implements OnInit {
   brand:Brand
   category:Category
   conditioning:Conditioning
-
+  stock:number
   product: Product=new Product();
 
   isError:boolean
@@ -105,7 +106,6 @@ export class ProductComponent implements OnInit {
 
   displayedColumns: string[] = [
     'name',
-    'code',
     'stock',
     'unit',
     'category',
@@ -302,6 +302,37 @@ export class ProductComponent implements OnInit {
       });
     });
   }
+
+  openDialogEdit(product: Product) {
+    this.productData = { ...product }; // Copiez les données du produit sélectionné dans productData
+    console.log(this.productData);
+    this.dialog.open(this.dialogTemplateEdit, {
+      width: '1200px',
+    });
+  }
+
+
+  editProduct() {
+    const user = this.tokenService.getUser();
+    this.productData.compteUser = { id: user.idCompteUser };
+    console.log("Produit modifié", this.productData);
+
+    this.dialog.closeAll();  // Ferme la boîte de dialogue
+
+    this.productService.update(this.productData.id, this.productData).then(() => {
+      this.snackBar.open('Produit modifié avec succès !', 'Fermer', {
+        duration: 3000,
+        panelClass: ['snackbar-success']
+      });
+      this.getAll(); // Recharge les produits pour afficher les mises à jour
+    }).catch(err => {
+      this.snackBar.open('Erreur lors de la modification du produit.', 'Fermer', {
+        duration: 3000,
+        panelClass: ['snackbar-error']
+      });
+    });
+  }
+
   getBrands(){
     this.brandService.getAllBrands().then(data =>{
       console.log(data)

@@ -1,3 +1,9 @@
+import { PristineChangeEvent } from "@angular/forms";
+import { Brand } from "../services/brand/Brand";
+import { Category } from "../services/category/Category";
+import { Conditioning } from "../services/conditioning/Conditioning";
+import { Unit } from "../services/unit/Unit";
+
 export class Product{
   id?:number
   code?:string;
@@ -8,15 +14,13 @@ export class Product{
   photo?:string;
   imageBase64?:string;
 
-  // category?:Category;
-  // brand?:Brand;
-  // conditioning?:Conditioning;
-  // unit:Unit;
-
-  //productList?:Product[];
-  // priceList:Price[]
-  // detailsPurchasingList:DetailsPurchasing[]
-  // // stockList:Stock[]
-  // stock: Stock;
+  category?:Category;
+  brand?:Brand;
+  conditioning?:Conditioning;
+  unit:Unit;
+  stock: number;
+  productList?:Product[];
+  priceList:PristineChangeEvent[]
+  // stockList:Stock[]
   isActive?:boolean;
 }

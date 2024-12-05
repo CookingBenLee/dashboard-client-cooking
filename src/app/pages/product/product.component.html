@@ -32,15 +32,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="code">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Code
-          </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.code }}
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="stock">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Stock
@@ -109,7 +100,7 @@
           </th>
           <td mat-cell *matCellDef="let product" class="action-link">
             <a
-
+            (click)="openDialogEdit(product)"
               class="m-r-10 cursor-pointer"
               ><i-tabler name="edit" class="icon-18"></i-tabler
             ></a>
@@ -137,6 +128,8 @@
 </mat-card>
 
 
+
+<!-- add -->
 <ng-template #dialogTemplate>
   <mat-dialog-content style="max-width: 1200px">
     <h2 mat-dialog-title>Ajouter un Produit</h2>
@@ -277,7 +270,158 @@
   </mat-dialog-content>
 </ng-template>
 
+<!-- update -->
+<ng-template #dialogTemplateEdit>
+  <mat-dialog-content style="max-width: 1200px">
+    <h2 mat-dialog-title>Modifier le Produit</h2>
+    <form #productForm="ngForm">
+      <div class="row">
+        <!-- Nom du produit -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Nom du Produit"
+              required
+              name="name"
+              [(ngModel)]="productData.name"
+            />
+          </mat-form-field>
+        </div>
+        <!-- Code du produit -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Code du Produit"
+              required
+              name="code"
+              [(ngModel)]="productData.code"
+            />
+          </mat-form-field>
+        </div>
+        <!-- Prix -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="number"
+              placeholder="Prix"
+              required
+              name="price"
+              [(ngModel)]="productData.price"
+            />
+          </mat-form-field>
+        </div>
+        <!-- Stock -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="number"
+              placeholder="Stock"
+              required
+              name="stock"
+              [(ngModel)]="productData.stock.quantity"
+            />
+          </mat-form-field>
+        </div>
+        <!-- Unité -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Unité</mat-label>
+            <mat-select
+              [(ngModel)]="productData.unit"
+              name="unit"
+              required
+            >
+              <mat-option *ngFor="let unit of units" [value]="unit">
+                {{ unit.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Catégorie -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Catégorie</mat-label>
+            <mat-select
+              [(ngModel)]="productData.category"
+              name="category"
+              required
+            >
+              <mat-option *ngFor="let category of categorys" [value]="category">
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Marque -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Marque</mat-label>
+            <mat-select
+              [(ngModel)]="productData.brand"
+              name="brand"
+              required
+            >
+              <mat-option *ngFor="let brand of brands" [value]="brand">
+                {{ brand.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Conditionnement -->
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Conditionnement</mat-label>
+            <mat-select
+              [(ngModel)]="productData.conditioning"
+              name="conditioning"
+              required
+            >
+              <mat-option *ngFor="let conditioning of conditionings" [value]="conditioning">
+                {{ conditioning.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Description -->
+        <div class="col-lg-12">
+          <mat-form-field appearance="outline" class="w-100">
+            <textarea
+              matInput
+              placeholder="Description"
+              name="description"
+              [(ngModel)]="productData.description"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="editProduct()"
+          [disabled]="!productForm.valid"
+        >
+          Modifier
+        </button>
+        <button
+          mat-stroked-button
+          color="warn"
+          class="m-l-8"
+          (click)="closeDialog()"
+        >
+          Annuler
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</ng-template>
 
+
+<!-- delete -->
 <ng-template #dialogTemplateDelete>
   <h5 mat-dialog-title class="mat-subtitle-1">Suppression du produit</h5>
 <div mat-dialog-content class="mat-subtitle-2 lh-16">
