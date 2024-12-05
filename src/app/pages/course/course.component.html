@@ -1,0 +1,128 @@
+<!-- <mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="row justify-content-between gap-16">
+      <div class="col-lg-4">
+        <mat-form-field appearance="outline" class="w-100 hide-hint">
+          <input [(ngModel)]="motRecherche"
+            matInput
+            placeholder="Rechercher un produit"
+            (keyup)="recherche()"
+          />
+          <mat-icon matSuffix>
+            <i-tabler name="search" class="icon-20"></i-tabler>
+          </mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-4 d-flex align-items-center justify-content-end">
+        <button mat-flat-button (click)="openDialogAdd()" color="primary">
+          Ajouter un Produit
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="w-100">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Stock
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.stock?.quantity }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Unite
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.unit?.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Categorie
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.category?.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="brand">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Marque
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.brand?.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="conditioning">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Condition
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.conditioning?.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Prix
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.price }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lossPercentage">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Poucentage de perte
+          </th>
+          <td mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.lossPercentage }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Action
+          </th>
+          <td mat-cell *matCellDef="let product" class="action-link">
+            <a
+            (click)="openDialogEdit(product)"
+              class="m-r-10 cursor-pointer"
+              ><i-tabler name="edit" class="icon-18"></i-tabler
+            ></a>
+            <a
+                (click)="deleteProduct(product)"
+              class="m-r-10 cursor-pointer"
+            >
+              <i-tabler name="trash" class="icon-18"></i-tabler>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+      [length]="totalRows"
+      [pageSize]="rows"
+      [pageSizeOptions]="[10, 20, 30]"
+        showFirstLastButtons
+      (page)="onPageChange($event)">
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card> -->

@@ -106,13 +106,11 @@ export class ProductComponent implements OnInit {
 
   displayedColumns: string[] = [
     'name',
-    'stock',
     'unit',
     'category',
     'brand',
     'conditioning',
     'price',
-    'lossPercentage',
     'action',
   ];
 
@@ -237,8 +235,9 @@ export class ProductComponent implements OnInit {
   }
 
   openDialogAdd() {
+    this.resetFields();
     this.dialog.open(this.dialogTemplate, {
-      width: '1200px',
+      width: '1200px', height: '570px'
     });
   }
 
@@ -255,14 +254,14 @@ export class ProductComponent implements OnInit {
     const user = this.tokenService.getUser();
     this.productData.compteUser = { id: user.idCompteUser };
     console.log("poduit envoye" , this.productData);
-    this.dialog.closeAll();
     this.productService.create(this.productData).then(() => {
       this.snackBar.open('Produit ajouté avec succès !', 'Fermer', {
         duration: 3000,
         panelClass: ['snackbar-success']
       });
-      this.getAll(); // Recharge les produits
-      this.dialog.closeAll(); // Ferme la boîte de dialogue
+      this.getAll();
+      this.dialog.closeAll();
+      this.resetFields();
     }).catch(err => {
       this.snackBar.open('Erreur lors de l\'ajout du produit.', 'Fermer', {
         duration: 3000,
@@ -278,9 +277,8 @@ export class ProductComponent implements OnInit {
 
 
   deleteProduct(product: Product): void {
-    this.productClicked = product;  // Enregistrez le produit à supprimer
+    this.productClicked = product;
 
-    // Ouvrez le modal de confirmation
     this.dialog.open(this.dialogTemplateDelete, {
       width: '400px',
     });
@@ -293,8 +291,8 @@ export class ProductComponent implements OnInit {
         duration: 3000,
         panelClass: ['snackbar-success']
       });
-      this.getAll();  // Recharge les produits après suppression
-      this.closeDialog();  // Ferme la boîte de dialogue
+      this.getAll();
+      this.closeDialog();
     }).catch(err => {
       this.snackBar.open('Erreur lors de la suppression du produit.', 'Fermer', {
         duration: 3000,
@@ -304,10 +302,10 @@ export class ProductComponent implements OnInit {
   }
 
   openDialogEdit(product: Product) {
-    this.productData = { ...product }; // Copiez les données du produit sélectionné dans productData
+    this.productData = { ...product };
     console.log(this.productData);
     this.dialog.open(this.dialogTemplateEdit, {
-      width: '1200px',
+      width: '1200px', height: '570px'
     });
   }
 
@@ -317,14 +315,16 @@ export class ProductComponent implements OnInit {
     this.productData.compteUser = { id: user.idCompteUser };
     console.log("Produit modifié", this.productData);
 
-    this.dialog.closeAll();  // Ferme la boîte de dialogue
+
 
     this.productService.update(this.productData.id, this.productData).then(() => {
       this.snackBar.open('Produit modifié avec succès !', 'Fermer', {
         duration: 3000,
         panelClass: ['snackbar-success']
       });
-      this.getAll(); // Recharge les produits pour afficher les mises à jour
+      this.getAll();
+      this.dialog.closeAll();
+      this.resetFields();
     }).catch(err => {
       this.snackBar.open('Erreur lors de la modification du produit.', 'Fermer', {
         duration: 3000,
@@ -332,6 +332,23 @@ export class ProductComponent implements OnInit {
       });
     });
   }
+
+
+  resetFields() {
+    this.productData = {}; // Réinitialise les données du produit
+    this.name = '';
+    this.code = '';
+    this.description = '';
+    this.price = 0;
+    this.lostpercentage = 0;
+
+    this.unit = {} as Unit;
+    this.brand = {} as Brand;
+    this.category = {} as Category;
+    this.conditioning = {} as Conditioning;
+    this.stock = 0;
+  }
+
 
   getBrands(){
     this.brandService.getAllBrands().then(data =>{

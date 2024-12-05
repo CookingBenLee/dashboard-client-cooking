@@ -32,15 +32,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="stock">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Stock
-          </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.stock?.quantity }}
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="unit">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Unite
@@ -85,15 +76,6 @@
             {{ product.price }}
           </td>
         </ng-container>
-
-        <ng-container matColumnDef="lossPercentage">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Poucentage de perte
-          </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.lossPercentage }}
-          </td>
-        </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Action
@@ -130,12 +112,17 @@
 
 
 <!-- add -->
-<ng-template #dialogTemplate>
-  <mat-dialog-content style="max-width: 1200px">
-    <h2 mat-dialog-title>Ajouter un Produit</h2>
-    <form #productForm="ngForm">
+<ng-template  #dialogTemplate>
+  <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
+    <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >Ajout d'un produit
+      </h5>
+    </div>
+    <form  #productForm="ngForm">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -166,18 +153,6 @@
               required
               name="price"
               [(ngModel)]="productData.price"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              type="number"
-              placeholder="Stock"
-              required
-              name="stock"
-              [(ngModel)]="productData.stock"
             />
           </mat-form-field>
         </div>
@@ -248,36 +223,33 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex justify-content-end">
-        <button
-          mat-flat-button
-          color="primary"
-          (click)="addProduct()"
-          [disabled]="!productForm.valid"
-        >
-          Ajouter
-        </button>
-        <button
-          mat-stroked-button
-          color="warn"
-          class="m-l-8"
-          (click)="closeDialog()"
-        >
-          Annuler
-        </button>
+      <div class="row">
+
+        <div class="col-lg-6">
+          <button mat-flat-button color="primary" class="large-button" (click)="addProduct()" [disabled]="!productForm.valid"> Ajouter </button>
+        </div>
+        <div class="col-lg-6">
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+        </div>
       </div>
+
     </form>
   </mat-dialog-content>
 </ng-template>
 
 <!-- update -->
 <ng-template #dialogTemplateEdit>
-  <mat-dialog-content style="max-width: 1200px">
-    <h2 mat-dialog-title>Modifier le Produit</h2>
+  <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
+    <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >Modification d'un produit
+      </h5>
+    </div>
     <form #productForm="ngForm">
       <div class="row">
         <!-- Nom du produit -->
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -310,19 +282,6 @@
               required
               name="price"
               [(ngModel)]="productData.price"
-            />
-          </mat-form-field>
-        </div>
-        <!-- Stock -->
-        <div class="col-lg-6">
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              type="number"
-              placeholder="Stock"
-              required
-              name="stock"
-              [(ngModel)]="productData.stock.quantity"
             />
           </mat-form-field>
         </div>
@@ -398,24 +357,17 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="d-flex justify-content-end">
-        <button
-          mat-flat-button
-          color="primary"
-          (click)="editProduct()"
-          [disabled]="!productForm.valid"
-        >
-          Modifier
-        </button>
-        <button
-          mat-stroked-button
-          color="warn"
-          class="m-l-8"
-          (click)="closeDialog()"
-        >
-          Annuler
-        </button>
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          <button mat-flat-button color="primary" class="large-button" (click)="editProduct()"[disabled]="!productForm.valid"> Modifier </button>
+        </div>
+        <div class="col-lg-6">
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+        </div>
       </div>
+
     </form>
   </mat-dialog-content>
 </ng-template>
