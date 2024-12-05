@@ -50,7 +50,7 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Mes courses',
         iconName: 'solar:round-alt-arrow-right-line-duotone',
-        route: '/apps/viewInvoice/101',
+        route: '/home/course',
       },
       {
         displayName: 'Catalogue de prix',
