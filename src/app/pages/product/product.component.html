@@ -14,7 +14,7 @@
         </mat-form-field>
       </div>
       <div class="col-lg-4 d-flex align-items-center justify-content-end">
-        <button mat-flat-button (click)="openDialog('Add', {})" color="primary">
+        <button mat-flat-button (click)="openDialogAdd()" color="primary">
           Ajouter un Produit
         </button>
       </div>
@@ -124,12 +124,12 @@
           </th>
           <td mat-cell *matCellDef="let product" class="action-link">
             <a
-              (click)="openDialog('Update', product)"
+             
               class="m-r-10 cursor-pointer"
               ><i-tabler name="edit" class="icon-18"></i-tabler
             ></a>
             <a
-              (click)="openDialog('Delete', product)"
+
               class="m-r-10 cursor-pointer"
             >
               <i-tabler name="trash" class="icon-18"></i-tabler>
@@ -150,3 +150,121 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+
+<ng-template #dialogTemplate>
+  <mat-dialog-content style="max-width: 600px">
+    <h2 mat-dialog-title>Ajouter un Produit</h2>
+    <form #productForm="ngForm">
+      <div class="row">
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Nom du Produit"
+              required
+              name="name"
+              [(ngModel)]="productData.name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Code du Produit"
+              required
+              name="code"
+              [(ngModel)]="productData.code"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="number"
+              placeholder="Prix"
+              required
+              name="price"
+              [(ngModel)]="productData.price"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="number"
+              placeholder="Stock"
+              required
+              name="stock"
+              [(ngModel)]="productData.stock"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Unité"
+              required
+              name="unit"
+              [(ngModel)]="productData.unit"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Catégorie"
+              required
+              name="category"
+              [(ngModel)]="productData.category"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Marque"
+              required
+              name="brand"
+              [(ngModel)]="productData.brand"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <textarea
+              matInput
+              placeholder="Description"
+              name="description"
+              [(ngModel)]="productData.description"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="addProduct()"
+          [disabled]="!productForm.valid"
+        >
+          Ajouter
+        </button>
+        <button
+          mat-stroked-button
+          color="warn"
+          class="m-l-8"
+          (click)="closeDialog()"
+        >
+          Annuler
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</ng-template>

@@ -6,6 +6,7 @@ import {
   ViewChild,
   AfterViewInit,
   OnInit,
+  TemplateRef,
 } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,6 +14,7 @@ import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
+  MatDialogModule,
 } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,6 +36,8 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { PaginateService } from 'src/app/services/paginate/paginate.service';
 import da from 'date-fns/locale/da';
+import { MatButtonModule } from '@angular/material/button';
+import { AddProductComponent } from './add-product/add-product.component';
 
 @Component({
   selector: 'app-product',
@@ -44,6 +48,7 @@ import da from 'date-fns/locale/da';
     ReactiveFormsModule,
     TablerIconsModule,
     CommonModule,
+    MatButtonModule, MatDialogModule,AddProductComponent
   ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
@@ -51,6 +56,7 @@ import da from 'date-fns/locale/da';
 export class ProductComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
   Object.create(null);
+  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
 
   rows=5
   totalRows=0
@@ -116,7 +122,7 @@ export class ProductComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource<Product>([]);
-
+  productData: any = {};
 
   //@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
   //  Object.create(null);
@@ -182,15 +188,6 @@ export class ProductComponent implements OnInit {
   }
 
 
-  // loadEmployees(): void {
-  //   const employee = this.employeeService.getEmployees();
-  //   this.dataSource.data = employee;
-  //   this.dataSource = new MatTableDataSource(employee);
-  // }
-  ngAfterViewInit(): void {
-    //this.dataSource.paginator = this.paginator;
-  }
-
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -240,17 +237,20 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  openDialog(action: string, employee: Employee | any): void {
-    const dialogRef = this.dialog.open(AppEmployeeDialogContentComponent, {
-      data: { action, employee },
+  openDialogAdd() {
+    this.dialog.open(this.dialogTemplate, {
+      width: '600px',
     });
+  }
 
-    dialogRef.afterClosed().subscribe((result) => {
-      // this.dataSource.data = this.employeeService.getEmployees();
-      // if (result && result.event === 'Refresh') {
-      //   this.loadEmployees(); // Refresh the employee list if necessary
-      // }
-    });
+  addProduct() {
+    console.log('Produit ajouté:', this.productData);
+    this.dialog.closeAll(); // Ferme la modale après l'ajout
+  }
+
+  // Fermer la modale
+  closeDialog() {
+    this.dialog.closeAll();
   }
 }
 
@@ -264,7 +264,7 @@ interface DialogData {
   selector: 'app-dialog-content',
   standalone: true,
   imports: [MaterialModule, FormsModule, ReactiveFormsModule, CommonModule],
-  templateUrl: '/employee-dialog-content.html',
+  templateUrl: 'employee-dialog-content.html',
 })
 // tslint:disable-next-line: component-class-suffix
 export class AppEmployeeDialogContentComponent {
