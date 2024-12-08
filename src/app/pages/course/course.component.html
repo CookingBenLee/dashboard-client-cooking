@@ -101,8 +101,190 @@
 
 
 <!-- add -->
-<ng-template  #dialogTemplate>
+<!-- <ng-template  #dialogTemplate>
   <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
+     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >Ajout d'un produit
+      </h5>
+    </div>
+    <form  #purchaseForm="ngForm">
+      <div class="row">
+        <div class="col-lg-12">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Nom du Produit"
+              required
+              name="name"
+              [(ngModel)]="purchaseData.name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Code du Produit"
+              required
+              name="code"
+              [(ngModel)]="purchaseData.code"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="number"
+              placeholder="Prix"
+              required
+              name="price"
+              [(ngModel)]="purchaseData.price"
+            />
+          </mat-form-field>
+        </div>
 
+      </div>
+      <div class="row">
+
+        <div class="col-lg-6">
+          <button mat-flat-button color="primary" class="large-button" (click)="addProduct()" [disabled]="!productForm.valid"> Ajouter </button>
+        </div>
+        <div class="col-lg-6">
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+        </div>
+      </div>
+
+    </form>
   </mat-dialog-content>
 </ng-template>
+ -->
+
+
+<!-- add -->
+<!-- <ng-template  #dialogTemplate>
+  <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
+     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >Ajout d'un produit
+      </h5>
+    </div>
+    <form  #productForm="ngForm">
+      <div class="row">
+        <div class="col-lg-12">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Nom du Produit"
+              required
+              name="name"
+              [(ngModel)]="productData.name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              placeholder="Code du Produit"
+              required
+              name="code"
+              [(ngModel)]="productData.code"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              type="number"
+              placeholder="Prix"
+              required
+              name="price"
+              [(ngModel)]="productData.price"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Unité</mat-label>
+            <mat-select
+              [(ngModel)]="productData.unit"
+              name="unit"
+              required
+            >
+              <mat-option *ngFor="let unit of units" [value]="unit">
+                {{ unit.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Catégorie</mat-label>
+            <mat-select
+              [(ngModel)]="productData.category"
+              name="category"
+              required
+            >
+              <mat-option *ngFor="let category of categorys" [value]="category">
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Marque</mat-label>
+            <mat-select
+              [(ngModel)]="productData.brand"
+              name="brand"
+              required
+            >
+              <mat-option *ngFor="let brand of brands" [value]="brand">
+                {{ brand.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Conditionnement</mat-label>
+            <mat-select
+              [(ngModel)]="productData.conditioning"
+              name="conditioning"
+              required
+            >
+              <mat-option *ngFor="let conditioning of conditionings" [value]="conditioning">
+                {{ conditioning.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-12">
+          <mat-form-field appearance="outline" class="w-100">
+            <textarea
+              matInput
+              placeholder="Description"
+              name="description"
+              [(ngModel)]="productData.description"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-lg-6">
+          <button mat-flat-button color="primary" class="large-button" (click)="addProduct()" [disabled]="!productForm.valid"> Ajouter </button>
+        </div>
+        <div class="col-lg-6">
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+        </div>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+</ng-template> -->
