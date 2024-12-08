@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { TokenService } from 'src/app/services/token/token.service';
 
 interface notifications {
   id: number;
@@ -87,33 +88,35 @@ export class HeaderComponent {
 
   public languages: any[] = [
     {
-      language: 'English',
-      code: 'en',
-      type: 'US',
-      icon: '/assets/images/flag/icon-flag-en.svg',
-    },
-    {
-      language: 'Español',
-      code: 'es',
-      icon: '/assets/images/flag/icon-flag-es.svg',
-    },
-    {
       language: 'Français',
       code: 'fr',
       icon: '/assets/images/flag/icon-flag-fr.svg',
     },
     {
+      language: 'English',
+      code: 'en',
+      type: 'US',
+      icon: '/assets/images/flag/icon-flag-en.svg',
+    },
+    
+   /* 
+    {
+      language: 'Español',
+      code: 'es',
+      icon: '/assets/images/flag/icon-flag-es.svg',
+    },{
       language: 'German',
       code: 'de',
       icon: '/assets/images/flag/icon-flag-de.svg',
-    },
+    },*/
   ];
 
   constructor(
     private settings: CoreService,
     private vsidenav: CoreService,
     public dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private tokenService:TokenService
   ) {
     translate.setDefaultLang('en');
   }
@@ -225,7 +228,7 @@ export class HeaderComponent {
   ];
 
   profiledd: profiledd[] = [
-    {
+   /* {
       id: 1,
       title: 'My Profile',
       link: '/',
@@ -245,11 +248,11 @@ export class HeaderComponent {
       id: 4,
       title: ' Account Settings',
       link: '/',
-    },
+    },*/
     {
-      id: 5,
-      title: 'Sign Out',
-      link: '/authentication/login',
+      id: 1,
+      title: 'Deconnexion',
+      link: '/login',
     },
   ];
 
@@ -356,6 +359,12 @@ export class HeaderComponent {
       link: '/apps/todo',
     },
   ];
+
+  doProfileAction(title:string){    
+    if (title==this.profiledd[this.profiledd.length-1].title){
+        this.tokenService.signOut()
+    }
+  }
 }
 
 @Component({

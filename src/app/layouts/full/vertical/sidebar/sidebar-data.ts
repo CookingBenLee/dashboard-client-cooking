@@ -55,7 +55,7 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Catalogue de prix',
         iconName: 'solar:round-alt-arrow-right-line-duotone',
-        route: '/apps/viewInvoice/101',
+        route: '/home/catalogue-prix',
       }
     ],
   },

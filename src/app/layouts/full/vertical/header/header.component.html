@@ -26,10 +26,10 @@
     <!-- --------------------------------------------------------------- -->
     <!--  Links -->
     <!-- --------------------------------------------------------------- -->
-    <button mat-mini-fab color="inherit" [matMenuTriggerFor]="appsmenu" aria-label="Notifications"
+    <!--<button mat-mini-fab color="inherit" [matMenuTriggerFor]="appsmenu" aria-label="Notifications"
       class="d-flex justify-content-center">
       <i class="iconify icon-20 d-flex" data-icon="solar:widget-3-line-duotone"></i>
-    </button>
+    </button>-->
 
     <mat-menu #appsmenu="matMenu" class="apps-dd cardWithShadow">
       <div class="row">
@@ -95,9 +95,9 @@
   <!-- --------------------------------------------------------------- -->
   <!--  Search -->
   <!-- --------------------------------------------------------------- -->
-  <button mat-mini-fab color="inherit" (click)="openDialog()" class="d-flex justify-content-center">
+  <!--<button mat-mini-fab color="inherit" (click)="openDialog()" class="d-flex justify-content-center">
     <i class="iconify icon-20 d-flex" data-icon="solar:magnifer-outline"></i>
-  </button>
+  </button>-->
 
   <button mat-mini-fab color="inherit" aria-label="lightdark" class="d-flex justify-content-center" (click)="setDark()">
     <i-tabler class="d-flex icon-22" [name]="options.theme === 'dark'? 'sun': 'moon'"></i-tabler>
@@ -106,7 +106,7 @@
   <!-- --------------------------------------------------------------- -->
   <!-- Inbox Dropdown -->
   <!-- --------------------------------------------------------------- -->
-  <button mat-mini-fab color="inherit" [matMenuTriggerFor]="inboxmenu" aria-label="Inbox"
+   <!--<button mat-mini-fab color="inherit" [matMenuTriggerFor]="inboxmenu" aria-label="Inbox"
     class="d-flex justify-content-center position-relative">
     <i class="iconify icon-20 d-flex" data-icon="solar:inbox-line-line-duotone"></i>
     <div class="notification bg-primary text-white rounded-circle f-s-10">3</div>
@@ -149,13 +149,13 @@
         See All Messages
       </button>
     </div>
-  </mat-menu>
+  </mat-menu>-->
 
 
   <!-- --------------------------------------------------------------- -->
   <!-- Notification Dropdown -->
   <!-- --------------------------------------------------------------- -->
-  <button mat-mini-fab color="inherit" [matMenuTriggerFor]="notificationmenu" aria-label="Notifications"
+  <!--<button mat-mini-fab color="inherit" [matMenuTriggerFor]="notificationmenu" aria-label="Notifications"
     class="d-flex justify-content-center position-relative">
     <i class="iconify icon-20 d-flex" data-icon="solar:bell-bing-line-duotone"></i>
     <div class="notification bg-error text-white rounded-circle f-s-10">5</div>
@@ -197,7 +197,7 @@
         See all notifications
       </button>
     </div>
-  </mat-menu>
+  </mat-menu>-->
 
   <!-- --------------------------------------------------------------- -->
   <!-- langugage Dropdown -->
@@ -240,7 +240,7 @@
     </div>
     <div class="p-x-32 p-b-16">
       @for(profile of profiledd; track profile.title) {
-      <a class="p-8 text-decoration-none d-block text-hover-primary" [routerLink]="[profile.link]">
+      <a class="p-8 text-decoration-none d-block text-hover-primary" (click)="doProfileAction(profile.title)" [routerLink]="[profile.link]">
         <div class="d-flex align-items-center">
           <h5 class="f-s-14 f-w-600 m-0 textprimary mat-subtitle-1 hover-text">
             {{ profile.title }}
