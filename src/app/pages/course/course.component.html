@@ -300,14 +300,27 @@
 
 
               <ng-template pTemplate="caption">
-                <div class="flex">
-                    <!--<button pButton label="Tout afficher" class="p-button-outlined" icon="pi pi-filter-slash" (click)="tableShort.clear(dt2)"></button>-->
+                <!-- <div class="flex">
+                    <button pButton label="Tout afficher" class="p-button-outlined" icon="pi pi-filter-slash" (click)="tableShort.clear(dt2)"></button>
                     <span class="p-input-icon-left mr-auto">
                         <i class="pi pi-search"></i>
-                        <!--<input pInputText type="text" [(ngModel)]="motRecherche" (input)="dt2.filterGlobal(motRecherche, 'contains')" placeholder="Rechercher" />-->
+                        <input pInputText type="text" [(ngModel)]="motRecherche" (input)="dt2.filterGlobal(motRecherche, 'contains')" placeholder="Rechercher" />
                         <input pInputText type="text" [(ngModel)]="motRecherche" (input)="recherche()" placeholder="Rechercher" />
 
+
                       </span>
+                </div> -->
+                <div class="col-lg-4 flex">
+                  <mat-form-field appearance="outline" class="w-100 hide-hint">
+                    <input [(ngModel)]="motRecherche"
+                      matInput
+                      placeholder="Rechercher une course"
+                      (keyup)="recherche()"
+                    />
+                    <mat-icon matSuffix>
+                      <i-tabler name="search" class="icon-20"></i-tabler>
+                    </mat-icon>
+                  </mat-form-field>
                 </div>
               </ng-template>
 
