@@ -134,9 +134,10 @@ export class ProductComponent implements OnInit {
   }
 
   getAll(){
+    const user = this.tokenService.getUser();
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
-    this.productService.getActivePage(params).then(data =>{
+    this.productService.getActivePage(params, user.id).then(data =>{
       console.log(data)
       //this.menus=data
       console.log(data)
@@ -249,7 +250,7 @@ export class ProductComponent implements OnInit {
 
   addProduct() {
     const user = this.tokenService.getUser();
-    this.productData.compteUser = { id: user.idCompteUser };
+    this.productData.user = { id: user.id };
     console.log("poduit envoye" , this.productData);
     this.productService.create(this.productData).then(() => {
       this.snackBar.open('Produit ajouté avec succès !', 'Fermer', {
