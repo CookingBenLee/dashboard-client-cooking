@@ -13,9 +13,7 @@ export class PriceService {
 
   //create
   create(price:Price){
-
     return this.http.post<any>(`${this.env.apiUrl}/price/new`,price)
-
     .toPromise()
     .then()
     .then();
@@ -41,13 +39,6 @@ export class PriceService {
         .then(data => data);
   }
 
-  // getAllPage(param:any, idUser: number) {
-  //   return this.http.get<any>(`${this.env.apiUrl}/price/getallpagebyuser/${idUser}?page=`+param['page']+'&size='+param['size'])
-  //       .toPromise()
-  //       .then(res => res.data as any)
-  //       .then(data => data);
-  // }
-
   recherche(mot:String) {
     return this.http.get<any>(`${this.env.apiUrl}/price/search?mot=${mot}`,)
         .toPromise()
@@ -58,6 +49,35 @@ export class PriceService {
 
   rechercheParPage(mot:String,param:any) {
     return this.http.get<any>(`${this.env.apiUrl}/price/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
+    .toPromise()
+    .then(res => res.data as any)
+    .then(data => data);
+  }
+
+  //specific
+  getAllByUser(idUser:number) {
+    return this.http.get<any>(`${this.env.apiUrl}/price/getallbyuser/${idUser}`)
+        .toPromise()
+        .then(res => res.data as Price[])
+        .then(data => data);
+  }
+  getAllPageByUser(idUser:number,param:any) {
+    return this.http.get<any>(`${this.env.apiUrl}/price/getallpage/${idUser}?page=`+param['page']+'&size='+param['size'])
+        .toPromise()
+        .then(res => res.data as any)
+        .then(data => data);
+  }
+
+  rechercheByUser(idUser:number,mot:String) {
+    return this.http.get<any>(`${this.env.apiUrl}/price/search/${idUser}?mot=${mot}`,)
+        .toPromise()
+        .then(res => res.data as Price[])
+        .then(data => data);
+  }
+
+
+  rechercheParPageByUser(idUser:number,mot:String,param:any) {
+    return this.http.get<any>(`${this.env.apiUrl}/price/searchbypage/${idUser}?mot=${mot}&page=${param['page']}&size=${param['size']}`)
     .toPromise()
     .then(res => res.data as any)
     .then(data => data);

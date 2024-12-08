@@ -45,11 +45,7 @@
     "ngx-scrollbar": "^11.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
-<<<<<<< HEAD
     "primeng": "^17.18.12",
-=======
-    "primeng": "^18.0.0",
->>>>>>> 52fb355409fea61fc0dde5975c975d87caf2ef55
     "rxjs": "~7.5.0",
     "sass": "^1.57.1",
     "tslib": "^2.3.0",
