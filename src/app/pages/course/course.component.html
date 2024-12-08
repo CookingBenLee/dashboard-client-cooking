@@ -5,7 +5,7 @@
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <input [(ngModel)]="motRecherche"
             matInput
-            placeholder="Rechercher un produit"
+            placeholder="Rechercher une course"
             (keyup)="recherche()"
           />
           <mat-icon matSuffix>
@@ -15,7 +15,7 @@
       </div>
       <div class="col-lg-4 d-flex align-items-center justify-content-end">
         <button mat-flat-button (click)="openDialogAdd()" color="primary">
-          Ajouter un Produit
+          Ajouter une course
         </button>
       </div>
     </div>
@@ -98,3 +98,11 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+
+<!-- add -->
+<ng-template  #dialogTemplate>
+  <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
+
+  </mat-dialog-content>
+</ng-template>
