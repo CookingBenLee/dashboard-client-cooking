@@ -39,7 +39,11 @@
               "src/styles.scss",
               "src/assets/scss/style.scss",
               "node_modules/angular-calendar/css/angular-calendar.css",
-              "node_modules/dropzone/dist/dropzone.css"
+              "node_modules/dropzone/dist/dropzone.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeflex/primeflex.css"
             ],
             "scripts": []
           },
