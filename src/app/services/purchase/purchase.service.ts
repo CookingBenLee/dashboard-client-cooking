@@ -13,7 +13,7 @@ export class PurchaseService {
 
   //create
   create(purchase:Purchase){
-    return this.http.post<any>(`${this.env.api}/purchase/new`,purchase)
+    return this.http.post<any>(`${this.env.apiUrl}/purchase/new`,purchase)
     .toPromise()
     .then()
     .then();
@@ -21,40 +21,40 @@ export class PurchaseService {
   //read
 
   getById(id:any | undefined){
-    return this.http.get<any>(`${this.env.api}/purchase/load/${id}`)
+    return this.http.get<any>(`${this.env.apiUrl}/purchase/load/${id}`)
         .toPromise()
         .then(res => res.data as Purchase)
         .then(data => data);
   }
   getAll() {
-    return this.http.get<any>(`${this.env.api}/purchase/getall`)
+    return this.http.get<any>(`${this.env.apiUrl}/purchase/getall`)
         .toPromise()
         .then(res => res.data as Purchase[])
         .then(data => data);
   }
   getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.api}/purchase/getallpage?page=`+param['page']+'&size='+param['size'])
+    return this.http.get<any>(`${this.env.apiUrl}/purchase/getallpage?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);
   }
 
   byShop(id:number |undefined) {
-    return this.http.get<any>(`${this.env.api}/purchase/byshop?idShop=${id}`)
+    return this.http.get<any>(`${this.env.apiUrl}/purchase/byshop?idShop=${id}`)
         .toPromise()
         .then(res => res.data as Purchase[])
         .then(data => data);
   }
 
   recherche(mot:String) {
-    return this.http.get<any>(`${this.env.api}/purchase/search?mot=${mot}`,)
+    return this.http.get<any>(`${this.env.apiUrl}/purchase/search?mot=${mot}`,)
         .toPromise()
         .then(res => res.data as Purchase[])
         .then(data => data);
   }
 
   rechercheParPage(mot:String,param:any) {
-    return this.http.get<any>(`${this.env.api}/purchase/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
+    return this.http.get<any>(`${this.env.apiUrl}/purchase/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
     .toPromise()
     .then(res => res.data as any)
     .then(data => data);
@@ -62,7 +62,7 @@ export class PurchaseService {
 
   //update
   update(idpurchase:number |undefined, purchase:Purchase){
-    return this.http.put<any>(`${this.env.api}/purchase/update/${idpurchase}`,purchase)
+    return this.http.put<any>(`${this.env.apiUrl}/purchase/update/${idpurchase}`,purchase)
     .toPromise()
     .then()
     .then();
@@ -70,7 +70,7 @@ export class PurchaseService {
 
   ///delete
   delete(id:number | undefined) {
-  return this.http.delete<any>(`${this.env.api}/purchase/delete/${id}`)
+  return this.http.delete<any>(`${this.env.apiUrl}/purchase/delete/${id}`)
   .toPromise()
         .then()
         .then();
