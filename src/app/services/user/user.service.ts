@@ -22,7 +22,7 @@ export class UserService {
   }
 
 
-   // Méthode pour se connecter
+   
    login(login: string, password: string): Observable<any> {
     const user = { "password": password, "login": login };
     return this.http.post(this.API_URL + this.END_POINT_LOGIN, user);
