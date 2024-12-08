@@ -13,34 +13,34 @@ export class AddressService {
 
   //create
   create(address:Address){
-    return this.http.post<any>(`${this.env.api}/address/new`,address)
+    return this.http.post<any>(`${this.env.apiUrl}/address/new`,address)
     .toPromise()
     .then()
     .then();
   }
   //read
   getAll() {
-    return this.http.get<any>(`${this.env.api}/address/getall`)
+    return this.http.get<any>(`${this.env.apiUrl}/address/getall`)
         .toPromise()
         .then(res => res.data as Address[])
         .then(data => data);
   }
   getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.api}/address/getallpage?page=`+param['page']+'&size='+param['size'])
+    return this.http.get<any>(`${this.env.apiUrl}/address/getallpage?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);
   }
 
   recherche(mot:String) {
-    return this.http.get<any>(`${this.env.api}/address/search?mot=${mot}`,)
+    return this.http.get<any>(`${this.env.apiUrl}/address/search?mot=${mot}`,)
         .toPromise()
         .then(res => res.data as Address[])
         .then(data => data);
   }
 
   rechercheParPage(mot:String,param:any) {
-    return this.http.get<any>(`${this.env.api}/address/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
+    return this.http.get<any>(`${this.env.apiUrl}/address/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
     .toPromise()
     .then(res => res.data as any)
     .then(data => data);
@@ -48,14 +48,14 @@ export class AddressService {
 
 
   byShop(id:number |undefined) {
-    return this.http.get<any>(`${this.env.api}/address/byshop/${id}`)
+    return this.http.get<any>(`${this.env.apiUrl}/address/byshop/${id}`)
         .toPromise()
         .then(res => res.data as Address[])
         .then(data => data);
   }
 
   byCountry(id:number |undefined) {
-    return this.http.get<any>(`${this.env.api}/address/bycountry/${id}`)
+    return this.http.get<any>(`${this.env.apiUrl}/address/bycountry/${id}`)
         .toPromise()
         .then(res => res.data as Address[])
         .then(data => data);
@@ -63,7 +63,7 @@ export class AddressService {
 
   //update
   update(idaddress:number |undefined, address:Address){
-    return this.http.put<any>(`${this.env.api}/address/update/${idaddress}`,address)
+    return this.http.put<any>(`${this.env.apiUrl}/address/update/${idaddress}`,address)
     .toPromise()
     .then()
     .then();
@@ -71,7 +71,7 @@ export class AddressService {
 
   ///delete
   delete(id:number | undefined) {
-  return this.http.delete<any>(`${this.env.api}/address/delete/${id}`)
+  return this.http.delete<any>(`${this.env.apiUrl}/address/delete/${id}`)
   .toPromise()
         .then()
         .then();

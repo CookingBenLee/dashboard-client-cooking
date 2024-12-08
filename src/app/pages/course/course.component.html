@@ -1,4 +1,4 @@
-<!-- <mat-card class="cardWithShadow">
+<mat-card class="cardWithShadow">
   <mat-card-content class="p-24">
     <div class="row justify-content-between gap-16">
       <div class="col-lg-4">
@@ -25,87 +25,59 @@
   <mat-card-content class="p-24">
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" class="w-100">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.name }}
+        <ng-container matColumnDef="date course">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Date Course</th>
+          <td mat-cell *matCellDef="let purchase">
+            {{ purchase.datePurchase | date:'dd-MM-yyyy HH:mm' }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="stock">
+        <ng-container matColumnDef="fournisseur">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Stock
+            Fournisseur
           </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.stock?.quantity }}
+          <td mat-cell *matCellDef="let purchase" class="f-s-14">
+            {{ purchase?.shop?.name }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="unit">
+        <ng-container matColumnDef="montant">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Unite
+            Montant
           </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.unit?.name }}
+          <td mat-cell *matCellDef="let purchase" class="f-s-14">
+            {{ purchase.montant }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="category">
+        <ng-container matColumnDef="date de saisie">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Categorie
+            Date de saisie
           </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.category?.name }}
+          <td mat-cell *matCellDef="let purchase" class="f-s-14">
+            {{ purchase.entryDate | date:'dd-MM-yyyy HH:mm' }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="brand">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Marque
-          </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.brand?.name }}
-          </td>
-        </ng-container>
 
-        <ng-container matColumnDef="conditioning">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Condition
-          </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.conditioning?.name }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Prix
-          </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.price }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="lossPercentage">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Poucentage de perte
-          </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.lossPercentage }}
-          </td>
-        </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Action
           </th>
-          <td mat-cell *matCellDef="let product" class="action-link">
+          <td mat-cell *matCellDef="let purchase" class="action-link">
             <a
-            (click)="openDialogEdit(product)"
+            (click)="openDialogEdit(purchase)"
+              class="m-r-10 cursor-pointer"
+              ><i-tabler name="eye" class="icon-18"></i-tabler
+            ></a>
+
+            <a
+            (click)="openDialogEdit(purchase)"
               class="m-r-10 cursor-pointer"
               ><i-tabler name="edit" class="icon-18"></i-tabler
             ></a>
             <a
-                (click)="deleteProduct(product)"
+                (click)="deletePurchase(purchase)"
               class="m-r-10 cursor-pointer"
             >
               <i-tabler name="trash" class="icon-18"></i-tabler>
@@ -125,4 +97,4 @@
       </mat-paginator>
     </div>
   </mat-card-content>
-</mat-card> -->
+</mat-card>

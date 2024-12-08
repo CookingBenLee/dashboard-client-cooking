@@ -119,7 +119,6 @@ export class ProductComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private employeeService: EmployeeService,
     private brandService:BrandService,private conditioningService:ConditioningService,private unitService:UnitService,private categoryService:CategoryService,
     private productService:ProductService ,private paginateService:PaginateService,private snackBar: MatSnackBar,
     private tokenService: TokenService,
