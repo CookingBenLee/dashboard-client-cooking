@@ -14,6 +14,7 @@ import { Price } from 'src/app/services/price/Price';
 import { PriceService } from 'src/app/services/price/price.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
+import { TokenService } from 'src/app/services/token/token.service';
 import { UnitService } from 'src/app/services/unit/unit.service';
 
 @Component({
@@ -71,7 +72,7 @@ export class CatalogueDePrixComponent implements OnInit {
   onSearch=true
   constructor(private route:ActivatedRoute,private purchaseService:PurchaseService,
     private priceService:PriceService,private productService:ProductService,
-    private paginateService:PaginateService,
+    private paginateService:PaginateService,private tokenService: TokenService,
     public dialog: MatDialog,private snackBar: MatSnackBar,
     private currencyService:CurrencyService,private unitService:UnitService) {}
 
@@ -91,6 +92,7 @@ export class CatalogueDePrixComponent implements OnInit {
   priceData: any = {};
 
   getAll(){
+    // const user= this.tokenService.getUser();
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
     this.priceService.getAllPage(params).then(data =>{
