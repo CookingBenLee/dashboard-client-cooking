@@ -302,6 +302,10 @@ export class ProductComponent implements OnInit {
   openDialogEdit(product: Product) {
     this.productData = { ...product };
     console.log(this.productData);
+    this.productData.category = this.categorys.find(cat => cat.id === product.category?.id);
+    this.productData.brand = this.brands.find(brand => brand.id === product.brand?.id);
+    this.productData.unit = this.units.find(unit => unit.id === product.unit.id);
+    this.productData.conditioning = this.conditionings.find(cond => cond.id === product.conditioning?.id);
     this.dialog.open(this.dialogTemplateEdit, {
       width: '1200px', height: '570px'
     });
