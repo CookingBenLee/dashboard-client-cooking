@@ -13,7 +13,9 @@ export class PriceService {
 
   //create
   create(price:Price){
+
     return this.http.post<any>(`${this.env.apiUrl}/price/new`,price)
+
     .toPromise()
     .then()
     .then();

@@ -40,7 +40,7 @@ interface profiledd {
   id: number;
   title: string;
   new?: boolean;
-  click?: String
+  link?: String
 }
 
 interface apps {
@@ -103,26 +103,27 @@ export class HeaderComponent implements OnInit{
 
   public languages: any[] = [
     {
-      language: 'English',
-      code: 'en',
-      type: 'US',
-      icon: '/assets/images/flag/icon-flag-en.svg',
-    },
-    {
-      language: 'Español',
-      code: 'es',
-      icon: '/assets/images/flag/icon-flag-es.svg',
-    },
-    {
       language: 'Français',
       code: 'fr',
       icon: '/assets/images/flag/icon-flag-fr.svg',
     },
     {
+      language: 'English',
+      code: 'en',
+      type: 'US',
+      icon: '/assets/images/flag/icon-flag-en.svg',
+    },
+    
+   /* 
+    {
+      language: 'Español',
+      code: 'es',
+      icon: '/assets/images/flag/icon-flag-es.svg',
+    },{
       language: 'German',
       code: 'de',
       icon: '/assets/images/flag/icon-flag-de.svg',
-    },
+    },*/
   ];
 
   constructor(
@@ -130,6 +131,7 @@ export class HeaderComponent implements OnInit{
     private vsidenav: CoreService,
     public dialog: MatDialog,
     private translate: TranslateService,
+
     private tokenService: TokenService,
     public router: Router
   ) {
@@ -243,7 +245,7 @@ export class HeaderComponent implements OnInit{
   ];
 
   profiledd: profiledd[] = [
-    {
+   /* {
       id: 1,
       title: 'My Profile',
     },
@@ -259,6 +261,12 @@ export class HeaderComponent implements OnInit{
     {
       id: 4,
       title: ' Account Settings',
+      link: '/',
+    },*/
+    {
+      id: 1,
+      title: 'Deconnexion',
+      link: '/login',
     },
   ];
 
@@ -365,6 +373,12 @@ export class HeaderComponent implements OnInit{
       link: '/apps/todo',
     },
   ];
+
+  doProfileAction(title:string){    
+    if (title==this.profiledd[this.profiledd.length-1].title){
+        this.tokenService.signOut()
+    }
+  }
 }
 
 @Component({

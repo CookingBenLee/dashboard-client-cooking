@@ -43,6 +43,7 @@ export const routes: Routes = [
         component: ProductComponent
       },
       {
+
         path:"catalogue-de-prix",
         component: CatalogueDePrixComponent
       },
