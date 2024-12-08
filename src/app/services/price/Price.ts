@@ -1,6 +1,6 @@
+import { Product } from "src/app/entity/Product";
 import { Currency } from "../currency/Currency";
 import { DetailsPurchasing } from "../detailspurchasing/DetailsPurchasing";
-import { Product } from "../product/Product";
 import { Shop } from "../shop/Shop";
 
 export class Price{

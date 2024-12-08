@@ -7,7 +7,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { Component } from '@angular/core';
 import { AcceuilComponent } from './pages/acceuil/acceuil.component';
 import { ProductComponent } from './pages/product/product.component';
-import { CataloguePrixComponent } from './pages/catalogue-prix/catalogue-prix.component';
+import { CatalogueDePrixComponent } from './pages/catalogue-de-prix/catalogue-de-prix.component';
+import { CourseComponent } from './pages/course/course.component';
 
 export const routes: Routes = [
   {
@@ -42,8 +43,13 @@ export const routes: Routes = [
         component: ProductComponent
       },
       {
-        path: "catalogue-prix",
-        component: CataloguePrixComponent
+
+        path:"catalogue-de-prix",
+        component: CatalogueDePrixComponent
+      },
+      {
+        path:"course",
+        component: CourseComponent
       },
       {
         path: 'starter',

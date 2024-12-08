@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   ViewEncapsulation,
+  OnInit,
 } from '@angular/core';
 import { CoreService } from 'src/app/services/core.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +12,7 @@ import { navItems } from '../sidebar/sidebar-data';
 import { TranslateService } from '@ngx-translate/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -38,8 +39,8 @@ interface inbox {
 interface profiledd {
   id: number;
   title: string;
-  link: string;
   new?: boolean;
+  link?: String
 }
 
 interface apps {
@@ -70,12 +71,26 @@ interface quicklinks {
   templateUrl: './header.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   @Input() showToggle = true;
   @Input() toggleChecked = false;
   @Output() toggleMobileNav = new EventEmitter<void>();
   @Output() toggleMobileFilterNav = new EventEmitter<void>();
   @Output() toggleCollapsed = new EventEmitter<void>();
+
+  user: any
+
+
+  ngOnInit(): void {
+   this.user = this.tokenService.getUser();
+  }
+
+  logout(): void {
+    console.log("desconnexion");
+
+    this.tokenService.signOut();
+    this.router.navigate(['/login']);
+  }
 
   showFiller = false;
 
@@ -116,7 +131,9 @@ export class HeaderComponent {
     private vsidenav: CoreService,
     public dialog: MatDialog,
     private translate: TranslateService,
-    private tokenService:TokenService
+
+    private tokenService: TokenService,
+    public router: Router
   ) {
     translate.setDefaultLang('en');
   }
@@ -231,18 +248,15 @@ export class HeaderComponent {
    /* {
       id: 1,
       title: 'My Profile',
-      link: '/',
     },
     {
       id: 2,
       title: 'My Subscription',
-      link: '/',
     },
     {
       id: 3,
       title: 'My Invoice',
       new: true,
-      link: '/',
     },
     {
       id: 4,
