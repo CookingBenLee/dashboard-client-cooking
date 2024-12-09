@@ -216,10 +216,10 @@ export class ProductComponent implements OnInit {
 
     }else{
       this.onSearch=true
-
+      const user = this.tokenService.getUser();
       const params=this.paginateService.getRequestParams(this.page,this.rows)
       console.log(params);
-      this.productService.rechercheParPage(this.motRecherche,params).then(data =>{
+      this.productService.rechercheParPage(this.motRecherche,params,user.id).then(data =>{
       console.log(data)
         //this.menus=data
         console.log(data)
