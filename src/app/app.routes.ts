@@ -11,6 +11,10 @@ import { CatalogueDePrixComponent } from './pages/catalogue-de-prix/catalogue-de
 import { CourseComponent } from './pages/course/course.component';
 import { DetailpurchsaeComponent } from './pages/course/detailpurchsae/detailpurchsae.component';
 import { FournisseurComponent } from './pages/fournisseur/fournisseur.component';
+import { PlatComponent } from './pages/plat/plat.component';
+import { RepasComponent } from './pages/repas/repas.component';
+import { PlanificationComponent } from './pages/planification/planification.component';
+import { RecetteComponent } from './pages/recette/recette.component';
 
 export const routes: Routes = [
   {
@@ -60,6 +64,22 @@ export const routes: Routes = [
       {
         path:'purchase/detailpurchase/:id',
         component:DetailpurchsaeComponent,
+      },
+      {
+        path:'plat',
+        component:PlatComponent,
+      },
+      {
+        path:'repas',
+        component:RepasComponent,
+      },
+      {
+        path:'planification',
+        component:PlanificationComponent,
+      },
+      {
+        path:'recette',
+        component:RecetteComponent,
       },
       {
         path: 'starter',
