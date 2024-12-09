@@ -79,7 +79,7 @@ import { TokenService } from 'src/app/services/token/token.service';
   selector: 'app-course',
   standalone: true,
   imports: [ MaterialModule,
-    FormsModule,RouterModule,
+    FormsModule,RouterModule,CalendarModule,
     ReactiveFormsModule,ConfirmDialogModule,
     TablerIconsModule,DialogModule,ToastModule,
     CommonModule,TableModule,PaginatorModule,DividerModule,
@@ -160,7 +160,7 @@ detailPurchasesForms2:any=[]
 
 
  purchase: Purchase=new Purchase();
- 
+
  isError:boolean
  isSuccess:boolean
  erreur:string
@@ -653,7 +653,8 @@ detailPurchasesForms2:any=[]
    })
  }
  async getProducts(){
-   await this.productService.getActive().then(data =>{
+    const user= this.tokenService.getUser();
+   await this.productService.getAll(user.id).then(data =>{
      console.log(data)
      this.products=data
      //this.productes[0]=this.products[0]

@@ -34,12 +34,14 @@ import { TableShortService } from 'src/app/services/tableShort/table-short.servi
 import { Unit } from 'src/app/services/unit/Unit';
 import { UnitService } from 'src/app/services/unit/unit.service';
 import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
+import { TokenService } from 'src/app/services/token/token.service';
+import { use } from 'echarts';
 
 @Component({
   selector: 'app-modalpurchase',
   standalone: true,
-  imports: [ ConfirmDialogModule,CalendarModule,
-    TablerIconsModule,DialogModule,ToastModule,
+  imports: [ ConfirmDialogModule,
+    TablerIconsModule,DialogModule,ToastModule,CalendarModule,
     CommonModule,TableModule,PaginatorModule,DividerModule,
     MatButtonModule, MatDialogModule,TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
@@ -89,7 +91,7 @@ export class ModalpurchaseComponent {
 
 detailPurchasesForms2:any=[]
 
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,private tokenService: TokenService,
     private dialogService:DialogService,public config: DynamicDialogConfig,  private detailpurchaseService:DetailspurchasingService,private cdref: ChangeDetectorRef,
     private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,
     private currencyService:CurrencyService,private productService:ProductService,private unitService:UnitService,private priceService:PriceService) {
@@ -190,7 +192,8 @@ detailPurchasesForms2:any=[]
   }
 
   async getProducts(){
-    await this.productService.getActive().then(data =>{
+    const user = this.tokenService.getUser();
+    await this.productService.getAll(user.id).then(data =>{
       console.log(data)
       this.products=data
       //this.productes[0]=this.products[0]

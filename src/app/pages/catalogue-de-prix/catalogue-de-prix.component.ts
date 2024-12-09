@@ -17,6 +17,7 @@ import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { UnitService } from 'src/app/services/unit/unit.service';
 import { TabViewModule } from 'primeng/tabview';
+import { use } from 'echarts';
 @Component({
   selector: 'app-catalogue-de-prix',
   standalone: true,
@@ -82,10 +83,12 @@ export class CatalogueDePrixComponent implements OnInit {
 
   }
 
-  displayedColumns: string[] = [
+  displayedColumns?: string[] = [
     'nom produit',
     'categorie',
     'action',
+    // 'fournisseur',
+    // 'prix',
   ];
 
   dataSource = new MatTableDataSource<Price>([]);
@@ -168,10 +171,11 @@ export class CatalogueDePrixComponent implements OnInit {
     }
   }
 
-  openDialogAdd() {
+  openDialog(price: Price) {
     this.resetFields();
+    this.priceData = { ...price };
     this.dialog.open(this.dialogTemplate, {
-      width: '1200px', height: '570px'
+      width: '1200px', height: '200px'
     });
   }
 
