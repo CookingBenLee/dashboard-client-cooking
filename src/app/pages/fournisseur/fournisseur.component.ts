@@ -7,6 +7,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
 import { MaterialModule } from 'src/app/material.module';
 import { Address } from 'src/app/services/address/Address';
 import { AddressService } from 'src/app/services/address/address.service';
@@ -25,7 +26,7 @@ import { TableShortService } from 'src/app/services/tableShort/table-short.servi
     FormsModule,
     ReactiveFormsModule,
     TablerIconsModule,
-    CommonModule,
+    CommonModule,ToastModule,
     MatButtonModule, MatDialogModule
   ],
   providers: [ConfirmationService, MessageService,DialogService],
@@ -36,6 +37,7 @@ export class FournisseurComponent implements OnInit{
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
   Object.create(null);
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
+  @ViewChild('dialogTemplateEdit') dialogTemplateEdit!: TemplateRef<any>;
   @ViewChild('dialogTemplateDelete') dialogTemplateDelete!: TemplateRef<any>
   //pagination attributs
   rows=5
@@ -122,7 +124,7 @@ onPageChange(event: any): void {
   this.getAll();
 }
 
-openDialogEdit(shop: Shop){}
+// openDialogEdit(shop: Shop){}
 deleteShop(shop: Shop){}
 addProduct(){}
 closeDialog() {
@@ -225,13 +227,14 @@ resetFields() {}
    //console.log(this.addressesSelected);
 
    console.log(this.shopData)
-   this.adressService.create(this.shop.addressPrincipale).then(data1=>{
-     this.shop.addressPrincipale=data1.data
-     this.shopService.create(this.shop).then((data) =>{
+   this.adressService.create(this.shopData.addressPrincipale).then(data1=>{
+     this.shopData.addressPrincipale=data1.data
+     this.shopService.create(this.shopData).then((data) =>{
        this.getAll();
+       this.closeDialog();
        this.loading=false
        //this.isSuccess=true
-       this.sucess="Boutique créée !"
+       this.sucess="Fournisseur créée !"
        this.name=""
        this.acronym=""
        this.contact=""
@@ -247,6 +250,7 @@ resetFields() {}
          }else{
          this.erreur="Erreur liée au serveur"
        }
+       this.closeDialog();
        this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
        this.loading=false
@@ -259,6 +263,7 @@ resetFields() {}
        }else{
        this.erreur="Erreur liée au serveur"
      }
+     this.closeDialog();
      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
      this.loading=false
@@ -276,14 +281,36 @@ resetFields() {}
    console.log(this.shopClicked)
  }
 
+ openDialogEdit(shop: Shop, adresse: Address) {
+  this.shopData = { ...shop };
+
+  // Initialiser addresse avec tous les champs requis par le type Address
+  this.addresse = {
+    label: shop.addressPrincipale?.label || '',
+    country: this.countrys.find(country => country.id === shop.addressPrincipale?.country.id) || this.countrys[0], // Par défaut au premier pays de la liste
+    city: shop.addressPrincipale?.city || '',
+    geolocation: shop.addressPrincipale?.geolocation || '',
+    shop: shop, // Inclure l'objet shop si nécessaire
+    map: shop.addressPrincipale?.map || {}, // Valeur par défaut pour map
+  };
+
+  console.log(this.shopData, this.addresse);
+  this.dialog.open(this.dialogTemplateEdit, {
+    width: '1200px',
+    height: '400px',
+  });
+}
+
+
  update(){
    this.loading=true
-   console.log(this.shopClicked)
-   this.shopService.update(this.shopClicked.id,this.shopClicked).then(data=>{
+   console.log(this.shopData)
+   this.shopService.update(this.shopData.id,this.shopData).then(data=>{
      this.loading=false
      //this.isSuccessEdit=true
-     this.sucessEdit="Boutique modifiée"
-     this.getAll()
+     this.sucessEdit="Fournisseur modifiée"
+     this.getAll();
+     this.closeDialog();
      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucessEdit});
      this.isEditShopDialogVisible = false
 
@@ -300,7 +327,7 @@ resetFields() {}
      this.loading=false
      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit });
      this.getAll()
-
+     this.closeDialog();
    });
  }
 
