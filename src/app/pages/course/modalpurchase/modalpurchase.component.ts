@@ -33,6 +33,7 @@ import { ShopService } from 'src/app/services/shop/shop.service';
 import { TableShortService } from 'src/app/services/tableShort/table-short.service';
 import { Unit } from 'src/app/services/unit/Unit';
 import { UnitService } from 'src/app/services/unit/unit.service';
+import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
 
 @Component({
   selector: 'app-modalpurchase',

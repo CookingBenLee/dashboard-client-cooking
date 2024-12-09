@@ -70,6 +70,8 @@ import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/a
 import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
 import { TableShortService } from 'src/app/services/tableShort/table-short.service';
 import { PaginatorModule } from 'primeng/paginator';
+import { ModalAddProductComponent } from './modal-add-product/modal-add-product.component';
+import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
 
 @Component({
   selector: 'app-course',
