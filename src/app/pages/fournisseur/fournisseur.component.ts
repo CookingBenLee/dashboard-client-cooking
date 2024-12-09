@@ -297,6 +297,7 @@ resetFields() {}
     geolocation: shop.addressPrincipale?.geolocation || '',
     shop: shop, // Inclure l'objet shop si nécessaire
     map: shop.addressPrincipale?.map || {}, // Valeur par défaut pour map
+    purchaseList:[]
   };
 
   console.log(this.shopData, this.addresse);
