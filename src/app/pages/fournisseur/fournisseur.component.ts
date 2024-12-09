@@ -124,7 +124,10 @@ onPageChange(event: any): void {
 
 openDialogEdit(shop: Shop){}
 deleteShop(shop: Shop){}
-
+addProduct(){}
+closeDialog() {
+  this.dialog.closeAll();
+}
 resetFields() {}
  //recuperation de valeurs
  getAll(){
