@@ -82,10 +82,12 @@ export class CatalogueDePrixComponent implements OnInit {
 
   }
 
-  displayedColumns: string[] = [
+  displayedColumns?: string[] = [
     'nom produit',
     'categorie',
     'action',
+    // 'fournisseur',
+    // 'prix',
   ];
 
   dataSource = new MatTableDataSource<Price>([]);
@@ -95,7 +97,7 @@ export class CatalogueDePrixComponent implements OnInit {
     const user= this.tokenService.getUser();
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
-    this.priceService.getAllPage(params, user.id).then(data =>{
+    this.priceService.getAllPage(params).then(data =>{
       console.log(data)
         //this.menus=data
         console.log(data)
@@ -168,10 +170,11 @@ export class CatalogueDePrixComponent implements OnInit {
     }
   }
 
-  openDialogAdd() {
+  openDialog(price: Price) {
     this.resetFields();
+    this.priceData = { ...price };
     this.dialog.open(this.dialogTemplate, {
-      width: '1200px', height: '570px'
+      width: '1200px', height: '200px'
     });
   }
 
