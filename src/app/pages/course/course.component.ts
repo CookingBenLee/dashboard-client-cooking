@@ -480,15 +480,15 @@ detailPurchasesForms2:any=[]
 
 
  show(e:any,purchase:Purchase) {
-  //  this.ref = this.dialogService.open(ModalpurchaseComponent, {
-  //      header: 'Produit '+purchase.reference,
-  //      width: '90%',
-  //      contentStyle: { overflow: 'auto' },
-  //      baseZIndex: 10000,
-  //      maximizable: true,
-  //      data:purchase,
-  //  });
-   // this.purchaseSelected=purchase
+   this.ref = this.dialogService.open(ModalpurchaseComponent, {
+       header: 'Produit '+purchase.reference,
+       width: '90%',
+       contentStyle: { overflow: 'auto' },
+       baseZIndex: 10000,
+       maximizable: true,
+       data:purchase,
+   });
+   this.purchaseSelected=purchase
    // this.op.toggle(e)
 
      // this.ref.onClose.subscribe((shop: Shop) => {
@@ -722,23 +722,23 @@ detailPurchasesForms2:any=[]
  //////////
  //Ajout de produit etant dans approvisionnement
  showProductAddForm(){
-  //  this.ref = this.dialogService.open(ModalAddProductComponent, {
-  //    header: 'Ajouter un produit',
-  //    width: '70%',
-  //    contentStyle: { overflow: 'auto' },
-  //    baseZIndex: 10000,
-  //      maximizable: true
-  //  });
+   this.ref = this.dialogService.open(ModalAddProductComponent, {
+     header: 'Ajouter un produit',
+     width: '70%',
+     contentStyle: { overflow: 'auto' },
+     baseZIndex: 10000,
+       maximizable: true
+   });
 
-  //  this.ref.onClose.subscribe((retour: any) => {
-  //      if (retour=="ok") {
-  //          this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-  //          this.getProducts()
-  //      }else{
-  //        this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+   this.ref.onClose.subscribe((retour: any) => {
+       if (retour=="ok") {
+           this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
+           this.getProducts()
+       }else{
+         this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
 
-  //      }
-  //  });
+       }
+   });
 
    // this.ref.onMaximize.subscribe((value) => {
    //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });

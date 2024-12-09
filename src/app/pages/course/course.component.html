@@ -290,7 +290,7 @@
 </ng-template> -->
 <p-tabView [(activeIndex)]="activeIndex">
   <!--Panel liste des purchases-->
-  <p-tabPanel header="Historique Approvisionnement">
+  <p-tabPanel header="Liste des courses">
     <div class="">
       <div class="card">
           <!--<h5>Purchase List</h5>-->
@@ -310,7 +310,7 @@
 
                       </span>
                 </div> -->
-                <div class="col-lg-4 flex">
+                <div class="col-lg-12 flex">
                   <mat-form-field appearance="outline" class="w-100 hide-hint">
                     <input [(ngModel)]="motRecherche"
                       matInput
@@ -375,7 +375,7 @@
   </p-tabPanel>
 
 
-  <p-tabPanel header="Nouveau Approvisionnement">
+  <p-tabPanel header="Nouvelle course">
     <div class="">
       <form class="grid newform " #f="ngForm" (ngSubmit)="save()">
         <div class="col-12 card p-fluid">
