@@ -1,3 +1,4 @@
+<p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <mat-card class="cardWithShadow">
   <mat-card-content class="p-24">
     <div class="row justify-content-between gap-16">
@@ -62,7 +63,7 @@
               ><i-tabler name="edit" class="icon-18"></i-tabler
             ></a>
             <a
-                (click)="deleteShop(shop)"
+                (click)="delete('top-right',shop)"
               class="m-r-10 cursor-pointer"
             >
               <i-tabler name="trash" class="icon-18"></i-tabler>
@@ -183,7 +184,7 @@
 </ng-template>
 
 
-<!-- add -->
+<!-- edit -->
 <ng-template  #dialogTemplateEdit>
   <mat-dialog-content style="max-width: 1200px; max-height: 400px;">
      <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">

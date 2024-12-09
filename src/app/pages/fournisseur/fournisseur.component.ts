@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { MaterialModule } from 'src/app/material.module';
@@ -27,7 +28,7 @@ import { TableShortService } from 'src/app/services/tableShort/table-short.servi
     ReactiveFormsModule,
     TablerIconsModule,
     CommonModule,ToastModule,
-    MatButtonModule, MatDialogModule
+    MatButtonModule, MatDialogModule,ConfirmDialogModule
   ],
   providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './fournisseur.component.html',
@@ -343,7 +344,7 @@ resetFields() {}
        icon: 'pi pi-info-circle',
        accept: () => {
          this.shopService.delete(shop.id).then(data=>{this.getAll()})
-         this.messageService.add({ severity: 'error', summary: 'Confirm', detail: 'Boutique modifiée' });
+         this.messageService.add({ severity: 'error', summary: 'Confirm', detail: 'Fournisseur supprime' });
        },
        reject: (type:any) => {
            switch (type) {
