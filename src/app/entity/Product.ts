@@ -4,6 +4,7 @@ import { Category } from "../services/category/Category";
 import { Conditioning } from "../services/conditioning/Conditioning";
 import { Unit } from "../services/unit/Unit";
 import { Stock } from "../services/stock/Stock";
+import { Currency } from "../services/currency/Currency";
 
 export class Product{
   id?:number
@@ -24,4 +25,5 @@ export class Product{
   priceList:PristineChangeEvent[]
   // stockList:Stock[]
   isActive?:boolean;
+  currency?: Currency[]
 }

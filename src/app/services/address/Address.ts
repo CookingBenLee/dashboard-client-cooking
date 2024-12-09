@@ -26,6 +26,6 @@ export class Address{
   country :Country;
 
   map:AddMap;
-  purchaseList: Purchase[];
+  purchaseList?: Purchase[];
 
 }

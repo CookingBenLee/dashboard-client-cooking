@@ -92,10 +92,10 @@ export class CatalogueDePrixComponent implements OnInit {
   priceData: any = {};
 
   getAll(){
-    // const user= this.tokenService.getUser();
+    const user= this.tokenService.getUser();
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
-    this.priceService.getAllPage(params).then(data =>{
+    this.priceService.getAllPage(params, user.id).then(data =>{
       console.log(data)
         //this.menus=data
         console.log(data)
@@ -106,17 +106,20 @@ export class CatalogueDePrixComponent implements OnInit {
         this.totalPages=data.totalPages
           if(this.prices.length==0 || this.page==0){
             this.resClient=data
-            console.log(this.resClient)
+            // console.log(this.resClient)
             this.prices=data.content
-            console.log(this.totalPages)
+            // console.log(this.totalPages)
             this.totalRows=data.totalElements
-            console.log(this.count)
+            // console.log(this.count)
             this.dataSource.data = data.content;
+            console.log(this.dataSource);
+
           }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
             this.resClient.number =data.number
             this.prices=data.content
-            console.log(data)
+            // console.log(data)
             this.dataSource.data = data.content;
+            console.log(this.dataSource);
           }
       }, error => {
         //console.log(error)
