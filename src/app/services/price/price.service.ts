@@ -32,13 +32,20 @@ export class PriceService {
         .then(res => res.data as Price[])
         .then(data => data);
   }
-  getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.apiUrl}/price/getallpage?page=`+param['page']+'&size='+param['size'])
+  getAllPage(param:any, idUser: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/price/getallpagebyuser/${idUser}?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);
   }
 
+
+  // getAllPage(param:any,idUser: number) {
+  //   return this.http.get<any>(`${this.env.apiUrl}/price/searchbyuser/${idUser}?page=`+param['page']+'&size='+param['size'])
+  //       .toPromise()
+  //       .then(res => res.data as any)
+  //       .then(data => data);
+  // }
   recherche(mot:String) {
     return this.http.get<any>(`${this.env.apiUrl}/price/search?mot=${mot}`,)
         .toPromise()

@@ -73,6 +73,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ModalAddProductComponent } from './modal-add-product/modal-add-product.component';
 import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
 import { RouterModule } from '@angular/router';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-course',
@@ -94,7 +95,7 @@ export class CourseComponent implements OnInit {
  // detailsPurchases:DetailsPurchasing[]=[]
 
  //pagination attributs
- rows=5
+ rows=4
  totalRows=0
  page=0;
  count=0;
@@ -159,7 +160,7 @@ detailPurchasesForms2:any=[]
 
 
  purchase: Purchase=new Purchase();
-
+ 
  isError:boolean
  isSuccess:boolean
  erreur:string
@@ -177,7 +178,7 @@ detailPurchasesForms2:any=[]
  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
    private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,
-   private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,
+   private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,private tokenService: TokenService,
    private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
 
  async ngOnInit(): Promise<void> {
@@ -212,9 +213,10 @@ detailPurchasesForms2:any=[]
 
  //recuperation de valeurs
  getAll(){
+   const user= this.tokenService.getUser();
    const params=this.paginateService.getRequestParams(this.page,this.rows)
    console.log(params);
-   this.purchaseService.getAllPage(params).then(data =>{
+   this.purchaseService.getAllPage(params, user.id).then(data =>{
      console.log(data)
      //this.menus=data
      console.log(data)
@@ -368,7 +370,8 @@ detailPurchasesForms2:any=[]
    // this.purchase.quantity=this.quantity
    this.purchase.montant=this.montant
    this.purchase.datePurchase=this.datePurchase
-
+  const user = this.tokenService.getUser();
+    this.purchase.user = {id: user.id}
    console.log(this.purchase)
 
    this.purchaseService.create(this.purchase).then(async (data) =>{

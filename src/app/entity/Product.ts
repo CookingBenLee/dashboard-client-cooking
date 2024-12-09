@@ -3,6 +3,8 @@ import { Brand } from "../services/brand/Brand";
 import { Category } from "../services/category/Category";
 import { Conditioning } from "../services/conditioning/Conditioning";
 import { Unit } from "../services/unit/Unit";
+import { Stock } from "../services/stock/Stock";
+import { Currency } from "../services/currency/Currency";
 
 export class Product{
   id?:number
@@ -18,9 +20,10 @@ export class Product{
   brand?:Brand;
   conditioning?:Conditioning;
   unit:Unit;
-  stock: number;
+  stock: Stock[];
   productList?:Product[];
   priceList:PristineChangeEvent[]
   // stockList:Stock[]
   isActive?:boolean;
+  currency?: Currency[]
 }

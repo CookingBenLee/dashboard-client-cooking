@@ -16,7 +16,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { UnitService } from 'src/app/services/unit/unit.service';
-
+import { TabViewModule } from 'primeng/tabview';
 @Component({
   selector: 'app-catalogue-de-prix',
   standalone: true,
@@ -26,7 +26,7 @@ import { UnitService } from 'src/app/services/unit/unit.service';
     ReactiveFormsModule,
     TablerIconsModule,
     CommonModule,
-    MatButtonModule, MatDialogModule
+    MatButtonModule, MatDialogModule,TabViewModule
   ],
   templateUrl: './catalogue-de-prix.component.html',
   styleUrl: './catalogue-de-prix.component.scss'
@@ -37,7 +37,7 @@ export class CatalogueDePrixComponent implements OnInit {
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   @ViewChild('dialogTemplateDelete') dialogTemplateDelete!: TemplateRef<any>
 
-  rows=6
+  rows=4
   totalRows=0
   page=0;
   count=0;
@@ -92,10 +92,10 @@ export class CatalogueDePrixComponent implements OnInit {
   priceData: any = {};
 
   getAll(){
-    // const user= this.tokenService.getUser();
+    const user= this.tokenService.getUser();
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
-    this.priceService.getAllPage(params).then(data =>{
+    this.priceService.getAllPage(params, user.id).then(data =>{
       console.log(data)
         //this.menus=data
         console.log(data)
@@ -106,17 +106,20 @@ export class CatalogueDePrixComponent implements OnInit {
         this.totalPages=data.totalPages
           if(this.prices.length==0 || this.page==0){
             this.resClient=data
-            console.log(this.resClient)
+            // console.log(this.resClient)
             this.prices=data.content
-            console.log(this.totalPages)
+            // console.log(this.totalPages)
             this.totalRows=data.totalElements
-            console.log(this.count)
+            // console.log(this.count)
             this.dataSource.data = data.content;
+            console.log(this.dataSource);
+
           }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
             this.resClient.number =data.number
             this.prices=data.content
-            console.log(data)
+            // console.log(data)
             this.dataSource.data = data.content;
+            console.log(this.dataSource);
           }
       }, error => {
         //console.log(error)
@@ -151,12 +154,12 @@ export class CatalogueDePrixComponent implements OnInit {
               console.log(this.totalPages)
               this.totalRows=data.totalElements
               console.log(this.count)
-
+              this.dataSource.data = data.content;
             }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
               this.resClient.number =data.number
               this.prices=data.content
               console.log(data)
-
+              this.dataSource.data = data.content;
             }
         }, error => {
           //console.log(error)

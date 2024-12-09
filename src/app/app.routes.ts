@@ -9,6 +9,8 @@ import { AcceuilComponent } from './pages/acceuil/acceuil.component';
 import { ProductComponent } from './pages/product/product.component';
 import { CatalogueDePrixComponent } from './pages/catalogue-de-prix/catalogue-de-prix.component';
 import { CourseComponent } from './pages/course/course.component';
+import { DetailpurchsaeComponent } from './pages/course/detailpurchsae/detailpurchsae.component';
+import { FournisseurComponent } from './pages/fournisseur/fournisseur.component';
 
 export const routes: Routes = [
   {
@@ -50,6 +52,14 @@ export const routes: Routes = [
       {
         path:"course",
         component: CourseComponent
+      },
+      {
+        path: "fournisseur",
+        component: FournisseurComponent
+      },
+      {
+        path:'purchase/detailpurchase/:id',
+        component:DetailpurchsaeComponent,
       },
       {
         path: 'starter',

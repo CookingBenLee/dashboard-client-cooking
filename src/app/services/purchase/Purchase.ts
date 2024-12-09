@@ -19,5 +19,6 @@ export class Purchase{
   shop :Shop;
   address :Address;
   currency :Currency;
+  user?: any
 
 }
