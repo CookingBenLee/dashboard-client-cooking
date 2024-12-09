@@ -109,7 +109,7 @@ export class FournisseurComponent implements OnInit{
  openDialogAdd() {
   this.resetFields();
   this.dialog.open(this.dialogTemplate, {
-    width: '1200px', height: '570px'
+    width: '1200px', height: '400px'
   });
 }
 
@@ -215,16 +215,16 @@ resetFields() {}
    this.loading=true
 
    //recup des valeurs et attribution
-   this.shop.name=this.name
-   this.shop.acronym=this.acronym
+  //  this.shop.name=this.name
+  //  this.shop.acronym=this.acronym
    //this.shop.contact=this.contact
    //this.shop.email=this.email
-   this.shop.addressPrincipale=this.addresse
+   this.shopData.addressPrincipale=this.addresse
   //this.shop.adressList=this.addressesSelected
 
    //console.log(this.addressesSelected);
 
-   console.log(this.shop)
+   console.log(this.shopData)
    this.adressService.create(this.shop.addressPrincipale).then(data1=>{
      this.shop.addressPrincipale=data1.data
      this.shopService.create(this.shop).then((data) =>{
