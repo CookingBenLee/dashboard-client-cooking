@@ -160,7 +160,7 @@ detailPurchasesForms2:any=[]
 
 
  purchase: Purchase=new Purchase();
-
+ 
  isError:boolean
  isSuccess:boolean
  erreur:string
@@ -213,10 +213,10 @@ detailPurchasesForms2:any=[]
 
  //recuperation de valeurs
  getAll(){
-  //  const user= this.tokenService.getUser();
+   const user= this.tokenService.getUser();
    const params=this.paginateService.getRequestParams(this.page,this.rows)
    console.log(params);
-   this.purchaseService.getAllPage(params).then(data =>{
+   this.purchaseService.getAllPage(params, user.id).then(data =>{
      console.log(data)
      //this.menus=data
      console.log(data)
@@ -370,7 +370,8 @@ detailPurchasesForms2:any=[]
    // this.purchase.quantity=this.quantity
    this.purchase.montant=this.montant
    this.purchase.datePurchase=this.datePurchase
-
+  const user = this.tokenService.getUser();
+    this.purchase.user = {id: user.id}
    console.log(this.purchase)
 
    this.purchaseService.create(this.purchase).then(async (data) =>{

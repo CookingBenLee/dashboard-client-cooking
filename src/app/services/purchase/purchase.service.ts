@@ -32,19 +32,19 @@ export class PurchaseService {
         .then(res => res.data as Purchase[])
         .then(data => data);
   }
-  getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.apiUrl}/purchase/getallpage?page=`+param['page']+'&size='+param['size'])
-        .toPromise()
-        .then(res => res.data as any)
-        .then(data => data);
-  }
-
-  // getAllPage(param:any, userId: number) {
-  //   return this.http.get<any>(`${this.env.apiUrl}/purchase/getallpage/${userId}?page=`+param['page']+'&size='+param['size'])
+  // getAllPage(param:any) {
+  //   return this.http.get<any>(`${this.env.apiUrl}/purchase/getallpage?page=`+param['page']+'&size='+param['size'])
   //       .toPromise()
   //       .then(res => res.data as any)
   //       .then(data => data);
   // }
+
+  getAllPage(param:any, id: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/purchase/getallpagebyuser/${id}?page=`+param['page']+'&size='+param['size'])
+        .toPromise()
+        .then(res => res.data as any)
+        .then(data => data);
+  }
 
   byShop(id:number |undefined) {
     return this.http.get<any>(`${this.env.apiUrl}/purchase/byshop?idShop=${id}`)
