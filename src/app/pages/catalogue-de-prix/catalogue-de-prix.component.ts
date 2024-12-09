@@ -16,7 +16,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { UnitService } from 'src/app/services/unit/unit.service';
-
+import { TabViewModule } from 'primeng/tabview';
 @Component({
   selector: 'app-catalogue-de-prix',
   standalone: true,
@@ -26,7 +26,7 @@ import { UnitService } from 'src/app/services/unit/unit.service';
     ReactiveFormsModule,
     TablerIconsModule,
     CommonModule,
-    MatButtonModule, MatDialogModule
+    MatButtonModule, MatDialogModule,TabViewModule
   ],
   templateUrl: './catalogue-de-prix.component.html',
   styleUrl: './catalogue-de-prix.component.scss'
