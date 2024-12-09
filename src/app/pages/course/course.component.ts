@@ -94,7 +94,7 @@ export class CourseComponent implements OnInit {
  // detailsPurchases:DetailsPurchasing[]=[]
 
  //pagination attributs
- rows=5
+ rows=4
  totalRows=0
  page=0;
  count=0;

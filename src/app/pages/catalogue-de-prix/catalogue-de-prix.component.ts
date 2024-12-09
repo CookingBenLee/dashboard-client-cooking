@@ -37,7 +37,7 @@ export class CatalogueDePrixComponent implements OnInit {
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   @ViewChild('dialogTemplateDelete') dialogTemplateDelete!: TemplateRef<any>
 
-  rows=6
+  rows=4
   totalRows=0
   page=0;
   count=0;
@@ -151,12 +151,12 @@ export class CatalogueDePrixComponent implements OnInit {
               console.log(this.totalPages)
               this.totalRows=data.totalElements
               console.log(this.count)
-
+              this.dataSource.data = data.content;
             }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
               this.resClient.number =data.number
               this.prices=data.content
               console.log(data)
-
+              this.dataSource.data = data.content;
             }
         }, error => {
           //console.log(error)

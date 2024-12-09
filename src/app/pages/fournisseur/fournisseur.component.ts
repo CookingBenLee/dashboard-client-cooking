@@ -41,7 +41,7 @@ export class FournisseurComponent implements OnInit{
   @ViewChild('dialogTemplateEdit') dialogTemplateEdit!: TemplateRef<any>;
   @ViewChild('dialogTemplateDelete') dialogTemplateDelete!: TemplateRef<any>
   //pagination attributs
-  rows=5
+  rows=4
   totalRows=0
   page=0;
   count=0;
@@ -192,12 +192,12 @@ resetFields() {}
            console.log(this.totalPages)
            this.totalRows=data.totalElements
            console.log(this.count)
-
+           this.dataSource.data = data.content;
          }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
            this.resClient.number =data.number
            this.shops=data.content
            console.log(data)
-
+           this.dataSource.data = data.content;
          }
      }, error => {
        //console.log(error)
