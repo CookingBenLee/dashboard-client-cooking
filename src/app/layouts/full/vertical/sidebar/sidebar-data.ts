@@ -62,7 +62,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Les Fournisseurs',
     iconName: 'solar:user-hands-bold',
-    route: 'home/ui-components/tooltips',
+    route: 'home/fournisseur',
   },
   // {
   //   displayName: 'Acceuil',
