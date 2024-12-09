@@ -17,24 +17,24 @@ export const navItems: NavItem[] = [
       {
         displayName: 'Planifier un repas',
         iconName: 'solar:round-alt-arrow-right-line-duotone',
-        route: '/apps/invoice',
+        route: 'home/repas',
       },
       {
         displayName: 'Liste des planifications',
         iconName: 'solar:round-alt-arrow-right-line-duotone',
-        route: '/apps/viewInvoice/101',
+        route: 'home/planification',
       }
     ],
   },
   {
     displayName: 'Mes Plats',
     iconName: 'material-symbols:dining',
-    route: 'home/ui-components/chips',
+    route: 'home/plat',
   },
   {
     displayName: 'Mes Recettes',
     iconName: 'arcticons:reciper',
-    route: 'home/ui-components/lists',
+    route: 'home/recette',
 
   },
   {
