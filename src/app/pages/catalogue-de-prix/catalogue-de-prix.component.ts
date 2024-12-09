@@ -17,6 +17,7 @@ import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { UnitService } from 'src/app/services/unit/unit.service';
 import { TabViewModule } from 'primeng/tabview';
+import { use } from 'echarts';
 @Component({
   selector: 'app-catalogue-de-prix',
   standalone: true,
@@ -97,7 +98,7 @@ export class CatalogueDePrixComponent implements OnInit {
     const user= this.tokenService.getUser();
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
-    this.priceService.getAllPage(params).then(data =>{
+    this.priceService.getAllPage(params, user.id).then(data =>{
       console.log(data)
         //this.menus=data
         console.log(data)

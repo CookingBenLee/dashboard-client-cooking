@@ -20,8 +20,8 @@ export class ProductService {
     .then();
   }
   //read
-  getAll() {
-    return this.http.get<any>(`${this.env.apiUrl}/product/getall`)
+  getAll(idUser: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/product/getallbyuser/${idUser}`)
         .toPromise()
         .then(res => res.data as Product[])
         .then(data => data);
