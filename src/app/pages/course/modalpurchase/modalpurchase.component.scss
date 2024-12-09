@@ -102,25 +102,27 @@ $color11:#2d674d;
 }
 
 
-.table{
+table{
   width: 100%;
 
 }
-.table,.thead,.td,.th {
+table,thead,td,th {
   border: 1px solid black;
   border-collapse: collapse;
 
 }
-.table>.tr{
+table>tr{
   background-color: rgba(185, 181, 181, 0.596);
   border-radius: 5px;
-  padding: 3px;
+  padding: 5px;
 }
-
 
 .divtableau{
   max-height: 160px;
   padding: 5px;
-  overflow: hidden;
-  overflow-y: scroll;
+overflow: hidden;
+overflow-y: scroll;
 }
+
+
+

@@ -34,6 +34,9 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { PaginateService } from 'src/app/services/paginate/paginate.service';
 import { MatButtonModule } from '@angular/material/button';
 import { TokenService } from 'src/app/services/token/token.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ModalproductComponent } from './modalproduct/modalproduct.component';
 
 @Component({
   selector: 'app-product',
@@ -46,6 +49,7 @@ import { TokenService } from 'src/app/services/token/token.service';
     CommonModule,
     MatButtonModule, MatDialogModule
   ],
+  providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })
@@ -87,6 +91,7 @@ export class ProductComponent implements OnInit {
   conditioning:Conditioning
   stock:number
   product: Product=new Product();
+  ref: DynamicDialogRef | undefined;
 
   isError:boolean
   isSuccess:boolean
@@ -121,7 +126,7 @@ export class ProductComponent implements OnInit {
     public dialog: MatDialog,
     private brandService:BrandService,private conditioningService:ConditioningService,private unitService:UnitService,private categoryService:CategoryService,
     private productService:ProductService ,private paginateService:PaginateService,private snackBar: MatSnackBar,
-    private tokenService: TokenService,
+    private tokenService: TokenService,private dialogService:DialogService,
   ) {}
 
   ngOnInit(): void {
@@ -170,6 +175,17 @@ export class ProductComponent implements OnInit {
     }, error => {
       //console.log(error)
     })
+  }
+
+  show(e:any,product:Product) {
+    this.ref = this.dialogService.open(ModalproductComponent, {
+        header: 'Produit '+product.name,
+        //width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data:product,
+    });
   }
 
   onPageChange(event: any): void {
