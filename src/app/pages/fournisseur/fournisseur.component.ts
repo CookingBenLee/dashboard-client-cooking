@@ -18,6 +18,7 @@ import { PaginateService } from 'src/app/services/paginate/paginate.service';
 import { Shop } from 'src/app/services/shop/Shop';
 import { ShopService } from 'src/app/services/shop/shop.service';
 import { TableShortService } from 'src/app/services/tableShort/table-short.service';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-fournisseur',
@@ -89,7 +90,7 @@ export class FournisseurComponent implements OnInit{
  onSearch=true
  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
    private dialogService:DialogService,public dialog: MatDialog,
-   private paginateService:PaginateService,
+   private paginateService:PaginateService,private tokenService: TokenService,
    private adressService:AddressService,private countryService:CountryService,
    private shopService:ShopService,public tableShort:TableShortService) {}
 
@@ -222,7 +223,10 @@ resetFields() {}
   //  this.shop.acronym=this.acronym
    //this.shop.contact=this.contact
    //this.shop.email=this.email
+   const user = this.tokenService.getUser();
    this.shopData.addressPrincipale=this.addresse
+   this.shopData.user= {id: user.id};
+
   //this.shop.adressList=this.addressesSelected
 
    //console.log(this.addressesSelected);

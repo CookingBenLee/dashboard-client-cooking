@@ -48,7 +48,7 @@
           </th>
           <td mat-cell *matCellDef="let price" class="action-link">
             <a
-            (click)="openDialogDetails(price)"
+            (click)="openDialog(price)"
               class="m-r-10 cursor-pointer"
               ><i-tabler name="eye" class="icon-18"></i-tabler
             ></a>
@@ -68,3 +68,30 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+
+
+<ng-template #dialogTemplate>
+  <mat-dialog-content style="max-width: 1200px; padding: 16px;">
+    <div class="dialog-container">
+      <!-- Titre de la boîte de dialogue -->
+      <h2 class="dialog-title">Détails du Prix</h2>
+
+      <!-- Tableau élégant -->
+      <div class="info-table">
+        <!-- En-tête des colonnes -->
+        <div class="info-header">
+          <div class="info-header-cell">Fournisseur</div>
+          <div class="info-header-cell">Prix</div>
+        </div>
+
+        <!-- Ligne Fournisseur -->
+        <div class="info-row">
+          <div class="info-cell label">{{ priceData?.shop?.name || 'Non renseigné' }}</div>
+          <div class="info-cell value">{{ priceData?.product?.price || 'Non renseigné' }}  {{ priceData?.currency?.symbol || 'Non renseigné' }}</div>
+        </div>
+
+      </div>
+    </div>
+  </mat-dialog-content>
+</ng-template>

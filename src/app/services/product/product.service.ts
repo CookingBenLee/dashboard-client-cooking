@@ -20,8 +20,8 @@ export class ProductService {
     .then();
   }
   //read
-  getAll() {
-    return this.http.get<any>(`${this.env.apiUrl}/product/getall`)
+  getAll(idUser: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/product/getallbyuser/${idUser}`)
         .toPromise()
         .then(res => res.data as Product[])
         .then(data => data);
@@ -53,8 +53,8 @@ export class ProductService {
         .then(data => data);
   }
 
-  rechercheParPage(mot:String,param:any) {
-    return this.http.get<any>(`${this.env.apiUrl}/product/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
+  rechercheParPage(mot:String,param:any, idUser: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/product/searchbypageanduser/${idUser}?mot=${mot}&page=${param['page']}&size=${param['size']}`)
     .toPromise()
     .then(res => res.data as any)
     .then(data => data);

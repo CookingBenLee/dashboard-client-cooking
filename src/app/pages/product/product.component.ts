@@ -37,6 +37,8 @@ import { TokenService } from 'src/app/services/token/token.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModalproductComponent } from './modalproduct/modalproduct.component';
+import { CurrencyService } from 'src/app/services/currency/currency.service';
+import { Currency } from 'src/app/services/currency/Currency';
 
 @Component({
   selector: 'app-product',
@@ -123,7 +125,7 @@ export class ProductComponent implements OnInit {
   //  Object.create(null);
 
   constructor(
-    public dialog: MatDialog,
+    public dialog: MatDialog,private currencyService:CurrencyService,
     private brandService:BrandService,private conditioningService:ConditioningService,private unitService:UnitService,private categoryService:CategoryService,
     private productService:ProductService ,private paginateService:PaginateService,private snackBar: MatSnackBar,
     private tokenService: TokenService,private dialogService:DialogService,
@@ -135,6 +137,7 @@ export class ProductComponent implements OnInit {
     this.getCategorys()
     this.getConditioning()
     this.getUnit()
+    this.getCurrency()
   }
 
   getAll(){
@@ -213,10 +216,10 @@ export class ProductComponent implements OnInit {
 
     }else{
       this.onSearch=true
-
+      const user = this.tokenService.getUser();
       const params=this.paginateService.getRequestParams(this.page,this.rows)
       console.log(params);
-      this.productService.rechercheParPage(this.motRecherche,params).then(data =>{
+      this.productService.rechercheParPage(this.motRecherche,params,user.id).then(data =>{
       console.log(data)
         //this.menus=data
         console.log(data)
@@ -386,6 +389,14 @@ export class ProductComponent implements OnInit {
     this.unitService.getAllUnits().then(data =>{
       console.log(data)
       this.units=data})
+  }
+  currencys: Currency[] = [];
+
+  currency: Currency = new Currency();
+  getCurrency(){
+    this.currencyService.getAll().then(data =>{
+      console.log(data)
+      this.currencys=data})
   }
 }
 

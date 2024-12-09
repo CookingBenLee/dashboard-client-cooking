@@ -105,7 +105,7 @@
             />
           </mat-form-field>
         </div>
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -115,17 +115,31 @@
               [(ngModel)]="productData.code"
             />
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
               type="number"
-              placeholder="Prix Devise"
+              placeholder="Prix"
               required
               name="price"
               [(ngModel)]="productData.price"
             />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Devise</mat-label>
+            <mat-select
+              [(ngModel)]="productData.currency"
+              name="currency"
+              required
+            >
+              <mat-option *ngFor="let currency of currencys" [value]="currency">
+                {{ currency.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
         <div class="col-lg-6">
