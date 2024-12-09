@@ -53,8 +53,8 @@ export class ProductService {
         .then(data => data);
   }
 
-  rechercheParPage(mot:String,param:any) {
-    return this.http.get<any>(`${this.env.apiUrl}/product/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
+  rechercheParPage(mot:String,param:any, idUser: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/product/searchbypageanduser/${idUser}?mot=${mot}&page=${param['page']}&size=${param['size']}`)
     .toPromise()
     .then(res => res.data as any)
     .then(data => data);
