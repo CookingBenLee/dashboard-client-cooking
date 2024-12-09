@@ -449,26 +449,26 @@
               <p *ngIf="detailPurchasesForms2.length==0">Aucun produit pour l'instant! Veuillez remplir le formulaire pour ajouter un produit.</p>
 
               <div class="divtableau">
-                <table *ngIf="detailPurchasesForms2.length!=0">
-                <thead>
-                  <th>Produit </th>
-                  <th>Catégory</th>
-                  <th>Conditionnement</th>
-                  <th>Quantité(unité)</th>
+                <table class="table" *ngIf="detailPurchasesForms2.length!=0">
+                <thead class="head">
+                  <th class="th">Produit </th>
+                  <th class="th">Catégory</th>
+                  <th class="th">Conditionnement</th>
+                  <th class="th">Quantité(unité)</th>
 
-                  <th>Prix/unité</th>
-                  <th>Prix Total </th>
-                  <th></th>
+                  <th class="th">Prix/unité</th>
+                  <th class="th">Prix Total </th>
+                  <th class="th"></th>
 
                 </thead>
-                <tr *ngFor="let detail of detailPurchasesForms2,let i=index">
-                  <td>{{detail?.product?.name}}</td>
-                  <td>{{detail.product?.category?.name}}</td>
-                  <td>{{detail.product.conditioning?.name}}</td>
-                  <td>{{detail.quantity}} ({{detail.unit.code}})</td>
-                  <td>{{detail.value}}/{{detail.unit.code}}</td>
-                  <td>{{detail.totalPrice}}</td>
-                  <td>
+                <tr class="tr" *ngFor="let detail of detailPurchasesForms2,let i=index">
+                  <td class="td">{{detail?.product?.name}}</td>
+                  <td class="td">{{detail.product?.category?.name}}</td>
+                  <td class="td">{{detail.product.conditioning?.name}}</td>
+                  <td class="td">{{detail.quantity}} ({{detail.unit.code}})</td>
+                  <td class="td">{{detail.value}}/{{detail.unit.code}}</td>
+                  <td class="td">{{detail.totalPrice}}</td>
+                  <td class="td">
                     <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetail(detail,i)"></button>
                   </td>
 
@@ -707,7 +707,7 @@
 
   <p id="directionDetail">Montant : {{purchaseSelected.montant}} {{purchaseSelected?.currency?.symbol}}</p>
   <p id="divisionDetail">Date d'enregistrement : {{purchaseSelected.entryDate | date:'yyyy-MM-dd HH:mm'}}</p>
-  <!-- <p-button  [routerLink]="['detailpurchase',purchaseSelected.id]" >Voir plus</p-button> -->
+  <p-button  [routerLink]="['detailpurchase',purchaseSelected.id]" >Voir plus</p-button>
 
   <!--<button pButton class=" mt-2 btnEdit">Modifier</button>-->
 </ng-template>

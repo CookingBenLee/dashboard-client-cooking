@@ -72,12 +72,13 @@ import { TableShortService } from 'src/app/services/tableShort/table-short.servi
 import { PaginatorModule } from 'primeng/paginator';
 import { ModalAddProductComponent } from './modal-add-product/modal-add-product.component';
 import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-course',
   standalone: true,
   imports: [ MaterialModule,
-    FormsModule,
+    FormsModule,RouterModule,
     ReactiveFormsModule,ConfirmDialogModule,
     TablerIconsModule,DialogModule,ToastModule,
     CommonModule,TableModule,PaginatorModule,DividerModule,
