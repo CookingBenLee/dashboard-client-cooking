@@ -85,7 +85,7 @@
 
 <!-- add -->
 <ng-template  #dialogTemplate>
-  <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
+  <mat-dialog-content style="max-width: 1200px; max-height: 400px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
@@ -94,7 +94,7 @@
     </div>
     <form  #productForm="ngForm">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -116,7 +116,7 @@
             />
           </mat-form-field>
         </div> -->
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -141,7 +141,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Unité</mat-label>
@@ -170,7 +170,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Marque</mat-label>
             <mat-select
@@ -183,7 +183,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Conditionnement</mat-label>
@@ -235,7 +235,7 @@
     <form #productForm="ngForm">
       <div class="row">
         <!-- Nom du produit -->
-        <div class="col-lg-12">
+        <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -247,7 +247,7 @@
           </mat-form-field>
         </div>
         <!-- Code du produit -->
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -257,9 +257,9 @@
               [(ngModel)]="productData.code"
             />
           </mat-form-field>
-        </div>
+        </div> -->
         <!-- Prix -->
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
@@ -270,7 +270,7 @@
               [(ngModel)]="productData.price"
             />
           </mat-form-field>
-        </div>
+        </div> -->
         <!-- Unité -->
         <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
@@ -302,7 +302,7 @@
           </mat-form-field>
         </div>
         <!-- Marque -->
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Marque</mat-label>
             <mat-select
@@ -315,7 +315,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div> -->
         <!-- Conditionnement -->
         <div class="col-lg-6">
           <mat-form-field appearance="outline" class="w-100">
