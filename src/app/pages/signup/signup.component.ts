@@ -1,16 +1,11 @@
-// import { productsData } from './../ui-components/tables/tables.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-// import { Router, RouterModule } from '@angular/router';
-// import { MessageService } from 'primeng/api';
-// import { ButtonModule } from 'primeng/button';
-// import { RippleModule } from 'primeng/ripple';
-// import { ToastModule } from 'primeng/toast';
 import { NoWhitespaceDirective } from 'src/app/directives/no-whitespace.directive';
 import { TypeCompte } from 'src/app/entity/TypeCompte';
 import { Utilisateur } from 'src/app/entity/Utilisateur';
+import { CountryService } from 'src/app/services/country/country.service';
 import { TypeAccountService } from 'src/app/services/type-account/type-account.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -27,9 +22,10 @@ export class SignupComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllAccountType();
+    // this.getCountry();
   }
   constructor( private userService: UserService, private typeAccountService: TypeAccountService,
-    private router: Router
+    private router: Router, private countryService: CountryService
   ){}
 
   id: number;
@@ -44,6 +40,8 @@ export class SignupComponent implements OnInit{
   utilisateur: Utilisateur = new Utilisateur();
   confirmation: String;
   errorMessage: string = '';
+  pays: any
+  adresse: any
 
   addUserAccount(form: NgForm){
     if (form.valid) {
@@ -90,5 +88,18 @@ export class SignupComponent implements OnInit{
       }
     );
   }
+
+  getCountry() {
+    this.countryService.getAll().then(
+      (data: any) => {
+        this.pays = data
+        console.log(data);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+
 }
 
