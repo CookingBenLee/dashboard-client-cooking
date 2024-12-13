@@ -26,8 +26,8 @@ export class ShopService {
         .then(res => res.data as Shop)
         .then(data => data);
   }
-  getAll(id: number) {
-    return this.http.get<any>(`${this.env.apiUrl}/shop/getallbyuser/${id}`)
+  getAll() {
+    return this.http.get<any>(`${this.env.apiUrl}/shop/getall`)
         .toPromise()
         .then(res => res.data as Shop[])
         .then(data => data);
