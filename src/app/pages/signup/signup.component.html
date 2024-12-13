@@ -127,19 +127,17 @@
               <label for="user-role">Pays :</label>
               <div class="input-container">
                 <select
-                  name="user-role"
-                  id="user-role"
-                  [(ngModel)]="pays"
-                  required
-                  #paysInput="ngModel"
-                  [ngClass]="{'ng-invalid': paysInput.invalid && paysInput.touched}">
-                  <option value="" disabled selected>Choisissez le Pays</option>
-
-                  <!-- Liez l'objet de compte complet, pas seulement l'ID -->
-                  <option *ngFor="let pay of pays" [ngValue]="pays">
-                    {{ pay.name }}
-                  </option>
-                </select>
+                name="user-role"
+                id="user-role"
+                [(ngModel)]="country"
+                required
+                #paysInput="ngModel"
+                [ngClass]="{'ng-invalid': paysInput.invalid && paysInput.touched}">
+                <option value="" disabled selected>Choisissez le Pays</option>
+                <option *ngFor="let pay of pays" [ngValue]="pay">
+                  {{ pay.name }}
+                </option>
+              </select>
                 <div *ngIf="paysInput.invalid && paysInput.touched" class="error-message">
                   Le pays est requis.
                 </div>

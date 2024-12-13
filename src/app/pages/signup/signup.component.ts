@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllAccountType();
-    // this.getCountry();
+    this.getCountry();
   }
   constructor( private userService: UserService, private typeAccountService: TypeAccountService,
     private router: Router, private countryService: CountryService
@@ -40,42 +40,42 @@ export class SignupComponent implements OnInit{
   utilisateur: Utilisateur = new Utilisateur();
   confirmation: String;
   errorMessage: string = '';
+  country: any
   pays: any
-  adresse: any
 
-  addUserAccount(form: NgForm){
+  adresse: any
+  addUserAccount(form: NgForm) {
     if (form.valid) {
       if (this.password === this.confirmation) {
-        console.log('Form Data: ', form.value);
-        console.log("valid");
         this.utilisateur.nom = this.nom;
         this.utilisateur.prenom = this.prenom;
         this.utilisateur.login = this.login;
-        this.utilisateur.password =this.password;
-        this.utilisateur.typeCompte = this.typeCompte
+        this.utilisateur.password = this.password;
+        this.utilisateur.typeCompte = this.typeCompte;
+        this.utilisateur.country = this.country; // Vérifiez ici
+        this.utilisateur.adresse = this.adresse;
 
-        console.log(this.utilisateur);
+        console.log('Données utilisateur envoyées:', this.utilisateur);
 
         this.userService.createUser(this.utilisateur).subscribe(
           (data: any) => {
-            console.log('User created:', data);
+            console.log('Utilisateur créé:', data);
             this.router.navigate(['/login'], {
-              queryParams: { success: 'Compte ' + this.utilisateur.prenom + ' ' + this.utilisateur.nom +   ' créé avec succès!' }
+              queryParams: {
+                success: `Compte ${this.utilisateur.prenom} ${this.utilisateur.nom} créé avec succès !`
+              }
             });
           },
           (error) => {
-            console.error('Error creating user:', error);
+            console.error('Erreur lors de la création de l\'utilisateur:', error);
           }
         );
       } else {
-         this.errorMessage = "Les mots de passe ne correspondent pas."
-
+        this.errorMessage = "Les mots de passe ne correspondent pas.";
       }
-
-
-
     }
   }
+
 
   getAllAccountType(): void {
     this.typeAccountService.getAllTypeAccount().subscribe(

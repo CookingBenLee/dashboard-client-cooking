@@ -16,12 +16,12 @@ export const navItems: NavItem[] = [
     children: [
       {
         displayName: 'Planifier un repas',
-        iconName: 'solar:round-alt-arrow-right-line-duotone',
+        iconName: 'tabler:point',
         route: 'home/repas',
       },
       {
         displayName: 'Liste des planifications',
-        iconName: 'solar:round-alt-arrow-right-line-duotone',
+        iconName: 'tabler:point',
         route: 'home/planification',
       }
     ],
@@ -44,17 +44,17 @@ export const navItems: NavItem[] = [
     children: [
       {
         displayName: 'Mes Produits',
-        iconName: 'solar:round-alt-arrow-right-line-duotone',
+        iconName: 'tabler:point',
         route: '/home/product',
       },
       {
         displayName: 'Mes courses',
-        iconName: 'solar:round-alt-arrow-right-line-duotone',
+        iconName: 'tabler:point',
         route: '/home/course',
       },
       {
         displayName: 'Catalogue de prix',
-        iconName: 'solar:round-alt-arrow-right-line-duotone',
+        iconName: 'tabler:point',
         route: '/home/catalogue-de-prix',
       }
     ],

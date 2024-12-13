@@ -5,6 +5,7 @@ import {
   Optional,
   ViewChild,
   AfterViewInit,
+  OnInit,
 } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,6 +22,7 @@ import { Employee } from 'src/app/pages/apps/employee/employee';
 import { EmployeeService } from 'src/app/services/apps/employee/employee-service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CountryService } from 'src/app/services/country/country.service';
 
 @Component({
   selector: 'app-acceuil',
@@ -36,8 +38,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './acceuil.component.html',
   styleUrl: './acceuil.component.scss'
 })
-export class AcceuilComponent {
-  
+export class AcceuilComponent  implements OnInit{
 
+  ngOnInit(): void {
+      this.getCountry()
+  }
+
+  pays: any
+  constructor( private countryService: CountryService){}
+
+  getCountry() {
+    this.countryService.getAll().then(
+      (data: any) => {
+        this.pays = data
+        console.log(data);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
 
 }
