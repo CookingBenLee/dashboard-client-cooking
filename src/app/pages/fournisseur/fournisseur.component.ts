@@ -135,9 +135,10 @@ closeDialog() {
 resetFields() {}
  //recuperation de valeurs
  getAll(){
+  const user = this.tokenService.getUser();
    const params=this.paginateService.getRequestParams(this.page,this.rows)
    console.log(params);
-   this.shopService.getAllPage(params).then(data =>{
+   this.shopService.getAllPage(params,user.id).then(data =>{
      console.log(data)
        //this.menus=data
        console.log(data)
