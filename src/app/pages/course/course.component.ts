@@ -52,7 +52,6 @@ import { RatingModule } from 'primeng/rating';
 import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
@@ -74,6 +73,7 @@ import { ModalAddProductComponent } from './modal-add-product/modal-add-product.
 import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
 import { RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
+import { use } from 'echarts';
 
 @Component({
   selector: 'app-course',
@@ -285,7 +285,8 @@ detailPurchasesForms2:any=[]
  }
 
  getAllShop(){
-   this.shopService.getAll().then(data =>{
+   const user = this.tokenService.getUser()
+   this.shopService.getAll(user.id).then(data =>{
      console.log(data)
 
      this.shops=data
