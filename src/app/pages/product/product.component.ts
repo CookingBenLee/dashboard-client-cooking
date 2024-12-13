@@ -253,7 +253,7 @@ export class ProductComponent implements OnInit {
   openDialogAdd() {
     this.resetFields();
     this.dialog.open(this.dialogTemplate, {
-      width: '1200px', height: '570px'
+      width: '1200px', height: '400px'
     });
   }
 
@@ -325,7 +325,7 @@ export class ProductComponent implements OnInit {
     this.productData.unit = this.units.find(unit => unit.id === product.unit.id);
     this.productData.conditioning = this.conditionings.find(cond => cond.id === product.conditioning?.id);
     this.dialog.open(this.dialogTemplateEdit, {
-      width: '1200px', height: '570px'
+      width: '1200px', height: '400px'
     });
   }
 

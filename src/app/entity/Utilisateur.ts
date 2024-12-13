@@ -1,3 +1,4 @@
+import { Country } from "../services/country/Country";
 import { TypeCompte } from "./TypeCompte";
 
 export class Utilisateur{
@@ -7,5 +8,7 @@ export class Utilisateur{
   login: String;
   password: String
   denomination: String;
-  typeCompte: TypeCompte[];
+  typeCompte: TypeCompte;
+  adresse: string;
+  country: Country;
 }

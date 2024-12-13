@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Utilisateur } from 'src/app/entity/Utilisateur';
 import { environment } from 'src/environments/environment';
 import { TokenService } from '../token/token.service';
+import { Country } from '../country/Country';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { TokenService } from '../token/token.service';
 export class UserService {
 
   private API_URL = environment.apiUrl;
-
+  private env=environment;
    readonly END_POINT_ADD = "/compteuser/new"
    readonly END_POINT_LOGIN = "/compteuser/login"
    readonly END_POINT_LOGOUT = "/logout"
@@ -22,7 +23,7 @@ export class UserService {
   }
 
 
-   
+
    login(login: string, password: string): Observable<any> {
     const user = { "password": password, "login": login };
     return this.http.post(this.API_URL + this.END_POINT_LOGIN, user);
@@ -32,6 +33,14 @@ export class UserService {
   logout(): Observable<any>{
     this.tokenService.signOut();
     return this.http.get(this.API_URL + this.END_POINT_LOGOUT );
+  }
+
+
+  getAll() {
+    return this.http.get<any>(`${this.env.apiUrl}/country/getall`)
+        .toPromise()
+        .then(res => res.data as Country[])
+        .then(data => data);
   }
 
 }
