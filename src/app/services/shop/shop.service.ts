@@ -32,8 +32,8 @@ export class ShopService {
         .then(res => res.data as Shop[])
         .then(data => data);
   }
-  getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.apiUrl}/shop/getallpage?page=`+param['page']+'&size='+param['size'])
+  getAllPage(param:any, id: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/shop/getallpagebyuser/${id}?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);

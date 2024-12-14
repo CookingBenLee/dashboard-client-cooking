@@ -52,7 +52,6 @@ import { RatingModule } from 'primeng/rating';
 import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';

@@ -18,6 +18,7 @@ import { TokenService } from 'src/app/services/token/token.service';
 import { UnitService } from 'src/app/services/unit/unit.service';
 import { TabViewModule } from 'primeng/tabview';
 import { use } from 'echarts';
+import { Product } from 'src/app/entity/Product';
 @Component({
   selector: 'app-catalogue-de-prix',
   standalone: true,
@@ -51,6 +52,7 @@ export class CatalogueDePrixComponent implements OnInit {
   prices:Price[]=[]
   positionModalConfirm:any
   motRecherche=''
+  products: Product[] = []
 
   // quantity:number=0;
   // value:number=0
@@ -93,41 +95,83 @@ export class CatalogueDePrixComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Price>([]);
   priceData: any = {};
+  price: any = {}
+
 
   getAll(){
-    const user= this.tokenService.getUser();
+    const user = this.tokenService.getUser();
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
-    this.priceService.getAllPage(params, user.id).then(data =>{
+    this.productService.getActivePage(params, user.id).then(data =>{
       console.log(data)
-        //this.menus=data
-        console.log(data)
-        //this.infos=data
-        console.log(data)
-        //this.contenus=data
+      //this.menus=data
+      console.log(data)
+      //this.infos=data
+      console.log(data)
+      //this.contenus=data
 
-        this.totalPages=data.totalPages
-          if(this.prices.length==0 || this.page==0){
-            this.resClient=data
-            // console.log(this.resClient)
-            this.prices=data.content
-            // console.log(this.totalPages)
-            this.totalRows=data.totalElements
-            // console.log(this.count)
-            this.dataSource.data = data.content;
-            console.log(this.dataSource);
+      this.totalPages=data.totalPages
+      if (this.products.length === 0 || this.page === 0) {
+        this.resClient = data;
+        this.products = data.content;
+        this.totalRows = data.totalElements;
+        this.dataSource.data = data.content; // Ajoutez cette ligne
+        console.log("new call")
 
-          }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
-            this.resClient.number =data.number
-            this.prices=data.content
-            // console.log(data)
-            this.dataSource.data = data.content;
-            console.log(this.dataSource);
-          }
-      }, error => {
-        //console.log(error)
-      })
+      } else if (
+        this.resClient.totalElements < data.totalElements ||
+        this.resClient.number !== data.number
+      ) {
+
+        this.resClient.number = data.number;
+        this.products=data.content;
+        this.dataSource.data=data.content; // Ajoutez cette ligne
+        console.log("added call")
+        console.log(this.dataSource.data)
+        console.log(this.products)
+
+      }
+      console.log(this.dataSource.data)
+
+    }, error => {
+      //console.log(error)
+    })
   }
+
+  // getAll(){
+  //   const user= this.tokenService.getUser();
+  //   const params=this.paginateService.getRequestParams(this.page,this.rows)
+  //   console.log(params);
+  //   this.priceService.getAllPage(params, user.id).then(data =>{
+  //     console.log(data)
+  //       //this.menus=data
+  //       console.log(data)
+  //       //this.infos=data
+  //       console.log(data)
+  //       //this.contenus=data
+
+  //       this.totalPages=data.totalPages
+  //         if(this.prices.length==0 || this.page==0){
+  //           this.resClient=data
+  //           // console.log(this.resClient)
+  //           this.prices=data.content
+  //           // console.log(this.totalPages)
+  //           this.totalRows=data.totalElements
+  //           // console.log(this.count)
+  //           this.dataSource.data = data.content;
+  //           console.log(this.dataSource);
+
+  //         }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
+  //           this.resClient.number =data.number
+  //           this.prices=data.content
+  //           // console.log(data)
+  //           this.dataSource.data = data.content;
+  //           console.log(this.dataSource);
+  //         }
+  //     }, error => {
+  //       //console.log(error)
+  //     })
+  // }
 
   recherche(){
 
@@ -171,11 +215,24 @@ export class CatalogueDePrixComponent implements OnInit {
     }
   }
 
-  openDialog(price: Price) {
-    this.resetFields();
-    this.priceData = { ...price };
+
+  openDialog(product: Product) {
+    // this.resetFields();
+    console.log(product.id, "id du produit");
+
+    this.priceService.byProduct(product.id).then(
+      (data: any) => {
+        this.price = data;
+        console.log(this.price);
+      },
+      (error) => {
+        console.error('Error fetching price data', error);
+      }
+    );
+
+
     this.dialog.open(this.dialogTemplate, {
-      width: '1200px', height: '200px'
+      width: '1200px', height: '300px'
     });
   }
 

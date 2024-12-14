@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit{
         this.utilisateur.login = this.login;
         this.utilisateur.password = this.password;
         this.utilisateur.typeCompte = this.typeCompte;
-        this.utilisateur.country = this.country; // Vérifiez ici
+        this.utilisateur.country = this.country;
         this.utilisateur.adresse = this.adresse;
 
         console.log('Données utilisateur envoyées:', this.utilisateur);
