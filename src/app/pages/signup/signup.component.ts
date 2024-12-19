@@ -47,13 +47,16 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { AddressService } from 'src/app/services/address/address.service';
 import { Address } from 'src/app/services/address/Address';
+import { Shop } from 'src/app/services/shop/Shop';
+import { Country } from 'src/app/services/country/Country';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
   imports: [CommonModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,RouterModule,
-    FormsModule,DropdownModule],
-  providers: [],
+    FormsModule,DropdownModule,DialogModule,InputNumberModule],
+  providers: [MessageService],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -67,7 +70,8 @@ export class SignupComponent implements OnInit{
     this.getAllAdress();
   }
   constructor( private userService: UserService, private typeAccountService: TypeAccountService,
-    private router: Router, private countryService: CountryService, private adresseService: AddressService
+    private router: Router, private countryService: CountryService, private adresseService: AddressService,
+    private messageService: MessageService,
   ){}
 
 
@@ -85,7 +89,7 @@ export class SignupComponent implements OnInit{
   errorMessage: string = '';
   country: any
   pays: any
-
+  selectePays: any
   adresse: Address[] = []
   addressesSelected: any
   addUserAccount(form: NgForm) {
@@ -150,7 +154,100 @@ export class SignupComponent implements OnInit{
       this.adresse=data
     })
   }
+  visibleAdd: boolean = false;
+  addNewAddress(){
+    this.visibleAdd = true;
+  }
 
-  addNewAddress(){}
+  addresss:Address[]=[]
+  shops:Shop[]=[]
+
+  positionModalConfirm:any
+  motRecherche=''
+
+  longitude?:number;
+  latitude?:number;
+
+  label?:string;
+  streetNumber?:string;
+  streetName?:string;
+  city?:string;
+
+  geolocation?:string;
+  contact?:string;
+  email?:string;
+
+  shop :Shop=new Shop();
+  countrys:Country[]
+
+  address: Address=new Address();
+  // description:string
+
+  isError:boolean
+  isSuccess:boolean
+  erreur:string
+  sucess:string
+  loading: boolean = false;
+
+  addressClicked: Address=new Address();
+  position:string
+  isEditaddressDialogVisible:boolean=false
+  isErrorEdit:boolean
+  isSuccessEdit:boolean
+  erreurEdit:string
+  sucessEdit:string
+  activeIndex: number = 0;
+
+  save(){
+    console.log("hello")
+    this.isError=false
+    this.isSuccess=false
+    this.loading=true
+
+    this.address.shop=this.shop
+    this.address.country=this.country
+
+    //recup des valeurs et attribution
+
+    this.address.label=this.label
+    this.address.longitude=this.longitude
+    this.address.latitude=this.latitude
+    this.address.streetNumber=this.streetNumber
+    this.address.city=this.city
+    this.address.streetName=this.streetName
+
+    this.address.geolocation=this.geolocation
+    // this.address.contact=this.contact
+    // this.address.email=this.email
+
+    this.adresseService.create(this.address).then((data) =>{
+      this.loading=false
+      //this.isSuccess=true
+      this.sucess="address created !"
+      this.label=""
+      this.geolocation=""
+      this.email=""
+      this.contact=""
+      this.streetName=""
+
+      this.city=""
+      this.streetNumber=""
+      this.activeIndex=0
+      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
+
+
+    },
+    (error: any)=>{
+      //this.isError=true
+      if(error.error.message=='ko'){
+        this.erreur=error.error.data
+        }else{
+        this.erreur="Server related error"
+      }
+      this.loading=false
+      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+
+    });
+  }
 }
 
