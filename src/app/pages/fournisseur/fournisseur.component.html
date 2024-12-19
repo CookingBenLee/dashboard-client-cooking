@@ -87,44 +87,36 @@
 
 
 <!-- add -->
-<ng-template  #dialogTemplate>
+<ng-template #dialogTemplate>
   <mat-dialog-content style="max-width: 1200px; max-height: 400px;">
-     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
+    <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
         >Ajout d'un fournisseur
       </h5>
     </div>
-    <form  #shopForm="ngForm">
+    <form #shopForm="ngForm">
       <div class="row">
         <div class="col-lg-6">
+          <label for="name">Nom du Fournisseur</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              placeholder="Nom du Fournisseur"
+              id="name"
+              placeholder="Entrez le nom du fournisseur"
               required
               name="name"
               [(ngModel)]="shopData.name"
             />
           </mat-form-field>
         </div>
-        <!-- <div class="col-lg-6">
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              placeholder="acronym"
-              required
-              name="acronym"
-              [(ngModel)]="shopData.acronym"
-            />
-          </mat-form-field>
-        </div> -->
         <div class="col-lg-6">
+          <label for="addresse">Adresse</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              type="text"
-              placeholder="addresse"
+              id="addresse"
+              placeholder="Entrez l'adresse"
               required
               name="addresse"
               [(ngModel)]="addresse.label"
@@ -132,9 +124,10 @@
           </mat-form-field>
         </div>
         <div class="col-lg-6">
+          <label for="country">Pays</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Pays</mat-label>
             <mat-select
+              id="country"
               [(ngModel)]="addresse.country"
               name="brand"
               required
@@ -145,12 +138,13 @@
             </mat-select>
           </mat-form-field>
         </div>
-
         <div class="col-lg-6">
+          <label for="city">Ville</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              placeholder="Ville"
+              id="city"
+              placeholder="Entrez la ville"
               required
               name="city"
               [(ngModel)]="addresse.city"
@@ -158,10 +152,12 @@
           </mat-form-field>
         </div>
         <div class="col-lg-12">
+          <label for="geolocation">Géolocalisation</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              placeholder="Geolocation"
+              id="geolocation"
+              placeholder="Entrez les coordonnées de géolocalisation"
               required
               name="geolocation"
               [(ngModel)]="addresse.geolocation"
@@ -170,7 +166,6 @@
         </div>
       </div>
       <div class="row">
-
         <div class="col-lg-6">
           <button mat-flat-button color="primary" class="large-button" (click)="save()" [disabled]="!shopForm.valid"> Ajouter </button>
         </div>
@@ -178,28 +173,31 @@
           <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
         </div>
       </div>
-
     </form>
   </mat-dialog-content>
 </ng-template>
 
 
+
 <!-- edit -->
-<ng-template  #dialogTemplateEdit>
+
+<ng-template #dialogTemplateEdit>
   <mat-dialog-content style="max-width: 1200px; max-height: 400px;">
-     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
+    <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
         >Modification d'un fournisseur
       </h5>
     </div>
-    <form  #shopForm="ngForm">
+    <form #shopForm="ngForm">
       <div class="row">
         <div class="col-lg-6">
+          <label for="name">Nom du Fournisseur</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              placeholder="Nom du Fournisseur"
+              id="name"
+              placeholder="Entrez le nom du fournisseur"
               required
               name="name"
               [(ngModel)]="shopData.name"
@@ -207,10 +205,12 @@
           </mat-form-field>
         </div>
         <div class="col-lg-6">
+          <label for="acronym">Acronyme</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              placeholder="acronym"
+              id="acronym"
+              placeholder="Entrez l'acronyme"
               required
               name="acronym"
               [(ngModel)]="shopData.acronym"
@@ -218,11 +218,12 @@
           </mat-form-field>
         </div>
         <div class="col-lg-6">
+          <label for="addresse">Adresse</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              type="text"
-              placeholder="addresse"
+              id="addresse"
+              placeholder="Entrez l'adresse"
               required
               name="addresse"
               [(ngModel)]="addresse.label"
@@ -230,9 +231,10 @@
           </mat-form-field>
         </div>
         <div class="col-lg-6">
+          <label for="country">Pays</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Pays</mat-label>
             <mat-select
+              id="country"
               [(ngModel)]="addresse.country"
               name="brand"
               required
@@ -243,12 +245,13 @@
             </mat-select>
           </mat-form-field>
         </div>
-
         <div class="col-lg-6">
+          <label for="city">Ville</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              placeholder="Ville"
+              id="city"
+              placeholder="Entrez la ville"
               required
               name="city"
               [(ngModel)]="addresse.city"
@@ -256,10 +259,12 @@
           </mat-form-field>
         </div>
         <div class="col-lg-6">
+          <label for="geolocation">Géolocalisation</label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               matInput
-              placeholder="Geolocation"
+              id="geolocation"
+              placeholder="Entrez les coordonnées de géolocalisation"
               required
               name="geolocation"
               [(ngModel)]="addresse.geolocation"
@@ -268,7 +273,6 @@
         </div>
       </div>
       <div class="row">
-
         <div class="col-lg-6">
           <button mat-flat-button color="primary" class="large-button" (click)="update()" [disabled]="!shopForm.valid"> Modifier </button>
         </div>
@@ -276,9 +280,10 @@
           <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
         </div>
       </div>
-
     </form>
   </mat-dialog-content>
 </ng-template>
+
+
 <p-toast position="top-center" key="tc"></p-toast>
 <p-toast key="shop"></p-toast>
