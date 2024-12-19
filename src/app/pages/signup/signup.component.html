@@ -99,7 +99,6 @@
                 <small style="color: red; margin-top: 5px;">{{ errorMessage }}</small>
               </div>
             </div>
-            <!-- confirmation de mot de passe -->
             <div class="form-group" style="flex: 1;">
               <label for="password">Confirmation de mot de passe :</label>
               <div class="input-container password-container">
@@ -121,8 +120,37 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <div class="dropdown-with-button">
+
+              <p-dropdown
+                  required="true"
+                  [options]="adresse"
+                  name="countries"
+                  [style]="{ width: '100%' }"
+                  [(ngModel)]="addressesSelected"
+                  optionLabel="label"
+                  [filter]="true"
+                  filterBy="label"
+                  [showClear]="true"
+                  placeholder="Selectionnez votre adresse">
+                      <ng-template pTemplate="selectedItem" let-selectedOption>
+                          <div class="flex align-items-center gap-2">
+                              <div>{{ selectedOption.country.name }},{{ selectedOption.city }}, {{ selectedOption.label }}, {{ selectedOption.streetName }}</div>
+                          </div>
+                      </ng-template>
+                      <ng-template let-homeee pTemplate="item">
+                          <div class="flex align-items-center gap-2">
+                              <div>{{ homeee.country.name }}, {{ homeee.city}}, {{ homeee.label}}, {{ homeee.streetName}}</div>
+                          </div>
+                      </ng-template>
+              </p-dropdown>
+              <button type="button" class="btn-dropdown-action">+</button>
+            </div>
+          </div>
+
           <!-- Section localisation -->
-          <div class="information">
+          <!-- <div class="information">
             <div class="form-group">
               <label for="user-role">Pays :</label>
               <div class="input-container">
@@ -143,9 +171,8 @@
                 </div>
               </div>
             </div>
-            <!-- confirmation de mot de passe -->
             <div class="form-group" style="flex: 1;">
-              <label for="password">Adresse :</label>
+              <label for="password">Ville :</label>
               <div class="input-container password-container">
                 <input
                   type="text"
@@ -158,34 +185,78 @@
                   #adresseInput="ngModel"
                   [ngClass]="{'ng-invalid': adresseInput.invalid && adresseInput.touched}" />
                 <div *ngIf="adresseInput.invalid && adresseInput.touched" class="error-message">
-                  L'adresse est requis.
+                  La ville est requis.
                 </div>
                 <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
               </div>
             </div>
-          </div>
-          <!-- Section Type de Compte -->
-          <div class="form-group">
-            <label for="user-role">Type de compte :</label>
-            <div class="input-container">
-              <select
-                name="user-role"
-                id="user-role"
-                [(ngModel)]="typeCompte"
-                required
-                #typeCompteInput="ngModel"
-                [ngClass]="{'ng-invalid': typeCompteInput.invalid && typeCompteInput.touched}">
-                <option value="" disabled selected>Choisissez le type de compte</option>
+          </div> -->
 
-                <!-- Liez l'objet de compte complet, pas seulement l'ID -->
-                <option *ngFor="let account of typeAccounts" [ngValue]="account">
-                  {{ account.libelle }}
-                </option>
-              </select>
-              <div *ngIf="typeCompteInput.invalid && typeCompteInput.touched" class="error-message">
-                Le type de compte est requis.
+          <!-- <div class="information">
+            <div class="form-group" style="flex: 1;">
+              <label for="password">Numero Rue :</label>
+              <div class="input-container password-container">
+                <input
+                  type="text"
+                  name="adresse"
+                  id="adresse"
+                  placeholder="mumero de la rue"
+                  required
+                  [(ngModel)]="adresse"
+                  noWhitespace
+                  #adresseInput="ngModel"
+                  [ngClass]="{'ng-invalid': adresseInput.invalid && adresseInput.touched}" />
+                <div *ngIf="adresseInput.invalid && adresseInput.touched" class="error-message">
+                  La numero de la rue est requis.
+                </div>
+                <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
               </div>
             </div>
+
+            <div class="form-group" style="flex: 1;">
+              <label for="password">Nom Rue :</label>
+              <div class="input-container password-container">
+                <input
+                  type="text"
+                  name="adresse"
+                  id="adresse"
+                  placeholder="nom de la rue"
+                  required
+                  [(ngModel)]="adresse"
+                  noWhitespace
+                  #adresseInput="ngModel"
+                  [ngClass]="{'ng-invalid': adresseInput.invalid && adresseInput.touched}" />
+                <div *ngIf="adresseInput.invalid && adresseInput.touched" class="error-message">
+                  Le nom de la rue est requis.
+                </div>
+                <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
+              </div>
+            </div>
+          </div> -->
+          <!-- Section Type de Compte -->
+          <div class="form-group">
+            <p-dropdown
+            required="true"
+            [options]="typeAccounts"
+            name="countries"
+            [style]="{ width: '100%' }"
+            [(ngModel)]="typeCompte"
+            optionLabel="libelle"
+            [filter]="true"
+            filterBy="libelle"
+            [showClear]="true"
+            placeholder="Selectionnez un type de compte">
+                <ng-template pTemplate="selectedItem" let-selectedOption>
+                    <div class="flex align-items-center gap-2">
+                        <div>{{ selectedOption.libelle }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-homeee pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>{{ homeee.libelle }}</div>
+                    </div>
+                </ng-template>
+        </p-dropdown>
           </div>
 
           <div class="remember">
