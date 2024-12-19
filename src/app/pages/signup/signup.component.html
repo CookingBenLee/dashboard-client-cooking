@@ -284,9 +284,80 @@
 
 
   <p-dialog header="Enregistrement d'adresse" [modal]="true" [(visible)]="visibleAdd"
-    [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <div class="col-12">
+    <div class="top ">
+    <form #fCreate="ngForm">
+      <div class="col-12 grid form-grid">
+        <!-- Ligne 1 -->
+        <div class="field col-6">
+          <label htmlFor="country">Pays</label>
+          <p-dropdown
+            id="dropdown"
+            formControlName="addressType"
+            [options]="pays"
+            optionLabel="name"
+            [style]="{ width: '100%' }"
+            [(ngModel)]="country"
+            placeholder="Sélectionner votre pays"
+          ></p-dropdown>
+        </div>
 
+        <div class="field col-6">
+          <label htmlFor="label">Label</label>
+          <input pInputText id="label" [(ngModel)]="label" name="label" type="text" placeholder="Label de l'adresse" required />
+        </div>
+
+        <!-- Ligne 2 -->
+        <div class="field col-6">
+          <label htmlFor="city">Ville</label>
+          <input pInputText id="city" [(ngModel)]="city" name="city" type="text" placeholder="Ville" required />
+        </div>
+        <div class="field col-6">
+          <label htmlFor="contact">Contact</label>
+          <input pInputText id="contact" [(ngModel)]="contact" name="contact" type="text" placeholder="Contact" required />
+        </div>
+
+        <!-- Ligne 3 -->
+        <div class="field col-6">
+          <label htmlFor="email">Email</label>
+          <input pInputText id="email" [(ngModel)]="email" name="email" type="email" placeholder="Adresse email" />
+        </div>
+        <div class="field col-6">
+          <label htmlFor="streetName">Rue</label>
+          <input pInputText id="streetName" [(ngModel)]="streetName" name="streetName" type="text" placeholder="Nom de la rue" />
+        </div>
+
+        <!-- Ligne 4 -->
+        <div class="field col-6">
+          <label htmlFor="geolocalisation">Geolocalisation</label>
+          <input pInputText id="geolocalisation" [(ngModel)]="geolocation" name="geolocalisation" type="text" placeholder="Geolocalisation" />
+        </div>
+        <div class="field col-6">
+          <label htmlFor="streetNumber">Numéro de rue</label>
+          <p-inputNumber name="streetNumber" [style]="{ width: '100%' }" id="streetNumber" [(ngModel)]="streetNumber" [showButtons]="true" [min]="0"></p-inputNumber>
+        </div>
+
+        <!-- Ligne 5 -->
+        <div class="field col-6">
+          <label htmlFor="longitude">Longitude</label>
+          <p-inputNumber name="longitude" [style]="{ width: '100%' }" id="longitude" [(ngModel)]="longitude" [showButtons]="true" [min]="0"></p-inputNumber>
+        </div>
+        <div class="field col-6">
+          <label htmlFor="latitude">Latitude</label>
+          <p-inputNumber name="latitude" [style]="{ width: '100%' }" id="latitude" [(ngModel)]="latitude" [showButtons]="true" [min]="0"></p-inputNumber>
+        </div>
+      </div>
+
+
+      <div style="margin-top: 20px;" class="form-group">
+        <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Créer un compte</button>
+      </div>
+    </form>
+    </div>
+  </div>
 </p-dialog>
+
 
 </body>
 </html>

@@ -50,12 +50,20 @@ import { Address } from 'src/app/services/address/Address';
 import { Shop } from 'src/app/services/shop/Shop';
 import { Country } from 'src/app/services/country/Country';
 import { MessageService } from 'primeng/api';
+import { BrowserModule } from '@angular/platform-browser';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
   imports: [CommonModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,RouterModule,
-    FormsModule,DropdownModule,DialogModule,InputNumberModule],
+    FormsModule,DropdownModule,DialogModule,InputNumberModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DialogModule,
+    DropdownModule,
+    InputTextModule,
+    ButtonModule,],
   providers: [MessageService],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'

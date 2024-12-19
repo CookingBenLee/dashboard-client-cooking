@@ -304,6 +304,35 @@ select option {
 
 
 
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Espace entre les colonnes et les lignes */
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Assure la taille uniforme des champs */
+}
+
+.col-6 {
+  flex: 0 0 calc(50% - 0.5rem); /* Chaque champ occupe 50% de la largeur avec un espace entre */
+  box-sizing: border-box;
+}
+
+.field label {
+  margin-bottom: 0.5rem; /* Espacement entre le label et le champ */
+  font-weight: bold;
+}
+
+.field input,
+.field p-dropdown,
+.field p-inputNumber {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 
 
 
