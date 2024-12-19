@@ -59,11 +59,11 @@ import { ButtonModule } from 'primeng/button';
   imports: [CommonModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,RouterModule,
     FormsModule,DropdownModule,DialogModule,InputNumberModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,ToastModule,
     DialogModule,
     DropdownModule,
     InputTextModule,
-    ButtonModule,],
+    ButtonModule],
   providers: [MessageService],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
@@ -132,6 +132,10 @@ export class SignupComponent implements OnInit{
     }
   }
 
+  saveme(){
+    console.log("passeeeeee");
+
+  }
 
   getAllAccountType(): void {
     this.typeAccountService.getAllTypeAccount().subscribe(
@@ -205,15 +209,17 @@ export class SignupComponent implements OnInit{
   erreurEdit:string
   sucessEdit:string
   activeIndex: number = 0;
-
+  countrySelect: any
   save(){
     console.log("hello")
+    console.log("saveeeeeeeeeeeeeeee");
+
     this.isError=false
     this.isSuccess=false
     this.loading=true
 
     this.address.shop=this.shop
-    this.address.country=this.country
+    this.address.country=this.countrySelect
 
     //recup des valeurs et attribution
 
@@ -227,6 +233,8 @@ export class SignupComponent implements OnInit{
     this.address.geolocation=this.geolocation
     // this.address.contact=this.contact
     // this.address.email=this.email
+
+    console.log("envoyes", this.address);
 
     this.adresseService.create(this.address).then((data) =>{
       this.loading=false
@@ -242,7 +250,8 @@ export class SignupComponent implements OnInit{
       this.streetNumber=""
       this.activeIndex=0
       this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
-
+      this.visibleAdd = false;
+      this.getAllAdress();
 
     },
     (error: any)=>{
@@ -254,7 +263,8 @@ export class SignupComponent implements OnInit{
       }
       this.loading=false
       this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
-
+      this.visibleAdd = false;
+      this.getAllAdress();
     });
   }
 }
