@@ -1,3 +1,4 @@
+import { label } from './../apps/contact-app/listening/categories';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
@@ -108,8 +109,8 @@ export class SignupComponent implements OnInit{
         this.utilisateur.login = this.login;
         this.utilisateur.password = this.password;
         this.utilisateur.typeCompte = this.typeCompte;
-        this.utilisateur.country = this.country;
-        this.utilisateur.adresse = this.addressesSelected;
+        this.utilisateur.country = this.addressesSelected.country;
+        this.utilisateur.adresse = this.addressesSelected.label;
 
         console.log('Données utilisateur envoyées:', this.utilisateur);
 
