@@ -88,7 +88,7 @@
 
 <!-- add -->
 <ng-template #dialogTemplate>
-  <mat-dialog-content style="max-width: 1200px; max-height: 400px;">
+  <mat-dialog-content style="max-width: 1200px; max-height: 550px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
@@ -148,6 +148,32 @@
               required
               name="city"
               [(ngModel)]="addresse.city"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <label for="name">Nom de la Rue</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              id="name"
+              placeholder="Entrez le nom de la rue"
+              required
+              name="name"
+              [(ngModel)]="shopData.nameStreet"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <label for="addresse">Numero de la Rue</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              id="addresse"
+              placeholder="Entrez le numero de la rue"
+              required
+              name="addresse"
+              [(ngModel)]="shopData.nameStreet"
             />
           </mat-form-field>
         </div>
@@ -255,6 +281,32 @@
               required
               name="city"
               [(ngModel)]="addresse.city"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <label for="name">Nom de la Rue</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              id="name"
+              placeholder="Entrez le nom de la rue"
+              required
+              name="name"
+              [(ngModel)]="shopData.nameStreet"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <label for="addresse">Numero de la Rue</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              id="addresse"
+              placeholder="Entrez le numero de la rue"
+              required
+              name="addresse"
+              [(ngModel)]="shopData.nameStreet"
             />
           </mat-form-field>
         </div>
