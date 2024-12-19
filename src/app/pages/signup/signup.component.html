@@ -145,7 +145,7 @@
                           </div>
                       </ng-template>
               </p-dropdown>
-              <button type="button" class="btn-dropdown-action">+</button>
+              <button type="button" (click)="addNewAddress()" class="btn-dropdown-action">+</button>
             </div>
           </div>
 
@@ -278,5 +278,15 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+  <p-dialog header="Enregistrement d'adresse" [modal]="true" [(visible)]="visibleAdd"
+    [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+
+</p-dialog>
+
 </body>
 </html>
