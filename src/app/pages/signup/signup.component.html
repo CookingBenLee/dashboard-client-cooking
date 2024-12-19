@@ -120,34 +120,6 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <div class="dropdown-with-button">
-
-              <p-dropdown
-                  required="true"
-                  [options]="adresse"
-                  name="countries"
-                  [style]="{ width: '100%' }"
-                  [(ngModel)]="addressesSelected"
-                  optionLabel="label"
-                  [filter]="true"
-                  filterBy="label"
-                  [showClear]="true"
-                  placeholder="Selectionnez votre adresse">
-                      <ng-template pTemplate="selectedItem" let-selectedOption>
-                          <div class="flex align-items-center gap-2">
-                              <div>{{ selectedOption.country.name }},{{ selectedOption.city }}, {{ selectedOption.label }}, {{ selectedOption.streetName }}</div>
-                          </div>
-                      </ng-template>
-                      <ng-template let-homeee pTemplate="item">
-                          <div class="flex align-items-center gap-2">
-                              <div>{{ homeee.country.name }}, {{ homeee.city}}, {{ homeee.label}}, {{ homeee.streetName}}</div>
-                          </div>
-                      </ng-template>
-              </p-dropdown>
-              <button type="button" (click)="addNewAddress()" class="btn-dropdown-action">+</button>
-            </div>
-          </div>
 
           <!-- Section localisation -->
           <!-- <div class="information">
@@ -259,6 +231,36 @@
         </p-dropdown>
           </div>
 
+          <div class="form-group">
+            <div class="dropdown-with-button">
+
+              <p-dropdown
+                  required="true"
+                  [options]="adresse"
+                  name="countries"
+                  [style]="{ width: '100%' }"
+                  [(ngModel)]="addressesSelected"
+                  optionLabel="label"
+                  [filter]="true"
+                  filterBy="label"
+                  [showClear]="true"
+                  placeholder="Selectionnez votre adresse">
+                      <ng-template pTemplate="selectedItem" let-selectedOption>
+                          <div class="flex align-items-center gap-2">
+                              <div>{{ selectedOption.country.name }},{{ selectedOption.city }}, {{ selectedOption.label }}, {{ selectedOption.streetName }}</div>
+                          </div>
+                      </ng-template>
+                      <ng-template let-homeee pTemplate="item">
+                          <div class="flex align-items-center gap-2">
+                              <div>{{ homeee.country.name }}, {{ homeee.city}}, {{ homeee.label}}, {{ homeee.streetName}}</div>
+                          </div>
+                      </ng-template>
+              </p-dropdown>
+              <button type="button" (click)="addNewAddress()" class="btn-dropdown-action">+</button>
+            </div>
+          </div>
+
+
           <div class="remember">
             <input type="checkbox" name="remember" id="remember" />
             <label for="remember">Accepter les termes et conditions</label>
@@ -285,79 +287,157 @@
 
   <p-dialog header="Enregistrement d'adresse" [modal]="true" [(visible)]="visibleAdd"
   [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-  <div class="col-12">
-    <div class="top ">
-    <form #fCreate="ngForm">
-      <div class="col-12 grid form-grid">
-        <!-- Ligne 1 -->
-        <div class="field col-6">
-          <label htmlFor="country">Pays</label>
-          <p-dropdown
-            id="dropdown"
-            formControlName="addressType"
-            [options]="pays"
-            optionLabel="name"
-            [style]="{ width: '100%' }"
-            [(ngModel)]="country"
-            placeholder="Sélectionner votre pays"
-          ></p-dropdown>
-        </div>
+    <div class="col-12">
+      <div class="top">
+        <form #fCreate="ngForm" (ngSubmit)="save()">
+          <div class="col-12 grid form-grid">
+            <!-- Ligne 1 -->
+            <div class="field col-6">
+              <label htmlFor="country">Pays</label>
+              <p-dropdown
+                id="dropdown"
+                [(ngModel)]="countrySelect"
+                name="countrySelect"
+                [options]="pays"
+                optionLabel="name"
+                placeholder="Sélectionner votre pays"
+                [style]="{ width: '100%' }"
+                required
+            ></p-dropdown>
 
-        <div class="field col-6">
-          <label htmlFor="label">Label</label>
-          <input pInputText id="label" [(ngModel)]="label" name="label" type="text" placeholder="Label de l'adresse" required />
-        </div>
+            </div>
 
-        <!-- Ligne 2 -->
-        <div class="field col-6">
-          <label htmlFor="city">Ville</label>
-          <input pInputText id="city" [(ngModel)]="city" name="city" type="text" placeholder="Ville" required />
-        </div>
-        <div class="field col-6">
-          <label htmlFor="contact">Contact</label>
-          <input pInputText id="contact" [(ngModel)]="contact" name="contact" type="text" placeholder="Contact" required />
-        </div>
+            <div class="field col-6">
+              <label htmlFor="label">Label</label>
+              <input pInputText
+                id="label"
+                [(ngModel)]="label"
+                name="label"
+                type="text"
+                placeholder="Label de l'adresse"
+                required
+                #labelInput="ngModel"
+                [ngClass]="{'ng-invalid': labelInput.invalid && labelInput.touched}" />
+              <div *ngIf="labelInput.invalid && labelInput.touched" class="error-message">
+                Le label est requis.
+              </div>
+            </div>
 
-        <!-- Ligne 3 -->
-        <div class="field col-6">
-          <label htmlFor="email">Email</label>
-          <input pInputText id="email" [(ngModel)]="email" name="email" type="email" placeholder="Adresse email" />
-        </div>
-        <div class="field col-6">
-          <label htmlFor="streetName">Rue</label>
-          <input pInputText id="streetName" [(ngModel)]="streetName" name="streetName" type="text" placeholder="Nom de la rue" />
-        </div>
+            <!-- Ligne 2 -->
+            <div class="field col-6">
+              <label htmlFor="city">Ville</label>
+              <input pInputText
+                id="city"
+                [(ngModel)]="city"
+                name="city"
+                type="text"
+                placeholder="Ville"
+                required
+                #cityInput="ngModel"
+                [ngClass]="{'ng-invalid': cityInput.invalid && cityInput.touched}" />
+              <div *ngIf="cityInput.invalid && cityInput.touched" class="error-message">
+                La ville est requise.
+              </div>
+            </div>
 
-        <!-- Ligne 4 -->
-        <div class="field col-6">
-          <label htmlFor="geolocalisation">Geolocalisation</label>
-          <input pInputText id="geolocalisation" [(ngModel)]="geolocation" name="geolocalisation" type="text" placeholder="Geolocalisation" />
-        </div>
-        <div class="field col-6">
-          <label htmlFor="streetNumber">Numéro de rue</label>
-          <p-inputNumber name="streetNumber" [style]="{ width: '100%' }" id="streetNumber" [(ngModel)]="streetNumber" [showButtons]="true" [min]="0"></p-inputNumber>
-        </div>
+            <!-- Ligne 3 -->
+            <div class="field col-6">
+              <label htmlFor="streetName">Rue</label>
+              <input pInputText
+                id="streetName"
+                [(ngModel)]="streetName"
+                name="streetName"
+                type="text"
+                placeholder="Nom de la rue"
+                required
+                #streetNameInput="ngModel"
+                [ngClass]="{'ng-invalid': streetNameInput.invalid && streetNameInput.touched}" />
+              <div *ngIf="streetNameInput.invalid && streetNameInput.touched" class="error-message">
+                Le nom de la rue est requis.
+              </div>
+            </div>
 
-        <!-- Ligne 5 -->
-        <div class="field col-6">
-          <label htmlFor="longitude">Longitude</label>
-          <p-inputNumber name="longitude" [style]="{ width: '100%' }" id="longitude" [(ngModel)]="longitude" [showButtons]="true" [min]="0"></p-inputNumber>
-        </div>
-        <div class="field col-6">
-          <label htmlFor="latitude">Latitude</label>
-          <p-inputNumber name="latitude" [style]="{ width: '100%' }" id="latitude" [(ngModel)]="latitude" [showButtons]="true" [min]="0"></p-inputNumber>
-        </div>
+            <!-- Ligne 4 -->
+            <div class="field col-6">
+              <label htmlFor="geolocalisation">Geolocalisation</label>
+              <input pInputText
+                id="geolocalisation"
+                [(ngModel)]="geolocation"
+                name="geolocalisation"
+                type="text"
+                placeholder="Geolocalisation"
+                required
+                #geolocationInput="ngModel"
+                [ngClass]="{'ng-invalid': geolocationInput.invalid && geolocationInput.touched}" />
+              <div *ngIf="geolocationInput.invalid && geolocationInput.touched" class="error-message">
+                La géolocalisation est requise.
+              </div>
+            </div>
+            <div class="field col-6">
+              <label htmlFor="streetNumber">Numéro de rue</label>
+              <p-inputNumber
+                name="streetNumber"
+                [style]="{ width: '100%' }"
+                id="streetNumber"
+                [(ngModel)]="streetNumber"
+                [showButtons]="true"
+                [min]="0"
+                required
+                #streetNumberInput="ngModel"
+                [ngClass]="{'ng-invalid': streetNumberInput.invalid && streetNumberInput.touched}"
+              ></p-inputNumber>
+              <div *ngIf="streetNumberInput.invalid && streetNumberInput.touched" class="error-message">
+                Le numéro de rue est requis.
+              </div>
+            </div>
+
+            <!-- Ligne 5 -->
+            <div class="field col-6">
+              <label htmlFor="longitude">Longitude</label>
+              <p-inputNumber
+                name="longitude"
+                [style]="{ width: '100%' }"
+                id="longitude"
+                [(ngModel)]="longitude"
+                [showButtons]="true"
+                [min]="0"
+                required
+                #longitudeInput="ngModel"
+                [ngClass]="{'ng-invalid': longitudeInput.invalid && longitudeInput.touched}"
+              ></p-inputNumber>
+              <div *ngIf="longitudeInput.invalid && longitudeInput.touched" class="error-message">
+                La longitude est requise.
+              </div>
+            </div>
+            <div class="field col-6">
+              <label htmlFor="latitude">Latitude</label>
+              <p-inputNumber
+                name="latitude"
+                [style]="{ width: '100%' }"
+                id="latitude"
+                [(ngModel)]="latitude"
+                [showButtons]="true"
+                [min]="0"
+                required
+                #latitudeInput="ngModel"
+                [ngClass]="{'ng-invalid': latitudeInput.invalid && latitudeInput.touched}"
+              ></p-inputNumber>
+              <div *ngIf="latitudeInput.invalid && latitudeInput.touched" class="error-message">
+                La latitude est requise.
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;" class="form-group">
+            <button type="submit" class="btn-login" >Enregistrer votre Adresse</button>
+          </div>
+        </form>
       </div>
-
-
-      <div style="margin-top: 20px;" class="form-group">
-        <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Créer un compte</button>
-      </div>
-    </form>
     </div>
-  </div>
-</p-dialog>
+  </p-dialog>
 
 
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast></p-toast>
 </body>
 </html>
