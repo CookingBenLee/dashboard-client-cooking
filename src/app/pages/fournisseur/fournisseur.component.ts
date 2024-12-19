@@ -68,7 +68,8 @@ export class FournisseurComponent implements OnInit{
  acronym:string
  contact:string
  email:string
-
+  nameStreet: string
+  numbertreet: number
  shop: Shop=new Shop();
 
  isError:boolean
@@ -113,7 +114,7 @@ export class FournisseurComponent implements OnInit{
  openDialogAdd() {
   this.resetFields();
   this.dialog.open(this.dialogTemplate, {
-    width: '1200px', height: '400px'
+    width: '1200px', height: '550px'
   });
 }
 
@@ -304,7 +305,7 @@ resetFields() {}
   console.log(this.shopData, this.addresse);
   this.dialog.open(this.dialogTemplateEdit, {
     width: '1200px',
-    height: '400px',
+    height: '550px',
   });
 }
 
