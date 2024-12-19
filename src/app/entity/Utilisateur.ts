@@ -1,3 +1,4 @@
+import { Address } from "../services/address/Address";
 import { Country } from "../services/country/Country";
 import { TypeCompte } from "./TypeCompte";
 
@@ -9,6 +10,6 @@ export class Utilisateur{
   password: String
   denomination: String;
   typeCompte: TypeCompte;
-  adresse: string;
+  adresse: Address;
   country: Country;
 }

@@ -37,10 +37,12 @@ body, html {
 /* Left Side (Background image section) */
 .login-image-section {
   flex: 1;
-  // background-image: url("./assets/images/logimage.jpg");
   background-size: cover;
   background-position: center;
   border-right: #ff0000;
+  position: fixed; /* L'image reste fixe */
+  height: 100%; /* Occupe toute la hauteur de la fenêtre */
+  width: 50%; /* Ajustez selon votre mise en page */
 }
 
 /* Right Side (Form Section) */
@@ -49,8 +51,13 @@ body, html {
   background-color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Alignement en haut */
+  overflow-y: auto; /* Ajoute un défilement vertical */
+  height: 100vh; /* Limite à la hauteur de la fenêtre */
+  margin-left: 50%; /* Décale pour éviter de chevaucher l'image */
 }
+
+
 .remember {
   display: flex;
   align-items: center; /* Aligne verticalement la case à cocher et le texte */
@@ -236,6 +243,7 @@ select option {
   padding: 10px; /* Espacement interne pour les options */
 }
 
+
 /* Responsive Design */
 /* Général : Champs prennent 100% de la largeur sur petits écrans */
 @media (max-width: 768px) {
@@ -266,6 +274,36 @@ select option {
     font-size: 1rem;
   }
 }
+
+
+.dropdown-with-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-with-button p-dropdown {
+  flex: 1; /* Prend toute la largeur possible */
+}
+
+.btn-dropdown-action {
+  padding: 13px 20px;
+  margin-left: 10px;
+  font-size: 1rem;
+  background-color: #f50000; /* Couleur de fond rouge */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-dropdown-action:hover {
+  background-color: #3e454d; /* Couleur de fond au survol */
+}
+
+
+
 
 @media (max-width: 768px) {
   .login-image-section {

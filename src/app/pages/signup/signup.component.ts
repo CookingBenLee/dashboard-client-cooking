@@ -8,25 +8,68 @@ import { Utilisateur } from 'src/app/entity/Utilisateur';
 import { CountryService } from 'src/app/services/country/country.service';
 import { TypeAccountService } from 'src/app/services/type-account/type-account.service';
 import { UserService } from 'src/app/services/user/user.service';
+// prime
+import { PanelModule } from 'primeng/panel';
+import { InputTextModule } from 'primeng/inputtext';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { CardModule } from 'primeng/card';
+import { PasswordModule } from 'primeng/password';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TabViewModule } from 'primeng/tabview';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { SliderModule } from 'primeng/slider';
+import { RatingModule } from 'primeng/rating';
+import { ListboxModule } from 'primeng/listbox';
+import { CalendarModule } from 'primeng/calendar';
+import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { EditorModule } from 'primeng/editor';
+import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FieldsetModule } from 'primeng/fieldset';
+import { TreeModule } from 'primeng/tree';
+import { AccordionModule } from 'primeng/accordion';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { ChipModule } from 'primeng/chip';
+import { FileUploadModule } from 'primeng/fileupload';
+import { RippleModule } from 'primeng/ripple';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { AddressService } from 'src/app/services/address/address.service';
+import { Address } from 'src/app/services/address/Address';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,RouterModule
-  ],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule,NoWhitespaceDirective,RouterModule,
+    FormsModule,DropdownModule],
   providers: [],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent implements OnInit{
 
+  countries: any[] | undefined;
+
   ngOnInit(): void {
     this.getAllAccountType();
     this.getCountry();
+    this.getAllAdress();
   }
   constructor( private userService: UserService, private typeAccountService: TypeAccountService,
-    private router: Router, private countryService: CountryService
+    private router: Router, private countryService: CountryService, private adresseService: AddressService
   ){}
+
 
   id: number;
   nom: String;
@@ -43,7 +86,8 @@ export class SignupComponent implements OnInit{
   country: any
   pays: any
 
-  adresse: any
+  adresse: Address[] = []
+  addressesSelected: any
   addUserAccount(form: NgForm) {
     if (form.valid) {
       if (this.password === this.confirmation) {
@@ -53,7 +97,7 @@ export class SignupComponent implements OnInit{
         this.utilisateur.password = this.password;
         this.utilisateur.typeCompte = this.typeCompte;
         this.utilisateur.country = this.country;
-        this.utilisateur.adresse = this.adresse;
+        this.utilisateur.adresse = this.addressesSelected;
 
         console.log('Données utilisateur envoyées:', this.utilisateur);
 
@@ -101,5 +145,12 @@ export class SignupComponent implements OnInit{
     );
   }
 
+  getAllAdress(){
+    this.adresseService.getAll().then(data=>{
+      this.adresse=data
+    })
+  }
+
+  addNewAddress(){}
 }
 
