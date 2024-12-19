@@ -652,8 +652,8 @@ detailPurchasesForms2:any=[]
    })
  }
  async getProducts(){
-    // const user= this.tokenService.getUser();
-   await this.productService.getAllProduct().then(data =>{
+    const user= this.tokenService.getUser();
+   await this.productService.getAll(user.id).then(data =>{
      console.log(data)
      this.products=data
      //this.productes[0]=this.products[0]
