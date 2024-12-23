@@ -193,7 +193,7 @@ detailPurchasesForms2:any=[]
   );
 
   this.utilisateurC =this.tokenService.getUser();
-  console.log();
+  console.log("courrency",this.utilisateurC.compteUser.country.currency);
   
   this.route.queryParams.subscribe(params => {
     if (params['activeTab'] === 'new') {
@@ -661,6 +661,15 @@ detailPurchasesForms2:any=[]
 
  }
 
+ updateUnitPrice(index: number): void {
+  const detail = this.detailPurchasesForms[index];
+  if (detail.quantity > 0) {
+    detail.value = detail.totalPrice / detail.quantity;
+  } else {
+    detail.value = 0; 
+  }
+}
+
  async getAllCategory(){
    await this.categoryService.getAllCategorys().then(data=>{
      this.categorys=data
@@ -674,7 +683,7 @@ detailPurchasesForms2:any=[]
  }
  async getProducts(){
     const user= this.tokenService.getUser();
-   await this.productService.getAll(user.id).then(data =>{
+   await this.productService.getAllProduct().then(data =>{
      console.log(data)
      this.products=data
      //this.productes[0]=this.products[0]
