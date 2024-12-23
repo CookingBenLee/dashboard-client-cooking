@@ -39,6 +39,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModalproductComponent } from './modalproduct/modalproduct.component';
 import { CurrencyService } from 'src/app/services/currency/currency.service';
 import { Currency } from 'src/app/services/currency/Currency';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -129,6 +130,7 @@ export class ProductComponent implements OnInit {
     private brandService:BrandService,private conditioningService:ConditioningService,private unitService:UnitService,private categoryService:CategoryService,
     private productService:ProductService ,private paginateService:PaginateService,private snackBar: MatSnackBar,
     private tokenService: TokenService,private dialogService:DialogService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -256,6 +258,10 @@ export class ProductComponent implements OnInit {
       width: '1200px', height: '450px'
     });
   }
+
+  openCourse() {
+    this.router.navigate(['home/course'], { queryParams: { activeTab: 'new' } });
+}
 
   // currentUser: any;
   // getCurrentUser() {
