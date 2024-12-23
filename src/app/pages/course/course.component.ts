@@ -73,6 +73,7 @@ import { ModalAddProductComponent } from './modal-add-product/modal-add-product.
 import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
+import { CountryService } from 'src/app/services/country/country.service';
 
 @Component({
   selector: 'app-course',
@@ -178,9 +179,22 @@ detailPurchasesForms2:any=[]
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
    private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
    private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,private tokenService: TokenService,
+   private countryService: CountryService,
    private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
-
+   
+   utilisateurC: any
+    countryss: any
  async ngOnInit(): Promise<void> {
+  this.countryService.getAll().then(
+    (data:any)=>{
+      this.countryss = data.data
+      console.log(this.countryss); 
+    }
+  );
+
+  this.utilisateurC =this.tokenService.getUser();
+  console.log();
+  
   this.route.queryParams.subscribe(params => {
     if (params['activeTab'] === 'new') {
         this.activeIndex = 1; 
@@ -189,7 +203,7 @@ detailPurchasesForms2:any=[]
     }
 });
    //await this.addNewDetails()
-
+ 
    //ajout dun produit par defaut
    //initialisation et ajout des premier element par default
    // this.quantitys.push(0);
