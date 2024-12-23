@@ -512,9 +512,19 @@
                     <div class="col">
                       <div class="field">
                         <label htmlFor="quantity{{detailPurchasesForms.length-1}}">Quantité</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantity{{detailPurchasesForms.length-1}}" id="quantity{i}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].quantity"  (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].quantity,detailPurchasesForms.length-1)" [showButtons]="true" [min]="0" ></p-inputNumber>
+                        <p-inputNumber 
+                          mode="decimal" 
+                          [minFractionDigits]="2" 
+                          name="quantity{{detailPurchasesForms.length-1}}" 
+                          id="quantity{{detailPurchasesForms.length-1}}" 
+                          [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].quantity"  
+                          (ngModelChange)="updateUnitPrice(detailPurchasesForms.length-1)" 
+                          [showButtons]="true" 
+                          [min]="0">
+                        </p-inputNumber>
                       </div>
                     </div>
+
                     <div class="col">
                       <div class="field ">
                         <label htmlFor="unit{{detailPurchasesForms.length-1}}">Unité</label>
@@ -522,19 +532,46 @@
                       </div>
                     </div>
 
-                    <div class="col">
-                      <div class="field">
-                        <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"  id="value{i}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true" [min]="0" (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].value,detailPurchasesForms.length-1)" ></p-inputNumber>
-                      </div>
-                    </div>
-
                     <div class="col-2">
                       <div class="field">
                         <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">Prix total</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="totalPrice{{detailPurchasesForms.length-1}}"  id="totalPrice{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice" [disabled]="true"  ></p-inputNumber>
+                        <p-inputNumber 
+                          mode="decimal" 
+                          [minFractionDigits]="2" 
+                          name="totalPrice{{detailPurchasesForms.length-1}}"  
+                          id="totalPrice{{detailPurchasesForms.length-1}}" 
+                          [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice"  
+                          (ngModelChange)="updateUnitPrice(detailPurchasesForms.length-1)"
+                          [showButtons]="true" 
+                          [min]="0">
+                          >
+                          
+                        </p-inputNumber>
                       </div>
                     </div>
+                    
+                    <div class="col">
+                      <div class="field">
+                        <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
+                        <p-inputNumber 
+                          mode="decimal" 
+                          [minFractionDigits]="2" 
+                          name="value{{detailPurchasesForms.length-1}}"  
+                          id="value{{detailPurchasesForms.length-1}}" 
+                          [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" 
+                          [disabled]="true" 
+                          [min]="0">
+                        </p-inputNumber>
+                      </div>
+                    </div>
+                    
+
+
+
+                  
+
+                   
+
                   </div>
 
                   <div *ngIf="detailPurchasesForms[detailPurchasesForms.length-1].distinctUnit" class="field">
