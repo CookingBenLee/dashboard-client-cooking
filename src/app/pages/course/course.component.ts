@@ -71,7 +71,7 @@ import { TableShortService } from 'src/app/services/tableShort/table-short.servi
 import { PaginatorModule } from 'primeng/paginator';
 import { ModalAddProductComponent } from './modal-add-product/modal-add-product.component';
 import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
@@ -176,11 +176,18 @@ detailPurchasesForms2:any=[]
 
  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
-   private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,
+   private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
    private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,private tokenService: TokenService,
    private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
 
  async ngOnInit(): Promise<void> {
+  this.route.queryParams.subscribe(params => {
+    if (params['activeTab'] === 'new') {
+        this.activeIndex = 1; 
+    } else {
+        this.activeIndex = 0; 
+    }
+});
    //await this.addNewDetails()
 
    //ajout dun produit par defaut
