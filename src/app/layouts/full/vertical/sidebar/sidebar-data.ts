@@ -10,23 +10,6 @@ export const navItems: NavItem[] = [
     route: 'home/acceuil',
   },
   {
-    displayName: 'Planification de Repas',
-    iconName: 'solar:calendar-mark-outline',
-    route: '',
-    children: [
-      {
-        displayName: 'Planifier un repas',
-        iconName: 'tabler:point',
-        route: 'home/repas',
-      },
-      {
-        displayName: 'Liste des planifications',
-        iconName: 'tabler:point',
-        route: 'home/planification',
-      }
-    ],
-  },
-  {
     displayName: 'Mes Plats',
     iconName: 'material-symbols:dining',
     route: 'home/plat',
@@ -38,32 +21,83 @@ export const navItems: NavItem[] = [
 
   },
   {
-    displayName: 'Mes Ingrédients',
-    iconName: 'mingcute:components-line',
-    route: '',
-    children: [
-      {
-        displayName: 'Mes Produits',
-        iconName: 'tabler:point',
-        route: '/home/product',
-      },
-      {
-        displayName: 'Mes courses',
-        iconName: 'tabler:point',
-        route: '/home/course',
-      },
-      {
-        displayName: 'Catalogue de prix',
-        iconName: 'tabler:point',
-        route: '/home/catalogue-de-prix',
-      }
-    ],
-  },
-  {
     displayName: 'Les Fournisseurs',
     iconName: 'solar:user-hands-bold',
     route: 'home/fournisseur',
   },
+  {
+    navCap: 'Planification de Repas',
+  },
+  {
+    displayName: 'Planifier un repas',
+    iconName: 'tabler:point',
+    route: 'home/repas',
+  },
+  {
+    displayName: 'Liste des planifications',
+    iconName: 'tabler:point',
+    route: 'home/planification',
+  },
+  // {
+  //   displayName: 'Planification de Repas',
+  //   iconName: 'solar:calendar-mark-outline',
+  //   route: '',
+  //   children: [
+  //     {
+  //       displayName: 'Planifier un repas',
+  //       iconName: 'tabler:point',
+  //       route: 'home/repas',
+  //     },
+  //     {
+  //       displayName: 'Liste des planifications',
+  //       iconName: 'tabler:point',
+  //       route: 'home/planification',
+  //     }
+  //   ],
+  // },
+  
+ 
+  {
+    navCap: 'Mes Ingrédients',
+  },
+  {
+    displayName: 'Mes Produits',
+    iconName: 'tabler:point',
+    route: '/home/product',
+  },
+  {
+    displayName: 'Mes courses',
+    iconName: 'tabler:point',
+    route: '/home/course',
+  },
+  {
+    displayName: 'Catalogue de prix',
+    iconName: 'tabler:point',
+    route: '/home/catalogue-de-prix',
+  },
+  // {
+  //   displayName: 'Mes Ingrédients',
+  //   iconName: 'mingcute:components-line',
+  //   route: '',
+  //   children: [
+  //     {
+  //       displayName: 'Mes Produits',
+  //       iconName: 'tabler:point',
+  //       route: '/home/product',
+  //     },
+  //     {
+  //       displayName: 'Mes courses',
+  //       iconName: 'tabler:point',
+  //       route: '/home/course',
+  //     },
+  //     {
+  //       displayName: 'Catalogue de prix',
+  //       iconName: 'tabler:point',
+  //       route: '/home/catalogue-de-prix',
+  //     }
+  //   ],
+  // },
+ 
   // {
   //   displayName: 'Acceuil',
   //   iconName: 'solar:widget-add-line-duotone',
