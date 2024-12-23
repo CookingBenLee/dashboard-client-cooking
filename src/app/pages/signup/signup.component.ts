@@ -178,8 +178,8 @@ export class SignupComponent implements OnInit{
   positionModalConfirm:any
   motRecherche=''
 
-  longitude?:number;
-  latitude?:number;
+  // longitude?:number;
+  // latitude?:number;
 
   label?:string;
   streetNumber?:string;
@@ -225,8 +225,8 @@ export class SignupComponent implements OnInit{
     //recup des valeurs et attribution
 
     this.address.label=this.label
-    this.address.longitude=this.longitude
-    this.address.latitude=this.latitude
+    // this.address.longitude=this.longitude
+    // this.address.latitude=this.latitude
     this.address.streetNumber=this.streetNumber
     this.address.city=this.city
     this.address.streetName=this.streetName
