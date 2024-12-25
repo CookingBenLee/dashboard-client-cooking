@@ -307,6 +307,9 @@ resetFields() {}
  update(){
    this.loading=true
    console.log(this.shopData)
+   console.log(this.address.id);
+   
+   this.adressService.update(this.address.id, this.address);
    this.shopService.update(this.shopData.id,this.shopData).then(data=>{
      this.loading=false
      //this.isSuccessEdit=true
