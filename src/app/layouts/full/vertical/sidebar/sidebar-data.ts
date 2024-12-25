@@ -21,11 +21,6 @@ export const navItems: NavItem[] = [
 
   },
   {
-    displayName: 'Les Fournisseurs',
-    iconName: 'solar:user-hands-bold',
-    route: 'home/fournisseur',
-  },
-  {
     navCap: 'Planification de Repas',
   },
   {
@@ -74,6 +69,11 @@ export const navItems: NavItem[] = [
     displayName: 'Catalogue de prix',
     iconName: 'tabler:point',
     route: '/home/catalogue-de-prix',
+  },
+  {
+    displayName: 'Mes Fournisseurs',
+    iconName: 'solar:user-hands-bold',
+    route: 'home/fournisseur',
   },
   // {
   //   displayName: 'Mes Ingrédients',
