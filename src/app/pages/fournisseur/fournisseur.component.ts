@@ -97,13 +97,13 @@ export class FournisseurComponent implements OnInit{
 
    displayedColumns: string[] = [
     'nom',
-    'acronym',
     'adresse',
     'action',
   ];
 
   dataSource = new MatTableDataSource<Shop>([]);
   shopData: any = {};
+  address: any = {};
 
  ngOnInit(): void {
    this.getAll();
