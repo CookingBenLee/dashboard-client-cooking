@@ -292,24 +292,16 @@ resetFields() {}
 
  openDialogEdit(shop: Shop, adresse: Address) {
   this.shopData = { ...shop };
+  this.address = { ...shop.addressPrincipale };
 
-  // Initialiser addresse avec tous les champs requis par le type Address
-  this.addresse = {
-    label: shop.addressPrincipale?.label || '',
-    country: this.countrys.find(country => country.id === shop.addressPrincipale?.country.id) || this.countrys[0], // Par défaut au premier pays de la liste
-    city: shop.addressPrincipale?.city || '',
-    geolocation: shop.addressPrincipale?.geolocation || '',
-    shop: shop, // Inclure l'objet shop si nécessaire
-    map: shop.addressPrincipale?.map || {}, // Valeur par défaut pour map
-    purchaseList:[]
-  };
 
-  console.log(this.shopData, this.addresse);
+  console.log(this.shopData, this.address, this.address.country);
   this.dialog.open(this.dialogTemplateEdit, {
     width: '1200px',
     height: '450px',
   });
 }
+
 
 
  update(){
