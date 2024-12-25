@@ -97,13 +97,13 @@ export class FournisseurComponent implements OnInit{
 
    displayedColumns: string[] = [
     'nom',
-    'acronym',
     'adresse',
     'action',
   ];
 
   dataSource = new MatTableDataSource<Shop>([]);
   shopData: any = {};
+  address: any = {};
 
  ngOnInit(): void {
    this.getAll();
@@ -114,7 +114,7 @@ export class FournisseurComponent implements OnInit{
  openDialogAdd() {
   this.resetFields();
   this.dialog.open(this.dialogTemplate, {
-    width: '1200px', height: '550px'
+    width: '1200px', height: '450px'
   });
 }
 
@@ -226,16 +226,18 @@ resetFields() {}
    //this.shop.contact=this.contact
    //this.shop.email=this.email
    const user = this.tokenService.getUser();
-   this.shopData.addressPrincipale=this.addresse
+  //  this.shopData.addressPrincipale=this.addresse
    this.shopData.user= {id: user.id};
 
   //this.shop.adressList=this.addressesSelected
 
    //console.log(this.addressesSelected);
 
-   console.log(this.shopData)
-   this.adressService.create(this.shopData.addressPrincipale).then(data1=>{
+   
+   console.log("dones adress",  this.address)
+   this.adressService.create(this.address).then(data1=>{
      this.shopData.addressPrincipale=data1.data
+     console.log("dones fournisseur",  this.shopData)
      this.shopService.create(this.shopData).then((data) =>{
        this.getAll();
        this.closeDialog();
@@ -290,29 +292,24 @@ resetFields() {}
 
  openDialogEdit(shop: Shop, adresse: Address) {
   this.shopData = { ...shop };
+  this.address = { ...shop.addressPrincipale };
 
-  // Initialiser addresse avec tous les champs requis par le type Address
-  this.addresse = {
-    label: shop.addressPrincipale?.label || '',
-    country: this.countrys.find(country => country.id === shop.addressPrincipale?.country.id) || this.countrys[0], // Par défaut au premier pays de la liste
-    city: shop.addressPrincipale?.city || '',
-    geolocation: shop.addressPrincipale?.geolocation || '',
-    shop: shop, // Inclure l'objet shop si nécessaire
-    map: shop.addressPrincipale?.map || {}, // Valeur par défaut pour map
-    purchaseList:[]
-  };
 
-  console.log(this.shopData, this.addresse);
+  console.log(this.shopData, this.address, this.address.country);
   this.dialog.open(this.dialogTemplateEdit, {
     width: '1200px',
-    height: '550px',
+    height: '450px',
   });
 }
+
 
 
  update(){
    this.loading=true
    console.log(this.shopData)
+   console.log(this.address.id);
+   
+   this.adressService.update(this.address.id, this.address);
    this.shopService.update(this.shopData.id,this.shopData).then(data=>{
      this.loading=false
      //this.isSuccessEdit=true

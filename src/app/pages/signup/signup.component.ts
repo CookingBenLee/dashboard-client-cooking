@@ -101,25 +101,37 @@ export class SignupComponent implements OnInit{
   selectePays: any
   adresse: Address[] = []
   addressesSelected: any
+
+  adresseS: any = {}
+  compteUser: any = {}
+
   addUserAccount(form: NgForm) {
     if (form.valid) {
       if (this.password === this.confirmation) {
-        this.utilisateur.nom = this.nom;
-        this.utilisateur.prenom = this.prenom;
-        this.utilisateur.login = this.login;
-        this.utilisateur.password = this.password;
-        this.utilisateur.typeCompte = this.typeCompte;
-        this.utilisateur.country = this.addressesSelected.country;
-        this.utilisateur.adresse = this.addressesSelected.label;
+        // this.utilisateur.nom = this.nom;
+        // this.utilisateur.prenom = this.prenom;
+        // this.utilisateur.login = this.login;
+        // this.utilisateur.password = this.password;
+        // this.utilisateur.typeCompte = this.typeCompte;
+        // this.utilisateur.country = this.addressesSelected.country;
+        // this.utilisateur.adresse = this.addressesSelected.label;
 
-        console.log('Données utilisateur envoyées:', this.utilisateur);
+        this.adresseService.create(this.adresseS).then(
+          (response: any)=> {
+            console.log("Adresse creeeeeeeeeeeeeeeeeeeeeeeeer");
+            this.compteUser.address = response.data
+            this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Adresse creé avec succes"});
+          }
+        )
+        console.log('Données adresse envoyées:', this.adresseS);
 
-        this.userService.createUser(this.utilisateur).subscribe(
+        console.log('Données utilisateur envoyées:', this.compteUser);
+        this.userService.createUser(this.compteUser).subscribe(
           (data: any) => {
             console.log('Utilisateur créé:', data);
             this.router.navigate(['/login'], {
               queryParams: {
-                success: `Compte ${this.utilisateur.prenom} ${this.utilisateur.nom} créé avec succès !`
+                success: `Compte ${this.compteUser.prenom} ${this.utilisateur.nom} créé avec succès !`
               }
             });
           },
