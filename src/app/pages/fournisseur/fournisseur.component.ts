@@ -114,7 +114,7 @@ export class FournisseurComponent implements OnInit{
  openDialogAdd() {
   this.resetFields();
   this.dialog.open(this.dialogTemplate, {
-    width: '1200px', height: '550px'
+    width: '1200px', height: '450px'
   });
 }
 
@@ -226,16 +226,18 @@ resetFields() {}
    //this.shop.contact=this.contact
    //this.shop.email=this.email
    const user = this.tokenService.getUser();
-   this.shopData.addressPrincipale=this.addresse
+  //  this.shopData.addressPrincipale=this.addresse
    this.shopData.user= {id: user.id};
 
   //this.shop.adressList=this.addressesSelected
 
    //console.log(this.addressesSelected);
 
-   console.log(this.shopData)
-   this.adressService.create(this.shopData.addressPrincipale).then(data1=>{
+   
+   console.log("dones adress",  this.address)
+   this.adressService.create(this.address).then(data1=>{
      this.shopData.addressPrincipale=data1.data
+     console.log("dones fournisseur",  this.shopData)
      this.shopService.create(this.shopData).then((data) =>{
        this.getAll();
        this.closeDialog();
@@ -305,7 +307,7 @@ resetFields() {}
   console.log(this.shopData, this.addresse);
   this.dialog.open(this.dialogTemplateEdit, {
     width: '1200px',
-    height: '550px',
+    height: '450px',
   });
 }
 
