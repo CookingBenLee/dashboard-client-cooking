@@ -244,6 +244,13 @@
         <div class="col-lg-6">
           <label for="countryEdit">Pays</label>
           <mat-form-field appearance="outline" class="w-100">
+            <mat-select [(value)]="address.country.id" name="country" required>
+              <mat-option *ngFor="let country of countrys" [value]="country.id">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- <mat-form-field appearance="outline" class="w-100">
             <mat-select
               id="countryEdit"
               [(ngModel)]="address.country"
@@ -254,7 +261,7 @@
                 {{ country.name }}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>        
         <div class="col-lg-6">
           <label for="cityEdit">Ville</label>
