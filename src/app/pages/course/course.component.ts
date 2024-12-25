@@ -189,6 +189,14 @@ selectedCountry: any; // To store the retrieved country
 
  async ngOnInit(): Promise<void> {
 
+  this.route.queryParams.subscribe(params => {
+    if (params['activeTab'] === 'new') {
+        this.activeIndex = 1; 
+    } else {
+        this.activeIndex = 0; 
+    }
+});
+
   this.utilisateurC =this.tokenService.getUser();
   console.log("courrency",this.utilisateurC.compteUser.country.id);
   
@@ -206,13 +214,7 @@ selectedCountry: any; // To store the retrieved country
 );
 
 
-  this.route.queryParams.subscribe(params => {
-    if (params['activeTab'] === 'new') {
-        this.activeIndex = 1; 
-    } else {
-        this.activeIndex = 0; 
-    }
-});
+  
    //await this.addNewDetails()
  
    //ajout dun produit par defaut
