@@ -1,9 +1,8 @@
-/* Reset basic styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  // font-family: 'Poppins'
+  /* font-family: 'Poppins' */
 }
 
 body, html {
@@ -18,11 +17,9 @@ body, html {
 
 .error-message {
   color: red; /* Couleur du texte d'erreur */
-  // margin-bottom: 4px; /* Espacement en bas du message */
   font-size: 0.6rem; /* Taille de la police */
   text-align: center; /* Centrer le texte */
 }
-
 
 .login-container {
   display: flex;
@@ -56,7 +53,6 @@ body, html {
   height: 100vh; /* Limite à la hauteur de la fenêtre */
   margin-left: 50%; /* Décale pour éviter de chevaucher l'image */
 }
-
 
 .remember {
   display: flex;
@@ -127,19 +123,9 @@ input:focus {
   font-size: 18px;
 }
 
-
 /* Form Fields */
 .form-group {
   margin-bottom: 15px;
-}
-
-
-input {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
 input:focus {
@@ -191,6 +177,7 @@ input[type="password"], input[type="text"] {
 .input-container {
   margin-top: 8px;
 }
+
 /* Submit Button */
 .btn-login {
   width: 100%;
@@ -243,9 +230,7 @@ select option {
   padding: 10px; /* Espacement interne pour les options */
 }
 
-
 /* Responsive Design */
-/* Général : Champs prennent 100% de la largeur sur petits écrans */
 @media (max-width: 768px) {
   .form-container {
     padding: 20px; /* Réduire les marges */
@@ -275,79 +260,6 @@ select option {
   }
 }
 
-
-.dropdown-with-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.dropdown-with-button p-dropdown {
-  flex: 1; /* Prend toute la largeur possible */
-}
-
-.btn-dropdown-action {
-  padding: 13px 20px;
-  margin-left: 10px;
-  font-size: 1rem;
-  background-color: #f50000; /* Couleur de fond rouge */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-dropdown-action:hover {
-  background-color: #3e454d; /* Couleur de fond au survol */
-}
-
-
-
-.form-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem; /* Espace entre les colonnes et les lignes */
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  width: 100%; /* Assure la taille uniforme des champs */
-}
-
-.col-6 {
-  flex: 0 0 calc(50% - 0.5rem); /* Chaque champ occupe 50% de la largeur avec un espace entre */
-  box-sizing: border-box;
-}
-
-.field label {
-  margin-bottom: 0.5rem; /* Espacement entre le label et le champ */
-  font-weight: bold;
-}
-
-.field input,
-.field p-dropdown,
-.field p-inputNumber {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-
-
-
-@media (max-width: 768px) {
-  .login-image-section {
-    display: none; /* Masque complètement la section */
-  }
-
-  .login-form-section {
-    flex: none;
-    width: 100%; /* La section formulaire prend toute la largeur */
-  }
-}
-
-/* Pour les très petits écrans (smartphones étroits) */
 @media (max-width: 480px) {
   .form-container {
     padding: 15px; /* Encore plus compact */
@@ -372,3 +284,39 @@ select option {
   }
 }
 
+// .dropdown-with-button {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+
+// .dropdown-with-button p-dropdown {
+//   flex: 1; /* Prend toute la largeur possible */
+// }
+
+.btn-dropdown-action {
+  padding: 13px 20px;
+  margin-left: 10px;
+  font-size: 1rem;
+  background-color: #f50000; /* Couleur de fond rouge */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-dropdown-action:hover {
+  background-color: #3e454d; /* Couleur de fond au survol */
+}
+
+@media (max-width: 768px) {
+  .login-image-section {
+    display: none; /* Masque complètement la section */
+  }
+
+  .login-form-section {
+    flex: none;
+    width: 100%; /* La section formulaire prend toute la largeur */
+  }
+}

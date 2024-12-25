@@ -182,19 +182,13 @@ detailPurchasesForms2:any=[]
    private countryService: CountryService,
    private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
    
-   utilisateurC: any
-    countryss: any
- async ngOnInit(): Promise<void> {
-  this.countryService.getAll().then(
-    (data:any)=>{
-      this.countryss = data.data
-      console.log(this.countryss); 
-    }
-  );
+   utilisateurC: any;
+countryss: any[] = []; // Ensure this is initialized as an array
+selectedCountry: any; // To store the retrieved country
 
-  this.utilisateurC =this.tokenService.getUser();
-  console.log("courrency",this.utilisateurC.compteUser.country.currency);
-  
+
+ async ngOnInit(): Promise<void> {
+
   this.route.queryParams.subscribe(params => {
     if (params['activeTab'] === 'new') {
         this.activeIndex = 1; 
@@ -202,6 +196,25 @@ detailPurchasesForms2:any=[]
         this.activeIndex = 0; 
     }
 });
+
+  this.utilisateurC =this.tokenService.getUser();
+  console.log("courrency",this.utilisateurC.compteUser.country.id);
+  
+  
+  this.countryService.getAll().then(
+    (data: any) => {
+        this.countryss = data;
+        console.log(this.countryss);
+
+        this.selectedCountry = this.countryss.find(
+            (country: any) => country.id === this.utilisateurC.compteUser.country.id
+        );
+        console.log("selected", this.selectedCountry);
+    }
+);
+
+
+  
    //await this.addNewDetails()
  
    //ajout dun produit par defaut
@@ -231,6 +244,26 @@ detailPurchasesForms2:any=[]
 
  }
 
+ // Function to retrieve country by ID
+retrieveCountryById(): void {
+  if (this.countryss && this.utilisateurC) {
+    const countryId = this.utilisateurC.compteUser.country.id;
+
+    // Find the country in the list
+    this.selectedCountry = this.countryss.find(
+      (country: any) => country.id === countryId
+    );
+
+    // Log the selected country
+    if (this.selectedCountry) {
+      console.log("Selected Country:", this.selectedCountry);
+    } else {
+      console.error("Country not found for ID:", countryId);
+    }
+  } else {
+    console.error("Countries list or user data not loaded.");
+  }
+}
  //recuperation de valeurs
  getAll(){
    const user= this.tokenService.getUser();
