@@ -231,7 +231,7 @@
                     </option>
                   </select>
                   <div *ngIf="countryInput.invalid && countryInput.touched" class="error-message">
-                    Le type de compte est requis.
+                    Le pays est requis.
                   </div>
                 </div>
             </div>
@@ -265,7 +265,7 @@
             <div class="form-group" style="flex: 1;">
               <label for="streetName">Rue :</label>
               <div class="input-container">
-                <input type="text" name="streetName" id="streetName" placeholder="Ville" required [(ngModel)]="adresseS.streetName"
+                <input type="text" name="streetName" id="streetName" placeholder="Rue" required [(ngModel)]="adresseS.streetName"
                   noWhitespace #streetNameInput="ngModel"
                   [ngClass]="{'ng-invalid': streetNameInput.invalid && streetNameInput.touched}" />
                 <div *ngIf="streetNameInput.invalid && streetNameInput.touched" class="error-message">
@@ -277,9 +277,9 @@
           <!-- Ligne 4 -->
           <div class="information">
             <div class="form-group" style="flex: 1;">
-              <label for="streetNumber">Numéro de rue :</label>
+              <label for="streetNumber">Numéro de la rue :</label>
               <div class="input-container">
-                <input type="text" name="streetNumber" id="streetNumber" placeholder="Ville" required [(ngModel)]="adresseS.streetNumber"
+                <input type="text" name="streetNumber" id="streetNumber" placeholder="Numero de la rue" required [(ngModel)]="adresseS.streetNumber"
                   noWhitespace #streetNumberInput="ngModel"
                   [ngClass]="{'ng-invalid': streetNumberInput.invalid && streetNumberInput.touched}" />
                 <div *ngIf="streetNumberInput.invalid && streetNumberInput.touched" class="error-message">
