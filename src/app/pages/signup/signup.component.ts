@@ -116,20 +116,22 @@ export class SignupComponent implements OnInit{
         // this.utilisateur.country = this.addressesSelected.country;
         // this.utilisateur.adresse = this.addressesSelected.label;
 
-        console.log('Données utilisateur envoyées:', this.utilisateur);
         this.adresseService.create(this.adresseS).then(
           (response: any)=> {
-              console.log("Adresse creeeeeeeeeeeeeeeeeeeeeeeeer");
-              
+            console.log("Adresse creeeeeeeeeeeeeeeeeeeeeeeeer");
+            this.compteUser.address = response.data
+            this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Adresse creé avec succes"});
           }
         )
-       
+        console.log('Données adresse envoyées:', this.adresseS);
+
+        console.log('Données utilisateur envoyées:', this.compteUser);
         this.userService.createUser(this.compteUser).subscribe(
           (data: any) => {
             console.log('Utilisateur créé:', data);
             this.router.navigate(['/login'], {
               queryParams: {
-                success: `Compte ${this.utilisateur.prenom} ${this.utilisateur.nom} créé avec succès !`
+                success: `Compte ${this.compteUser.prenom} ${this.utilisateur.nom} créé avec succès !`
               }
             });
           },

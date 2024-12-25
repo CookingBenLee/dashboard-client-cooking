@@ -226,8 +226,8 @@
                     <option value="" disabled selected>Choisissez le pays</option>
     
                     <!-- Liez l'objet de compte complet, pas seulement l'ID -->
-                    <option *ngFor="let account of pays" [ngValue]="account">
-                      {{ account.libelle }}
+                    <option *ngFor="let pay of pays" [ngValue]="pay">
+                      {{ pay.name }}
                     </option>
                   </select>
                   <div *ngIf="countryInput.invalid && countryInput.touched" class="error-message">
@@ -279,7 +279,7 @@
             <div class="form-group" style="flex: 1;">
               <label for="streetNumber">Numéro de la rue :</label>
               <div class="input-container">
-                <input type="text" name="streetNumber" id="streetNumber" placeholder="Numero de la rue" required [(ngModel)]="adresseS.streetNumber"
+                <input type="number" name="streetNumber" id="streetNumber" placeholder="Numero de la rue" required [(ngModel)]="adresseS.streetNumber"
                   noWhitespace #streetNumberInput="ngModel"
                   [ngClass]="{'ng-invalid': streetNumberInput.invalid && streetNumberInput.touched}" />
                 <div *ngIf="streetNumberInput.invalid && streetNumberInput.touched" class="error-message">
