@@ -198,7 +198,7 @@ selectedCountry: any; // To store the retrieved country
 });
 
   this.utilisateurC =this.tokenService.getUser();
-  console.log("courrency",this.utilisateurC.compteUser.country.id);
+  // console.log("courrency",this.utilisateurC.compteUser.country.id);
   
   
   this.countryService.getAll().then(
@@ -238,7 +238,7 @@ selectedCountry: any; // To store the retrieved country
    // this.detailPurchasings.push(new DetailsPurchasing())
 
    //for details
-   await this.getProducts()
+   this.getProducts()
    this.getUnits()
    this.cdref.detectChanges();
 
@@ -717,8 +717,9 @@ retrieveCountryById(): void {
  async getProducts(){
     const user= this.tokenService.getUser();
    await this.productService.getAllProduct().then(data =>{
-     console.log(data)
+     
      this.products=data
+     
      //this.productes[0]=this.products[0]
      //this.unitys[0]=this.products[0].unit
    })

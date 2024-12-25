@@ -486,13 +486,36 @@
                       <div class="field ">
                         <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>
                         <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
-                        <p-dropdown [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
+                        <!-- <p-dropdown [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
                           <ng-template let-product pFilter="product.category.name" pTemplate="item" >
                             <div class="flex align-items-center operatingSystems-item">
                               <div>{{product.name}} ({{product.category.name}} / {{product?.conditioning?.name}})</div>
                             </div>
                           </ng-template>
-                        </p-dropdown>
+                        </p-dropdown> -->
+                        <p-dropdown 
+                        [options]="products"
+                        [(ngModel)]="detailPurchasesForms"
+                        [ngModelOptions]="{standalone: true}"
+                        optionLabel="name"
+                        [filter]="true"
+                        filterBy="name"
+                        [showClear]="true"
+                        placeholder="Select a Product">
+                    
+                        <ng-template pTemplate="selectedItem" let-selectedProduct>
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ selectedProduct.name }} ({{ selectedProduct.category.name }} / {{ selectedProduct?.conditioning?.name }})</div>
+                            </div>
+                        </ng-template>
+                        
+                        <ng-template let-product pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ product.name }} ({{ product.category.name }} / {{ product?.conditioning?.name }})</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    
                       </div>
                     </div>
 
