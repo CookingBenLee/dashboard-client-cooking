@@ -164,7 +164,8 @@ detailPurchasesForms2:any=[]
 
 
   getAllShop(){
-    this.shopService.getAll().then(data =>{
+    const user = this.tokenService.getUser()
+    this.shopService.getAll(user.id).then(data =>{
       console.log(data)
 
       this.shops=data
