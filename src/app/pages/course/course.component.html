@@ -1,3 +1,8 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Gestion des feuilles de course</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
 <p-tabView [(activeIndex)]="activeIndex">
   <!--Panel liste des purchases-->
   <p-tabPanel header="Liste des courses">
@@ -151,7 +156,7 @@
           <div class="mb-2 mt-1">
             <div class="flex-1 mb-2">
               <h5>Liste des  produits</h5>
-              <button pButton label="Ajouter un produit" type="button" [loading]="loading" class="p-button-newline mt-2" (click)="showAddProductForm()" ></button>
+              <button  pButton label="Ajouter un produit" type="button" [loading]="loading" class="p-button-newline mt-2" (click)="showAddProductForm()" ></button>
             </div>
 
             <!-- List of created product-->
@@ -179,7 +184,7 @@
                   <td>{{detail.value}}/{{detail.unit.code}}</td>
                   <td>{{detail.totalPrice}}</td>
                   <td>
-                    <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetail(detail,i)"></button>
+                    <button pButton pRipple type="button"   icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetail(detail,i)"></button>
                   </td>
 
                 </tr>
@@ -442,3 +447,5 @@
 </p-dialog>
 
 </p-overlayPanel>
+</mat-card-content>
+</mat-card>
