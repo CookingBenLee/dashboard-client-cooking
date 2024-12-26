@@ -1,6 +1,6 @@
 <p-tabView [(activeIndex)]="activeIndex">
   <!--Panel liste des purchases-->
-  <p-tabPanel header="Historique Approvisionnement">
+  <p-tabPanel header="Liste des courses">
     <div class="">
       <div class="card">
           <!--<h5>Purchase List</h5>-->
@@ -85,7 +85,7 @@
   </p-tabPanel>
 
 
-  <p-tabPanel header="Nouveau Approvisionnement">
+  <p-tabPanel header="Nouvelle coursee">
     <div class="">
       <form class="grid newform " #f="ngForm" (ngSubmit)="save()">
         <div class="col-12 card p-fluid">
@@ -131,7 +131,7 @@
             <div class="col-3">
               <div class="field">
                 <label htmlFor="montant">Montant</label>
-                <p-inputNumber mode="decimal" [minFractionDigits]="2" name="montant" id="montant" [(ngModel)]="montant" [showButtons]="true" [min]="0" ></p-inputNumber>
+                <p-inputNumber mode="decimal" [disabled]="true" [minFractionDigits]="2" name="montant" id="montant" [(ngModel)]="montant" [showButtons]="true" [min]="0" ></p-inputNumber>
               </div>
             </div>
 
@@ -199,11 +199,13 @@
               <div  *ngIf="showAddProduct" class="cardnew mt-5">
                 <form class="p-fluid  ">
                   <div class="grid">
-                    <div class="col-4">
+                    
+                    <div class="col-3">
                       <div class="field ">
                         <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>
                         <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
-                        <p-dropdown [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
+                        <p-dropdown [filter]="true"
+                        filterBy="name"  [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
                           <ng-template let-product pFilter="product.category.name" pTemplate="item" >
                             <div class="flex align-items-center operatingSystems-item">
                               <div>{{product.name}} ({{product.category.name}} / {{product?.conditioning?.name}})</div>
@@ -212,7 +214,9 @@
                         </p-dropdown>
                       </div>
                     </div>
-
+                    <div style="margin-top: 5px; margin-left: -5px;" class="col-1">
+                      <button pButton pRipple icon="pi pi-filter-fill" style="margin-top: 20px;" class="p-button-rounded p-button-primary mr-2"></button>
+                    </div>
                     <!--<div class="col-3">
                       <div class="field ">
                         <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>-->
@@ -242,7 +246,7 @@
                     <div class="col">
                       <div class="field">
                         <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"  id="value{i}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true" [min]="0"  ></p-inputNumber>
+                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"  id="value{i}" [disabled]="true" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true" [min]="0"  ></p-inputNumber>
                       </div>
                     </div>
 
