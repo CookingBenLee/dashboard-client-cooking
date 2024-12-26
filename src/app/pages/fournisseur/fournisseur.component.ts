@@ -114,7 +114,7 @@ export class FournisseurComponent implements OnInit{
  openDialogAdd() {
   this.resetFields();
   this.dialog.open(this.dialogTemplate, {
-    width: '1200px', height: '450px'
+    width: '1200px', height: '500px'
   });
 }
 
@@ -298,7 +298,7 @@ resetFields() {}
   console.log(this.shopData, this.address, this.address.country);
   this.dialog.open(this.dialogTemplateEdit, {
     width: '1200px',
-    height: '450px',
+    height: '500px',
   });
 }
 
