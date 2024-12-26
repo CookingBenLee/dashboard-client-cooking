@@ -175,6 +175,17 @@ detailPurchasesForms2:any=[]
  erreurEdit:string
  sucessEdit:string
   usercurrency: [] = []
+
+
+  displayedColumns: string[] = [
+    'name',
+    'category',
+    'stock',
+    'action',
+  ];
+
+  dataSource = new MatTableDataSource<Product>([]);
+
  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
    private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
@@ -839,5 +850,14 @@ retrieveCountryById(): void {
  this.detailPurchasesForms2=[]
  this.purchase=new Purchase()
  this.ngOnInit()
+ }
+
+ visibleSelect: boolean = false;
+ showDialogSelect(){
+
+  console.log("test");
+  
+    this.visibleSelect = true;
+    
  }
 }
