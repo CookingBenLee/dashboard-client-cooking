@@ -121,9 +121,7 @@ export class SignupComponent implements OnInit{
             console.log("Adresse creeeeeeeeeeeeeeeeeeeeeeeeer");
             this.compteUser.address = response.data
             this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Adresse creé avec succes"});
-          }
-        )
-        console.log('Données adresse envoyées:', this.adresseS);
+            console.log('Données adresse envoyées:', this.adresseS);
 
         console.log('Données utilisateur envoyées:', this.compteUser);
         this.userService.createUser(this.compteUser).subscribe(
@@ -139,6 +137,9 @@ export class SignupComponent implements OnInit{
             console.error('Erreur lors de la création de l\'utilisateur:', error);
           }
         );
+          }
+        )
+        
       } else {
         this.errorMessage = "Les mots de passe ne correspondent pas.";
       }
