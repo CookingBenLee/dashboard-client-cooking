@@ -238,7 +238,7 @@
       </div>
     </div>
     <div class="p-x-32 p-b-16">
-      @for(profile of profiledd; track profile.title) {
+      <!-- @for(profile of profiledd; track profile.title) {
       <a class="p-8 text-decoration-none d-block text-hover-primary" (click)="doProfileAction(profile.title)" [routerLink]="[profile.link]">
         <div class="d-flex align-items-center">
           <h5 class="f-s-14 f-w-600 m-0 textprimary mat-subtitle-1 hover-text">
@@ -249,14 +249,13 @@
           }
         </div>
       </a>
-      }
+      } -->
 
-      <a class="p-8 text-decoration-none d-block text-hover-primary" (click)="logout()">
-        <div class="d-flex align-items-center">
+      <a class="text-decoration-none d-block text-hover-primary" (click)="logout()">
+       
           <h5 class="f-s-14 f-w-600 m-0 textprimary mat-subtitle-1 hover-text">
             Deconnexion
           </h5>
-        </div>
       </a>
     </div>
   </mat-menu>
