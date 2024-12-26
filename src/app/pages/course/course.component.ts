@@ -174,7 +174,7 @@ detailPurchasesForms2:any=[]
  isSuccessEdit:boolean
  erreurEdit:string
  sucessEdit:string
-
+  usercurrency: [] = []
  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
    private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
@@ -198,20 +198,23 @@ selectedCountry: any; // To store the retrieved country
 });
 
   this.utilisateurC =this.tokenService.getUser();
-  console.log("courrency",this.utilisateurC.compteUser.country.id);
+  this.usercurrency = this.utilisateurC.compteUser.address.country.currency
+  console.log("currency", this.usercurrency);
+  
+  // console.log("courrency",.name);
   
   
-  this.countryService.getAll().then(
-    (data: any) => {
-        this.countryss = data;
-        console.log(this.countryss);
+  // this.countryService.getAll().then(
+  //   (data: any) => {
+  //       this.countryss = data;
+  //       console.log(this.countryss);
 
-        this.selectedCountry = this.countryss.find(
-            (country: any) => country.id === this.utilisateurC.compteUser.country.id
-        );
-        console.log("selected", this.selectedCountry);
-    }
-);
+  //       this.selectedCountry = this.countryss.find(
+  //           (country: any) => country.id === this.utilisateurC.compteUser.country.id
+  //       );
+  //       console.log("selected", this.selectedCountry);
+  //   }
+// );
 
 
   
@@ -238,7 +241,7 @@ selectedCountry: any; // To store the retrieved country
    // this.detailPurchasings.push(new DetailsPurchasing())
 
    //for details
-   await this.getProducts()
+   this.getProducts()
    this.getUnits()
    this.cdref.detectChanges();
 
@@ -447,6 +450,8 @@ retrieveCountryById(): void {
    },
    (error: any)=>{
      //this.isError=true
+     console.log(error);
+     
      if(error.error.message=='ko'){
        this.erreur=error.error.data
        }else{
@@ -637,18 +642,18 @@ retrieveCountryById(): void {
  }
 
  changeValue(value: any,i:any ){
-   console.log(i);
+  console.log(i);
 
-   this.detailPurchasesForms[i].totalPrice=this.detailPurchasesForms[i].value*this.detailPurchasesForms[i].quantity
-   //this.totalPrices[i]=this.values[i]*this.quantitys[i]
-   ////this.unit=this.product.unit
-   this.changeUnit(i)
-   this.montant=0
+  this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
+  //this.totalPrices[i]=this.values[i]*this.quantitys[i]
+  ////this.unit=this.product.unit
+  this.changeUnit(i)
+  this.montant=0
 
-   for(let i=0;i<this.detailPurchasesForms.length;i++){
-     this.montant+=this.detailPurchasesForms[i].totalPrice
-   }
- }
+  for(let i=0;i<this.detailPurchasesForms.length;i++){
+    this.montant+=this.detailPurchasesForms[i].totalPrice
+  }
+}
 
  async findOrCreatePrice(price:Price){
    await this.priceService.loadOrCreate(price).then(data=>{
@@ -717,8 +722,9 @@ retrieveCountryById(): void {
  async getProducts(){
     const user= this.tokenService.getUser();
    await this.productService.getAllProduct().then(data =>{
-     console.log(data)
+     
      this.products=data
+     
      //this.productes[0]=this.products[0]
      //this.unitys[0]=this.products[0].unit
    })
