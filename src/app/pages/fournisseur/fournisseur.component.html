@@ -2,7 +2,7 @@
 <mat-card class="cardWithShadow">
   <mat-card-content class="p-24">
     <div class="row justify-content-between gap-16">
-      <div class="col-lg-4">
+      <div class="col-4">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <input [(ngModel)]="motRecherche"
             matInput
@@ -14,7 +14,7 @@
           </mat-icon>
         </mat-form-field>
       </div>
-      <div class="col-lg-4 d-flex align-items-center justify-content-end">
+      <div class="col-4 d-flex align-items-center justify-content-end">
         <button mat-flat-button (click)="openDialogAdd()" color="primary">
           Ajouter un fournisseur
         </button>
@@ -88,7 +88,7 @@
 
 <!-- add -->
 <ng-template #dialogTemplate>
-  <mat-dialog-content style="max-width: 1200px; max-height: 450px;">
+  <mat-dialog-content style="max-width: 1200px; max-height: 500px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>
@@ -177,6 +177,19 @@
             />
           </mat-form-field>
         </div>
+        <div class="col-lg-12">
+          <label for="geolocation">Geolocation</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              id="geolocation"
+              placeholder="Entrez la Geolocation"
+              required
+              name="geolocation"
+              [(ngModel)]="address.geolocation"
+            />
+          </mat-form-field>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-6">
@@ -193,7 +206,7 @@
 <!-- edit -->
 
 <ng-template #dialogTemplateEdit>
-  <mat-dialog-content style="max-width: 1200px; max-height: 450px;">
+  <mat-dialog-content style="max-width: 1200px; max-height: 500px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>
@@ -299,6 +312,19 @@
               required
               name="streetNumber"
               [(ngModel)]="address.streetNumber"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-12">
+          <label for="geolocation">Geolocation</label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              id="geolocation"
+              placeholder="Entrez la Geolocation"
+              required
+              name="geolocation"
+              [(ngModel)]="address.geolocation"
             />
           </mat-form-field>
         </div>

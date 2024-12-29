@@ -165,6 +165,17 @@ detailPurchasesForms2:any=[]
  isSuccessEdit:boolean
  erreurEdit:string
  sucessEdit:string
+  usercurrency: Currency;
+
+
+  displayedColumns: string[] = [
+    'name',
+    'category',
+    'stock',
+    'action',
+  ];
+
+  dataSource = new MatTableDataSource<Product>([]);
 
  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
@@ -189,20 +200,24 @@ selectedCountry: any; // To store the retrieved country
 });
 
   this.utilisateurC =this.tokenService.getUser();
-  // console.log("courrency",this.utilisateurC.compteUser.country.id);
+  this.usercurrency = this.utilisateurC.compteUser.address.country.currency
+  this.currencys.push(this.usercurrency)
+  console.log("currency", this.usercurrency);
+  
+  // console.log("courrency",.name);
   
   
-  this.countryService.getAll().then(
-    (data: any) => {
-        this.countryss = data;
-        console.log(this.countryss);
+  // this.countryService.getAll().then(
+  //   (data: any) => {
+  //       this.countryss = data;
+  //       console.log(this.countryss);
 
-        this.selectedCountry = this.countryss.find(
-            (country: any) => country.id === this.utilisateurC.compteUser.country.id
-        );
-        console.log("selected", this.selectedCountry);
-    }
-);
+  //       this.selectedCountry = this.countryss.find(
+  //           (country: any) => country.id === this.utilisateurC.compteUser.country.id
+  //       );
+  //       console.log("selected", this.selectedCountry);
+  //   }
+// );
 
 
   
@@ -223,7 +238,7 @@ selectedCountry: any; // To store the retrieved country
    this.getAll()
    this.getAllShop()
    //this.getAllAdress()
-   this.getAllCurrency()
+   //this.getAllCurrency()
    await this.getAllCategory()
    //this.getProductCategory(this.category)
    // this.detailPurchasings.push(new DetailsPurchasing())
@@ -329,7 +344,8 @@ retrieveCountryById(): void {
  }
 
  getAllShop(){
-   this.shopService.getAll().then(data =>{
+  const user = this.tokenService.getUser();
+   this.shopService.getAll(user.id).then(data =>{
      console.log(data)
 
      this.shops=data
@@ -410,7 +426,7 @@ retrieveCountryById(): void {
    this.purchase.shop=this.shop
 
    this.purchase.reference=this.reference
-   this.purchase.currency=this.currency
+   this.purchase.currency=this.usercurrency
    // this.purchase.quantity=this.quantity
    this.purchase.montant=this.montant
    this.purchase.datePurchase=this.datePurchase
@@ -438,6 +454,8 @@ retrieveCountryById(): void {
    },
    (error: any)=>{
      //this.isError=true
+     console.log(error);
+     
      if(error.error.message=='ko'){
        this.erreur=error.error.data
        }else{
@@ -628,18 +646,18 @@ retrieveCountryById(): void {
  }
 
  changeValue(value: any,i:any ){
-   console.log(i);
+  console.log(i);
 
-   this.detailPurchasesForms[i].totalPrice=this.detailPurchasesForms[i].value*this.detailPurchasesForms[i].quantity
-   //this.totalPrices[i]=this.values[i]*this.quantitys[i]
-   ////this.unit=this.product.unit
-   this.changeUnit(i)
-   this.montant=0
+  this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
+  //this.totalPrices[i]=this.values[i]*this.quantitys[i]
+  ////this.unit=this.product.unit
+  this.changeUnit(i)
+  this.montant=0
 
-   for(let i=0;i<this.detailPurchasesForms.length;i++){
-     this.montant+=this.detailPurchasesForms[i].totalPrice
-   }
- }
+  for(let i=0;i<this.detailPurchasesForms.length;i++){
+    this.montant+=this.detailPurchasesForms[i].totalPrice
+  }
+}
 
  async findOrCreatePrice(price:Price){
    await this.priceService.loadOrCreate(price).then(data=>{
@@ -824,5 +842,14 @@ retrieveCountryById(): void {
  this.detailPurchasesForms2=[]
  this.purchase=new Purchase()
  this.ngOnInit()
+ }
+
+ visibleSelect: boolean = false;
+ showDialogSelect(){
+
+  console.log("test");
+  
+    this.visibleSelect = true;
+    
  }
 }
