@@ -28,7 +28,7 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product">
-            {{ product.name }}
+            {{ product.product.name }}
           </td>
         </ng-container>
         <ng-container matColumnDef="category">
@@ -36,7 +36,7 @@
             Categorie
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.category?.name }}
+            {{ product.product.category?.name }}
           </td>
         </ng-container>
 
@@ -45,7 +45,7 @@
             Stock
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.sotck }}
+            {{ product.quantity }}
           </td>
         </ng-container>
         <ng-container matColumnDef="action">

@@ -248,17 +248,20 @@
                       </div>
                     </div>
 
-                    <div class="col">
-                      <div class="field">
-                        <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"  id="value{i}" [disabled]="true" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true" [min]="0"  ></p-inputNumber>
-                      </div>
-                    </div>
+                   
 
                     <div class="col-2">
                       <div class="field">
                         <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">Prix total</label>
                         <p-inputNumber mode="decimal" [minFractionDigits]="2" name="totalPrice{{detailPurchasesForms.length-1}}"  id="totalPrice{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice" [showButtons]="true" [min]="0" (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].totalPrice,detailPurchasesForms.length-1)"  ></p-inputNumber>
+                      </div>
+                    </div>
+
+
+                    <div class="col">
+                      <div class="field">
+                        <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
+                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"  id="value{i}" [disabled]="true" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true" [min]="0"  ></p-inputNumber>
                       </div>
                     </div>
                   </div>
