@@ -305,7 +305,7 @@ export class ProductComponent implements OnInit {
     this.productClicked = product;
 
     this.dialog.open(this.dialogTemplateDelete, {
-      width: '40px',
+      width: '400px',
     });
   }
 

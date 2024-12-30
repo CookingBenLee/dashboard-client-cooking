@@ -54,12 +54,12 @@
           </th>
           <td mat-cell *matCellDef="let product" class="action-link">
             <a
-            (click)="openDialogEdit(product)"
+            (click)="openDialogEdit(product.product)"
               class="m-r-10 cursor-pointer"
               ><i-tabler name="edit" class="icon-18"></i-tabler
             ></a>
             <a
-                (click)="deleteProduct(product)"
+                (click)="deleteProduct(product.product)"
               class="m-r-10 cursor-pointer"
             >
               <i-tabler name="trash" class="icon-18"></i-tabler>
@@ -289,6 +289,7 @@
 
 <!-- delete -->
 <ng-template #dialogTemplateDelete>
+  
   <h5 mat-dialog-title class="mat-subtitle-1">Suppression du produit</h5>
 <div mat-dialog-content class="mat-subtitle-2 lh-16">
   Êtes-vous sûr de vouloir supprimer ce produit ?
