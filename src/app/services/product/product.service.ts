@@ -47,7 +47,7 @@ export class ProductService {
         .then(data => data);
   }
   getActivePage(param:any,userId: number ) {
-    return this.http.get<any>(`${this.env.apiUrl}/product/getallpagebyuser/${userId}?page=`+param['page']+'&size='+param['size'])
+    return this.http.get<any>(`${this.env.apiUrl}/stock/getallpagebyuser/${userId}?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);

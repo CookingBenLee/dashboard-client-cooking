@@ -56,22 +56,13 @@ import { DialogModule } from 'primeng/dialog';
 import { EditorModule } from 'primeng/editor';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FieldsetModule } from 'primeng/fieldset';
-import { TreeModule } from 'primeng/tree';
-import { AccordionModule } from 'primeng/accordion';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { ChipModule } from 'primeng/chip';
-import { FileUploadModule } from 'primeng/fileupload';
-import { RippleModule } from 'primeng/ripple';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SplitButtonModule } from 'primeng/splitbutton';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
 import { TableShortService } from 'src/app/services/tableShort/table-short.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { ModalAddProductComponent } from './modal-add-product/modal-add-product.component';
 import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 
@@ -174,7 +165,7 @@ detailPurchasesForms2:any=[]
  isSuccessEdit:boolean
  erreurEdit:string
  sucessEdit:string
-  usercurrency: [] = []
+  usercurrency: Currency;
 
 
   displayedColumns: string[] = [
@@ -210,6 +201,7 @@ selectedCountry: any; // To store the retrieved country
 
   this.utilisateurC =this.tokenService.getUser();
   this.usercurrency = this.utilisateurC.compteUser.address.country.currency
+  this.currencys.push(this.usercurrency)
   console.log("currency", this.usercurrency);
   
   // console.log("courrency",.name);
@@ -246,7 +238,7 @@ selectedCountry: any; // To store the retrieved country
    this.getAll()
    this.getAllShop()
    //this.getAllAdress()
-   this.getAllCurrency()
+   //this.getAllCurrency()
    await this.getAllCategory()
    //this.getProductCategory(this.category)
    // this.detailPurchasings.push(new DetailsPurchasing())
@@ -434,7 +426,7 @@ retrieveCountryById(): void {
    this.purchase.shop=this.shop
 
    this.purchase.reference=this.reference
-   this.purchase.currency=this.currency
+   this.purchase.currency=this.usercurrency
    // this.purchase.quantity=this.quantity
    this.purchase.montant=this.montant
    this.purchase.datePurchase=this.datePurchase

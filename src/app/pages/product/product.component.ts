@@ -158,6 +158,8 @@ export class ProductComponent implements OnInit {
       if (this.products.length === 0 || this.page === 0) {
         this.resClient = data;
         this.products = data.content;
+        console.log(this.products);
+        
         this.totalRows = data.totalElements;
         this.dataSource.data = data.content; // Ajoutez cette ligne
         console.log("new call")
@@ -169,6 +171,7 @@ export class ProductComponent implements OnInit {
 
         this.resClient.number = data.number;
         this.products=data.content;
+        console.log(this.products);
         this.dataSource.data=data.content; // Ajoutez cette ligne
         console.log("added call")
         console.log(this.dataSource.data)
@@ -302,7 +305,7 @@ export class ProductComponent implements OnInit {
     this.productClicked = product;
 
     this.dialog.open(this.dialogTemplateDelete, {
-      width: '40px',
+      width: '400px',
     });
   }
 
