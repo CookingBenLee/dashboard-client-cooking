@@ -45,7 +45,7 @@
             Stock
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.quantity }}
+            {{ product.quantity }}  {{ product.product.unit.code }}
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
