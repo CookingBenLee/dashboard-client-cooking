@@ -388,7 +388,7 @@ retrieveCountryById(): void {
        //this.purchaseService.delete(purchase.id).then(data=>{this.getAll()})
        this.detailPurchasesForms2 = this.detailPurchasesForms2.filter((item: any) => item !== detail)
        this.detailPurchasesForms = this.detailPurchasesForms.filter((item: any) => item !== detail)
-
+      this.montant = this.montant - detail?.totalPrice
        // this.detailPurchasesForms2.splice(i,i)
        // this.detailPurchasesForms.splice(i,i)
 
