@@ -87,7 +87,7 @@ body, html {
 
 input {
   width: 100%;
-  padding: 14px;
+  padding: 15px;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -111,13 +111,14 @@ input:focus {
 }
 
 .form-container h2 {
-  text-align: left;
+  margin-bottom: 10px;
+  text-align: center;
   font-size: 2rem;
   color: #333;
 }
 
 .form-container p {
-  text-align: left;
+  text-align: center;
   color: #666;
   margin-bottom: 05px;
   font-size: 18px;
@@ -252,6 +253,7 @@ select option {
   }
 
   .form-container h2 {
+    margin-bottom: 10px;
     font-size: 1.5rem; /* Taille réduite pour les titres */
   }
 
@@ -308,6 +310,39 @@ select option {
 
 .btn-dropdown-action:hover {
   background-color: #3e454d; /* Couleur de fond au survol */
+}
+
+fieldset {
+  border: 2px solid #000000;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+legend {
+  background-color: #4594e9;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 10px 25px; /* Agrandir le fond en ajoutant du padding */
+    border-radius: 5px; /* Arrondir les coins */
+    display: inline-block; /* Pour ajuster le fond autour du texte */
+    text-align: center;
+}
+
+.nested {
+  border-color: #000000;
+  border-radius: 10px;
+}
+
+.nested legend {
+  color: white;
+  background-color: #007BFF;
+  padding: 10px 25px;
+  border-radius: 10px;
+}
+
+input {
+  margin: 0.4rem;
 }
 
 @media (max-width: 768px) {
