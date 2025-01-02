@@ -1,14 +1,11 @@
-<p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm"
+  rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
 <mat-card class="cardWithShadow">
   <mat-card-content class="p-24">
     <div class="row justify-content-between gap-16">
       <div class="col-4">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
-          <input [(ngModel)]="motRecherche"
-            matInput
-            placeholder="Rechercher"
-            (keyup)="recherche()"
-          />
+          <input [(ngModel)]="motRecherche" matInput placeholder="Rechercher" (keyup)="recherche()" />
           <mat-icon matSuffix>
             <i-tabler name="search" class="icon-20"></i-tabler>
           </mat-icon>
@@ -57,15 +54,9 @@
             Action
           </th>
           <td mat-cell *matCellDef="let shop" class="action-link">
-            <a
-            (click)="openDialogEdit(shop,addresse)"
-              class="m-r-10 cursor-pointer"
-              ><i-tabler name="edit" class="icon-18"></i-tabler
-            ></a>
-            <a
-                (click)="delete('top-right',shop)"
-              class="m-r-10 cursor-pointer"
-            >
+            <a (click)="openDialogEdit(shop,addresse)" class="m-r-10 cursor-pointer"><i-tabler name="edit"
+                class="icon-18"></i-tabler></a>
+            <a (click)="delete('top-right',shop)" class="m-r-10 cursor-pointer">
               <i-tabler name="trash" class="icon-18"></i-tabler>
             </a>
           </td>
@@ -74,12 +65,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <mat-paginator
-      [length]="totalRows"
-      [pageSize]="rows"
-      [pageSizeOptions]="[10, 20, 30]"
-        showFirstLastButtons
-      (page)="onPageChange($event)">
+      <mat-paginator [length]="totalRows" [pageSize]="rows" [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+        (page)="onPageChange($event)">
       </mat-paginator>
     </div>
   </mat-card-content>
@@ -88,119 +75,105 @@
 
 <!-- add -->
 <ng-template #dialogTemplate>
-  <mat-dialog-content style="max-width: 1200px; max-height: 500px;">
+  <mat-dialog-content style="max-width: 600px; max-height: 700px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>
         Ajout d'un fournisseur
       </h5>
     </div>
+
     <form #shopForm="ngForm">
+      <!-- Nom du Fournisseur -->
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <label for="name">Nom du Fournisseur</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="name"
-              placeholder="Entrez le nom du fournisseur"
-              required
-              name="name"
-              [(ngModel)]="shopData.name"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <label for="address">Adresse</label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="address"
-              placeholder="Entrez l'adresse"
-              required
-              name="address"
-              [(ngModel)]="address.label"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <label for="country">Pays</label>
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="country"
-              [(ngModel)]="address.country"
-              name="country"
-              required
-            >
-              <mat-option *ngFor="let country of countrys" [value]="country">
-                {{ country.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <label for="city">Ville</label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="city"
-              placeholder="Entrez la ville"
-              required
-              name="city"
-              [(ngModel)]="address.city"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <label for="streetName">Nom de la Rue</label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="streetName"
-              placeholder="Entrez le nom de la rue"
-              required
-              name="streetName"
-              [(ngModel)]="address.streetName"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <label for="streetNumber">Numéro de la Rue</label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="streetNumber"
-              placeholder="Entrez le numéro de la rue"
-              required
-              name="streetNumber"
-              [(ngModel)]="address.streetNumber"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-12">
-          <label for="geolocation">Geolocation</label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="geolocation"
-              placeholder="Entrez la Geolocation"
-              name="geolocation"
-              [(ngModel)]="address.geolocation"
-            />
+            <input matInput id="name" placeholder="Entrez le nom du fournisseur" required name="name"
+              [(ngModel)]="shopData.name" />
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-6">
-          <button mat-flat-button color="primary" class="large-button" (click)="save()" [disabled]="!shopForm.valid"> Ajouter </button>
+
+      <!-- Informations Personnelles -->
+      <fieldset>
+        <legend>Informations Personnelles</legend>
+
+        <div class="row">
+          <div class="col-lg-8">
+            <label for="streetName">Nom de la Rue</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput id="streetName" placeholder="Entrez le nom de la rue" required name="streetName"
+                [(ngModel)]="address.streetName" />
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4">
+            <label for="streetNumber">Numéro de la Rue</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput id="streetNumber" placeholder="Entrez le numéro de la rue" required name="streetNumber"
+                [(ngModel)]="address.streetNumber" />
+            </mat-form-field>
+          </div>
         </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <label for="address">Code Postal</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput id="address" placeholder="Entrez le code postal" required name="address"
+                [(ngModel)]="address.label" />
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-8">
+            <label for="city">Ville</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput id="city" placeholder="Entrez la ville" required name="city" [(ngModel)]="address.city" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <label for="country">Pays</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select id="country" [(ngModel)]="address.country" name="country" required>
+                <mat-option *ngFor="let country of countrys" [value]="country">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <label for="geolocation">Géolocalisation</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput id="geolocation" placeholder="Coordonnées Géographiques (Lat. ; Long)" name="geolocation"
+                [(ngModel)]="address.geolocation" />
+            </mat-form-field>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Boutons d'action -->
+      <div class="row">
+        
         <div class="col-lg-6">
-          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()">Annuler</button>
+        </div>
+
+        <div class="col-lg-6">
+          <button mat-flat-button color="primary" class="large-button" (click)="save()"
+            [disabled]="!shopForm.valid">Ajouter</button>
         </div>
       </div>
     </form>
   </mat-dialog-content>
 </ng-template>
+
 
 <!-- edit -->
 
@@ -217,14 +190,8 @@
         <div class="col-lg-6">
           <label for="nameEdit">Nom du Fournisseur</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="nameEdit"
-              placeholder="Entrez le nom du fournisseur"
-              required
-              name="name"
-              [(ngModel)]="shopData.name"
-            />
+            <input matInput id="nameEdit" placeholder="Entrez le nom du fournisseur" required name="name"
+              [(ngModel)]="shopData.name" />
           </mat-form-field>
         </div>
         <!-- <div class="col-lg-6">
@@ -240,17 +207,12 @@
             />
           </mat-form-field>
         </div> -->
+
         <div class="col-lg-6">
           <label for="addressEdit">Adresse</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="addressEdit"
-              placeholder="Entrez l'adresse"
-              required
-              name="address"
-              [(ngModel)]="address.label"
-            />
+            <input matInput id="addressEdit" placeholder="Entrez l'adresse" required name="address"
+              [(ngModel)]="address.label" />
           </mat-form-field>
         </div>
         <div class="col-lg-6">
@@ -262,74 +224,40 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <!-- <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="countryEdit"
-              [(ngModel)]="address.country"
-              name="country"
-              required
-            >
-              <mat-option *ngFor="let country of countrys" [value]="country">
-                {{ country.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field> -->
-        </div>        
+        </div>
         <div class="col-lg-6">
           <label for="cityEdit">Ville</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="cityEdit"
-              placeholder="Entrez la ville"
-              required
-              name="city"
-              [(ngModel)]="address.city"
-            />
+            <input matInput id="cityEdit" placeholder="Entrez la ville" required name="city"
+              [(ngModel)]="address.city" />
           </mat-form-field>
         </div>
         <div class="col-lg-6">
           <label for="streetNameEdit">Nom de la Rue</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="streetNameEdit"
-              placeholder="Entrez le nom de la rue"
-              required
-              name="streetName"
-              [(ngModel)]="address.streetName"
-            />
+            <input matInput id="streetNameEdit" placeholder="Entrez le nom de la rue" required name="streetName"
+              [(ngModel)]="address.streetName" />
           </mat-form-field>
         </div>
         <div class="col-lg-6">
           <label for="streetNumberEdit">Numéro de la Rue</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="streetNumberEdit"
-              placeholder="Entrez le numéro de la rue"
-              required
-              name="streetNumber"
-              [(ngModel)]="address.streetNumber"
-            />
+            <input matInput id="streetNumberEdit" placeholder="Entrez le numéro de la rue" required name="streetNumber"
+              [(ngModel)]="address.streetNumber" />
           </mat-form-field>
         </div>
         <div class="col-lg-12">
           <label for="geolocation">Geolocation</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="geolocation"
-              placeholder="Entrez la Geolocation"
-              name="geolocation"
-              [(ngModel)]="address.geolocation"
-            />
+            <input matInput id="geolocation" placeholder="Entrez la Geolocation" name="geolocation"
+              [(ngModel)]="address.geolocation" />
           </mat-form-field>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6">
-          <button mat-flat-button color="primary" class="large-button" (click)="update()" [disabled]="!shopForm.valid"> Modifier </button>
+          <button mat-flat-button color="primary" class="large-button" (click)="update()" [disabled]="!shopForm.valid">
+            Modifier </button>
         </div>
         <div class="col-lg-6">
           <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
