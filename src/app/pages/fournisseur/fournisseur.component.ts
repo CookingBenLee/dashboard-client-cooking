@@ -114,7 +114,7 @@ export class FournisseurComponent implements OnInit{
  openDialogAdd() {
   this.resetFields();
   this.dialog.open(this.dialogTemplate, {
-    width: '1200px', height: '500px'
+    width: '600px', height: '700px'
   });
 }
 
