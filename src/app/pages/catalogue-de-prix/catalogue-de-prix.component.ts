@@ -80,11 +80,14 @@ export class CatalogueDePrixComponent implements OnInit {
     private currencyService:CurrencyService,private unitService:UnitService) {}
 
   ngOnInit(): void {
-
+    this.user = this.tokenService.getUser();
+    console.log(this.user.id);
+    
     this.getAll()
 
   }
 
+  user: any
   displayedColumns?: string[] = [
     'nom produit',
     'categorie',
@@ -218,8 +221,9 @@ export class CatalogueDePrixComponent implements OnInit {
 
   openDialog(product: Product) {
     // this.resetFields();
-    console.log(product.id, "id du produit");
-
+    console.log(product, "id du produit");
+    
+    
     this.priceService.byProduct(product.id).then(
       (data: any) => {
         this.price = data;

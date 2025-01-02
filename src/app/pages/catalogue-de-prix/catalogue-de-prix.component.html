@@ -91,8 +91,8 @@
           <!-- Ligne Fournisseur -->
 
           <div *ngFor="let pric of price" class="info-row">
-            <div class="info-cell label">{{ pric?.shop?.name || 'Non renseigné' }}</div>
-            <div class="info-cell value">
+            <div *ngIf="pric.shop.user.id == user.id" class="info-cell label">{{ pric?.shop?.name || 'Non renseigné' }}</div>
+            <div *ngIf="pric.shop.user.id == user.id" class="info-cell value">
               {{ pric?.value || 'Non renseigné' }}
               {{ pric?.currency?.symbol || 'Non renseigné' }}
             </div>
