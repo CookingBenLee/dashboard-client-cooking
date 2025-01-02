@@ -156,9 +156,93 @@
           <div class="mb-2 mt-1">
             <div class="flex-1 mb-2">
               <h5>Liste des  produits</h5>
-              <button  pButton label="Ajouter un produit" type="button" [loading]="loading" class="p-button-newline mt-2" (click)="showAddProductForm()" ></button>
+              <!-- <button  pButton label="Ajouter un produit" type="button" [loading]="loading" class="p-button-newline mt-2" (click)="showAddProductForm()" ></button> -->
             </div>
 
+
+
+             <!--Formulaire d'ajout-->
+             <h3>Saisie nouvel achat de produit </h3>
+             <div  class="cardnew mt-5">
+               <form class="p-fluid  ">
+                 <div class="grid">
+                   
+                   <div class="col-3">
+                     <div class="field ">
+                       <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>
+                       <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
+                       <p-dropdown [filter]="true"
+                       filterBy="name"  [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
+                         <ng-template let-product pFilter="product.category.name" pTemplate="item" >
+                           <div class="flex align-items-center operatingSystems-item">
+                             <div>{{product.name}} ({{product.category.name}} / {{product?.conditioning?.name}})</div>
+                           </div>
+                         </ng-template>
+                       </p-dropdown>
+                     </div>
+                   </div>
+                   <div (click)="showDialogSelect()"  style="margin-top: 5px; margin-left: -5px;" class="col-1">
+                     <button pButton pRipple icon="pi pi-filter-fill" style="margin-top: 20px;" class="p-button-rounded p-button-primary mr-2"></button>
+                   </div>
+                   <!--<div class="col-3">
+                     <div class="field ">
+                       <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>-->
+                       <!--<p-dropdown [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detail.product" (ngModelChange)="changeProduct(detail.product,i)">
+                         <ng-template let-product pFilter="product.category.name" pTemplate="item" >
+                           <div class="flex align-items-center operatingSystems-item">
+                             <div>{{product.name}} ({{product.category.name}})</div>
+                           </div>
+                         </ng-template>
+                       </p-dropdown>-->
+                      <!--<p-dropdown [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}"  [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)"></p-dropdown>->
+                     </div>
+                   </div>-->
+                   <div class="col">
+                     <div class="field">
+                       <label htmlFor="quantity{{detailPurchasesForms.length-1}}">Quantité</label>
+                       <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantity{{detailPurchasesForms.length-1}}" id="quantity{i}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].quantity"  (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].quantity,detailPurchasesForms.length-1)" [showButtons]="true" [min]="0" ></p-inputNumber>
+                     </div>
+                   </div>
+                   <div class="col">
+                     <div class="field ">
+                       <label htmlFor="unit{{detailPurchasesForms.length-1}}">Unité</label>
+                       <p-dropdown [options]="units"  optionLabel="name" name="unit{{detailPurchasesForms.length-1}}"  [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].unit" (ngModelChange)="changeUnit(detailPurchasesForms.length-1)" ></p-dropdown>
+                     </div>
+                   </div>
+
+   
+
+                   <div class="col-2">
+                     <div class="field">
+                       <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">Prix total</label>
+                       <p-inputNumber mode="decimal" [minFractionDigits]="2" name="totalPrice{{detailPurchasesForms.length-1}}"  id="totalPrice{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice" [showButtons]="true" [min]="0" (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].totalPrice,detailPurchasesForms.length-1)"  ></p-inputNumber>
+                     </div>
+                   </div>
+
+
+                   <div class="col">
+                     <div class="field">
+                       <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
+                       <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"  id="value{i}" [disabled]="true" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true" [min]="0"  ></p-inputNumber>
+                     </div>
+                   </div>
+                 </div>
+
+                 <div *ngIf="detailPurchasesForms[detailPurchasesForms.length-1].distinctUnit" class="field">
+                   <label htmlFor="price{{detailPurchasesForms.length-1}}">Quantité réelle : </label>
+                   <label> {{detailPurchasesForms[detailPurchasesForms.length-1].realQuantity}}</label>
+                 </div>
+
+
+
+               </form>
+               <!---->
+               <div class="ml-auto btnspart  grid mt-3">
+                 <button pButton label="Produit non existant" pRipple type="button"   class="col p-button p-button-nouveau p-component" (click)="showProductAddForm()"></button>
+                 <button pButton  pRipple label="Enregistrer" [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0"  type="button"   class="col p-button-saved p-button p-component ml-7 mr-2" (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])"></button>
+                 <button pButton pRipple label="Annuler" type="reset"   class="col p-button-annuler p-button p-component " (click)="showAddProductForm()"></button>
+               </div>
+             </div>
             <!-- List of created product-->
               <!-- Liste des produits créés -->
 <div class="ListProduct">
@@ -209,88 +293,7 @@
 
 
 
-              <!--Formulaire d'ajout-->
-              <h3 *ngIf="showAddProduct">Saisie nouvel achat de produit </h3>
-              <div  *ngIf="showAddProduct" class="cardnew mt-5">
-                <form class="p-fluid  ">
-                  <div class="grid">
-                    
-                    <div class="col-3">
-                      <div class="field ">
-                        <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>
-                        <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
-                        <p-dropdown [filter]="true"
-                        filterBy="name"  [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
-                          <ng-template let-product pFilter="product.category.name" pTemplate="item" >
-                            <div class="flex align-items-center operatingSystems-item">
-                              <div>{{product.name}} ({{product.category.name}} / {{product?.conditioning?.name}})</div>
-                            </div>
-                          </ng-template>
-                        </p-dropdown>
-                      </div>
-                    </div>
-                    <div (click)="showDialogSelect()"  style="margin-top: 5px; margin-left: -5px;" class="col-1">
-                      <button pButton pRipple icon="pi pi-filter-fill" style="margin-top: 20px;" class="p-button-rounded p-button-primary mr-2"></button>
-                    </div>
-                    <!--<div class="col-3">
-                      <div class="field ">
-                        <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>-->
-                        <!--<p-dropdown [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}" [(ngModel)]="detail.product" (ngModelChange)="changeProduct(detail.product,i)">
-                          <ng-template let-product pFilter="product.category.name" pTemplate="item" >
-                            <div class="flex align-items-center operatingSystems-item">
-                              <div>{{product.name}} ({{product.category.name}})</div>
-                            </div>
-                          </ng-template>
-                        </p-dropdown>-->
-                       <!--<p-dropdown [options]="products"  optionLabel="name" name="product{{detailPurchasesForms.length-1}}"  [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)"></p-dropdown>->
-                      </div>
-                    </div>-->
-                    <div class="col">
-                      <div class="field">
-                        <label htmlFor="quantity{{detailPurchasesForms.length-1}}">Quantité</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantity{{detailPurchasesForms.length-1}}" id="quantity{i}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].quantity"  (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].quantity,detailPurchasesForms.length-1)" [showButtons]="true" [min]="0" ></p-inputNumber>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="field ">
-                        <label htmlFor="unit{{detailPurchasesForms.length-1}}">Unité</label>
-                        <p-dropdown [options]="units"  optionLabel="name" name="unit{{detailPurchasesForms.length-1}}"  [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].unit" (ngModelChange)="changeUnit(detailPurchasesForms.length-1)" ></p-dropdown>
-                      </div>
-                    </div>
-
-    
-
-                    <div class="col-2">
-                      <div class="field">
-                        <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">Prix total</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="totalPrice{{detailPurchasesForms.length-1}}"  id="totalPrice{{detailPurchasesForms.length-1}}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice" [showButtons]="true" [min]="0" (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].totalPrice,detailPurchasesForms.length-1)"  ></p-inputNumber>
-                      </div>
-                    </div>
-
-
-                    <div class="col">
-                      <div class="field">
-                        <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"  id="value{i}" [disabled]="true" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true" [min]="0"  ></p-inputNumber>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div *ngIf="detailPurchasesForms[detailPurchasesForms.length-1].distinctUnit" class="field">
-                    <label htmlFor="price{{detailPurchasesForms.length-1}}">Quantité réelle : </label>
-                    <label> {{detailPurchasesForms[detailPurchasesForms.length-1].realQuantity}}</label>
-                  </div>
-
-
-
-                </form>
-                <!---->
-                <div class="ml-auto btnspart  grid mt-3">
-                  <button pButton label="Produit non existant" pRipple type="button"   class="col p-button p-button-nouveau p-component" (click)="showProductAddForm()"></button>
-                  <button pButton  pRipple label="Enregistrer" [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0"  type="button"   class="col p-button-saved p-button p-component ml-7 mr-2" (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])"></button>
-                  <button pButton pRipple label="Annuler" type="reset"   class="col p-button-annuler p-button p-component " (click)="showAddProductForm()"></button>
-                </div>
-              </div>
+             
 
           </div>
 
