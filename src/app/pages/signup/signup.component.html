@@ -18,72 +18,180 @@
       <div class="form-container">
         <!-- <h3>{{ error }}</h3> -->
         <h2>Créer un Compte</h2>
-        <p>Veuillez entrer vos informations personnelles pour continuer</p>
+        <!-- <p>Veuillez entrer vos informations personnelles pour continuer</p> -->
 
         <form id="login" #fCreate="ngForm" (ngSubmit)="addUserAccount(fCreate)">
-          <div class="information">
-            <div class="form-group" style="flex: 1;">
-              <label for="nom">Nom :</label>
+          <fieldset>
+            <legend>Informations Personnelles</legend>
+
+            <div class="form-group">
+              <!-- <label for="user-role">Type de compte :</label> -->
               <div class="input-container">
-                <input type="text" name="nom" id="nom" placeholder="Nom" required [(ngModel)]="compteUser.nom" noWhitespace
-                  #nomInput="ngModel" [ngClass]="{'ng-invalid': nomInput.invalid && nomInput.touched}" />
-                <div *ngIf="nomInput.invalid && nomInput.touched" class="error-message">
-                  Le nom est requis et ne doit pas contenir d'espaces.
+                <select name="user-role" id="user-role" [(ngModel)]="compteUser.typeCompte" required
+                  #typeCompteInput="ngModel"
+                  [ngClass]="{'ng-invalid': typeCompteInput.invalid && typeCompteInput.touched}">
+                  <option   disabled selected>Choisissez le type de compte</option>
+
+                  <!-- Liez l'objet de compte complet, pas seulement l'ID -->
+                  <option *ngFor="let account of typeAccounts" [ngValue]="account">
+                    {{ account.libelle }}
+                  </option>
+                </select>
+                <div *ngIf="typeCompteInput.invalid && typeCompteInput.touched" class="error-message">
+                  Le type de compte est requis.
                 </div>
               </div>
             </div>
 
-            <div class="form-group" style="flex: 1;">
-              <label for="prenom">Prénom :</label>
-              <div class="input-container">
-                <input type="text" name="prenom" id="prenom" placeholder="Prénom" required [(ngModel)]="compteUser.prenom"
-                  noWhitespace #prenomInput="ngModel"
-                  [ngClass]="{'ng-invalid': prenomInput.invalid && prenomInput.touched}" />
-                <div *ngIf="prenomInput.invalid && prenomInput.touched" class="error-message">
-                  Le prénom est requis et ne doit pas contenir d'espaces.
+            <div class="information">
+              <div class="form-group" style="flex: 1;">
+                <!-- <label for="nom">Nom :</label> -->
+                <div class="input-container">
+                  <input type="text" name="nom" id="nom" placeholder="Nom" required [(ngModel)]="compteUser.nom"
+                    noWhitespace #nomInput="ngModel" [ngClass]="{'ng-invalid': nomInput.invalid && nomInput.touched}" />
+                  <div *ngIf="nomInput.invalid && nomInput.touched" class="error-message">
+                    Le nom est requis.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group" style="flex: 1;">
+                <!-- <label for="prenom">Prénom :</label> -->
+                <div class="input-container">
+                  <input type="text" name="prenom" id="prenom" placeholder="Prénom" required
+                    [(ngModel)]="compteUser.prenom" noWhitespace #prenomInput="ngModel"
+                    [ngClass]="{'ng-invalid': prenomInput.invalid && prenomInput.touched}" />
+                  <div *ngIf="prenomInput.invalid && prenomInput.touched" class="error-message">
+                    Le prénom est requis.
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div class="form-group">
+              <!-- <label for="email">Email :</label> -->
+              <div class="input-container">
+                <input type="text" name="login" id="login" placeholder="Email" required [(ngModel)]="compteUser.login"
+                  noWhitespace #emailInput="ngModel"
+                  [ngClass]="{'ng-invalid': emailInput.invalid && emailInput.touched}" />
+                <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
+                  Un email valide est requise.
+                </div>
+              </div>
+            </div>
+
+            <div class="information">
+              <div class="form-group" style="flex: 1;">
+                <!-- <label for="password">Mot de passe :</label> -->
+                <div class="input-container password-container">
+                  <input type="password" name="password" id="password" placeholder="Mot de passe" required
+                    [(ngModel)]="compteUser.password" noWhitespace #passwordInput="ngModel"
+                    [ngClass]="{'ng-invalid': passwordInput.invalid && passwordInput.touched}" />
+                  <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
+                    Le mot de passe est requis.
+                  </div>
+                  <small style="color: red; margin-top: 5px;">{{ errorMessage }}</small>
+                </div>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <!-- <label for="password">Confirmation de mot de passe :</label> -->
+                <div class="input-container password-container">
+                  <input type="password" name="confirmation" id="confirmation" placeholder="confirmation" required
+                    [(ngModel)]="compteUser.confirmation" noWhitespace #confirmationInput="ngModel"
+                    [ngClass]="{'ng-invalid': confirmationInput.invalid && confirmationInput.touched}" />
+                  <div *ngIf="confirmationInput.invalid && confirmationInput.touched" class="error-message">
+                    La confirmation de mot de passe est requis.
+                  </div>
+                  <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
+                </div>
+              </div>
+            </div>
+
+
+            <fieldset class="nested">
+              <legend>Adresses Personnelles</legend>
+              <div class="information">
+
+                <div class="form-group" style="flex: 2;">
+                  <!-- <label for="streetName">Rue :</label> -->
+                  <div class="input-container">
+                    <input type="text" name="streetName" id="streetName" placeholder="Nom de Rue" required
+                      [(ngModel)]="adresseS.streetName" noWhitespace #streetNameInput="ngModel"
+                      [ngClass]="{'ng-invalid': streetNameInput.invalid && streetNameInput.touched}" />
+                    <div *ngIf="streetNameInput.invalid && streetNameInput.touched" class="error-message">
+                      Le nom de la rue est requis.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group" style="flex: 1;">
+                  <!-- <label for="streetNumber">Numéro de la rue :</label> -->
+                  <div class="input-container">
+                    <input type="number" name="streetNumber" id="streetNumber" placeholder="N° Rue" required
+                      [(ngModel)]="adresseS.streetNumber" noWhitespace #streetNumberInput="ngModel"
+                      [ngClass]="{'ng-invalid': streetNumberInput.invalid && streetNumberInput.touched}" />
+                    <div *ngIf="streetNumberInput.invalid && streetNumberInput.touched" class="error-message">
+                      Le numéro de rue est requis.
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- Ligne 2 -->
+              <div class="information">
+                <div class="form-group" style="flex: 1;">
+                  <!-- <label for="label">Adresse :</label> -->
+                  <div class="input-container">
+                    <input type="text" name="label" id="label" placeholder="Code Postal" required
+                      [(ngModel)]="adresseS.label" noWhitespace #labelInput="ngModel"
+                      [ngClass]="{'ng-invalid': labelInput.invalid && labelInput.touched}" />
+                    <div *ngIf="labelInput.invalid && labelInput.touched" class="error-message">
+                      Le code postal est requis.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" style="flex: 2;">
+                  <!-- <label for="city">Ville :</label> -->
+                  <div class="input-container">
+                    <input type="text" name="city" id="city" placeholder="Ville" required [(ngModel)]="adresseS.city"
+                      noWhitespace #cityInput="ngModel"
+                      [ngClass]="{'ng-invalid': cityInput.invalid && cityInput.touched}" />
+                    <div *ngIf="cityInput.invalid && cityInput.touched" class="error-message">
+                      La ville est requise..
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="form-group" style="flex: 1;">
+
+                <!-- <label for="country">Pays :</label> -->
+                <div class="input-container">
+                  <select name="country" id="country" [(ngModel)]="adresseS.country" required #countryInput="ngModel"
+                    [ngClass]="{'ng-invalid': countryInput.invalid && countryInput.touched}">
+                    <option value="" disabled selected>Choisissez le pays</option>
+
+                    <!-- Liez l'objet de compte complet, pas seulement l'ID -->
+                    <option *ngFor="let pay of pays" [ngValue]="pay">
+                      {{ pay.name }}
+                    </option>
+                  </select>
+                  <div *ngIf="countryInput.invalid && countryInput.touched" class="error-message">
+                    Le pays est requis.
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+          </fieldset>
+
 
           <!-- Section Email -->
-          <div class="form-group">
-            <label for="email">Email :</label>
-            <div class="input-container">
-              <input type="text" name="login" id="login" placeholder="Email" required [(ngModel)]="compteUser.login" noWhitespace
-                #emailInput="ngModel" [ngClass]="{'ng-invalid': emailInput.invalid && emailInput.touched}" />
-              <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
-                Un email valide est requise et ne doit pas contenir d'espaces.
-              </div>
-            </div>
-          </div>
+
           <!-- Section Mot de Passe -->
-          <div class="information">
-            <div class="form-group" style="flex: 1;">
-              <label for="password">Mot de passe :</label>
-              <div class="input-container password-container">
-                <input type="password" name="password" id="password" placeholder="Mot de passe" required
-                  [(ngModel)]="compteUser.password" noWhitespace #passwordInput="ngModel"
-                  [ngClass]="{'ng-invalid': passwordInput.invalid && passwordInput.touched}" />
-                <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
-                  Le mot de passe est requis.
-                </div>
-                <small style="color: red; margin-top: 5px;">{{ errorMessage }}</small>
-              </div>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label for="password">Confirmation de mot de passe :</label>
-              <div class="input-container password-container">
-                <input type="password" name="confirmation" id="confirmation" placeholder="confirmation" required
-                  [(ngModel)]="compteUser.confirmation" noWhitespace #confirmationInput="ngModel"
-                  [ngClass]="{'ng-invalid': confirmationInput.invalid && confirmationInput.touched}" />
-                <div *ngIf="confirmationInput.invalid && confirmationInput.touched" class="error-message">
-                  La confirmation de mot de passe est requis.
-                </div>
-                <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
-              </div>
-            </div>
-          </div>
+
 
 
           <!-- Section localisation -->
@@ -211,106 +319,7 @@
           </div> -->
 
 
-          <div class="information">
-            <div class="form-group" style="flex: 1;">
 
-                <label for="country">Pays :</label>
-                <div class="input-container">
-                  <select
-                    name="country"
-                    id="country"
-                    [(ngModel)]="adresseS.country"
-                    required
-                    #countryInput="ngModel"
-                    [ngClass]="{'ng-invalid': countryInput.invalid && countryInput.touched}">
-                    <option value="" disabled selected>Choisissez le pays</option>
-    
-                    <!-- Liez l'objet de compte complet, pas seulement l'ID -->
-                    <option *ngFor="let pay of pays" [ngValue]="pay">
-                      {{ pay.name }}
-                    </option>
-                  </select>
-                  <div *ngIf="countryInput.invalid && countryInput.touched" class="error-message">
-                    Le pays est requis.
-                  </div>
-                </div>
-            </div>
-
-            <div class="form-group" style="flex: 1;">
-              <label for="label">Adresse :</label>
-              <div class="input-container">
-                <input type="text" name="label" id="label" placeholder="Adresse" required [(ngModel)]="adresseS.label"
-                  noWhitespace #labelInput="ngModel"
-                  [ngClass]="{'ng-invalid': labelInput.invalid && labelInput.touched}" />
-                <div *ngIf="labelInput.invalid && labelInput.touched" class="error-message">
-                  Le prénom est requis et ne doit pas contenir d'espaces.
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Ligne 2 -->
-          <div class="information">
-            <div class="form-group" style="flex: 1;">
-              <label for="city">Ville :</label>
-              <div class="input-container">
-                <input type="text" name="city" id="city" placeholder="Ville" required [(ngModel)]="adresseS.city"
-                  noWhitespace #cityInput="ngModel"
-                  [ngClass]="{'ng-invalid': cityInput.invalid && cityInput.touched}" />
-                <div *ngIf="cityInput.invalid && cityInput.touched" class="error-message">
-                  La ville est requise. et ne doit pas contenir d'espaces.
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group" style="flex: 1;">
-              <label for="streetName">Rue :</label>
-              <div class="input-container">
-                <input type="text" name="streetName" id="streetName" placeholder="Rue" required [(ngModel)]="adresseS.streetName"
-                  noWhitespace #streetNameInput="ngModel"
-                  [ngClass]="{'ng-invalid': streetNameInput.invalid && streetNameInput.touched}" />
-                <div *ngIf="streetNameInput.invalid && streetNameInput.touched" class="error-message">
-                  Le nom de la rue est requis et ne doit pas contenir d'espaces.
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Ligne 4 -->
-          <div class="information">
-            <div class="form-group" style="flex: 1;">
-              <label for="streetNumber">Numéro de la rue :</label>
-              <div class="input-container">
-                <input type="number" name="streetNumber" id="streetNumber" placeholder="Numero de la rue" required [(ngModel)]="adresseS.streetNumber"
-                  noWhitespace #streetNumberInput="ngModel"
-                  [ngClass]="{'ng-invalid': streetNumberInput.invalid && streetNumberInput.touched}" />
-                <div *ngIf="streetNumberInput.invalid && streetNumberInput.touched" class="error-message">
-                  Le numéro de rue est requis et ne doit pas contenir d'espaces.
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group" style="flex: 1;">
-              <label for="user-role">Type de compte :</label>
-              <div class="input-container">
-                <select
-                  name="user-role"
-                  id="user-role"
-                  [(ngModel)]="compteUser.typeCompte"
-                  required
-                  #typeCompteInput="ngModel"
-                  [ngClass]="{'ng-invalid': typeCompteInput.invalid && typeCompteInput.touched}">
-                  <option value="" disabled selected>Choisissez le type de compte</option>
-  
-                  <!-- Liez l'objet de compte complet, pas seulement l'ID -->
-                  <option *ngFor="let account of typeAccounts" [ngValue]="account">
-                    {{ account.libelle }}
-                  </option>
-                </select>
-                <div *ngIf="typeCompteInput.invalid && typeCompteInput.touched" class="error-message">
-                  Le type de compte est requis.
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- Ligne 5 -->
           <!-- <div class="field col-6">
               <label htmlFor="longitude">Longitude</label>
@@ -347,12 +356,12 @@
               </div>
             </div> -->
 
-           
 
-          <div class="remember">
+
+          <!-- <div class="remember">
             <input type="checkbox" name="remember" id="remember" />
             <label for="remember">Accepter les termes et conditions</label>
-          </div>
+          </div> -->
 
           <!-- Bouton de Soumission -->
           <div class="form-group">
