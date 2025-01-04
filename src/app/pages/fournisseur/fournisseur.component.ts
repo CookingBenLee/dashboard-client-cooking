@@ -297,8 +297,7 @@ resetFields() {}
 
   console.log(this.shopData, this.address, this.address.country);
   this.dialog.open(this.dialogTemplateEdit, {
-    width: '1200px',
-    height: '500px',
+    width: '600px', height: '700px'
   });
 }
 
