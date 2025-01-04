@@ -47,7 +47,7 @@
               <div class="form-group" style="flex: 1;">
                 <label for="nom">Nom :</label> 
                 <div class="input-container">
-                  <input type="text" name="nom" id="nom" placeholder="Nom" required [(ngModel)]="compteUser.nom"
+                  <input type="text" name="nom" id="nom" required [(ngModel)]="compteUser.nom"
                     noWhitespace #nomInput="ngModel" [ngClass]="{'ng-invalid': nomInput.invalid && nomInput.touched}" />
                   <div *ngIf="nomInput.invalid && nomInput.touched" class="error-message">
                     Le nom est requis.
@@ -58,7 +58,7 @@
               <div class="form-group" style="flex: 1;">
                 <label for="prenom">Prénom :</label>
                 <div class="input-container">
-                  <input type="text" name="prenom" id="prenom" placeholder="Prénom" required
+                  <input type="text" name="prenom" id="prenom"  required
                     [(ngModel)]="compteUser.prenom" noWhitespace #prenomInput="ngModel"
                     [ngClass]="{'ng-invalid': prenomInput.invalid && prenomInput.touched}" />
                   <div *ngIf="prenomInput.invalid && prenomInput.touched" class="error-message">
@@ -70,7 +70,7 @@
             <div class="form-group">
               <label for="email">Email :</label> 
               <div class="input-container">
-                <input type="text" name="login" id="login" placeholder="Email" required [(ngModel)]="compteUser.login"
+                <input type="text" name="login" id="login" required [(ngModel)]="compteUser.login"
                   noWhitespace #emailInput="ngModel"
                   [ngClass]="{'ng-invalid': emailInput.invalid && emailInput.touched}" />
                 <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
@@ -83,7 +83,7 @@
               <div class="form-group" style="flex: 1;">
                 <label for="password">Mot de passe :</label> 
                 <div class="input-container password-container">
-                  <input type="password" name="password" id="password" placeholder="Mot de passe" required
+                  <input type="password" name="password" id="password" required
                     [(ngModel)]="compteUser.password" noWhitespace #passwordInput="ngModel"
                     [ngClass]="{'ng-invalid': passwordInput.invalid && passwordInput.touched}" />
                   <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
@@ -95,7 +95,7 @@
               <div class="form-group" style="flex: 1;">
                 <label for="password">Confirmation de mot de passe :</label> 
                 <div class="input-container password-container">
-                  <input type="password" name="confirmation" id="confirmation" placeholder="confirmation" required
+                  <input type="password" name="confirmation" id="confirmation"  required
                     [(ngModel)]="compteUser.confirmation" noWhitespace #confirmationInput="ngModel"
                     [ngClass]="{'ng-invalid': confirmationInput.invalid && confirmationInput.touched}" />
                   <div *ngIf="confirmationInput.invalid && confirmationInput.touched" class="error-message">
@@ -114,7 +114,7 @@
                 <div class="form-group" style="flex: 2;">
                   <label for="streetName">Rue :</label>
                   <div class="input-container">
-                    <input type="text" name="streetName" id="streetName" placeholder="Nom de Rue" required
+                    <input type="text" name="streetName" id="streetName" required
                       [(ngModel)]="adresseS.streetName" noWhitespace #streetNameInput="ngModel"
                       [ngClass]="{'ng-invalid': streetNameInput.invalid && streetNameInput.touched}" />
                     <div *ngIf="streetNameInput.invalid && streetNameInput.touched" class="error-message">
@@ -126,7 +126,7 @@
                 <div class="form-group" style="flex: 1;">
                   <label for="streetNumber">Numéro de la rue :</label>
                   <div class="input-container">
-                    <input type="number" name="streetNumber" id="streetNumber" placeholder="N° Rue" required
+                    <input type="number" name="streetNumber" id="streetNumber" required
                       [(ngModel)]="adresseS.streetNumber" noWhitespace #streetNumberInput="ngModel"
                       [ngClass]="{'ng-invalid': streetNumberInput.invalid && streetNumberInput.touched}" />
                     <div *ngIf="streetNumberInput.invalid && streetNumberInput.touched" class="error-message">
@@ -142,7 +142,7 @@
                 <div class="form-group" style="flex: 1;">
                   <label for="label">Adresse :</label>
                   <div class="input-container">
-                    <input type="text" name="label" id="label" placeholder="Code Postal" required
+                    <input type="text" name="label" id="label"  required
                       [(ngModel)]="adresseS.label" noWhitespace #labelInput="ngModel"
                       [ngClass]="{'ng-invalid': labelInput.invalid && labelInput.touched}" />
                     <div *ngIf="labelInput.invalid && labelInput.touched" class="error-message">
@@ -153,7 +153,7 @@
                 <div class="form-group" style="flex: 2;">
                   <label for="city">Ville :</label>
                   <div class="input-container">
-                    <input type="text" name="city" id="city" placeholder="Ville" required [(ngModel)]="adresseS.city"
+                    <input type="text" name="city" id="city" required [(ngModel)]="adresseS.city"
                       noWhitespace #cityInput="ngModel"
                       [ngClass]="{'ng-invalid': cityInput.invalid && cityInput.touched}" />
                     <div *ngIf="cityInput.invalid && cityInput.touched" class="error-message">
