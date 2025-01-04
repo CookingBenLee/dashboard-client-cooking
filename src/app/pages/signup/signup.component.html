@@ -25,7 +25,7 @@
             <legend>Informations Personnelles</legend>
 
             <div class="form-group">
-              <!-- <label for="user-role">Type de compte :</label> -->
+              <label for="user-role">Type de compte :</label> 
               <div class="input-container">
                 <select name="user-role" id="user-role" [(ngModel)]="compteUser.typeCompte" required
                   #typeCompteInput="ngModel"
@@ -45,7 +45,7 @@
 
             <div class="information">
               <div class="form-group" style="flex: 1;">
-                <!-- <label for="nom">Nom :</label> -->
+                <label for="nom">Nom :</label> 
                 <div class="input-container">
                   <input type="text" name="nom" id="nom" placeholder="Nom" required [(ngModel)]="compteUser.nom"
                     noWhitespace #nomInput="ngModel" [ngClass]="{'ng-invalid': nomInput.invalid && nomInput.touched}" />
@@ -56,7 +56,7 @@
               </div>
 
               <div class="form-group" style="flex: 1;">
-                <!-- <label for="prenom">Prénom :</label> -->
+                <label for="prenom">Prénom :</label>
                 <div class="input-container">
                   <input type="text" name="prenom" id="prenom" placeholder="Prénom" required
                     [(ngModel)]="compteUser.prenom" noWhitespace #prenomInput="ngModel"
@@ -68,7 +68,7 @@
               </div>
             </div>
             <div class="form-group">
-              <!-- <label for="email">Email :</label> -->
+              <label for="email">Email :</label> 
               <div class="input-container">
                 <input type="text" name="login" id="login" placeholder="Email" required [(ngModel)]="compteUser.login"
                   noWhitespace #emailInput="ngModel"
@@ -81,7 +81,7 @@
 
             <div class="information">
               <div class="form-group" style="flex: 1;">
-                <!-- <label for="password">Mot de passe :</label> -->
+                <label for="password">Mot de passe :</label> 
                 <div class="input-container password-container">
                   <input type="password" name="password" id="password" placeholder="Mot de passe" required
                     [(ngModel)]="compteUser.password" noWhitespace #passwordInput="ngModel"
@@ -93,7 +93,7 @@
                 </div>
               </div>
               <div class="form-group" style="flex: 1;">
-                <!-- <label for="password">Confirmation de mot de passe :</label> -->
+                <label for="password">Confirmation de mot de passe :</label> 
                 <div class="input-container password-container">
                   <input type="password" name="confirmation" id="confirmation" placeholder="confirmation" required
                     [(ngModel)]="compteUser.confirmation" noWhitespace #confirmationInput="ngModel"
@@ -112,7 +112,7 @@
               <div class="information">
 
                 <div class="form-group" style="flex: 2;">
-                  <!-- <label for="streetName">Rue :</label> -->
+                  <label for="streetName">Rue :</label>
                   <div class="input-container">
                     <input type="text" name="streetName" id="streetName" placeholder="Nom de Rue" required
                       [(ngModel)]="adresseS.streetName" noWhitespace #streetNameInput="ngModel"
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="form-group" style="flex: 1;">
-                  <!-- <label for="streetNumber">Numéro de la rue :</label> -->
+                  <label for="streetNumber">Numéro de la rue :</label>
                   <div class="input-container">
                     <input type="number" name="streetNumber" id="streetNumber" placeholder="N° Rue" required
                       [(ngModel)]="adresseS.streetNumber" noWhitespace #streetNumberInput="ngModel"
@@ -140,7 +140,7 @@
               <!-- Ligne 2 -->
               <div class="information">
                 <div class="form-group" style="flex: 1;">
-                  <!-- <label for="label">Adresse :</label> -->
+                  <label for="label">Adresse :</label>
                   <div class="input-container">
                     <input type="text" name="label" id="label" placeholder="Code Postal" required
                       [(ngModel)]="adresseS.label" noWhitespace #labelInput="ngModel"
@@ -151,7 +151,7 @@
                   </div>
                 </div>
                 <div class="form-group" style="flex: 2;">
-                  <!-- <label for="city">Ville :</label> -->
+                  <label for="city">Ville :</label>
                   <div class="input-container">
                     <input type="text" name="city" id="city" placeholder="Ville" required [(ngModel)]="adresseS.city"
                       noWhitespace #cityInput="ngModel"
@@ -167,7 +167,7 @@
 
               <div class="form-group" style="flex: 1;">
 
-                <!-- <label for="country">Pays :</label> -->
+                <label for="country">Pays :</label>
                 <div class="input-container">
                   <select name="country" id="country" [(ngModel)]="adresseS.country" required #countryInput="ngModel"
                     [ngClass]="{'ng-invalid': countryInput.invalid && countryInput.touched}">
