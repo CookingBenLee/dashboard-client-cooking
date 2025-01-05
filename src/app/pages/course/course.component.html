@@ -263,16 +263,20 @@
                   </form>
                   <!---->
                   <div class="ml-auto btnspart  grid mt-3">
-                    <button pButton label="Produit non existant" pRipple type="button"
+                    <button  style="margin: 10px;"  pButton label="Produit non existant" pRipple type="button"
                       class="col p-button p-button-nouveau p-component" (click)="showProductAddForm()"></button>
-                    <button pButton pRipple label="Enregistrer"
-                      [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0" type="button"
-                      class="col p-button-saved p-button p-component ml-7 mr-2"
-                      (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])"></button>
-                    <button pButton pRipple label="Annuler" type="reset"
+                    
+                    <button  style="margin: 10px;"  pButton pRipple label="Annuler" type="reset"
                       class="col p-button-annuler p-button p-component " (click)="showAddProductForm()"></button>
                   </div>
                 </div>
+                <div class="ml-auto btnspart  grid mt-3">
+                  <button pButton pRipple label="Ajouter"
+                      [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0" type="button"
+                      class="col p-button-saved p-button p-component"
+                      (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])"></button>
+                </div>
+                
                 <!-- List of created product-->
                 <!-- Liste des produits créés -->
                 <div class="ListProduct">
