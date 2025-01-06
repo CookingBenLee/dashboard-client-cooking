@@ -15,6 +15,7 @@ import { PlatComponent } from './pages/plat/plat.component';
 import { RepasComponent } from './pages/repas/repas.component';
 import { PlanificationComponent } from './pages/planification/planification.component';
 import { RecetteComponent } from './pages/recette/recette.component';
+import { RecipeComponent } from './pages/recipe/recipe.component';
 
 export const routes: Routes = [
   {
@@ -79,7 +80,7 @@ export const routes: Routes = [
       },
       {
         path:'recette',
-        component:RecetteComponent,
+        component: RecipeComponent,
       },
       {
         path: 'starter',
