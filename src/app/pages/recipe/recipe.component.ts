@@ -51,11 +51,15 @@ import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPur
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { PaginatorModule } from 'primeng/paginator';
+import { MaterialModule } from 'src/app/material.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-recipe',
   standalone: true,
-  imports: [RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
+  imports: [MaterialModule, MatButtonModule, MatDialogModule,
+    RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
     TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './recipe.component.html',
@@ -65,7 +69,7 @@ export class RecipeComponent {
 //number for according active
 index=0
 
-rows=5
+rows=3
 totalRows=0
 page=0;
 count=0;
