@@ -42,10 +42,11 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-categoryrecipe',
   standalone: true,
-  imports: [RouterModule,CalendarModule ,ConfirmDialogModule, DialogModule,ToastModule,
+  imports: [RouterModule,CalendarModule ,ConfirmDialogModule, DialogModule,ToastModule,CommonModule,
     TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './categoryrecipe.component.html',

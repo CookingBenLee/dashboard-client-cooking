@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -20,7 +21,7 @@ import { UnitService } from 'src/app/services/unit/unit.service';
 @Component({
   selector: 'app-detailrecipe',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './detailrecipe.component.html',
   styleUrl: './detailrecipe.component.scss'
