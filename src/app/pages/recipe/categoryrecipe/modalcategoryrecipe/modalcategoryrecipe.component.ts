@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -6,7 +7,7 @@ import { CategoryDishes } from 'src/app/services/categorydishes/CategoryDishes';
 @Component({
   selector: 'app-modalcategoryrecipe',
   standalone: true,
-  imports: [DividerModule],
+  imports: [DividerModule,CommonModule],
   templateUrl: './modalcategoryrecipe.component.html',
   styleUrl: './modalcategoryrecipe.component.scss'
 })

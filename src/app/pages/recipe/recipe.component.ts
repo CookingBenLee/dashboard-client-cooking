@@ -54,11 +54,12 @@ import { PaginatorModule } from 'primeng/paginator';
 import { MaterialModule } from 'src/app/material.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recipe',
   standalone: true,
-  imports: [MaterialModule, MatButtonModule, MatDialogModule,
+  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,
     RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
     TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
