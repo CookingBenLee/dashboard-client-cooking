@@ -96,18 +96,18 @@
                           <input pInputText id="code" [(ngModel)]="code" name="code" type="text" placeholder="Code du plat" required/>
                         </div>-->
           
-                        <div class="field col-5">
+                        <div class="field col-6">
                           <label htmlFor="name">Nom de la recette</label>
                           <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom de la recette" required/>
                         </div>
           
-                        <div class="field col-2">
+                        <div class="field col-6">
                           <label htmlFor="ratio">Ratio</label>
                           <p-inputNumber mode="decimal" [minFractionDigits]="5" name="ratio" id="ratio" [(ngModel)]="ratio" [showButtons]="true" [min]="0" ></p-inputNumber>
                         </div>
           
           
-                        <div class="field col-5">
+                        <!-- <div class="field col-5">
                           <label htmlFor="category">Categorie de la recette</label>
                           <p-dropdown [options]="CategoryRecipes" optionLabel="name"  name="category" [(ngModel)]="categorySelected" (onChange)="changeCategory()" >
                             <ng-template let-category pTemplate="item">
@@ -116,7 +116,7 @@
                               </div>
                             </ng-template>
                           </p-dropdown>
-                        </div>
+                        </div> -->
           
           
           
