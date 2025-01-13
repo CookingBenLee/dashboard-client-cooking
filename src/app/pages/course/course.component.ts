@@ -167,6 +167,7 @@ detailPurchasesForms2:any=[]
  sucessEdit:string
   usercurrency: Currency;
 
+  dialogAddCourse: boolean = false;
 
   displayedColumns: string[] = [
     'name',
@@ -248,6 +249,10 @@ selectedCountry: any; // To store the retrieved country
    this.getUnits()
    this.cdref.detectChanges();
 
+ }
+
+ dialogAdd(){
+  this.dialogAddCourse = true;
  }
 
  // Function to retrieve country by ID
