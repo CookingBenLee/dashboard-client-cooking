@@ -36,14 +36,19 @@ import { UnitService } from 'src/app/services/unit/unit.service';
 import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
 import { TokenService } from 'src/app/services/token/token.service';
 import { use } from 'echarts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from 'src/app/material.module';
 
 @Component({
   selector: 'app-modalpurchase',
   standalone: true,
-  imports: [ ConfirmDialogModule,
-    TablerIconsModule,DialogModule,ToastModule,CalendarModule,
-    CommonModule,TableModule,PaginatorModule,DividerModule,
-    MatButtonModule, MatDialogModule,TabViewModule,OverlayPanelModule],
+  imports: [ MaterialModule,
+      FormsModule,RouterModule,CalendarModule,
+      ReactiveFormsModule,ConfirmDialogModule,
+      TablerIconsModule,DialogModule,ToastModule,
+      CommonModule,TableModule,PaginatorModule,DividerModule,
+      MatButtonModule, MatDialogModule,TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './modalpurchase.component.html',
   styleUrl: './modalpurchase.component.scss'
@@ -69,7 +74,7 @@ export class ModalpurchaseComponent {
   erreur:string
   sucess:string
   loading: boolean = false;
-
+  // ref: DynamicDialogRef | undefined;
   showAddProduct=false
 
   price:Price;
@@ -194,7 +199,7 @@ detailPurchasesForms2:any=[]
 
   async getProducts(){
     const user = this.tokenService.getUser();
-    await this.productService.getAll(user.id).then(data =>{
+    await this.productService.getAllProduct().then(data =>{
       console.log(data)
       this.products=data
       //this.productes[0]=this.products[0]
@@ -219,26 +224,27 @@ detailPurchasesForms2:any=[]
     this.showAddProduct=!this.showAddProduct
   }
 
-  changeProduct(product:Product,i:any){
-    ////this.totalPrice=value*this.quantity
-    this.detailPurchasesForms[i].unit=this.detailPurchasesForms[i].product?.unit
-    //this.unitys[i]=this.productes[i]?.unit
-    //////this.changeUnit()
+   changeProduct(product:Product,i:any){
+   ////this.totalPrice=value*this.quantity
+   this.detailPurchasesForms[i].unit=this.detailPurchasesForms[i].product?.unit
+   //this.unitys[i]=this.productes[i]?.unit
+   //////this.changeUnit()
+ }
+
+ changeValue(value: any,i:any ){
+  console.log(i);
+
+  this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
+  //this.totalPrices[i]=this.values[i]*this.quantitys[i]
+  ////this.unit=this.product.unit
+  this.changeUnit(i)
+  this.data.montant=0
+
+  for(let i=0;i<this.detailPurchasesForms.length;i++){
+    this.data.montant+=this.detailPurchasesForms[i].totalPrice
   }
+}
 
-  changeValue(value: any,i:any ){
-    console.log(i);
-
-    this.detailPurchasesForms[i].totalPrice=this.detailPurchasesForms[i].value*this.detailPurchasesForms[i].quantity
-    //this.totalPrices[i]=this.values[i]*this.quantitys[i]
-    ////this.unit=this.product.unit
-    this.changeUnit(i)
-    this.data.montant=0
-
-    for(let i=0;i<this.detailPurchasesForms.length;i++){
-      this.data.montant+=this.detailPurchasesForms[i].totalPrice
-    }
-  }
 
   async findOrCreatePrice(price:Price){
     await this.priceService.loadOrCreate(price).then(data=>{
@@ -250,12 +256,12 @@ detailPurchasesForms2:any=[]
   changeUnit(i:any){
     console.log(i);
     console.log(this.products);
-
-
+ 
+ 
     if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
       console.log(this.detailPurchasesForms[i].product.unit);
       console.log(this.detailPurchasesForms[i].unit);
-
+ 
       if(this.detailPurchasesForms[i]?.product?.unit?.name!=this.detailPurchasesForms[i].unit.name){
         this.detailPurchasesForms[i].distinctUnit=true
         if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="KG"){
@@ -264,7 +270,7 @@ detailPurchasesForms2:any=[]
         }else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="G"){
           this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity/1000
           this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Kilogramme"
-
+ 
         }else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="L"){
           this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity*1000
           this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Millilitre"
@@ -272,16 +278,16 @@ detailPurchasesForms2:any=[]
         else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="ML"){
           this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity/1000
           this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Litre"
-
+ 
         }else{
           this.detailPurchasesForms[i].realQuantity="Conversion impossible"
         }
-
+ 
       }else this.detailPurchasesForms[i].distinctUnit=false
     }
     console.log(this.products);
-
-
+ 
+ 
   }
 
   firstSaveForDetail(detail:any){
@@ -312,10 +318,11 @@ detailPurchasesForms2:any=[]
         //this.purchaseService.delete(purchase.id).then(data=>{this.getAll()})
         this.detailPurchasesForms2 = this.detailPurchasesForms2.filter((item: any) => item !== detail)
         this.detailPurchasesForms = this.detailPurchasesForms.filter((item: any) => item !== detail)
+        this.data.montant = (this.data.montant || 0) - (detail?.totalPrice || 0);
+
 
         // this.detailPurchasesForms2.splice(i,i)
         // this.detailPurchasesForms.splice(i,i)
-
         this.messageService.add({ severity: 'success', summary: 'Confirm', detail: 'Produit supprimé' });
       },
       reject: (type:any) => {
@@ -425,7 +432,7 @@ detailPurchasesForms2:any=[]
       // this.price=0
       // this.geolocation=0
       this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail:detail?.product?.name+' ' +detail.quantity+' '+ detail.product.code+' creer'});
-
+      this.ref?.close
 
     },
     (error: any)=>{

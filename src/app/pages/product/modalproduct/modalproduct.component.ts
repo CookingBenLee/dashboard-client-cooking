@@ -14,7 +14,7 @@ export class ModalproductComponent {
 
   constructor(
       public config: DynamicDialogConfig) {
-      this.data=this.config.data
+      this.data=this.config.data.product
 
     }
 
