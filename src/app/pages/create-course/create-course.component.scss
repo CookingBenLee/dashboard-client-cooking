@@ -1,0 +1,120 @@
+// Couleurs principales
+$orange: #ff7900;
+$vert: #50be87;
+$jaune: #ffd200;
+$rose: #ffb4e6;
+$violet: #a885d8;
+$bleu: #4bb4e6;
+$noir: #000000;
+$blanc: #ffffff;
+
+// Couleurs secondaires
+$color1: #c1853b;
+$color2: #cc1b1b;
+$color3: #2f0505;
+$color4: #85311b;
+$color5: #000000;
+
+$color6: #cf4020;
+$color7: #a4ecdc;
+$color8: #bc2c14;
+$color9: #9e675b;
+$color10: #94c9b2;
+$color11: #2d674d;
+
+// Boutons
+.p-button-nouveau {
+  background: $color1;
+  color: $blanc;
+  border: 1px solid $color1;
+}
+
+.p-button-saved {
+  background: $color11;
+  color: $blanc;
+  border: 1px solid $color11;
+}
+
+.p-button-annuler {
+  background: $color2;
+  color: $blanc;
+  border: 1px solid $color2;
+}
+
+.p-button-newline {
+  margin: auto;
+  background: $blanc;
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
+// Carte et flexibilité
+.card {
+  border: none !important;
+}
+
+.cardnew {
+  padding: 10px;
+  border-radius: 5px;
+  border: 5px solid #3b82f6;
+}
+
+.flex-1 {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-align: center;
+
+  h5,
+  button {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h5 {
+    margin-left: 0;
+  }
+
+  button {
+    margin-right: 0;
+  }
+}
+
+// Tableau
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background-color: $bleu;
+    color: $blanc;
+  }
+
+  th,
+  td {
+    border: 1px solid $noir;
+    padding: 5px;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+    background-color: rgba(185, 181, 181, 0.2);
+  }
+
+  tr:hover {
+    background-color: rgba(185, 181, 181, 0.5);
+  }
+}
+
+.divtableau {
+  max-height: 160px;
+  padding: 5px;
+  overflow: auto;
+  border: 1px solid $noir;
+}

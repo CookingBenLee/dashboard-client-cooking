@@ -60,15 +60,14 @@ import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/a
 import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
 import { TableShortService } from 'src/app/services/tableShort/table-short.service';
 import { PaginatorModule } from 'primeng/paginator';
-import { ModalAddProductComponent } from './modal-add-product/modal-add-product.component';
-import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
-import { CreateCourseComponent } from '../create-course/create-course.component';
+import { ModalpurchaseComponent } from '../course/modalpurchase/modalpurchase.component';
+import { ModalAddProductComponent } from '../course/modal-add-product/modal-add-product.component';
 
 @Component({
-  selector: 'app-course',
+  selector: 'app-create-course',
   standalone: true,
   imports: [ MaterialModule,
     FormsModule,RouterModule,CalendarModule,
@@ -77,10 +76,10 @@ import { CreateCourseComponent } from '../create-course/create-course.component'
     CommonModule,TableModule,PaginatorModule,DividerModule,
     MatButtonModule, MatDialogModule,TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
-  templateUrl: './course.component.html',
-  styleUrl: './course.component.scss'
+  templateUrl: './create-course.component.html',
+  styleUrl: './create-course.component.scss'
 })
-export class CourseComponent implements OnInit {
+export class CreateCourseComponent implements OnInit {
  //number for according active
  index=0
  ///gestion des detailspurchazing
@@ -122,7 +121,7 @@ detailPurchasesForms2:any=[]
  @ViewChild('op',{static:true}) op: OverlayPanel;
 
  activeIndex: number = 0;
- ref: DynamicDialogRef | undefined;
+//  ref: DynamicDialogRef | undefined;
 
  purchaseSelected:Purchase=new Purchase()
  purchases:Purchase[]=[]
@@ -183,7 +182,7 @@ detailPurchasesForms2:any=[]
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
    private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
    private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,private tokenService: TokenService,
-   private countryService: CountryService,
+   private countryService: CountryService, private router: Router,private ref: DynamicDialogRef,
    private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
    
    utilisateurC: any;
@@ -253,14 +252,7 @@ selectedCountry: any; // To store the retrieved country
  }
 
  dialogAdd(){
-  this.ref = this.dialogService.open(CreateCourseComponent, {
-    header: "Enregistrement d'une course ",
-    width: '90%',
-    contentStyle: { overflow: 'auto' },
-    baseZIndex: 10000,
-    maximizable: true,
-});
- 
+  this.dialogAddCourse = true;
  }
 
  // Function to retrieve country by ID
@@ -463,6 +455,12 @@ retrieveCountryById(): void {
 
      await this.saveAllDetail(data.data)
      this.init()
+
+     this.ref?.close();
+
+     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['home/course']);
+    });
 
    },
    (error: any)=>{
