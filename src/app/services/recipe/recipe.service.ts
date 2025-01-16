@@ -32,8 +32,8 @@ export class RecipeService {
         .then(res => res.data as Recipe[])
         .then(data => data);
   }
-  getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.apiUrl}/recipe/getallpage?page=`+param['page']+'&size='+param['size'])
+  getAllPage(param:any,id:number) {
+    return this.http.get<any>(`${this.env.apiUrl}/recipe/getallpagebyuser/${id}?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);
