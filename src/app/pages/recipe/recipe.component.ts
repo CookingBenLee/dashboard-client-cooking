@@ -143,7 +143,7 @@ totalProportion=0
 
 constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
   private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
-  private dialogService:DialogService,private currencyService:CurrencyService,
+  private dialogService:DialogService,private currencyService:CurrencyService,private tokenService: TokenService,
   private recipeService:RecipeService,private detailRecipeService:DetailsrecipeService,
  //  private categoryRecipeService:CategoryrecipeService,
   public tableShort:TableShortService) {}
@@ -167,7 +167,8 @@ async ngOnInit(): Promise<void> {
 getAll(){
   const params=this.paginateService.getRequestParams(this.page,this.rows)
   console.log(params);
-  this.recipeService.getAllPage(params).then(data =>{
+  const user = this.tokenService.getUser();
+  this.recipeService.getAllPage(params,user.id).then(data =>{
     console.log(data)
     //this.menus=data
     console.log(data)
