@@ -1,0 +1,139 @@
+<div class="">
+    <form class="grid newform " #f="ngForm" (ngSubmit)="save()">
+      <div class="col-12 card p-fluid">
+          <!--<h5>Ajouter un nouveau Approvisionnement</h5>-->
+  
+        <div class="grid p-3  entete bg-primary">
+  
+          <!--<div class="field">
+            <label htmlFor="reference">Reference</label>
+            <input pInputText id="reference" [(ngModel)]="reference" name="reference" type="text" placeholder="Reference Approvisionnement" required/>
+          </div>-->
+  
+          <div class="field col-2">
+            <label htmlFor="datePurchase">Date </label>
+            <p-calendar [disabled]="true" [(ngModel)]="data.datePurchase" name="datePurchase" id="datePurchase" ></p-calendar>
+          </div>
+  
+          <div class="field col-5">
+            <label htmlFor="shop">Boutique</label>
+            <p-dropdown [options]="shops" [disabled]="true" optionLabel="name" name="shop" [(ngModel)]="data.shop"  >
+              <ng-template let-shop pTemplate="item">
+                <div class="flex align-items-center operatingSystems-item">
+                  <div class="flex align-items-center operatingSystems-item">
+                    <div> {{shop?.name}}({{shop?.addressPrincipale?.label}})</div>
+                  </div>
+  
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+  
+          <!--<div class="field col-3">
+            <label htmlFor="addresse">Adresse</label>
+            <p-dropdown [options]="addresss"   name="addresse" [(ngModel)]="data.address" >
+              <ng-template let-addresss pTemplate="item">
+                <div class="flex align-items-center operatingSystems-item">
+                  <div> {{addresss.label}}</div>
+  
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>-->
+  
+        <!--<div class="grid col">-->
+          <div class="col-3">
+            <div class="field">
+              <label htmlFor="montant">Montant</label>
+              <p-inputNumber name="montant" id="montant" [disabled]="true" [(ngModel)]="data.montant" [showButtons]="true" [min]="0" ></p-inputNumber>
+            </div>
+          </div>
+  
+          <div class="col-2">
+            <div class="field ">
+              <label htmlFor="currency">Devise</label>
+              <p-dropdown [options]="currencys" [disabled]="true" optionLabel="name" name="currency" [(ngModel)]="data.currency" ></p-dropdown>
+            </div>
+          </div>
+        <!--</div>-->
+  
+      </div>
+      <p class="divider mt-4" ></p>
+      <p class="divider"></p>
+  
+     
+  
+        <!--Partit produit-->
+        <div class="mb-2 mt-1">
+          <!-- <div class="flex-1 mb-2">
+            <h5>List des  produits</h5>
+            <button pButton label="Ajouter une nouvelle saisie" type="button" [loading]="loading" class="p-button-newline mt-2" (click)="showAddProductForm()" ></button>
+          </div> -->
+  
+          <!-- List of created product-->
+          <div class="ListProduct">
+            <p *ngIf="detailPurchasesForms2.length==0">Aucun produit pour l'instant! Veuillez remplir le formulaire pour ajouter un produit.</p>
+  
+            <div class="divtableau">
+              <table *ngIf="detailPurchasesForms2.length!=0">
+              <thead>
+                <th>Produit (Catégory)</th>
+                <th>Conditionnement</th>
+                <th>Quantité(unité)</th>
+  
+                <th>Prix/unité</th>
+                <th>Prix Total </th>
+                <th></th>
+  
+              </thead>
+              <tr *ngFor="let detail of detailPurchasesForms2,let i=index">
+                <td>{{detail?.product?.name}}({{detail.product?.category?.name}})</td>
+                <td>{{detail.product.conditioning?.name}}</td>
+                <td>{{detail.quantity}} ({{detail?.unit?.code}})</td>
+                <td>{{detail.value | number:'1.2-2'}}/{{detail?.unit?.code}}</td>
+                <td>{{detail.totalPrice}}</td>
+                <td>
+                  <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetail(detail,i)"></button>
+                </td>
+  
+              </tr>
+  
+            </table>
+            </div>
+  
+          </div>
+  
+  
+  
+  
+  
+  
+           
+  
+        </div>
+  
+  
+  
+        <label id="erreur" *ngIf="isError">{{erreur}}</label>
+        <label id="success" *ngIf="isSuccess">{{sucess}}</label>
+  
+  
+        <p class="divider-b"></p>
+  
+        
+  
+      </div>
+  
+  
+  
+    </form>
+  
+  </div>
+  
+  <p-toast></p-toast>
+  <p-toast position="top-center" key="tc"></p-toast>
+  <p-toast key="product"></p-toast>
+  <p-toast key="positionDialog"></p-toast>
+  
+  <p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+  
