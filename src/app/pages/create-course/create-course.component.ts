@@ -656,19 +656,42 @@ retrieveCountryById(): void {
    //////this.changeUnit()
  }
 
- changeValue(value: any,i:any ){
+ changeValue(value: any, i: any) {
   console.log(i);
 
-  this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
-  //this.totalPrices[i]=this.values[i]*this.quantitys[i]
-  ////this.unit=this.product.unit
-  this.changeUnit(i)
-  this.montant=0
-
-  for(let i=0;i<this.detailPurchasesForms.length;i++){
-    this.montant+=this.detailPurchasesForms[i].totalPrice
+  const detail = this.detailPurchasesForms[i];
+  
+  // Vérifier si une conversion d'unité est nécessaire
+  if (detail.product?.unit?.code?.toUpperCase() === "G" && detail.unit?.code?.toUpperCase() === "KG") {
+    // Convertir la quantité en kilogrammes
+    const convertedQuantity = detail.quantity / 1000;
+    detail.value = detail.totalPrice / convertedQuantity;
+  } else if (detail.product?.unit?.code?.toUpperCase() === "KG" && detail.unit?.code?.toUpperCase() === "G") {
+    // Convertir la quantité en grammes
+    const convertedQuantity = detail.quantity * 1000;
+    detail.value = detail.totalPrice / convertedQuantity;
+  } else if (detail.product?.unit?.code?.toUpperCase() === "ML" && detail.unit?.code?.toUpperCase() === "L") {
+    // Convertir la quantité en litres
+    const convertedQuantity = detail.quantity / 1000;
+    detail.value = detail.totalPrice / convertedQuantity;
+  } else if (detail.product?.unit?.code?.toUpperCase() === "L" && detail.unit?.code?.toUpperCase() === "ML") {
+    // Convertir la quantité en millilitres
+    const convertedQuantity = detail.quantity * 1000;
+    detail.value = detail.totalPrice / convertedQuantity;
+  } else {
+    // Pas de conversion nécessaire
+    detail.value = detail.totalPrice / detail.quantity;
   }
+
+  // Mettre à jour le montant total
+  this.montant = 0;
+  for (let i = 0; i < this.detailPurchasesForms.length; i++) {
+    this.montant += this.detailPurchasesForms[i].totalPrice;
+  }
+
+  this.changeUnit(i);
 }
+
 
  async findOrCreatePrice(price:Price){
    await this.priceService.loadOrCreate(price).then(data=>{
