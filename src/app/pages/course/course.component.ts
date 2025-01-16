@@ -66,6 +66,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { CreateCourseComponent } from '../create-course/create-course.component';
+import { DetailCourseComponent } from './detail-course/detail-course.component';
 
 @Component({
   selector: 'app-course',
@@ -559,6 +560,18 @@ retrieveCountryById(): void {
  //   })
  // }
 
+ details(e:any,purchase:Purchase) {
+  this.ref = this.dialogService.open(DetailCourseComponent, {
+      header: 'Details de la course '+purchase.reference,
+      width: '90%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+      data:purchase,
+  });
+  this.purchaseSelected=purchase
+  
+}
 
  show(e:any,purchase:Purchase) {
    this.ref = this.dialogService.open(ModalpurchaseComponent, {

@@ -83,9 +83,12 @@
                   <button pButton pRipple type="button" (click)="openModifier('top-right',purchase)" icon="pi pi-pencil" class="p-button p-component p-button-text p-button-icon-only"></button>
                 </td>-->
 
-              <td style="width: 15%;">
+              <td >
+                <button pButton pRipple type="button" (click)="details($event,purchase)" icon="pi pi-eye"
+                  class="p-button p-component p-button-text p-button-icon-only"></button>
                 <button pButton pRipple type="button" (click)="delete('top-right',purchase)" icon="pi pi-trash"
                   class="p-button p-component p-button-text p-button-icon-only"></button>
+
               </td>
             </tr>
           </ng-template>

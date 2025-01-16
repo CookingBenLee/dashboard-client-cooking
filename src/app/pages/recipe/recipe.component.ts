@@ -339,7 +339,8 @@ save(){
   // this.recipe.preparationIngredient=this.preparationIngredient
   // this.recipe.unit=this.unit
   this.recipe.categoryRecipe=this.categorySelected
-
+    const user = this.tokenService.getUser();
+    this.recipe.user = {id: user.id}
 
   console.log(this.recipe)
 
