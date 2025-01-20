@@ -106,6 +106,13 @@ export class PriceService {
         .then(res => res.data as Price[])
         .then(data => data);
   }
+
+  byProductAndUser(idProduct:number |undefined,idUser:number |undefined) {
+    return this.http.get<any>(`${this.env.apiUrl}/price/byproductanduser/${idProduct}/${idUser}`)
+        .toPromise()
+        .then(res => res.data as Price[])
+        .then(data => data);
+  }
   byCurrency(id:number |undefined) {
     return this.http.get<any>(`${this.env.apiUrl}/price/bycurrency/${id}`)
         .toPromise()

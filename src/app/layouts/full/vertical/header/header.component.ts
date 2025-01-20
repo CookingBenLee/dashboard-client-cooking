@@ -80,7 +80,9 @@ export class HeaderComponent implements OnInit{
 
   user: any
 
-  fixedDateTime: string = '20/01/2025, 00:40:00'; 
+  fixedDateTime: string = '20/01/2025'; 
+  //fixedDateTime: string = '20/01/2025, 00:40:00'; 
+
   
   ngOnInit(): void {
    this.user = this.tokenService.getUser();

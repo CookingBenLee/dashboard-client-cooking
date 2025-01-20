@@ -193,6 +193,8 @@ export class FullComponent implements OnInit {
       link: '/apps/todo',
     },
   ];
+  fixedDateTime: string = 'Numero de version : 20/01/2025'; 
+
 
   constructor(
     private settings: CoreService,

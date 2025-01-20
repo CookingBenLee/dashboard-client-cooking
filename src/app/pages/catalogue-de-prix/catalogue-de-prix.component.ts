@@ -103,6 +103,7 @@ export class CatalogueDePrixComponent implements OnInit {
 
   getAll(){
     const user = this.tokenService.getUser();
+    this.user=user
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
     this.productService.getActivePage(params, user.id).then(data =>{
@@ -224,7 +225,7 @@ export class CatalogueDePrixComponent implements OnInit {
     console.log(product, "id du produit");
     
     
-    this.priceService.byProduct(product.id).then(
+    this.priceService.byProductAndUser(product.id,this.user.id).then(
       (data: any) => {
         this.price = data;
         console.log(this.price);

@@ -19,7 +19,9 @@ import { CoreService } from 'src/app/services/core.service';
         />
       </a>
       <br>
-      <small>Numero de version: {{ fixedDateTime }}</small>
+      <h3 style="margin-left: 6px;">Cooking BenLee</h3>
+
+      <!--<small>Numero de version: {{ fixedDateTime }}</small>-->
       } @if(options.theme === 'dark') {
         <a [routerLink]="['/home']">
         <img
