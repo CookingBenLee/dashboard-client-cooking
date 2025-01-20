@@ -18,7 +18,8 @@ import { CoreService } from 'src/app/services/core.service';
           alt="logo"
         />
       </a>
-      <h3 style="margin-left: 6px;">Cooking BenLee</h3>
+      <br>
+      <small>Numero de version: {{ fixedDateTime }}</small>
       } @if(options.theme === 'dark') {
         <a [routerLink]="['/home']">
         <img
@@ -36,6 +37,6 @@ import { CoreService } from 'src/app/services/core.service';
 })
 export class BrandingComponent {
   options = this.settings.getOptions();
-
+   fixedDateTime: string = '20/01/2025, 00:40:00'; 
   constructor(private settings: CoreService) {}
 }

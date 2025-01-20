@@ -14,13 +14,16 @@
   </button>
   }
   <!-- --------------------------------------------------------------- -->
-
+ 
 
   <!-- Mobile Menu -->
   <button mat-mini-fab color="inherit" (click)="toggleMobileFilterNav.emit()"
     class="d-flex d-lg-none justify-content-center">
     <i class="iconify icon-20 d-flex" data-icon="solar:widget-3-line-duotone"></i>
   </button>
+
+  <small style="margin-left: 60px;">Numero de version: {{ fixedDateTime }}</small>
+
 
   <div class="d-none d-lg-flex">
     <!-- --------------------------------------------------------------- -->
