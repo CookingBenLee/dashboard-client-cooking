@@ -63,16 +63,16 @@
           </ng-template>
           <ng-template pTemplate="body" let-purchase>
             <tr class="cursor-pointer">
-              <td (click)="show($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.reference}}</td>
-              <td (click)="show($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.shop?.name}}</td>
-              <!--<td (click)="show($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.address?.address?.label}}</td>-->
+              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.reference}}</td>
+              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.shop?.name}}</td>
+              <!--<td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.address?.address?.label}}</td>-->
 
-              <td (click)="show($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.datePurchase |
+              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.datePurchase |
                 date:'dd-MM-yyyy HH:mm'}}</td>
 
-              <td (click)="show($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.montant}}
+              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.montant}}
                 {{purchase?.currency?.name}}</td>
-              <td (click)="show($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.entryDate |
+              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.entryDate |
                 date:'dd-MM-yyyy HH:mm'}}</td>
 
               <!--<td style="width: 15%;" (click)="show($event,purchase)">
@@ -84,8 +84,8 @@
                 </td>-->
 
               <td >
-                <button pButton pRipple type="button" (click)="details($event,purchase)" icon="pi pi-eye"
-                  class="p-button p-component p-button-text p-button-icon-only"></button>
+                <!-- <button pButton pRipple type="button" (click)="details($event,purchase)" icon="pi pi-eye"
+                  class="p-button p-component p-button-text p-button-icon-only"></button> -->
                 <button pButton pRipple type="button" (click)="delete('top-right',purchase)" icon="pi pi-trash"
                   class="p-button p-component p-button-text p-button-icon-only"></button>
 
