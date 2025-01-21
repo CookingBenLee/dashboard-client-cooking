@@ -186,8 +186,9 @@ export class ProductComponent implements OnInit {
   }
 
   show(e:any,product:Product) {
+    console.log(product)
     this.ref = this.dialogService.open(ModalproductComponent, {
-        header: 'Produit '+product.name,
+        header: 'Détail produit ',
         //width: '70%',
         contentStyle: { overflow: 'auto' },
         baseZIndex: 10000,

@@ -561,28 +561,31 @@ retrieveCountryById(): void {
  // }
 
  details(e:any,purchase:Purchase) {
+  var p={...purchase}
   this.ref = this.dialogService.open(DetailCourseComponent, {
       header: 'Details de la course '+purchase.reference,
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
-      data:purchase,
+      data:p,
   });
-  this.purchaseSelected=purchase
+  //this.purchaseSelected=purchase
   
 }
 
  show(e:any,purchase:Purchase) {
+  //this.purchaseSelected=purchase
+  var p={...purchase}
+
    this.ref = this.dialogService.open(ModalpurchaseComponent, {
        header: 'Produit '+purchase.reference,
        width: '90%',
        contentStyle: { overflow: 'auto' },
        baseZIndex: 10000,
        maximizable: true,
-       data:purchase,
+       data:p,
    });
-   this.purchaseSelected=purchase
    // this.op.toggle(e)
 
      // this.ref.onClose.subscribe((shop: Shop) => {
