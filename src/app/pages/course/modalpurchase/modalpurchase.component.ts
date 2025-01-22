@@ -1,28 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { CalendarModule } from 'angular-calendar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { DividerModule } from 'primeng/divider';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { PaginatorModule } from 'primeng/paginator';
-import { TableModule } from 'primeng/table';
-import { TabViewModule } from 'primeng/tabview';
-import { ToastModule } from 'primeng/toast';
 import { Product } from 'src/app/entity/Product';
+import { MaterialModule } from 'src/app/material.module';
 import { Address } from 'src/app/services/address/Address';
 import { AddressService } from 'src/app/services/address/address.service';
 import { Category } from 'src/app/services/category/Category';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Currency } from 'src/app/services/currency/Currency';
 import { CurrencyService } from 'src/app/services/currency/currency.service';
-import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
 import { DetailspurchasingService } from 'src/app/services/detailspurchasing/detailspurchasing.service';
+import { PaginateService } from 'src/app/services/paginate/paginate.service';
 import { Price } from 'src/app/services/price/Price';
 import { PriceService } from 'src/app/services/price/price.service';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -30,14 +23,48 @@ import { Purchase } from 'src/app/services/purchase/Purchase';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { Shop } from 'src/app/services/shop/Shop';
 import { ShopService } from 'src/app/services/shop/shop.service';
-import { TableShortService } from 'src/app/services/tableShort/table-short.service';
 import { Unit } from 'src/app/services/unit/Unit';
 import { UnitService } from 'src/app/services/unit/unit.service';
-import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
+
+
+
+// prime
+import { PanelModule } from 'primeng/panel';
+import { InputTextModule } from 'primeng/inputtext';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { CardModule } from 'primeng/card';
+import { PasswordModule } from 'primeng/password';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TabViewModule } from 'primeng/tabview';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { SliderModule } from 'primeng/slider';
+import { RatingModule } from 'primeng/rating';
+import { ListboxModule } from 'primeng/listbox';
+import { CalendarModule } from 'primeng/calendar';
+import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { EditorModule } from 'primeng/editor';
+import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
+import { TableShortService } from 'src/app/services/tableShort/table-short.service';
+import { PaginatorModule } from 'primeng/paginator';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from 'src/app/material.module';
+import { CountryService } from 'src/app/services/country/country.service';
+import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
+
 
 @Component({
   selector: 'app-modalpurchase',
