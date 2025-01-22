@@ -84,8 +84,8 @@
                 </td>-->
 
               <td >
-                <!-- <button pButton pRipple type="button" (click)="details($event,purchase)" icon="pi pi-eye"
-                  class="p-button p-component p-button-text p-button-icon-only"></button> -->
+                <button pButton pRipple type="button" (click)="show($event,purchase)" icon="pi pi-pencil"
+                  class="p-button p-component p-button-text p-button-icon-only"></button> 
                 <button pButton pRipple type="button" (click)="delete('top-right',purchase)" icon="pi pi-trash"
                   class="p-button p-component p-button-text p-button-icon-only"></button>
 
@@ -177,20 +177,20 @@
     <!---->
 
 
-    <p-overlayPanel #op [showCloseIcon]="true">
+    <!--<p-overlayPanel #op [showCloseIcon]="true">
       <ng-template pTemplate="content" class="panel">
         <h3 id="matricule">{{purchaseSelected.reference}}</h3>
         <p id="emailDetail">Le {{purchaseSelected.datePurchase | date:'yyyy-MM-dd HH:mm'}} chez
           <strong>{{purchaseSelected?.address?.shop?.name}}</strong> </p>
         <p id="telDetail">{{purchaseSelected?.address?.city}}</p>
-        <!--<p id="fixeDetail">{{purchaseSelected?.address?.contact}}</p>-->
+        <!-<p id="fixeDetail">{{purchaseSelected?.address?.contact}}</p>- >
         <p-divider></p-divider>
 
         <p id="directionDetail">Montant : {{purchaseSelected.montant}} {{purchaseSelected?.currency?.symbol}}</p>
         <p id="divisionDetail">Date d'enregistrement : {{purchaseSelected.entryDate | date:'yyyy-MM-dd HH:mm'}}</p>
         <p-button [routerLink]="['detailpurchase',purchaseSelected.id]">Voir plus</p-button>
 
-        <!--<button pButton class=" mt-2 btnEdit">Modifier</button>-->
+        <!-<button pButton class=" mt-2 btnEdit">Modifier</button>->
       </ng-template>
 
 
@@ -203,6 +203,6 @@
 
       </p-dialog>
 
-    </p-overlayPanel>
+    </p-overlayPanel>-->
   </mat-card-content>
 </mat-card>

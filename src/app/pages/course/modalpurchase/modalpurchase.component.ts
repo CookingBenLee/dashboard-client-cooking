@@ -35,7 +35,6 @@ import { Unit } from 'src/app/services/unit/Unit';
 import { UnitService } from 'src/app/services/unit/unit.service';
 import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
 import { TokenService } from 'src/app/services/token/token.service';
-import { use } from 'echarts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
@@ -65,7 +64,7 @@ export class ModalpurchaseComponent {
   categorys:Category[]=[]
   currencys:Currency[]=[]
 
-  datePurchase:Date
+  datePurchase:Date=new Date("January 31 1980 12:30");
   products:Product[]=[]
   units:Unit[]=[]
 
@@ -257,34 +256,107 @@ detailPurchasesForms2:any=[]
     console.log(i);
     console.log(this.products);
  
+    const form = this.detailPurchasesForms[i];
+    const productUnit = form.product?.unit?.code?.toUpperCase();
+    const inputUnit = form.unit?.code?.toUpperCase();
+
+    // Vérifier si les unités sont distinctes
+    if (form.product?.unit?.name !== form.unit?.name) {
+      form.distinctUnit = true;
+
+      // Initialiser les variables de conversion
+      let conversionFactor = 1; // Facteur de conversion
+      let targetUnit = ""; // Unité de destination
+
+      // Conversion en fonction des unités
+      switch (inputUnit) {
+        case "KG": // Kilogramme
+          conversionFactor = 1000;
+          targetUnit = "Gramme";
+          break;
+        case "G":
+        case "GR": // Gramme
+          conversionFactor = 1 / 1000;
+          targetUnit = "Kilogramme";
+          break;
+        case "L": // Litre
+          if (productUnit === "KG") {
+            conversionFactor = 1;
+            targetUnit = form.product?.unit?.name || "Kilogramme";
+          } else {
+            conversionFactor = 1000;
+            targetUnit = "Millilitre";
+          }
+          break;
+        case "ML": // Millilitre
+          if (productUnit === "KG" || productUnit === "G" || productUnit === "GR") {
+            conversionFactor = 1 / 1000;
+            targetUnit = "Kilogramme";
+          } else {
+            conversionFactor = 1 / 1000;
+            targetUnit = "Litre";
+          }
+          break;
+        default: // Cas non traité
+          form.realQuantity = "Conversion impossible";
+      }
+
+      // Effectuer la conversion
+      form.realQ = form.quantity * conversionFactor;
+      form.realQuantity = `${form.realQ} ${targetUnit}`;
+    } else {
+      form.distinctUnit = false;
+    }
  
-    if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
+    /*if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
       console.log(this.detailPurchasesForms[i].product.unit);
       console.log(this.detailPurchasesForms[i].unit);
+ 
+     
+      console.log(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase());
+      
  
       if(this.detailPurchasesForms[i]?.product?.unit?.name!=this.detailPurchasesForms[i].unit.name){
         this.detailPurchasesForms[i].distinctUnit=true
         if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="KG"){
           this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity*1000
           this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Gramme"
-        }else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="G"){
+        }else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="GR"){
           this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity/1000
           this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Kilogramme"
  
         }else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="L"){
-          this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity*1000
-          this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Millilitre"
+          if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()!="KG") {
+            this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity*1000
+            this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Gramme"
+
+          }else if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L") {
+            this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity
+            this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ ""+this.detailPurchasesForms[i].product?.unit?.name || ""
+
+          }
+          else {
+            this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity
+            this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Millilitre"
+          }
         }
         else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="ML"){
-          this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity/1000
-          this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Litre"
+          if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()!="GR" && this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()!="G") {
+            this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity/1000
+            this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Kilogramme"
+
+          }
+          else {
+            this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity
+           this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Litre"
+        }
  
         }else{
           this.detailPurchasesForms[i].realQuantity="Conversion impossible"
         }
  
       }else this.detailPurchasesForms[i].distinctUnit=false
-    }
+    }*/
     console.log(this.products);
  
  
@@ -451,4 +523,10 @@ detailPurchasesForms2:any=[]
   })
 
   }
+
+  /*ngAfterContentChecked() {
+    this.sampleViewModel.DataContext = this.DataContext;
+    this.sampleViewModel.Position = this.Position;
+    this.cdref.detectChanges();
+ }*/
 }
