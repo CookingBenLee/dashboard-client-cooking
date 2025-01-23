@@ -79,7 +79,7 @@
                     <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>
                     <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
                     <p-dropdown [filter]="true" filterBy="name" [options]="products" optionLabel="name"
-                      name="product{{detailPurchasesForms.length-1}}"
+                      name="product{{detailPurchasesForms.length-1}}" (onFocus)="getProducts()"
                       [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product"
                       (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
                       <ng-template let-product pFilter="product.category.name" pTemplate="item">
