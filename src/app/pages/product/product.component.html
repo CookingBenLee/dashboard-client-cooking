@@ -3,11 +3,7 @@
     <div class="row justify-content-between gap-16">
       <div class="col-4">
         <mat-form-field appearance="outline" class="w-100 hide-hint">
-          <input [(ngModel)]="motRecherche"
-            matInput
-            placeholder="Rechercher un produit"
-            (keyup)="recherche()"
-          />
+          <input [(ngModel)]="motRecherche" matInput placeholder="Rechercher un produit" (keyup)="recherche()" />
           <mat-icon matSuffix>
             <i-tabler name="search" class="icon-20"></i-tabler>
           </mat-icon>
@@ -45,7 +41,7 @@
             Stock
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.quantity }}  {{ product.product.unit.code }}
+            {{ product.quantity }} {{ product.product.unit.code }}
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
@@ -58,10 +54,7 @@
               class="m-r-10 cursor-pointer"
               ><i-tabler name="edit" class="icon-18"></i-tabler
             ></a> -->
-            <a
-                (click)="deleteProduct(product.product)"
-              class="m-r-10 cursor-pointer"
-            >
+            <a (click)="deleteProduct(product.product)" class="m-r-10 cursor-pointer">
               <i-tabler name="trash" class="icon-18"></i-tabler>
             </a>
           </td>
@@ -70,12 +63,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <mat-paginator
-      [length]="totalRows"
-      [pageSize]="rows"
-      [pageSizeOptions]="[10, 20, 30]"
-        showFirstLastButtons
-      (page)="onPageChange($event)">
+      <mat-paginator [length]="totalRows" [pageSize]="rows" [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+        (page)="onPageChange($event)">
       </mat-paginator>
     </div>
   </mat-card-content>
@@ -88,8 +77,7 @@
   <mat-dialog-content style="max-width: 1200px; max-height: 450px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
-        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
-        >Ajout d'un produit
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>Ajout d'un produit
       </h5>
     </div>
     <form #productForm="ngForm">
@@ -97,26 +85,15 @@
         <div class="col-lg-6">
           <label for="name">Nom du Produit</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="name"
-              placeholder="Entrez le nom du produit"
-              required
-              name="name"
-              [(ngModel)]="productData.name"
-            />
+            <input matInput id="name" placeholder="Entrez le nom du produit" required name="name"
+              [(ngModel)]="productData.name" />
           </mat-form-field>
         </div>
 
         <div class="col-lg-6">
           <label for="unit">Unité</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="unit"
-              [(ngModel)]="productData.unit"
-              name="unit"
-              required
-            >
+            <mat-select id="unit" [(ngModel)]="productData.unit" name="unit" required>
               <mat-option *ngFor="let unit of units" [value]="unit">
                 {{ unit.name }}
               </mat-option>
@@ -126,12 +103,7 @@
         <div class="col-lg-6">
           <label for="category">Catégorie</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="category"
-              [(ngModel)]="productData.category"
-              name="category"
-              required
-            >
+            <mat-select id="category" [(ngModel)]="productData.category" name="category" required>
               <mat-option *ngFor="let category of categorys" [value]="category">
                 {{ category.name }}
               </mat-option>
@@ -142,12 +114,7 @@
         <div class="col-lg-6">
           <label for="conditioning">Conditionnement</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="conditioning"
-              [(ngModel)]="productData.conditioning"
-              name="conditioning"
-              required
-            >
+            <mat-select id="conditioning" [(ngModel)]="productData.conditioning" name="conditioning" required>
               <mat-option *ngFor="let conditioning of conditionings" [value]="conditioning">
                 {{ conditioning.name }}
               </mat-option>
@@ -157,20 +124,16 @@
         <div class="col-lg-12">
           <label for="description">Description</label>
           <mat-form-field appearance="outline" class="w-100">
-            <textarea
-              matInput
-              id="description"
-              placeholder="Entrez une description du produit"
-              name="description"
-              [(ngModel)]="productData.description"
-            ></textarea>
+            <textarea matInput id="description" placeholder="Entrez une description du produit" name="description"
+              [(ngModel)]="productData.description"></textarea>
           </mat-form-field>
         </div>
       </div>
       <div class="row">
 
         <div class="col-lg-6">
-          <button mat-flat-button color="primary" class="large-button" (click)="addProduct()" [disabled]="!productForm.valid"> Ajouter </button>
+          <button mat-flat-button color="primary" class="large-button" (click)="addProduct()"
+            [disabled]="!productForm.valid"> Ajouter </button>
         </div>
         <div class="col-lg-6">
           <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
@@ -187,8 +150,7 @@
   <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
-        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
-        >Modification d'un produit
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>Modification d'un produit
       </h5>
     </div>
     <form #productForm="ngForm">
@@ -197,14 +159,8 @@
         <div class="col-lg-6">
           <label for="name">Nom du Produit</label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              matInput
-              id="name"
-              placeholder="Entrez le nom du produit"
-              required
-              name="name"
-              [(ngModel)]="productData.name"
-            />
+            <input matInput id="name" placeholder="Entrez le nom du produit" required name="name"
+              [(ngModel)]="productData.name" />
           </mat-form-field>
         </div>
 
@@ -212,12 +168,7 @@
         <div class="col-lg-6">
           <label for="unit">Unité</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="unit"
-              [(ngModel)]="productData.unit"
-              name="unit"
-              required
-            >
+            <mat-select id="unit" [(ngModel)]="productData.unit" name="unit" required>
               <mat-option *ngFor="let unit of units" [value]="unit">
                 {{ unit.name }}
               </mat-option>
@@ -229,12 +180,7 @@
         <div class="col-lg-6">
           <label for="category">Catégorie</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="category"
-              [(ngModel)]="productData.category"
-              name="category"
-              required
-            >
+            <mat-select id="category" [(ngModel)]="productData.category" name="category" required>
               <mat-option *ngFor="let category of categorys" [value]="category">
                 {{ category.name }}
               </mat-option>
@@ -246,12 +192,7 @@
         <div class="col-lg-6">
           <label for="conditioning">Conditionnement</label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select
-              id="conditioning"
-              [(ngModel)]="productData.conditioning"
-              name="conditioning"
-              required
-            >
+            <mat-select id="conditioning" [(ngModel)]="productData.conditioning" name="conditioning" required>
               <mat-option *ngFor="let conditioning of conditionings" [value]="conditioning">
                 {{ conditioning.name }}
               </mat-option>
@@ -263,20 +204,16 @@
         <div class="col-lg-12">
           <label for="description">Description</label>
           <mat-form-field appearance="outline" class="w-100">
-            <textarea
-              matInput
-              id="description"
-              placeholder="Entrez une description du produit"
-              name="description"
-              [(ngModel)]="productData.description"
-            ></textarea>
+            <textarea matInput id="description" placeholder="Entrez une description du produit" name="description"
+              [(ngModel)]="productData.description"></textarea>
           </mat-form-field>
         </div>
       </div>
 
       <div class="row">
         <div class="col-lg-6">
-          <button mat-flat-button color="primary" class="large-button" (click)="editProduct()" [disabled]="!productForm.valid"> Modifier </button>
+          <button mat-flat-button color="primary" class="large-button" (click)="editProduct()"
+            [disabled]="!productForm.valid"> Modifier </button>
         </div>
         <div class="col-lg-6">
           <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
@@ -289,18 +226,18 @@
 
 <!-- delete -->
 <ng-template #dialogTemplateDelete>
-  
+
   <h5 mat-dialog-title class="mat-subtitle-1">Suppression du produit</h5>
-<div mat-dialog-content class="mat-subtitle-2 lh-16">
-  Êtes-vous sûr de vouloir supprimer ce produit ?
-</div>
-<div mat-dialog-actions class="p-24 p-t-0">
+  <div mat-dialog-content class="mat-subtitle-2 lh-16">
+    Êtes-vous sûr de vouloir supprimer ce produit ?
+  </div>
+  <div mat-dialog-actions class="p-24 p-t-0">
 
-  <button (click)="closeDialog()" mat-flat-button color="primary" mat-dialog-close cdkFocusInitial>
-    NON
-  </button>
+    <button (click)="closeDialog()" mat-flat-button color="primary" mat-dialog-close cdkFocusInitial>
+      NON
+    </button>
 
-  <button (click)="confirmDelete()" mat-stroked-button color="warn" mat-dialog-close>OUI</button>
-</div>
+    <button (click)="confirmDelete()" mat-stroked-button color="warn" mat-dialog-close>OUI</button>
+  </div>
 
 </ng-template>

@@ -163,8 +163,8 @@
             </form>
             <!---->
             <div class="ml-auto btnspart  grid mt-3">
-              <button  style="margin: 10px;"  pButton label="Produit non existant" pRipple type="button"
-                class="col p-button p-button-nouveau p-component" (click)="showProductAddForm()"></button>
+              <button (click)="openDialogAdd()"  style="margin: 10px;"  pButton label="Produit non existant" pRipple type="button"
+                class="col p-button p-button-nouveau p-component" ></button>
                 <button style="margin: 10px;"  pButton pRipple label="Ajouter"
                 [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0" type="button"
                 class="col p-button-saved p-button p-component"
@@ -300,3 +300,5 @@
     </form>
 
   </div>
+
+ 
