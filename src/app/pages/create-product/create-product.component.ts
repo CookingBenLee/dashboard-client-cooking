@@ -73,7 +73,7 @@ export class CreateProductComponent implements OnInit {
 
 
   activeIndex: number = 0;
-  ref: DynamicDialogRef | undefined;
+  
 
 
   products:Product[]=[]
@@ -116,7 +116,7 @@ export class CreateProductComponent implements OnInit {
   productSelected:Product
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
-    private dialogService:DialogService,
+    private dialogService:DialogService,public ref: DynamicDialogRef,
     private paginateService:PaginateService,private tokenService: TokenService,
     private brandService:BrandService,private conditioningService:ConditioningService,private unitService:UnitService,private categoryService:CategoryService,
     private productService:ProductService,public tableShort:TableShortService) {}
@@ -185,7 +185,7 @@ export class CreateProductComponent implements OnInit {
         this.description=""
         this.activeIndex=0
         this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
-
+        this.ref?.close();
 
       },
       (error: any)=>{
