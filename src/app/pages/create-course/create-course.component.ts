@@ -65,6 +65,8 @@ import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { ModalpurchaseComponent } from '../course/modalpurchase/modalpurchase.component';
 import { ModalAddProductComponent } from '../course/modal-add-product/modal-add-product.component';
+import { Conditioning } from 'src/app/services/conditioning/Conditioning';
+import { CreateProductComponent } from '../create-product/create-product.component';
 
 @Component({
   selector: 'app-create-course',
@@ -182,7 +184,8 @@ detailPurchasesForms2:any=[]
    private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
    private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
    private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,private tokenService: TokenService,
-   private countryService: CountryService, private router: Router,private ref: DynamicDialogRef,
+   private countryService: CountryService, private router: Router,private ref: DynamicDialogRef
+   ,private snackBar: MatSnackBar,public dialog: MatDialog,
    private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
    
    utilisateurC: any;
@@ -937,4 +940,56 @@ retrieveCountryById(): void {
     this.visibleSelect = true;
     
  }
+
+ productData: any = {};
+ conditionings:Conditioning[]
+
+ @ViewChild(MatTable, { static: true }) table: MatTable<any> =
+  Object.create(null);
+  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
+
+ addProduct() {
+  const user = this.tokenService.getUser();
+  this.productData.user = { id: user.id };
+  console.log("poduit envoye" , this.productData);
+  this.productService.create(this.productData).then(() => {
+    this.snackBar.open('Produit ajouté avec succès !', 'Fermer', {
+      duration: 3000,
+      panelClass: ['snackbar-success']
+    });
+    this.getAll();
+    this.dialog.closeAll();
+  }).catch(err => {
+    this.snackBar.open('Erreur lors de l\'ajout du produit.', 'Fermer', {
+      duration: 3000,
+      panelClass: ['snackbar-error']
+    });
+  });
+}
+
+closeDialog() {
+  this.dialog.closeAll();
+}
+
+openDialogAdd() {
+  this.ref = this.dialogService.open(CreateProductComponent, {
+      header: "Ajout d'un produit non existant",
+      width: '70%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+  });
+  this.ref.onClose.subscribe((retour: any) => {
+    if (retour=="ok") {
+        this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
+        this.getProducts()
+    }else{
+      this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+
+    }
+});
+  
+}
+
+
 }

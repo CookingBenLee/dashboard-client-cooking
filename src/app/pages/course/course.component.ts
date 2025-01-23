@@ -67,6 +67,8 @@ import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { CreateCourseComponent } from '../create-course/create-course.component';
 import { DetailCourseComponent } from './detail-course/detail-course.component';
+import { Brand } from 'src/app/services/brand/Brand';
+import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 
 @Component({
   selector: 'app-course',
@@ -185,7 +187,9 @@ detailPurchasesForms2:any=[]
    private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
    private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,private tokenService: TokenService,
    private countryService: CountryService,
-   private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
+   private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService
+   ,private snackBar: MatSnackBar,public dialog: MatDialog
+  ) {}
    
    utilisateurC: any;
 countryss: any[] = []; // Ensure this is initialized as an array
@@ -257,8 +261,8 @@ selectedCountry: any; // To store the retrieved country
   this.ref = this.dialogService.open(CreateCourseComponent, {
     header: "Enregistrement d'une course ",
     width: '90%',
-    contentStyle: { overflow: 'auto' },
-    baseZIndex: 10000,
+    // contentStyle: { overflow: 'auto' },
+    // baseZIndex: 10000,
     maximizable: true,
 });
  
@@ -881,4 +885,6 @@ retrieveCountryById(): void {
     this.visibleSelect = true;
     
  }
+
+ 
 }
