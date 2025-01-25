@@ -199,7 +199,7 @@ detailPurchasesForms2:any=[]
       console.log(data)
 
       this.shops=data
-      this.data.shop=this.shops[0]
+      // this.data.shop=this.shops[0]
 
       //this.changeShop()
     })
