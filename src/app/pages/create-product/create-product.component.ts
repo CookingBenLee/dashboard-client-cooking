@@ -90,7 +90,7 @@ export class CreateProductComponent implements OnInit {
   code:string
   description:string
   price:number
-  lostpercentage:number
+  lostpercentage:number = 5
 
   unit:Unit
   brand:Brand
