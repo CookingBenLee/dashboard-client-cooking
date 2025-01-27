@@ -130,10 +130,10 @@ detailPurchasesForms2:any=[]
     private currencyService:CurrencyService,private productService:ProductService,private unitService:UnitService,private priceService:PriceService) {
       this.data=this.config.data
 
-      var date  = new Date(this.data.datePurchase).getMonth() + '/' + new Date(this.data.datePurchase).getDate() + '/' + new Date(this.data.datePurchase).getFullYear();
+      // var date  = new Date(this.data.datePurchase).getMonth() + '/' + new Date(this.data.datePurchase).getDate() + '/' + new Date(this.data.datePurchase).getFullYear();
 
-      console.log(date);
-      this.data.datePurchase=new Date(this.data.datePurchase)
+      // console.log(date);
+      // this.data.datePurchase=new Date(this.data.datePurchase)
 
       //this.datePurchase=new Date(date)
     }

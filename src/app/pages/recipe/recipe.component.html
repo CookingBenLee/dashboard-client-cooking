@@ -102,8 +102,8 @@
                         </div>
           
                         <div class="field col-6">
-                          <label htmlFor="ratio">Ratio</label>
-                          <p-inputNumber mode="decimal" [minFractionDigits]="5" name="ratio" id="ratio" [(ngModel)]="ratio" [showButtons]="true" [min]="0" ></p-inputNumber>
+                          <label htmlFor="ratio">Pourcentage de perte</label>
+                          <p-inputNumber mode="decimal" [minFractionDigits]="5" name="ratio" [suffix]="'%'" id="ratio" [(ngModel)]="ratio" [showButtons]="true" [min]="0" ></p-inputNumber>
                         </div>
           
           

@@ -1,42 +1,54 @@
 <div class="grid">
-    <form class=" newform col-12" #f="ngForm" (ngSubmit)="save()">
-      <div class="card p-fluid">
-        <div class="grid">
-            <div class="col-6">
-                <div class="field">
-                    <label htmlFor="name">Nom</label>
-                    <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom produit" required/>
-                  </div>
-            </div>
-            <div class="col-6">
-                <div class="field ">
-                    <label htmlFor="unit">Unité</label>
-                    <p-dropdown [options]="units"  optionLabel="name" name="unit" [(ngModel)]="unit" ></p-dropdown>
-                  </div>
-            </div>
-            <div class="col-6">
-                <div class="field ">
-                    <label htmlFor="category">Categorie</label>
-                    <p-dropdown [options]="categorys"  optionLabel="name" name="category" [(ngModel)]="category" ></p-dropdown>
-                  </div>
-            </div>
-            <div class="col-6">
-                <div class="field ">
-                    <label htmlFor="conditioning">Condition</label>
-                    <p-dropdown [options]="conditionings"  optionLabel="name" name="conditioning" [(ngModel)]="conditioning" ></p-dropdown>
-                  </div>
-            </div>
+  <form class=" newform col-12" #f="ngForm" (ngSubmit)="save()">
+    <div class="card p-fluid">
+      <div class="grid">
+        <div class="col-6">
+          <div class="field">
+            <label htmlFor="name">Nom</label>
+            <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom produit" required />
+          </div>
         </div>
-       
-        <p>Description</p>
-        <textarea rows="5" cols="10" [(ngModel)]="description" name="description" placeholder="Description" pInputTextarea ></textarea>
+        <div class="col-6">
+          <div class="field ">
+            <label htmlFor="unit">Unité</label>
+            <p-dropdown [options]="units" optionLabel="name" name="unit" [(ngModel)]="unit"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="field ">
+            <label htmlFor="category">Categorie</label>
+            <p-dropdown [options]="categorys" optionLabel="name" name="category" [(ngModel)]="category"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="field ">
+            <label htmlFor="conditioning">Condition</label>
+            <p-dropdown [options]="conditionings" optionLabel="name" name="conditioning"
+              [(ngModel)]="conditioning"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="field">
+            <label htmlFor="lostpercentage">Pourcentage de perte</label>
+            <p-inputNumber mode="decimal" [minFractionDigits]="2" name="lostpercentage" id="lostpercentage"
+              [(ngModel)]="lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
+            </p-inputNumber>
+          </div>
 
-        <label id="erreur" *ngIf="isError">{{erreur}}</label>
-        <label id="success" *ngIf="isSuccess">{{sucess}}</label>
-
-
-        <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4" [disabled]="!f.valid" ></button>
-
+        </div>
       </div>
-    </form>
-  </div>
+
+      <p>Description</p>
+      <textarea rows="5" cols="10" [(ngModel)]="description" name="description" placeholder="Description"
+        pInputTextarea></textarea>
+
+      <label id="erreur" *ngIf="isError">{{erreur}}</label>
+      <label id="success" *ngIf="isSuccess">{{sucess}}</label>
+
+
+      <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4"
+        [disabled]="!f.valid"></button>
+
+    </div>
+  </form>
+</div>
