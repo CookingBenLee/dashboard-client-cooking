@@ -116,7 +116,9 @@ export class ModalpurchaseComponent {
     unit:new Unit(),
     realQ:0,
     distinctUnit:false,
-    realQuantity:''
+    realQuantity:'',
+    realtotalPrice:0,
+    realUnit:""
   }
 ]
 
@@ -170,7 +172,9 @@ detailPurchasesForms2:any=[]
           unit:detail.price.product.unit,
           realQ:detail.quantity,
           distinctUnit:false,
-          realQuantity:''
+          realQuantity:'',
+          realtotalPrice:0,
+          realUnit:""
         }
         this.detailPurchasesForms.push(d)
         this.detailPurchasesForms2.push(d)
@@ -184,7 +188,9 @@ detailPurchasesForms2:any=[]
           unit:new Unit(),
           realQ:0,
           distinctUnit:false,
-          realQuantity:''
+          realQuantity:'',
+          realtotalPrice:0,
+          realUnit:""
         }
       )
 
@@ -200,7 +206,7 @@ detailPurchasesForms2:any=[]
       console.log(data)
 
       this.shops=data
-      this.data.shop=this.shops[0]
+      //this.data.shop=this.shops[0]
 
       //this.changeShop()
     })
@@ -254,6 +260,7 @@ detailPurchasesForms2:any=[]
    ////this.totalPrice=value*this.quantity
    this.detailPurchasesForms[i].unit=this.detailPurchasesForms[i].product?.unit
    //this.unitys[i]=this.productes[i]?.unit
+   this.changeValue(null,i)
    //////this.changeUnit()
  }
 
@@ -288,51 +295,57 @@ detailPurchasesForms2:any=[]
     const inputUnit = form.unit?.code?.toUpperCase();
 
     // Vérifier si les unités sont distinctes
-    if (form.product?.unit?.name !== form.unit?.name) {
+    if (inputUnit !== "L" && inputUnit !== "KG") {
       form.distinctUnit = true;
 
       // Initialiser les variables de conversion
       let conversionFactor = 1; // Facteur de conversion
       let targetUnit = ""; // Unité de destination
+      let targetUnitCode = "";
 
       // Conversion en fonction des unités
       switch (inputUnit) {
         case "KG": // Kilogramme
-          conversionFactor = 1000;
-          targetUnit = "Gramme";
-          break;
-        case "G":
-        case "GR": // Gramme
-          conversionFactor = 1 / 1000;
+          conversionFactor = 1; // Déjà en kilogramme
           targetUnit = "Kilogramme";
+          targetUnitCode="KG";
           break;
+
+        case "G": // Gramme
+        case "GR":
+          conversionFactor = 1 / 1000; // Convertir en kilogrammes
+          targetUnit = "Kilogramme";
+          targetUnitCode="KG";
+          break;
+
         case "L": // Litre
-          if (productUnit === "KG") {
-            conversionFactor = 1;
-            targetUnit = form.product?.unit?.name || "Kilogramme";
-          } else {
-            conversionFactor = 1000;
-            targetUnit = "Millilitre";
-          }
+          conversionFactor = 1; // Déjà en litre
+          targetUnit = "Litre";
+          targetUnitCode="L";
           break;
+
         case "ML": // Millilitre
-          if (productUnit === "KG" || productUnit === "G" || productUnit === "GR") {
-            conversionFactor = 1 / 1000;
-            targetUnit = "Kilogramme";
-          } else {
-            conversionFactor = 1 / 1000;
-            targetUnit = "Litre";
-          }
+          conversionFactor = 1 / 1000; // Convertir en litres
+          targetUnit = "Litre";
+          targetUnitCode="L";
           break;
-        default: // Cas non traité
+
+        default: // Cas où l'unité ne peut pas être convertie
           form.realQuantity = "Conversion impossible";
+          return; // Arrêter l'exécution pour cet élément
       }
 
       // Effectuer la conversion
       form.realQ = form.quantity * conversionFactor;
+      form.realUnit=targetUnitCode
+      form.realtotalPrice=form.totalPrice*conversionFactor
       form.realQuantity = `${form.realQ} ${targetUnit}`;
+
+      //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
+      //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/(form.quantity * conversionFactor)
+
     } else {
-      form.distinctUnit = false;
+      form.distinctUnit = false; // Pas de différence d'unités
     }
  
     /*if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
@@ -400,7 +413,9 @@ detailPurchasesForms2:any=[]
         unit:new Unit(),
         realQ:0,
         distinctUnit:false,
-        realQuantity:''
+        realQuantity:'',
+        realtotalPrice:0,
+        realUnit:""
       }
     )
   }

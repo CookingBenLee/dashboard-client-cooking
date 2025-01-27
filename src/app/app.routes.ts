@@ -16,6 +16,7 @@ import { RepasComponent } from './pages/repas/repas.component';
 import { PlanificationComponent } from './pages/planification/planification.component';
 import { RecetteComponent } from './pages/recette/recette.component';
 import { RecipeComponent } from './pages/recipe/recipe.component';
+import { LoginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
   {
@@ -26,10 +27,13 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [LoginGuard],
+
   },
   {
     path: 'signup',
     component: SignupComponent,
+    canActivate: [LoginGuard]
   },
   {
     path: 'home',

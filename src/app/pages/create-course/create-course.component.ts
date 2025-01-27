@@ -713,52 +713,56 @@ retrieveCountryById(): void {
    const inputUnit = form.unit?.code?.toUpperCase();
 
    // Vérifier si les unités sont distinctes
-   if (form.product?.unit?.name !== form.unit?.name) {
-     form.distinctUnit = true;
+   if (inputUnit !== "L" && inputUnit !== "KG") {
+    form.distinctUnit = true;
 
-     // Initialiser les variables de conversion
-     let conversionFactor = 1; // Facteur de conversion
-     let targetUnit = ""; // Unité de destination
+    // Initialiser les variables de conversion
+    let conversionFactor = 1; // Facteur de conversion
+    let targetUnit = ""; // Unité de destination
+    let targetUnitCode = "";
 
-     // Conversion en fonction des unités
-     switch (inputUnit) {
-       case "KG": // Kilogramme
-         conversionFactor = 1000;
-         targetUnit = "Gramme";
-         break;
-       case "G":
-       case "GR": // Gramme
-         conversionFactor = 1 / 1000;
-         targetUnit = "Kilogramme";
-         break;
-       case "L": // Litre
-         if (productUnit === "KG") {
-           conversionFactor = 1;
-           targetUnit = form.product?.unit?.name || "Kilogramme";
-         } else {
-           conversionFactor = 1000;
-           targetUnit = "Millilitre";
-         }
-         break;
-       case "ML": // Millilitre
-         if (productUnit === "KG" || productUnit === "G" || productUnit === "GR") {
-           conversionFactor = 1 / 1000;
-           targetUnit = "Kilogramme";
-         } else {
-           conversionFactor = 1 / 1000;
-           targetUnit = "Litre";
-         }
-         break;
-       default: // Cas non traité
-         form.realQuantity = "Conversion impossible";
-     }
+    // Conversion en fonction des unités
+    switch (inputUnit) {
+      case "KG": // Kilogramme
+        conversionFactor = 1; // Déjà en kilogramme
+        targetUnit = "Kilogramme";
+        targetUnitCode="KG";
+        break;
 
-     // Effectuer la conversion
-     form.realQ = form.quantity * conversionFactor;
-     form.realQuantity = `${form.realQ} ${targetUnit}`;
-   } else {
-     form.distinctUnit = false;
-   }
+      case "G": // Gramme
+      case "GR":
+        conversionFactor = 1 / 1000; // Convertir en kilogrammes
+        targetUnit = "Kilogramme";
+        targetUnitCode="KG";
+        break;
+
+      case "L": // Litre
+        conversionFactor = 1; // Déjà en litre
+        targetUnit = "Litre";
+        targetUnitCode="L";
+        break;
+
+      case "ML": // Millilitre
+        conversionFactor = 1 / 1000; // Convertir en litres
+        targetUnit = "Litre";
+        targetUnitCode="L";
+        break;
+
+      default: // Cas où l'unité ne peut pas être convertie
+        form.realQuantity = "Conversion impossible";
+        return; // Arrêter l'exécution pour cet élément
+    }
+
+    // Effectuer la conversion
+    form.realQ = form.quantity * conversionFactor;
+    form.realQuantity = `${form.realQ} ${targetUnit}`;
+
+    //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
+    //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/(form.quantity * conversionFactor)
+
+  } else {
+    form.distinctUnit = false; // Pas de différence d'unités
+  }
    /*if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || (this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="GR") || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
      console.log(this.detailPurchasesForms[i].product.unit);
      console.log(this.detailPurchasesForms[i].unit);
