@@ -1,0 +1,109 @@
+
+$orange:#FF7900;
+$Vert:#50BE87;
+$Jaune:#FFD200;
+$Rose:#FFB4E6;
+$Violet:#A885D8;
+$Bleu:#4BB4E6;
+$Noir:#000000;
+$Blanc:#ffffff;
+
+$color1:#c1853b;
+$color2:#cc1b1b;
+$color3:#2f0505;
+$color4:#85311b;
+$color5:#000000;
+
+$color6:#cf4020;
+$color7:#a4ecdc;
+$color8:#bc2c14;
+$color9:#9e675b;
+$color10:#94c9b2;
+$color11:#2d674d;
+
+.p-button-orange{
+  background: $color11;
+  border: none;
+}
+
+.p-button-orange:hover{
+  background: #fff;
+  color:$color11;
+  border: none;
+  border:1px solid $color11;
+}
+
+.fileInput{
+  display: block;
+  border: 2px solid;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  position: inherit !important;
+  visibility: inherit !important;
+  color: #000;
+}
+
+
+.divImage{
+  display: flex;
+  img{
+    height: 90%;
+    width: 90%;
+    object-fit: cover;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  label{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    color: $orange;
+  }
+}
+
+#erreur{
+  color: white;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: #ff00008f;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 1%;
+  margin: auto;
+  margin-bottom: 5px;
+}
+
+#success{
+  color: white;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: green;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 1%;
+  margin: auto;
+  margin-bottom: 5px;
+}
+
+
+.contientFichier{
+  display: flex;
+  p-checkbox {
+    margin-left: 5px;
+  }
+}
+
+.pdf{
+  //display: contents;
+  width: 100%;
+  //height: 70rem;
+}

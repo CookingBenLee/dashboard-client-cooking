@@ -13,34 +13,34 @@ export class CategoryMenuService {
 
   //create
   createCategory(category:CategoryMenu){
-    return this.http.post<any>(`${this.env.api}/categorymenu/new`,category)
+    return this.http.post<any>(`${this.env.apiUrl}/categorymenu/new`,category)
     .toPromise()
     .then()
     .then();
   }
   //read
   getAllCategorys() {
-    return this.http.get<any>(`${this.env.api}/categorymenu/getall`)
+    return this.http.get<any>(`${this.env.apiUrl}/categorymenu/getall`)
         .toPromise()
         .then(res => res.data as CategoryMenu[])
         .then(data => data);
   }
   getAllCategorysPage(param:any) {
-    return this.http.get<any>(`${this.env.api}/categorymenu/getallpage?page=`+param['page']+'&size='+param['size'])
+    return this.http.get<any>(`${this.env.apiUrl}/categorymenu/getallpage?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);
   }
 
   recherche(mot:String) {
-    return this.http.get<any>(`${this.env.api}/categorymenu/search?mot=${mot}`,)
+    return this.http.get<any>(`${this.env.apiUrl}/categorymenu/search?mot=${mot}`,)
         .toPromise()
         .then(res => res.data as CategoryMenu[])
         .then(data => data);
   }
 
   rechercheParPage(mot:String,param:any) {
-    return this.http.get<any>(`${this.env.api}/categorymenu/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
+    return this.http.get<any>(`${this.env.apiUrl}/categorymenu/searchbypage?mot=${mot}&page=${param['page']}&size=${param['size']}`)
     .toPromise()
     .then(res => res.data as any)
     .then(data => data);
@@ -49,7 +49,7 @@ export class CategoryMenuService {
 
   //update
   updateCategory(idcategory:number |undefined, category:CategoryMenu){
-    return this.http.put<any>(`${this.env.api}/categorymenu/update/${idcategory}`,category)
+    return this.http.put<any>(`${this.env.apiUrl}/categorymenu/update/${idcategory}`,category)
     .toPromise()
     .then()
     .then();
@@ -57,7 +57,7 @@ export class CategoryMenuService {
 
   ///delete
   deleteCategory(id:number | undefined) {
-  return this.http.delete<any>(`${this.env.api}/categorymenu/delete/${id}`)
+  return this.http.delete<any>(`${this.env.apiUrl}/categorymenu/delete/${id}`)
   .toPromise()
         .then()
         .then();

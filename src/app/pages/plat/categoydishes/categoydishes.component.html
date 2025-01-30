@@ -1,0 +1,145 @@
+<p-tabView [(activeIndex)]="activeIndex">
+    <!--Panel liste des categorys-->
+    <p-tabPanel header="Liste des categories de plat">
+      <div class="">
+        <div class="card">
+            <h5>Liste des categories de plat</h5>
+  
+            <p-table #dt2 [value]="categorys"  responsiveLayout="scroll"
+            [globalFilterFields]="['name','detail','code']">
+  
+  
+                <ng-template pTemplate="caption">
+                  <div class="flex">
+                      <!--<button pButton label="Tout afficher" class="p-button-outlined" icon="pi pi-filter-slash" (click)="tableShort.clear(dt2)"></button>-->
+                      <span class="p-input-icon-left mr-auto">
+                          <i class="pi pi-search"></i>
+                          <!--<input pInputText type="text" [(ngModel)]="motRecherche" (input)="dt2.filterGlobal(motRecherche, 'contains')" placeholder="Rechercher" />-->
+                          <input pInputText type="text" [(ngModel)]="motRecherche" (input)="recherche()" placeholder="Rechercher" />
+  
+                        </span>
+                  </div>
+                </ng-template>
+  
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="name" pColumnFilter="name">Nom<p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="code" pColumnFilter="code">Code<p-sortIcon field="code"></p-sortIcon></th>
+  
+                        <th pSortableColumn="detail" pColumnFilter="detail">Details<p-sortIcon field="detail"></p-sortIcon></th>
+  
+                        <th></th>
+                        <!--<th></th>-->
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-category>
+                    <tr class="cursor-pointer"  >
+  
+                      <td (click)="show($event,category)" style="width: 35%; min-width: 8rem;">{{category.name}}</td>
+                      <td (click)="show($event,category)" style="width: 35%; min-width: 8rem;">{{category.code}}</td>
+  
+                      <td (click)="show($event,category)" style="width: 35%; min-width: 8rem;">{{category.detail | slice:0:30 }}...</td>
+  
+                      <!--<td style="width: 15%;" (click)="show($event,category)"  >
+                        <button pButton pRipple type="button"  icon="pi pi-eye" class="p-button p-component p-button-text p-button-icon-only"></button>
+                      </td>-->
+                      <td style="width: 15%;">
+                        <button pButton pRipple type="button" (click)="openModifier('right',category)" icon="pi pi-pencil" class="p-button p-component p-button-text p-button-icon-only"></button>
+                      </td>
+  
+                      <td style="width: 15%;">
+                        <button pButton pRipple type="button" (click)="delete('top-right',category)" icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only"></button>
+                      </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-paginator (onPageChange)="onPageChange($event)"  [rows]="rows" [totalRecords]="totalRows" [rowsPerPageOptions]="[6, 12, 20]"></p-paginator>
+  
+          </div>
+      </div>
+  
+    </p-tabPanel>
+    <p-tabPanel header="Nouvelle categorie de plat">
+      <div class="grid">
+        <form class=" newform col-12 md:col-6" #f="ngForm" (ngSubmit)="save()">
+          <div class="card p-fluid">
+            <h5>Ajouter nouvelle categorie de plat</h5>
+  
+            <div class="field">
+              <label htmlFor="name">Nom</label>
+              <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom Categorie" required/>
+            </div>
+  
+            <div class="field">
+              <label htmlFor="code">Code</label>
+              <input pInputText id="code" [(ngModel)]="code" name="code" type="text" placeholder="Code Categorie" required/>
+            </div>
+  
+            <p>Detail</p>
+                  <textarea rows="15" cols="30" [(ngModel)]="detail" name="detail" placeholder="Details" pInputTextarea ></textarea>
+  
+  
+            <label id="erreur" *ngIf="isError">{{erreur}}</label>
+            <label id="success" *ngIf="isSuccess">{{sucess}}</label>
+  
+  
+            <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange" [disabled]="!f.valid" ></button>
+  
+          </div>
+        </form>
+      </div>
+    </p-tabPanel>
+  
+  </p-tabView>
+  
+  <p-toast position="top-center" key="tc"></p-toast>
+  
+  <p-toast></p-toast>
+  <p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+  <!--pour la modification d'une category-->
+  <p-dialog *ngIf="isEditCategoryDialogVisible" header="Mettre à jour la categorie {{categoryClicked.name}}" [(visible)]="isEditCategoryDialogVisible" [style]="{ width: '50vw' }">
+    <form  #fUpdate="ngForm" (ngSubmit)="update()">
+      <div class="card p-fluid">
+        <h5>Mise à jour categorie</h5>
+        <div class="field">
+          <label htmlFor="name">Nom</label>
+          <input pInputText id="name" [(ngModel)]="categoryClicked.name" name="name" type="text" placeholder="Non categorie" required/>
+        </div>
+  
+        <div class="field">
+          <label htmlFor="code">Code</label>
+          <input pInputText id="code" [(ngModel)]="categoryClicked.code" name="code" type="text" placeholder="Code categorie" required/>
+        </div>
+  
+  
+        <p>Detail</p>
+              <textarea rows="5" cols="10" [(ngModel)]="categoryClicked.detail" name="detail" placeholder="Detail" pInputTextarea ></textarea>
+  
+        <label id="erreur" *ngIf="isErrorEdit">{{erreurEdit}}</label>
+        <label id="success" *ngIf="isSuccessEdit">{{sucessEdit}}</label>
+  
+  
+        <button pButton type="submit" label="Modifier" class="p-button-orange" [loading]="loading" [disabled]="!fUpdate.valid" ></button>
+  
+      </div>
+  
+    </form>
+  
+  </p-dialog>
+  
+  <p-overlayPanel #op [showCloseIcon]="true">
+    <ng-template pTemplate="content" class="panel">
+      <h3>{{categorySelected.name}}</h3>
+      <h5>    <p id="matricule" >{{categorySelected.code}}</p>
+      </h5>
+  
+      <p-divider></p-divider>
+  
+      <span id="directionDetail">{{categorySelected.detail}}</span>
+  
+    </ng-template>
+  
+  </p-overlayPanel>
+  <!---->
+  
