@@ -91,7 +91,7 @@ export class ModalpurchaseComponent {
   categorys:Category[]=[]
   currencys:Currency[]=[]
 
-  datePurchase:Date=new Date("January 31 1980 12:30");
+  datePurchase:any;
   products:Product[]=[]
   units:Unit[]=[]
 
