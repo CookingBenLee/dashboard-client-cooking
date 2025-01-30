@@ -98,5 +98,13 @@
   "Menu Level": "Niveau menu",
   "Menu 1": "Menu 1",
   "Menu 2": "Menu 2",
-  "Disabled": "Désactivé"
+  "Disabled": "Désactivé",
+
+  "COMPONENT":{
+    "ERROR":{
+      "HEAD": "Oups!!!",
+      "BODY_MSG": "Une erreur s'est produite. Cela pourrait être lié à votre connexion Internet.",
+      "BACK": "Retour dans l'application"
+    }
+  }
 }

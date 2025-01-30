@@ -1,7 +1,7 @@
 import {
   ApplicationConfig,
   provideZoneChangeDetection,
-  importProvidersFrom,
+  importProvidersFrom, isDevMode,
 } from '@angular/core';
 import {
   HTTP_INTERCEPTORS,
@@ -39,6 +39,8 @@ export function HttpLoaderFactory(http: HttpClient): any {
 
 import { NgxEchartsModule } from 'ngx-echarts';
 import { HttpRequestInterceptor } from './services/Helpers/http.interceptor';
+import { TranslocoHttpLoader } from './transloco-loader';
+import { provideTransloco } from '@ngneat/transloco';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -83,6 +85,15 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       })
-    ),
+    ), provideHttpClient(), provideTransloco({
+        config: { 
+          availableLangs: ['fr','en','es','de'],
+          defaultLang: 'fr',
+          // Remove this option if your application doesn't support changing language in runtime.
+          reRenderOnLangChange: true,
+          prodMode: !isDevMode(),
+        },
+        loader: TranslocoHttpLoader
+      }),
   ],
 };

@@ -64,7 +64,7 @@ import { RouterModule } from '@angular/router';
       TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule],
       providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './modalrecipe.component.html',
-  styleUrl: './modalrecipe.component.scss'
+  styleUrls: ['./modalrecipe.component.scss','../../recipe/recipe.component.scss','../detailrecipe/detailrecipe.component.scss']
 })
 export class ModalrecipeComponent {
 //number for according active

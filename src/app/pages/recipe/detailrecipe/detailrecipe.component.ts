@@ -111,7 +111,7 @@ import { RippleModule } from 'primeng/ripple';
     PaginatorModule],
       providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './detailrecipe.component.html',
-  styleUrl: './detailrecipe.component.scss'
+  styleUrls: ['./detailrecipe.component.scss','../../recipe/recipe.component.scss']
 })
 export class DetailrecipeComponent {
   resClient:any
