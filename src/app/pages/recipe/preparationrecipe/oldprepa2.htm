@@ -1,0 +1,135 @@
+<div class="loader " *ngIf="loadingPage">
+  <div class="card flex  justify-content-center">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+  </div>
+</div>
+
+<div class="content">
+  <div class="left">
+    <div class="row1">
+      <div class="row1content">
+        <div class="head bighead">
+          <label for="head">Menu Preparation</label>
+        </div>
+
+        <div class="infos">
+          <label for="infos">Veuillez choisir une recette et saisissez la quantité nette à préparer svp !</label>
+        </div>
+        <!--Formulaire -->
+        <div class="form">
+          <form class="p-fluid colo">
+            <div class="row grid">
+              <div class="field plat col-7">
+                <p-dropdown [options]="plats" [(ngModel)]="platsSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changePlat()" placeholder="Choisir le plat">
+                  <ng-template pTemplate="selectedItem">
+                      <div class="flex align-items-center gap-2" *ngIf="platsSelectione">
+                          <div>{{platsSelectione.code}} {{ platsSelectione.name }}</div>
+                      </div>
+                  </ng-template>
+                  <ng-template let-plat pTemplate="item">
+                      <div class="flex align-items-center gap-2">
+                          <div>{{ plat.name }}</div>
+                      </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+
+              <div class="field poid col">
+                <p-inputNumber [inputStyle]="{background: '#3b81f6',color:'#fff'}" class="number" mode="decimal" [minFractionDigits]="2" name="poidnet" id="poidnet" [(ngModel)]="platsSelectione.net" (ngModelChange)="changePlat()" [showButtons]="true" [min]="0.1" ></p-inputNumber>
+              </div>
+
+              <div class="field unite col-1">
+                <label class="label" for="unite">
+                  KG
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="div-btn">
+        <button class="btn" [disabled]="!platsSelectione.name" (click)="generate()">Télécharger la fiche</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="rigth" #invoice id="invoice">
+    <div class="head head-center">
+      <label for="head" *ngIf="!platsSelectione.name" >Nom de la Recette</label>
+      <label for="head" *ngIf="platsSelectione.name">{{ platsSelectione.name }}</label>
+
+    </div>
+
+    <div class="poid-cout row  grid">
+
+      <div class="poid col-5 divblue">
+        <label for="poit" *ngIf="!platsSelectione.net">Poid Net</label>
+        <label for="poit" *ngIf="platsSelectione.net">{{platsSelectione.net| number: '1.0-3' }}</label>
+
+      </div>
+
+      <div class="cout col divblue">
+        <label for="cout" *ngIf="!platsSelectione.cout">Cout</label>
+        <label for="cout" *ngIf="platsSelectione.cout">{{platsSelectione.brut| number: '1.0-2' }}</label>
+      </div>
+
+
+    </div>
+
+
+    <div class="ingredientDetails">
+      <div class="ingredients">
+        <div class="head-no-border head-center">
+          <label for="head">Détails des Ingrédients</label>
+        </div>
+
+        <div class="listIngredients">
+          <div class="entetelist divblue">
+            <div class="lbl brdr-right pdr"><label for="">Nom Ingrédient</label></div>
+            <div class="lbl brdr-left pdl"><label for="">Poid Net</label></div>
+            <div class="lbl brdr-left pdl"><label for="">Poid Brut</label></div>
+            <div class="lbl brdr-left pdl"><label for="">Préparation</label></div>
+            <div class="lbl brdr-left pdl" ><label for="">Cout</label></div>
+          </div>
+
+          <div class="bdylist">
+            <div class="linebdy"  *ngFor="let detail of detailsDishes,let i=index">
+              <div class="lbl brdr-right pdr"><label for="">{{detail?.ingredient?.name}}</label></div>
+              <div class="lbl brdr-left pdl"><label for="">{{detail?.net| number: '1.0-3' }} {{detail?.ingredient?.unit?.code}} </label></div>
+              <div class="lbl brdr-left pdl"><label for="">{{detail?.brut | number: '1.0-3' }}  {{detail?.ingredient?.unit?.code}}</label></div>
+              <div class="lbl brdr-left pdl"><label for="">{{detail?.preparationIngredient }}</label></div>
+              <div class="lbl brdr-left pdl" ><label for="">{{detail?.cout| number: '1.0-2' }} </label></div>
+            </div>
+            <div class="nodetail m-2 head-center" *ngIf="!platsSelectione.name">
+              <label for="">
+                Aucun ingrédients
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="detailscuisine">
+        <div class="head head-details head-center">
+          <label for="head">Détails Cuisine</label>
+        </div>
+
+        <div class="detailscontenu">
+          <label *ngIf="!platsSelectione.detailCuisine" for="detailscontenu">
+           Pas de details cuisine
+          </label>
+
+          <label *ngIf="platsSelectione.detailCuisine" for="detailscontenu">
+            {{platsSelectione.detailCuisine}}
+          </label>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

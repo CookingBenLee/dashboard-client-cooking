@@ -1,0 +1,123 @@
+<div class="content">
+  <div class="head">
+    <h1>Préparation</h1>
+    <h4>Choisir le plat et saisir le poid net  </h4>
+  </div>
+  <p-splitter  styleClass="mb-5">
+
+    <ng-template pTemplate>
+      <div class="head-1">
+
+      </div>
+      <form class="p-fluid col">
+        <div class="row">
+          <div class="field">
+            <label htmlFor="plat">Plat</label>
+            <p-dropdown [options]="plats" [(ngModel)]="platsSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changePlat()" placeholder="Choisir le plat">
+              <ng-template pTemplate="selectedItem">
+                  <div class="flex align-items-center gap-2" *ngIf="platsSelectione">
+                      <div>{{platsSelectione.code}} {{ platsSelectione.name }}</div>
+                  </div>
+              </ng-template>
+              <ng-template let-plat pTemplate="item">
+                  <div class="flex align-items-center gap-2">
+                      <div>{{ plat.name }}</div>
+                  </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label htmlFor="poidnet">Poid Net</label>
+            <p-inputNumber mode="decimal" [minFractionDigits]="2" name="poidnet" id="poidnet" [(ngModel)]="platsSelectione.net" (ngModelChange)="changePlat()" [showButtons]="true" [min]="0.1" ></p-inputNumber>
+          </div>
+        </div>
+
+        <button pButton type="submit" label="Telecharger la fiche" class="p-button-nouveau mt-5 w-100" [loading]="loading" [disabled]="!platsSelectione.name" (click)="generate()" ></button>
+
+      </form>
+
+    </ng-template>
+    <ng-template pTemplate >
+      <div class="containtresult">
+        <div class="result" *ngIf="platsSelectione.name">
+          <h4 id="platNom">{{platsSelectione.name}}</h4>
+          <!--<p class="divider"></p>-->
+          <div class="contenu">
+            <p> Poid Net : {{platsSelectione.net| number: '1.0-5' }}</p>
+            <p class="divider"></p>
+
+            <p>Poid Brut : {{platsSelectione.brut| number: '1.0-5' }} </p>
+            <p class="divider"></p>
+            <p>Cout : {{platsSelectione.cout| number: '1.0-5' }} </p>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+    </ng-template>
+  </p-splitter>
+
+
+  <div class="contentTable card" *ngIf="platsSelectione" #invoice id="invoice">
+    <h1 id="head">Cooking.ben</h1>
+    <h5>List des details des ingredients nécessaires</h5>
+    <!-- List of created product-->
+    <div class="ListProduct">
+      <p *ngIf="detailsDishes.length==0">Aucun plat selectioné pour l'instant! Veuillez choisir un pour voir les details.</p>
+      <p *ngIf="detailsDishes.length!=0">Pour la preparation de {{platsSelectione.net| number: '1.0-5' }} poid net qui equivaut à {{platsSelectione.brut| number: '1.0-5' }} poid brut.</p>
+      <p *ngIf="detailsDishes.length!=0">Cout: {{platsSelectione.cout| number: '1.0-5' }} .</p>
+
+
+
+      <div class="divtableau">
+        <table *ngIf="detailsDishes.length!=0">
+          <thead>
+            <th>Produit </th>
+            <th>Catégorie</th>
+            <!--<th>Preparation Initial</th>-->
+
+            <!--<th>Unité</th>
+                        <th>Preparation Ingredient</th>
+-->
+            <th>Net</th>
+
+            <th>Brut</th>
+
+            <th>Cout</th>
+
+          </thead>
+          <tr *ngFor="let detail of detailsDishes,let i=index">
+            <td>{{detail?.ingredient?.name}}</td>
+            <td>{{detail?.ingredient?.category?.name}}</td>
+            <!--<td>{{detail?.preparationInitial}}</td>
+            <td>{{detail?.preparationIngredient}}</td>-->
+            <!--<td>{{detail?.unit?.code}}</td>-->
+            <td>{{detail?.net| number: '1.0-5' }}</td>
+
+            <td>{{detail?.brut | number: '1.0-5' }}</td>
+
+            <td>{{detail?.cout| number: '1.0-5' }}</td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div class="generating mt-5" >
+        <!--<h5 class="subhead">Préparation Ingrédient</h5>
+        <p>{{platsSelectione.preparationIngredient}}</p>-->
+        <p class="divider"></p>
+
+        <h5 class="subhead">Détail cuisine</h5>
+        <p>{{platsSelectione.detailCuisine}}</p>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
