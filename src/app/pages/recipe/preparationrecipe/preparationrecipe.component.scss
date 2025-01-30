@@ -1,0 +1,274 @@
+
+$orange:#FF7900;
+$Vert:#50BE87;
+$Jaune:#FFD200;
+$Rose:#FFB4E6;
+$Violet:#A885D8;
+$Bleu:#4BB4E6;
+$Noir:#000000;
+$Blanc:#ffffff;
+
+$color1:#c1853b;
+$color2:#cc1b1b;
+$color3:#2f0505;
+$color4:#85311b;
+$color5:#000000;
+
+$color6:#cf4020;
+$color7:#a4ecdc;
+$color8:#bc2c14;
+$color9:#9e675b;
+$color10:#94c9b2;
+$color11:#2d674d;
+
+$overBleu:#3b81f6;
+$newgray:#595959;
+
+$margintopValu:10px;
+$paddindValu:8px;
+$borderRadiusValu:8px;
+
+$color12:#a9d18d;
+
+.content{
+  //background-color: $Blanc;
+  border: 2px solid $color5;
+  padding: 5px;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 2rem;
+}
+
+
+.firstrow,.secaindrow{
+  border: 2px solid $color5;
+  padding: $paddindValu;
+}
+
+////
+.firstrow{
+  background-color: $color12;
+  .formpart>.colo>.grid{
+    padding: $paddindValu;
+    //margin-top: $margintopValu;
+
+    display: grid;
+    grid-template-rows: auto auto;
+  }
+  .formpart>.colo>.grid>.grid{
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    //gap: 1rem;
+    >*{
+      display: flex;
+      justify-content: center;
+      flex-grow: 0;
+      // flex-basis: content;
+    }
+
+    .plat{
+      //padding-left: 0;
+      p-dropdown{
+        width: -webkit-fill-available;
+      }
+    }
+
+    .detailPlat{
+      //width: 100%;
+      border-left: 8px solid $overBleu;
+      margin: auto;
+      display: grid !important;
+      grid-template-columns: 49% 49%;
+      gap: 2%;
+    }
+
+    .btn-generate{
+      //border-right: 5px solid $overBleu;
+    }
+
+
+  }
+}
+
+.detailscontenu{
+  border: 2px solid $color12;
+  border-radius: $borderRadiusValu;
+  padding: $paddindValu;
+  margin-top: $margintopValu;
+
+}
+
+.border-right-5{
+  border-right: 5px solid $overBleu;
+
+}
+p-divider	{
+  color: $overBleu;
+}
+.barhorizon{
+  color:  $overBleu;
+}
+
+//////
+.secaindrow{
+  .listIngredients{
+    font-size: 10px;
+    margin-top: $margintopValu;
+    margin-bottom:  $margintopValu;
+
+    .entetelist,.linebdy{
+      display: grid;
+      grid-template-columns: 15% 15% 15% 40% 15%;
+      .lbl{
+        word-wrap: break-word;
+      }
+    }
+
+    .linebdy{
+      border: 2px solid rgba(0, 0, 0, 0);
+      padding: $paddindValu;
+      color: $Noir !important;
+    }
+
+  }
+
+}
+
+
+
+
+
+
+// ///
+.head{
+  font-size: 1.3rem;
+  font-weight: bold;
+  width: 100%;
+  border: 2px solid $color5;
+  padding: 2%;
+}
+
+.mini-head{
+  font-weight: bold;
+  width: 100%;
+  border: 2px solid $color5;
+  padding: 5px;
+}
+
+
+
+
+.head-no-border{
+  font-size: 1.3rem;
+  font-weight: bold;
+  width: 100%;
+  padding: 2%;
+}
+.bighead{
+  font-size: 1.7rem;;
+}
+.head-center{
+  display: flex;
+  justify-content: center;
+}
+
+
+.divblue{
+  padding: $paddindValu;
+  border: 2px solid black;
+  color: $Blanc;
+  background-color: $overBleu;
+  border-radius: $borderRadiusValu;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+
+.divgray{
+  padding: $paddindValu;
+  border: 2px solid $Noir;
+  color: $Blanc;
+  background-color: $newgray;
+  border-radius: $borderRadiusValu;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+
+  label{
+    margin: auto;
+  }
+}
+
+
+
+.brdr-left{
+  border-left: 2px solid $Blanc;
+}
+
+.brdr-right{
+  border-right: 2px solid $Blanc;
+}
+
+.pdl{
+  padding-left: 5px;
+}
+.pdr{
+  padding-right: 5px;
+}
+
+//////
+///
+.loader{
+  position: absolute;
+  margin: auto;
+  display: flex;
+  width: -webkit-fill-available;
+  .card{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #3b80f660;
+    p-progressSpinner{
+      margin: auto;
+    }
+  }
+}
+
+.d-none{
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .formpart>.colo>.grid>.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px,1fr));
+
+    >*{
+      display: flex;
+      justify-content: center;
+      flex-grow: 0;
+      width: auto !important;
+      // flex-basis: content;
+    }
+
+    .plat{
+      padding-left: 0;
+      p-dropdown{
+        width: -webkit-fill-available;
+      }
+    }
+
+    .detailPlat{
+      //width: 360px !important;
+      border-left: 8px solid $overBleu;
+      margin: auto;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(150px,1fr)) !important;
+      //grid-template-columns: 49% 49%;
+      gap: 2%;
+    }
+
+  }
+}
+
