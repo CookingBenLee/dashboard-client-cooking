@@ -20,6 +20,8 @@ export class LoginGuard implements CanActivate {
     
     // Si un token existe, l'utilisateur peut accéder à la route
     if (token==null) {
+      localStorage.clear();
+      this.tokenService.signOut();
       return true;
     }
 

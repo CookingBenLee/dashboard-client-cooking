@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { OverlayPanel } from 'primeng/overlaypanel';
+import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { Product } from 'src/app/entity/Product';
 import { Category } from 'src/app/services/category/Category';
 import { CategoryRecipe } from 'src/app/services/categoryrecipe/CategoryRecipe';
@@ -18,13 +18,100 @@ import { TableShortService } from 'src/app/services/tableShort/table-short.servi
 import { Unit } from 'src/app/services/unit/Unit';
 import { UnitService } from 'src/app/services/unit/unit.service';
 
+// prime
+import { PanelModule } from 'primeng/panel';
+import { InputTextModule } from 'primeng/inputtext';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { CardModule } from 'primeng/card';
+import { PasswordModule } from 'primeng/password';
+import { SidebarModule } from 'primeng/sidebar';
+import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TabViewModule } from 'primeng/tabview';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { SliderModule } from 'primeng/slider';
+import { RatingModule } from 'primeng/rating';
+import { ListboxModule } from 'primeng/listbox';
+import { CalendarModule } from 'primeng/calendar';
+import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { EditorModule } from 'primeng/editor';
+import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
+import { TokenService } from 'src/app/services/token/token.service';
+import { CountryService } from 'src/app/services/country/country.service';
+import { PaginatorModule } from 'primeng/paginator';
+import { MaterialModule } from 'src/app/material.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { FieldsetModule } from 'primeng/fieldset';
+import { TreeModule } from 'primeng/tree';
+import { AccordionModule } from 'primeng/accordion';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { ChipModule } from 'primeng/chip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { FileUploadModule } from 'primeng/fileupload';
+import { RippleModule } from 'primeng/ripple';
+
 @Component({
   selector: 'app-detailrecipe',
   standalone: true,
-  imports: [CommonModule],
-  providers: [ConfirmationService, MessageService,DialogService],
+   imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,
+      RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
+      TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule,
+    //prime module
+    InputTextModule,
+    TreeSelectModule,
+    DropdownModule,
+    CardModule,
+    PasswordModule,
+    PanelModule,
+    SidebarModule,
+    CheckboxModule,
+    TabViewModule,
+    ConfirmDialogModule,
+    ToastModule,
+    InputNumberModule,
+    InputTextareaModule,
+    TableModule,
+		RatingModule,
+		ButtonModule,
+		SliderModule,
+		InputTextModule,
+		ToggleButtonModule,
+		RippleModule,
+		MultiSelectModule,
+		DropdownModule,
+		ProgressBarModule,
+    DialogModule,
+    OverlayPanelModule,
+    EditorModule,
+    ListboxModule,
+    CalendarModule,
+    DynamicDialogModule,
+    DividerModule,
+    FieldsetModule,
+    TreeModule,
+    AccordionModule,
+    PanelMenuModule,
+    ChipModule,
+    ProgressSpinnerModule,
+    SplitButtonModule,
+    FileUploadModule,
+    PaginatorModule],
+      providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './detailrecipe.component.html',
-  styleUrl: './detailrecipe.component.scss'
+  styleUrls: ['./detailrecipe.component.scss','../../recipe/recipe.component.scss']
 })
 export class DetailrecipeComponent {
   resClient:any

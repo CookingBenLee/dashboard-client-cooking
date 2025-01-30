@@ -1,1 +1,391 @@
-<p>modalrecipe works!</p>
+
+<div class="">
+    <form class="grid newform " #f="ngForm" (ngSubmit)="update()">
+  
+  
+        <div class="col-12 card p-fluid">
+          <!--<h5>Ajouter un nouveau plat</h5>-->
+  
+          <div class="grid p-1  entete bg-primary m-auto">
+  
+            <!--<div class="field col-2">
+              <label htmlFor="code">Nom du plat</label>
+              <input pInputText id="code" [(ngModel)]="dishe.code" name="code" type="text" placeholder="Code du plat" required/>
+            </div>-->
+  
+            <div class="field col-5">
+              <!--<label htmlFor="name">Nom de la recette</label>-->
+              <input pInputText id="name" [(ngModel)]="recipe.name" name="name" type="text" placeholder="Nom du plat" required/>
+            </div>
+  
+              <div class="field col-2">
+                <!--<label htmlFor="ratio">Ratio</label>-->
+                <p-inputNumber mode="decimal" [minFractionDigits]="2" name="ratio" id="ratio" [(ngModel)]="recipe.ratio" [showButtons]="true" [min]="0" ></p-inputNumber>
+              </div>
+  
+            <!--<div class="field col-5 grid">
+              <label htmlFor="category" style="justify-content: end;"  class="col-3">Categorie: </label>
+              <p-dropdown class="col" [options]="categoryRecipes" optionLabel="name"  name="category" [(ngModel)]="categorySelected" (onChange)="changeCategory()" >
+                <ng-template let-category pTemplate="item">
+                  <div class="flex align-items-center operatingSystems-item">
+                    <div> {{category.name}}({{category?.code}})</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>-->
+  
+  
+  
+  
+  
+            <!--<div class="col">
+              <div class="field">
+                <label htmlFor="quantite">Quantite</label>
+                <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="dishe.quantite" [showButtons]="true" [min]="0" ></p-inputNumber>
+              </div>
+            </div>-->
+  
+  
+            <!--<div class="field col-2">
+              <label htmlFor="unit">Unite</label>
+              <p-dropdown [options]="units" optionLabel="name"  name="unit" [(ngModel)]="unit" >
+                <ng-template let-unit pTemplate="item">
+                  <div class="flex align-items-center operatingSystems-item">
+                    <div> {{unit?.name}}({{unit?.code}})</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+  
+  
+            <div class="col-3">
+              <div class="field">
+                <label htmlFor="cout">Cout</label>
+                <p-inputNumber mode="decimal" [minFractionDigits]="2" name="cout" id="cout" [(ngModel)]="dishe.cout" [showButtons]="true" [min]="0" ></p-inputNumber>
+              </div>
+            </div>-->
+  
+            <!--<div class="grid col-12">
+              <div class="col-6">
+  
+                <div class=" row">
+                  <div class="field">
+                    <label htmlFor="preparationIngredient">Preparation ingredient</label>
+                    <textarea rows="4" cols="30" name="preparationIgredient" pInputTextarea [(ngModel)]="dishe.preparationIngredient"></textarea>
+                  </div>
+                </div>
+  
+                <div class=" row" >
+                  <div class="field" >
+                    <label htmlFor="detailCuisine">Detail cuisine</label>
+                    <textarea rows="4" cols="30" name="detailCuisine" pInputTextarea [(ngModel)]="dishe.detailCuisine"></textarea>
+                  </div>
+                </div>
+  
+              </div>
+  
+  
+              <div class="col-6">
+                <div class="grid row">
+  
+  
+                  <-<div class="col">
+                    <div class="field">
+                      <label htmlFor="brut">Brut</label>
+                      <p-inputNumber mode="decimal" [minFractionDigits]="2" name="brut" id="brut" [(ngModel)]="dishe.brut" [showButtons]="true" [min]="0" ></p-inputNumber>
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <div class="grid row">
+                  <div class="col">
+                    <div class="field">
+                      <label htmlFor="net">Net</label>
+                      <p-inputNumber mode="decimal" [minFractionDigits]="2" name="net" id="net" [(ngModel)]="dishe.net" [showButtons]="true" [min]="0" ></p-inputNumber>
+                    </div>
+                  </div>
+  
+  
+  
+                  <div class="col">
+                    <div class="field">
+                      <label htmlFor="poids">Poids</label>
+                      <p-inputNumber mode="decimal" [minFractionDigits]="2" name="poids" id="poids" [(ngModel)]="dishe.poids" [showButtons]="true" [min]="0" ></p-inputNumber>
+                    </div>
+                  </div>->
+  
+                </div>
+  
+                <-<div class="grid row">
+                  <div class="col">
+                    <div class="field">
+                      <label htmlFor="preparationInitial">Preparation Initial</label>
+                      <p-inputNumber mode="decimal" [minFractionDigits]="2" name="preparationInitial" id="preparationInitial" [(ngModel)]="dishe.preparationInitial" [showButtons]="true" [min]="0" ></p-inputNumber>
+                    </div>
+                  </div>
+                </div>>
+              </div>
+  
+            </div>-->
+  
+        </div>
+      <!--<p class="divider mt-4" ></p>
+      <p class="divider"></p>-->
+  
+      <!--Partit produit-->
+      <div class="mb-2 mt-1">
+        <div class="flex-1 mb-2">
+          <h5>List des  Details de la recette</h5>
+          <button pButton label="Ajouter un ingrédient" type="button" [loading]="loading" class="p-button-newline mt-2" (click)="showAddDetailDishesForm()" ></button>
+        </div>
+  
+        <!--Formulaire d'ajout-->
+        <h3 *ngIf="showAddDetailsRecipe">Saisie nouvel detail de la recette </h3>
+        <div  *ngIf="showAddDetailsRecipe" class="cardnew mt-5">
+          <form class="p-fluid  ">
+            <div class="grid">
+              <div class="col-3">
+                <div class="field ">
+                  <label htmlFor="product{{detailRecipeProvisoire2.length-1}}">Produit</label>
+                  <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
+                  <p-dropdown [options]="products"  optionLabel="name" name="product{{detailRecipeProvisoire2.length-1}}" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].ingredient" >
+                    <ng-template let-product pFilter="product.category.name" pTemplate="item" >
+                      <div class="flex align-items-center operatingSystems-item">
+                        <div>{{product.name}} ({{product?.category?.name}} / {{product?.conditioning?.name}})</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+              </div>
+  
+              <div class="col-2">
+                <div class="field">
+                  <label htmlFor="quantity{{detailRecipeProvisoire2.length-1}}">Proportion %</label>
+                  <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantity{{detailRecipeProvisoire2.length-1}}" id="quantity{i}" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].proportion"  (ngModelChange)="changeDetailQuantite(detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].proportion,detailRecipeProvisoire2.length-1,true)" [showButtons]="true" [min]="0" ></p-inputNumber>
+                </div>
+              </div>
+  
+              <div class="col-5">
+                <div class="field">
+                  <label htmlFor="preparationIngredient">Preparation ingredient</label>
+                  <textarea rows="1" cols="30"  [autoResize]="true" name="preparationIgredient" pInputTextarea [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].preparationIngredient"></textarea>
+                </div>
+              </div>
+  
+  
+              <div class="col-1 al-btn">
+                <button pButton  pRipple icon="pi pi-check" [disabled]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].proportion <= 0"  type="button"   class="col p-button-saved p-button p-component" (click)="firstSaveForDetail(detailRecipeProvisoire2[detailRecipeProvisoire2.length-1])"></button>
+              </div>
+  
+            <div class="col-1 al-btn">
+              <button pButton pRipple icon="pi pi-times" type="reset"   class="col p-button-annuler p-button p-component " (click)="RemoveLastDetail()"></button>
+            </div>
+  
+  
+              <!--<div class="col-3">
+                <div class="field">
+                  <label htmlFor="poids">Poids</label>
+                  <p-inputNumber mode="decimal" [minFractionDigits]="2" name="poids" id="poids" [showButtons]="true" [min]="0" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].poids" (ngModelChange)="changeDetailPoids()"></p-inputNumber>
+                </div>
+              </div>
+  
+  
+              <div class="field col-2">
+                <label htmlFor="unit">Unite</label>
+                <p-dropdown [options]="units" optionLabel="name"  name="unit" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].unit"  >
+                  <ng-template let-unit pTemplate="item">
+                    <div class="flex align-items-center operatingSystems-item">
+                      <div> {{unit?.name}}({{unit?.code}})</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+  
+              <div class="col-3">
+                <div class="field">
+                  <label htmlFor="cout">Cout</label>
+                  <p-inputNumber mode="decimal" [minFractionDigits]="2" name="cout" id="cout" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].cout" [showButtons]="true" [min]="0" (ngModelChange)="changeDetailCout()"></p-inputNumber>
+                </div>
+              </div>-->
+  
+  
+              <!--<div class="grid col-12">
+  
+  
+                <div class="grid col-6">
+                  <div class="col row">
+                    <div class="col">
+                      <div class="field">
+                        <label htmlFor="brut">Brut</label>
+                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="brut" id="brut" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].brut" [showButtons]="true" [min]="0" (ngModelChange)="changeDetailBrut()" ></p-inputNumber>
+                      </div>
+                    </div>
+  
+  
+                    <div class="col">
+                      <div class="field">
+                        <label htmlFor="net">Net</label>
+                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="net" id="net" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].net" [showButtons]="true" [min]="0" (ngModelChange)="changeDetailNet()"></p-inputNumber>
+                      </div>
+                    </div>
+  
+  
+                  </div
+  
+                  <div class="col row">
+  
+  
+                    -<div class="col">
+                      <div class="field">
+                        <label htmlFor="preparationInitial">Preparation Initial</label>
+                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="preparationInitial" id="preparationInitial" [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].preparationInitial" (ngModelChange)="changeDetailPrepaInit()" [showButtons]="true" [min]="0" ></p-inputNumber>
+                      </div>
+                    </div>-
+  
+                  </div>
+                </div>
+              </div>-->
+  
+  
+  
+              <!--<div class="col-3">
+                <div class="field">
+                  <label htmlFor="quantite">Quantite</label>
+                  <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="detailDishesProvisoire[detailDishesProvisoire.length-1].quantite" [showButtons]="true" [min]="0" ></p-inputNumber>
+                </div>
+              </div>-->
+            </div>
+  
+          </form>
+          <!---->
+          <div class="ml-auto btnspart  grid mt-3">
+            <!--<button pButton label="Produit non existant" pRipple type="button"   class="col p-button p-button-nouveau p-component" (click)="showProductAddForm()"></button>
+            <button pButton  pRipple label="Enregistrer la saisie de ce produit" [disabled]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].quantite <= 0"  type="button"   class="col p-button-saved p-button p-component mr-7 mr-2" (click)="firstSaveForDetail(detailRecipeProvisoire2[detailRecipeProvisoire2.length-1])"></button>
+            <button pButton pRipple label="Annuler la saisie de ce produit" type="reset"   class="col p-button-annuler p-button p-component " (click)="RemoveLastDetail()"></button>-->
+          </div>
+        </div>
+  
+        <!-- List of created product-->
+        <div class="ListProduct">
+          <p *ngIf="detailRecipe2.length==0">Aucun detail  de la recette pour l'instant! Veuillez remplir le formulaire pour ajouter un detail.</p>
+  
+          <div class="divtableau">
+            <table *ngIf="detailRecipe2.length!=0">
+              <thead>
+                <!--<th>Catégory</th>-->
+  
+                <th>Produit </th>
+                <th>Proportion %</th>
+  
+                <!--<th>Preparation Initial</th>-->
+                <th>Preparation Ingredient</th>
+                <!--<th>Poids</th>
+                <th>Unité</th>
+                <th>Brut</th>
+                <th>Net</th>
+  
+                <th>Cout</th>-->
+  
+                <th></th>
+  
+              </thead>
+              <tr *ngFor="let detail of detailRecipe2,let i=index">
+                <!--<td>{{detail?.ingredient?.category?.name}}</td>-->
+  
+                <td>{{detail?.ingredient?.name}}</td>
+  
+                <td>{{detail?.proportion}}</td>
+  
+                <!--<td>{{detail?.preparationInitial}}</td>-->
+                <td>{{detail?.preparationIngredient}}</td>
+                <!--<td>{{detail?.poids}}</td>
+                <td>{{detail?.unit?.code}}</td>
+  
+                <td>{{detail?.brut}}</td>
+                <td>{{detail?.net}}</td>
+  
+                <td>{{detail?.cout}}</td>-->
+  
+                <td>
+                  <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetailEdit(detail,i)"></button>
+                </td>
+  
+              </tr>
+              <td>Total Proportion</td>
+          <td>{{totalProportion | number: '1.0-3'}}</td>
+  
+            </table>
+          </div>
+        </div>
+  
+  
+  
+  
+      </div>
+  
+      <p class="divider mt-4" ></p>
+      <!--<p class="divider"></p>-->
+      <div class="grid p-2 entete bg-primary">
+  
+        <div class="field  col-12">
+  
+        <!--<div class=" row">
+          <div class="field">
+            <label htmlFor="preparationIngredient">Preparation ingredient</label>
+            <textarea rows="4" cols="30" name="preparationIgredient" pInputTextarea [(ngModel)]="dishe.preparationIngredient"></textarea>
+          </div>
+        </div>-->
+  
+          <div class="field" >
+            <label htmlFor="detailCuisine">Detail cuisine</label>
+            <textarea rows="1" cols="30" [autoResize]="true" name="detailCuisine" pInputTextarea [(ngModel)]="recipe.detailCuisine"></textarea>
+          </div>
+        </div>
+  
+      </div>
+  
+  
+  
+        <label id="erreur" *ngIf="isError">{{erreur}}</label>
+        <label id="success" *ngIf="isSuccess">{{sucess}}</label>
+  
+  
+        <p class="divider-b"></p>
+  
+        <button pButton label="Modifier la recette" type="submit" [loading]="loading" class="p-button-saved" [disabled]="!f.valid " ></button>
+  
+      </div>
+    </form>
+  
+  </div>
+  
+  
+  
+  <p-toast position="top-center" key="tc"></p-toast>
+  <p-toast key="product"></p-toast>
+  
+  <p-toast></p-toast>
+  <p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+  <!--pour la modification d'une purchase-->
+  <p-dialog *ngIf="isEditRecipeDialogVisible" header="Mise à jour de la Approvisionnement reference {{recipeClicked.code}}" [(visible)]="isEditRecipeDialogVisible"  [style]="{ width: '50vw' }">
+  <form  #fUpdate="ngForm" (ngSubmit)="update()">
+  <div class="card p-fluid">
+    <h5>Mettre à jour</h5>
+  
+  
+  
+    <label id="erreur" *ngIf="isErrorEdit">{{erreurEdit}}</label>
+    <label id="success" *ngIf="isSuccessEdit">{{sucessEdit}}</label>
+  
+  
+    <button pButton type="submit" label="Modifier" class="p-button-orange" [loading]="loading" [disabled]="!fUpdate.valid" ></button>
+  
+  </div>
+  
+  </form>
+  
+  </p-dialog>
+  <!---->
+  
+  

@@ -1,114 +1,114 @@
 
 <div class="">
-    <form class="grid newform " >
-  
-  
-        <div class="col-12 card p-fluid">
-          <!--<h5>Ajouter un nouveau plat</h5>-->
-  
-          <div class="grid p-1  entete bg-primary m-auto">
-  
-            <div class="field col-6">
-              <!--<label htmlFor="name">Nom de la recette</label>-->
-              <p>Nom: {{recipe.name}}</p>
-            </div>
-  
-            <div class="field col-2">
-              <!--<label htmlFor="category">Ratio</label>-->
-              <p>Ratio: {{recipe.ratio}}</p>
-            </div>
-  
-            <!--<div class="col-4">
-              <p> <label htmlFor="category">Categorie :</label> {{recipe.categoryRecipe.name}}({{recipe.categoryRecipe.code}})</p>
-            </div>-->
-  
-        </div>
-        <p class="divider mt-4" ></p>
-          <!--<p class="divider"></p>>-->
-  
-      <!--Partit produit-->
-      <div class="mb-2 mt-1">
-        <div class="flex-1 mb-2">
-          <h5>List des  Details de la recette</h5>
-        </div>
-  
-        <!-- List of created product-->
-        <div class="ListProduct">
-          <p *ngIf="detailRecipe2.length==0">Aucun detail  de la recette pour l'instant! Veuillez remplir le formulaire pour ajouter un detail.</p>
-  
-          <div class="divtableau">
-            <table *ngIf="detailRecipe2.length!=0">
-              <thead>
-                <!--<th>Catégory</th>-->
-  
-                <th>Produit </th>
-                <th>Proportion %</th>
-  
-                <!--<th>Preparation Initial</th>-->
-                <th>Preparation Ingredient</th>
-                <!--<th>Poids</th>
-                <th>Unité</th>
-                <th>Brut</th>
-                <th>Net</th>
-  
-                <th>Cout</th>
-  
-                <th></th>-->
-  
-              </thead>
-              <tr *ngFor="let detail of detailRecipe2,let i=index">
-                <!--<td>{{detail?.ingredient?.category?.name}}</td>-->
-  
-                <td>{{detail?.ingredient?.name}}</td>
-  
-                <td>{{detail?.proportion}}</td>
-  
-                <!--<td>{{detail?.preparationInitial}}</td>-->
-                <td>{{detail?.preparationIngredient}}</td>
-                <!--<td>{{detail?.poids}}</td>
-                <td>{{detail?.unit?.code}}</td>
-  
-                <td>{{detail?.brut}}</td>
-                <td>{{detail?.net}}</td>
-  
-                <td>{{detail?.cout}}</td>
-  
-                <td>
-                  <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetailEdit(detail,i)"></button>
-                </td>-->
-  
-              </tr>
-              <td>Total Proportion</td>
-              <td>{{totalProportion }}</td>
-  
-  
-            </table>
+  <form class="grid newform " #f="ngForm">
+
+
+      <div class="col-12 card p-fluid">
+        <!--<h5>Ajouter un nouveau plat</h5>-->
+
+        <div class="grid p-1  entete bg-primary m-auto">
+
+          <div class="field col-6">
+            <!--<label htmlFor="name">Nom de la recette</label>-->
+            <p>Nom: {{recipe.name}}</p>
           </div>
-        </div>
+
+          <div class="field col-2">
+            <!--<label htmlFor="category">Ratio</label>-->
+            <p>Pourcentage de perte: {{ recipe.ratio | number:'1.2-2' }}
+            </p>
+          </div>
+
+          <!--<div class="col-4">
+            <p> <label htmlFor="category">Categorie :</label> {{recipe.categoryRecipe.name}}({{recipe.categoryRecipe.code}})</p>
+          </div>-->
+
       </div>
-  
       <p class="divider mt-4" ></p>
-      <p class="divider"></p>
-      <div class="grid p-2 entete bg-primary">
-        <div class="field  col-12">
-          <div class="field" >
-            <label htmlFor="detailCuisine">Detail cuisine</label>
-            <p>{{recipe.detailCuisine}}</p>
-          </div>
+        <!--<p class="divider"></p>>-->
+
+    <!--Partit produit-->
+    <div class="mb-2 mt-1">
+      <div class="flex-1 mb-2">
+        <h5>List des  Details de la recette</h5>
+      </div>
+
+      <!-- List of created product-->
+      <div class="ListProduct">
+        <p *ngIf="detailRecipe2.length==0">Aucun detail  de la recette pour l'instant! Veuillez remplir le formulaire pour ajouter un detail.</p>
+
+        <div class="divtableau">
+          <table *ngIf="detailRecipe2.length!=0">
+            <thead>
+              <!--<th>Catégory</th>-->
+
+              <th>Produit </th>
+              <th>Proportion %</th>
+
+              <!--<th>Preparation Initial</th>-->
+              <th>Preparation Ingredient</th>
+              <!--<th>Poids</th>
+              <th>Unité</th>
+              <th>Brut</th>
+              <th>Net</th>
+
+              <th>Cout</th>
+
+              <th></th>-->
+
+            </thead>
+            <tr *ngFor="let detail of detailRecipe2,let i=index">
+              <!--<td>{{detail?.ingredient?.category?.name}}</td>-->
+
+              <td>{{detail?.ingredient?.name}}</td>
+
+              <td>{{detail?.proportion}}</td>
+
+              <!--<td>{{detail?.preparationInitial}}</td>-->
+              <td>{{detail?.preparationIngredient}}</td>
+              <!--<td>{{detail?.poids}}</td>
+              <td>{{detail?.unit?.code}}</td>
+
+              <td>{{detail?.brut}}</td>
+              <td>{{detail?.net}}</td>
+
+              <td>{{detail?.cout}}</td>
+
+              <td>
+                <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetailEdit(detail,i)"></button>
+              </td>-->
+
+            </tr>
+            <td>Total Proportion</td>
+            <td>{{totalProportion | number: '1.0-3'}}</td>
+
+
+          </table>
         </div>
       </div>
-  
-      <div class="field m-auto mt-2">
-        <button pButton pRipple type="button" label="Modifier la recette" icon="pi pi-pencil" class="p-button p-component p-button-vert" (click)="show($event,recipe)"></button>
+    </div>
+
+    <p class="divider mt-4" ></p>
+    <p class="divider"></p>
+    <div class="grid p-2 entete bg-primary">
+      <div class="field  col-12">
+        <div class="field" >
+          <label htmlFor="detailCuisine">Detail cuisine</label>
+          <p>{{recipe.detailCuisine}}</p>
+        </div>
       </div>
-  
-      </div>
-  
-  
-    </form>
-  
-  </div>
-  
-  
-  
-  
+    </div>
+
+    <div class="field m-auto mt-2">
+      <button pButton pRipple type="button" label="Modifier la recette" icon="pi pi-pencil" class="p-button p-component p-button-vert" (click)="show($event,recipe)"></button>
+    </div>
+
+    </div>
+
+
+  </form>
+
+</div>
+
+
+
