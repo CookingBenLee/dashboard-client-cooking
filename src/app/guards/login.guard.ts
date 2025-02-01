@@ -19,14 +19,14 @@ export class LoginGuard implements CanActivate {
     console.log(token);
     
     // Si un token existe, l'utilisateur peut accéder à la route
-    if (token==null) {
-      localStorage.clear();
-      this.tokenService.signOut();
-      return true;
+    if (token) {
+      this.router.navigate(['/home']);
+      return false;
     }
 
     // Sinon, rediriger l'utilisateur vers la page de login
-    this.router.navigate(['/home']);
-    return false;
+    localStorage.clear();
+    this.tokenService.signOut();
+    return true;
   }
 }

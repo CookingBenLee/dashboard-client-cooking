@@ -138,7 +138,7 @@ detailPurchasesForms2:any=[]
  reference:string
  quantity:number
  montant:any=0
- datePurchase:Date
+ datePurchase:Date=new Date()
 
  shop:Shop=new Shop()
  shops:Shop[]=[]
@@ -189,19 +189,19 @@ detailPurchasesForms2:any=[]
    private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService) {}
    
    utilisateurC: any;
-countryss: any[] = []; // Ensure this is initialized as an array
-selectedCountry: any; // To store the retrieved country
+  countryss: any[] = []; // Ensure this is initialized as an array
+  selectedCountry: any; // To store the retrieved country
 
 
  async ngOnInit(): Promise<void> {
 
-  this.route.queryParams.subscribe(params => {
+  /*this.route.queryParams.subscribe(params => {
     if (params['activeTab'] === 'new') {
         this.activeIndex = 1; 
     } else {
         this.activeIndex = 0; 
     }
-});
+});*/
 
   this.utilisateurC =this.tokenService.getUser();
   this.usercurrency = this.utilisateurC.compteUser.address.country.currency

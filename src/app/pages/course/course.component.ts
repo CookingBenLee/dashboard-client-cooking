@@ -259,12 +259,13 @@ selectedCountry: any; // To store the retrieved country
 
  dialogAdd(){
   this.ref = this.dialogService.open(CreateCourseComponent, {
+    focusOnShow: false,
     header: "Enregistrement d'une course ",
     width: '90%',
     // contentStyle: { overflow: 'auto' },
     // baseZIndex: 10000,
     maximizable: true,
-});
+  });
  
  }
 

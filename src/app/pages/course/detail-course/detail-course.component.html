@@ -12,12 +12,12 @@
   
           <div class="field col-2">
             <label htmlFor="datePurchase">Date </label>
-            <p-calendar [disabled]="true" [(ngModel)]="data.datePurchase" name="datePurchase" id="datePurchase" ></p-calendar>
+            <p-calendar [disabled]="true" [(ngModel)]="data.datePurchase" name="datePurchase" id="datePurchase" dateFormat="dd-mm-yy"  ></p-calendar>
           </div>
   
           <div class="field col-5">
             <label htmlFor="shop">Fournisseur</label>
-            <p-dropdown [options]="shops" [disabled]="true" optionLabel="name" name="shop" [(ngModel)]="shop"  >
+            <p-dropdown [options]="shops" [disabled]="true" optionLabel="name" [(ngModel)]="shop"  name="shop1"  >
               <ng-template let-shop pTemplate="item">
                 <div class="flex align-items-center operatingSystems-item">
                   <div class="flex align-items-center operatingSystems-item">
