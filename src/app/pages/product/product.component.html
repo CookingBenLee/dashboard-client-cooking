@@ -24,7 +24,7 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product">
-            {{ product.product.name }}
+            {{ product?.product?.name }}
           </td>
         </ng-container>
         <ng-container matColumnDef="category">
@@ -32,7 +32,7 @@
             Categorie
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.product.category?.name }}
+            {{ product?.product?.category?.name }}
           </td>
         </ng-container>
 
@@ -41,7 +41,7 @@
             Stock
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product.quantity }} {{ product.product.unit.code }}
+            {{ product?.quantity }} {{ product?.product?.unit?.code }}
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
@@ -49,9 +49,9 @@
             Action
           </th>
           <td mat-cell *matCellDef="let product" class="action-link">
-            <a (click)="openDialogEdit(product.product)" class="m-r-10 cursor-pointer"><i-tabler name="edit"
+            <a (click)="openDialogEdit(product?.product)" class="m-r-10 cursor-pointer"><i-tabler name="edit"
                 class="icon-18"></i-tabler></a>
-            <a (click)="deleteProduct(product.product)" class="m-r-10 cursor-pointer">
+            <a (click)="deleteProduct(product?.product)" class="m-r-10 cursor-pointer">
               <i-tabler name="trash" class="icon-18"></i-tabler>
             </a>
           </td>
@@ -92,7 +92,7 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-select id="unit" [(ngModel)]="productData.unit" name="unit" required>
               <mat-option *ngFor="let unit of units" [value]="unit">
-                {{ unit.name }}
+                {{ unit?.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -102,7 +102,7 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-select id="category" [(ngModel)]="productData.category" name="category" required>
               <mat-option *ngFor="let category of categorys" [value]="category">
-                {{ category.name }}
+                {{ category?.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -113,7 +113,7 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-select id="conditioning" [(ngModel)]="productData.conditioning" name="conditioning" required>
               <mat-option *ngFor="let conditioning of conditionings" [value]="conditioning">
-                {{ conditioning.name }}
+                {{ conditioning?.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
