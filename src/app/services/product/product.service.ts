@@ -33,6 +33,15 @@ export class ProductService {
         .then(res => res.data as Product[])
         .then(data => data);
   }
+
+
+  getByCode(nom: string) {
+    return this.http.get<any>(`${this.env.apiUrl}/product/loadbyname/${nom}`)
+        .toPromise()
+        .then(res => res.data as Product[])
+        .then(data => data);
+  }
+
   getAllPage(param:any) {
     return this.http.get<any>(`${this.env.apiUrl}/product/getallpage?page=`+param['page']+'&size='+param['size'])
         .toPromise()

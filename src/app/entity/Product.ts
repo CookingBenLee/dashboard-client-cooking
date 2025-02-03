@@ -8,7 +8,7 @@ import { Currency } from "../services/currency/Currency";
 
 export class Product{
   id?:number
-  code?:string;
+  code:string;
   name:string;
   price?:number;
   lossPercentage?:number;

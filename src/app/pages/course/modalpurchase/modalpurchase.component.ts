@@ -64,6 +64,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
+import { CreateProductComponent } from '../../create-product/create-product.component';
 
 
 @Component({
@@ -84,8 +85,6 @@ export class ModalpurchaseComponent {
   data:Purchase;
   //detailpurchases:DetailsPurchasing[]=[]
 
-  ref: DynamicDialogRef | undefined;
-
   shops:Shop[]=[]
   addresss:Address[]=[]
   categorys:Category[]=[]
@@ -100,7 +99,7 @@ export class ModalpurchaseComponent {
   erreur:string
   sucess:string
   loading: boolean = false;
-  // ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | undefined;
   showAddProduct=false
 
   price:Price;
@@ -157,6 +156,25 @@ detailPurchasesForms2:any=[]
 
   }
 
+  openDialogAdd() {
+    this.ref = this.dialogService.open(CreateProductComponent, {
+        header: "Ajout d'un produit non existant",
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+    });
+    this.ref.onClose.subscribe((retour: any) => {
+      if (retour=="ok") {
+          this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
+          this.getProducts()
+      }else{
+        this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+  
+      }
+  });
+    
+  }
 
    //recuperation de valeurs
    getAll(id:any){
@@ -497,6 +515,7 @@ detailPurchasesForms2:any=[]
       this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée"});
 
       await this.saveAllDetail(data.data)
+      this.ref?.close;
 
     },
     (error: any)=>{
