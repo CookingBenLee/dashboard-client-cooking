@@ -78,7 +78,7 @@
               <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>
               <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
               <p-dropdown [filter]="true" filterBy="name" [options]="products" optionLabel="name"
-                name="product{{detailPurchasesForms.length-1}}"
+                name="product{{detailPurchasesForms.length-1}}" (onFocus)="getProducts()"
                 [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product"
                 (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
                 <ng-template let-product pFilter="product.category.name" pTemplate="item">
@@ -162,7 +162,7 @@
       </form>
        <!---->
        <div class="ml-auto btnspart  grid mt-3">
-         <button pButton label="Produit non existant" pRipple type="button"   class="col p-button p-button-nouveau p-component" (click)="showProductAddForm()"></button>
+         <button pButton label="Produit non existant" pRipple type="button"   class="col p-button p-button-nouveau p-component" (click)="openDialogAdd()"></button>
          <button pButton  pRipple label="Ajouter"  type="button"  [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice <= 0"  class="col p-button-saved p-button p-component ml-7 mr-2" (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])"></button>
          <button pButton pRipple label="Annuler la saisie de ce produit" type="reset"   class="col p-button-annuler p-button p-component " (click)="showAddProductForm()"></button>
        </div>

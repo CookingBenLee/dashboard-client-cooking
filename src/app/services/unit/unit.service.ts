@@ -25,6 +25,16 @@ export class UnitService {
         .then(res => res.data as Unit[])
         .then(data => data);
   }
+
+
+  getAllUnitsProducts() {
+    return this.http.get<any>(`${this.env.apiUrl}unit/getforproduct`)
+        .toPromise()
+        .then(res => res.data as Unit[])
+        .then(data => data);
+  }
+
+
   getAllUnitsPage(param:any) {
     return this.http.get<any>(`${this.env.apiUrl}/unit/getallpage?page=`+param['page']+'&size='+param['size'])
         .toPromise()

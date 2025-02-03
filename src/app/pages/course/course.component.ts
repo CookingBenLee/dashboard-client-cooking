@@ -69,6 +69,7 @@ import { CreateCourseComponent } from '../create-course/create-course.component'
 import { DetailCourseComponent } from './detail-course/detail-course.component';
 import { Brand } from 'src/app/services/brand/Brand';
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
+import { CreateProductComponent } from '../create-product/create-product.component';
 
 @Component({
   selector: 'app-course',
@@ -90,7 +91,7 @@ export class CourseComponent implements OnInit {
  // detailsPurchases:DetailsPurchasing[]=[]
 
  //pagination attributs
- rows=4
+ rows=10
  totalRows=0
  page=0;
  count=0;
@@ -579,6 +580,9 @@ retrieveCountryById(): void {
   
 }
 
+
+
+
  show(e:any,purchase:Purchase) {
   //this.purchaseSelected=purchase
   var p={...purchase}
@@ -591,13 +595,13 @@ retrieveCountryById(): void {
        maximizable: true,
        data:p,
    });
-   // this.op.toggle(e)
+   this.op.toggle(e)
 
-     // this.ref.onClose.subscribe((shop: Shop) => {
-     //     if (shop) {
-     //         this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
-     //     }
-     // });
+     this.ref.onClose.subscribe((shop: Shop) => {
+         if (shop) {
+             this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
+         }
+     });
 
      // this.ref.onMaximize.subscribe((value) => {
      //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
