@@ -40,6 +40,8 @@ import { ModalproductComponent } from './modalproduct/modalproduct.component';
 import { CurrencyService } from 'src/app/services/currency/currency.service';
 import { Currency } from 'src/app/services/currency/Currency';
 import { Router } from '@angular/router';
+import { Stock } from 'src/app/services/stock/Stock';
+import { StockService } from 'src/app/services/stock/stock.service';
 
 @Component({
   selector: 'app-product',
@@ -126,7 +128,7 @@ export class ProductComponent implements OnInit {
   //  Object.create(null);
 
   constructor(
-    public dialog: MatDialog,private currencyService:CurrencyService,
+    public dialog: MatDialog,private currencyService:CurrencyService,private stockSerevice: StockService,
     private brandService:BrandService,private conditioningService:ConditioningService,private unitService:UnitService,private categoryService:CategoryService,
     private productService:ProductService ,private paginateService:PaginateService,private snackBar: MatSnackBar,
     private tokenService: TokenService,private dialogService:DialogService,
@@ -149,9 +151,9 @@ export class ProductComponent implements OnInit {
     this.productService.getActivePage(params, user.id).then(data =>{
       console.log(data)
       //this.menus=data
-      console.log(data)
+      // console.log(data)
       //this.infos=data
-      console.log(data)
+      // console.log(data)
       //this.contenus=data
 
       this.totalPages=data.totalPages
@@ -302,7 +304,7 @@ export class ProductComponent implements OnInit {
   }
 
 
-  deleteProduct(product: Product): void {
+  deleteProduct(product: any): void {
     this.productClicked = product;
 
     this.dialog.open(this.dialogTemplateDelete, {
@@ -312,31 +314,48 @@ export class ProductComponent implements OnInit {
 
 
   confirmDelete(): void {
-    this.productService.deleteProduct(this.productClicked.id).then(() => {
-      this.snackBar.open('Produit supprimé avec succès !', 'Fermer', {
+
+     this.stockSerevice.delete(this.productClicked.id).then(() => {
+      this.snackBar.open('Stock supprimé avec succès !', 'Fermer', {
         duration: 3000,
         panelClass: ['snackbar-success']
       });
       this.getAll();
       this.closeDialog();
     }).catch(err => {
-      this.snackBar.open('Erreur lors de la suppression du produit.', 'Fermer', {
+      this.snackBar.open('Erreur lors de la suppression du Stock.', 'Fermer', {
         duration: 3000,
         panelClass: ['snackbar-error']
       });
     });
+
+    // this.productService.deleteProduct(this.productClicked.id).then(() => {
+    //   this.snackBar.open('Produit supprimé avec succès !', 'Fermer', {
+    //     duration: 3000,
+    //     panelClass: ['snackbar-success']
+    //   });
+    //   this.getAll();
+    //   this.closeDialog();
+    // }).catch(err => {
+    //   this.snackBar.open('Erreur lors de la suppression du produit.', 'Fermer', {
+    //     duration: 3000,
+    //     panelClass: ['snackbar-error']
+    //   });
+    // });
   }
 
-  openDialogEdit(product: Product) {
+  openDialogEdit(product: Stock) {
 
     this.productData = { ...product };
     console.log(this.productData);
-    this.productData.category = this.categorys.find(cat => cat.id === product.category?.id);
-    this.productData.brand = this.brands.find(brand => brand.id === product.brand?.id);
-    this.productData.unit = this.units.find(unit => unit.id === product.unit.id);
-    this.productData.conditioning = this.conditionings.find(cond => cond.id === product.conditioning?.id);
-    this.productData.lossPercentage = product.lossPercentage;
-    this.productData.quantity = product.stock;
+    console.log(product);
+    this.productData.category = this.categorys.find(cat => cat.id === product.product.category?.id);
+    this.productData.brand = this.brands.find(brand => brand.id === product.product.brand?.id);
+    this.productData.unit = this.units.find(unit => unit.id === product.product.unit.id);
+    this.productData.conditioning = this.conditionings.find(cond => cond.id === product.product.conditioning?.id);
+    this.productData.lossPercentage = product.product.lossPercentage;
+    this.productData.quantity = product?.quantity;
+    console.log(this.productData.quantity);
 
     this.dialog.open(this.dialogTemplateEdit, {
       width: '1200px', height: '450px'
@@ -350,8 +369,26 @@ export class ProductComponent implements OnInit {
     console.log("Produit modifié", this.productData);
 
 
+    this.stockSerevice.update(this.productData.id, this.productData).then(
+      () => {
+        this.snackBar.open('Stock modifié avec succès !', 'Fermer', {
+          duration: 2000,
+          panelClass: ['snackbar-success']
+        });
+        this.getAll();
+        this.dialog.closeAll();
+        this.resetFields();
+      }).catch(err => {
+        this.snackBar.open('Erreur lors de la modification du Stock.', 'Fermer', {
+          duration: 2000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    );
 
-    this.productService.update(this.productData.id, this.productData).then(() => {
+
+
+    this.productService.update(this.productData.product.id, this.productData.product).then(() => {
       this.snackBar.open('Produit modifié avec succès !', 'Fermer', {
         duration: 3000,
         panelClass: ['snackbar-success']
