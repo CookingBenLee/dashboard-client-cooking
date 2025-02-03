@@ -826,7 +826,7 @@ retrieveCountryById(): void {
    })
  }
  getUnits(){
-   this.unitService.getAllUnits().then(data =>{
+   this.unitService.getAllUnitsProducts().then(data =>{
      console.log(data)
      this.units=data
    })
