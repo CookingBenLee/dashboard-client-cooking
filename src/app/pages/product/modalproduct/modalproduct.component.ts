@@ -11,16 +11,18 @@ import { Product } from 'src/app/entity/Product';
 })
 export class ModalproductComponent {
   data:Product;
-
+  product: any;
   constructor(
       public config: DynamicDialogConfig) {
       this.data=this.config.data.product
-
+        this.product = this.config.data;
     }
 
 
   ngOnInit(): void {
     console.log(this.data);
+    console.log(this.product);
+    
   }
 
 }
