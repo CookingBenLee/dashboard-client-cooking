@@ -302,46 +302,48 @@ detailPurchasesForms2:any=[]
       let targetUnitCode = "";
 
       // Conversion en fonction des unités
-      switch (inputUnit) {
-        case "KG": // Kilogramme
-          conversionFactor = 1; // Déjà en kilogramme
-          targetUnit = "Kilogramme";
-          targetUnitCode="KG";
-          break;
-
-        case "G": // Gramme
-        case "GR":
-          conversionFactor = 1 / 1000; // Convertir en kilogrammes
-          targetUnit = "Kilogramme";
-          targetUnitCode="KG";
-          break;
-
-        case "L": // Litre
-          conversionFactor = 1; // Déjà en litre
-          targetUnit = "Litre";
-          targetUnitCode="L";
-          break;
-
-        case "ML": // Millilitre
-          conversionFactor = 1 / 1000; // Convertir en litres
-          targetUnit = "Litre";
-          targetUnitCode="L";
-          break;
-
-        default: // Cas où l'unité ne peut pas être convertie
-          form.realQuantity = "Conversion impossible";
-          return; // Arrêter l'exécution pour cet élément
-      }
-
-      // Effectuer la conversion
-      form.realQ = form.quantity * conversionFactor;
-      form.realUnit=targetUnitCode
-      form.realtotalPrice=form.totalPrice*conversionFactor
-      form.realQuantity = `${form.realQ} ${targetUnit}`;
-
-      //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
-      //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/(form.quantity * conversionFactor)
-
+    switch (inputUnit) {
+      case "KG": // Kilogramme
+        conversionFactor = 1; // Déjà en kilogramme
+        targetUnit = "Kilogramme";
+        targetUnitCode = "KG";
+        break;
+    
+      case "G": // Gramme
+      case "GR":
+        conversionFactor = 1 / 1000; // Convertir en kilogrammes
+        targetUnit = "Kilogramme";
+        targetUnitCode = "KG";
+        break;
+    
+      case "L": // Litre
+        conversionFactor = 1; // Déjà en litre
+        targetUnit = "Litre";
+        targetUnitCode = "L";
+        break;
+    
+      case "ML": // Millilitre
+        conversionFactor = 1 / 1000; // Convertir en litres
+        targetUnit = "Litre";
+        targetUnitCode = "L";
+        break;
+    
+      default: // Cas où l'unité ne peut pas être convertie
+        form.realQuantity = "Conversion impossible";
+        return; // Arrêter l'exécution
+    }
+    
+    // Effectuer la conversion
+    form.realQ = form.quantity * conversionFactor;
+    form.realQuantity = `${form.realQ} ${targetUnit}`;
+    
+    // Mettre à jour le prix unitaire (value) après conversion
+    if (form.realQ !== 0) {
+      form.value = form.totalPrice / form.realQ;
+    } else {
+      form.value = 0; // Éviter la division par zéro
+    }
+    
     } else {
       form.distinctUnit = false; // Pas de différence d'unités
     }
