@@ -49,11 +49,8 @@
             Action
           </th>
           <td mat-cell *matCellDef="let product" class="action-link">
-            <a
-            (click)="openDialogEdit(product.product)"
-              class="m-r-10 cursor-pointer"
-              ><i-tabler name="edit" class="icon-18"></i-tabler
-            ></a>
+            <a (click)="openDialogEdit(product.product)" class="m-r-10 cursor-pointer"><i-tabler name="edit"
+                class="icon-18"></i-tabler></a>
             <a (click)="deleteProduct(product.product)" class="m-r-10 cursor-pointer">
               <i-tabler name="trash" class="icon-18"></i-tabler>
             </a>
@@ -204,17 +201,16 @@
         <div class="col-lg-6">
           <label for="conditioning">Pourcentage de perte</label>
           <mat-form-field appearance="outline" class="w-100 hide-hint">
-            <input type="number" placeholder="Entrez une description du produit" 
-            name="lostpercentage" [(ngModel)]="productData.lostpercentage" 
-            matInput class="form-control" min="1"  />
+            <input type="number" placeholder="Entrez une description du produit" name="lostpercentage"
+              [(ngModel)]="productData.lossPercentage" matInput class="form-control" min="1" />
           </mat-form-field>
         </div>
 
         <div class="col-lg-6">
           <label for="conditioning">Stock</label>
           <mat-form-field appearance="outline" class="w-100 hide-hint">
-            <input type="number" placeholder="Entrez une description du produit"
-             name="description"  matInput class="form-control" min="1"  />
+            <input type="number" placeholder="Entrez une description du produit" name="description" matInput
+              class="form-control" min="1" />
           </mat-form-field>
         </div>
 
