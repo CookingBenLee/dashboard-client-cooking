@@ -591,13 +591,13 @@ retrieveCountryById(): void {
        maximizable: true,
        data:p,
    });
-   // this.op.toggle(e)
+   this.op.toggle(e)
 
-     // this.ref.onClose.subscribe((shop: Shop) => {
-     //     if (shop) {
-     //         this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
-     //     }
-     // });
+     this.ref.onClose.subscribe((shop: Shop) => {
+         if (shop) {
+             this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
+         }
+     });
 
      // this.ref.onMaximize.subscribe((value) => {
      //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });

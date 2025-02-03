@@ -149,7 +149,7 @@ export class CreateProductComponent implements OnInit {
         this.conditionings=data})
     }
     getUnit(){
-      this.unitService.getAllUnits().then(data =>{
+      this.unitService.getAllUnitsProducts().then(data =>{
         console.log(data)
         this.units=data})
     }

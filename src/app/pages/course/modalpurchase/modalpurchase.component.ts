@@ -98,7 +98,7 @@ export class ModalpurchaseComponent {
   erreur:string
   sucess:string
   loading: boolean = false;
-  // ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | undefined;
   showAddProduct=false
 
   price:Price;
@@ -124,7 +124,7 @@ detailPurchasesForms2:any=[]
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,private tokenService: TokenService,
     private dialogService:DialogService,public config: DynamicDialogConfig,  private detailpurchaseService:DetailspurchasingService,private cdref: ChangeDetectorRef,
-    private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,public ref: DynamicDialogRef,
+    private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,
     private currencyService:CurrencyService,private productService:ProductService,private unitService:UnitService,private priceService:PriceService) {
       this.data=this.config.data
 
@@ -495,7 +495,7 @@ detailPurchasesForms2:any=[]
       this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée"});
 
       await this.saveAllDetail(data.data)
-      this.ref.close;
+      this.ref?.close;
 
     },
     (error: any)=>{
