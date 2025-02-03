@@ -177,6 +177,8 @@ export class CreateProductComponent implements OnInit {
       console.log(this.product)
       const user = this.tokenService.getUser();
       this.product.user = { id: user.id };
+      console.log(this.product);
+      
       this.productService.create(this.product).then((data) =>{
         this.loading=false
         //this.isSuccess=true
