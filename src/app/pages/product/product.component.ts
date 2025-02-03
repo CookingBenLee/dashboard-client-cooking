@@ -366,7 +366,8 @@ export class ProductComponent implements OnInit {
   editProduct() {
     const user = this.tokenService.getUser();
     this.productData.compteUser = { id: user.idCompteUser };
-    console.log("Produit modifié", this.productData);
+    this.productData.product.lossPercentage = this.productData.lossPercentage;
+    console.log("Produit modifié", this.productData.product);
 
 
     this.stockSerevice.update(this.productData.id, this.productData).then(
