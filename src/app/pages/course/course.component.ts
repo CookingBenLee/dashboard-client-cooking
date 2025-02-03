@@ -69,6 +69,7 @@ import { CreateCourseComponent } from '../create-course/create-course.component'
 import { DetailCourseComponent } from './detail-course/detail-course.component';
 import { Brand } from 'src/app/services/brand/Brand';
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
+import { CreateProductComponent } from '../create-product/create-product.component';
 
 @Component({
   selector: 'app-course',
@@ -578,6 +579,9 @@ retrieveCountryById(): void {
   //this.purchaseSelected=purchase
   
 }
+
+
+
 
  show(e:any,purchase:Purchase) {
   //this.purchaseSelected=purchase
