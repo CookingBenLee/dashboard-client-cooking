@@ -148,11 +148,15 @@ export class CreateProductComponent implements OnInit {
         console.log(data)
         this.conditionings=data})
     }
-    getUnit(){
-      this.unitService.getAllUnitsProducts().then(data =>{
-        console.log(data)
-        this.units=data})
+    getUnit() {
+      this.unitService.getAllUnits().then(data => {
+        console.log( data);    
+        this.units = data.filter(unit => unit.code === 'Kg' || unit.code === 'L');
+    
+        console.log(this.units);
+      });
     }
+    
 
     ///save
     save(){
