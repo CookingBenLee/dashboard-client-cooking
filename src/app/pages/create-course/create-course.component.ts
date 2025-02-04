@@ -726,43 +726,47 @@ retrieveCountryById(): void {
       case "KG": // Kilogramme
         conversionFactor = 1; // Déjà en kilogramme
         targetUnit = "Kilogramme";
-        targetUnitCode="KG";
+        targetUnitCode = "KG";
         break;
-
+    
       case "G": // Gramme
       case "GR":
         conversionFactor = 1 / 1000; // Convertir en kilogrammes
         targetUnit = "Kilogramme";
-        targetUnitCode="KG";
+        targetUnitCode = "KG";
         break;
-
+    
       case "L": // Litre
         conversionFactor = 1; // Déjà en litre
         targetUnit = "Litre";
-        targetUnitCode="L";
+        targetUnitCode = "L";
         break;
-
+    
       case "ML": // Millilitre
         conversionFactor = 1 / 1000; // Convertir en litres
         targetUnit = "Litre";
-        targetUnitCode="L";
+        targetUnitCode = "L";
         break;
-
+    
       default: // Cas où l'unité ne peut pas être convertie
         form.realQuantity = "Conversion impossible";
-        return; // Arrêter l'exécution pour cet élément
+        return; // Arrêter l'exécution
     }
-
+    
     // Effectuer la conversion
     form.realQ = form.quantity * conversionFactor;
     form.realQuantity = `${form.realQ} ${targetUnit}`;
-
-    //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
-    //this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/(form.quantity * conversionFactor)
-
-  } else {
-    form.distinctUnit = false; // Pas de différence d'unités
-  }
+    
+    // Mettre à jour le prix unitaire (value) après conversion
+    if (form.realQ !== 0) {
+      form.value = form.totalPrice / form.realQ;
+    } else {
+      form.value = 0; // Éviter la division par zéro
+    }
+    
+    } else {
+      form.distinctUnit = false; // Pas de différence d'unités
+    }
    /*if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || (this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="GR") || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
      console.log(this.detailPurchasesForms[i].product.unit);
      console.log(this.detailPurchasesForms[i].unit);
