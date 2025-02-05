@@ -192,7 +192,7 @@ detailPurchasesForms2:any=[]
   countryss: any[] = []; // Ensure this is initialized as an array
   selectedCountry: any; // To store the retrieved country
 
-
+  curenn: any;
  async ngOnInit(): Promise<void> {
 
   /*this.route.queryParams.subscribe(params => {
@@ -207,7 +207,7 @@ detailPurchasesForms2:any=[]
   this.usercurrency = this.utilisateurC.compteUser.address.country.currency
   this.currencys.push(this.usercurrency)
   console.log("currency", this.usercurrency);
-  
+  this.curenn = this.utilisateurC.compteUser.address.country.currency.name
   // console.log("courrency",.name);
   
   
