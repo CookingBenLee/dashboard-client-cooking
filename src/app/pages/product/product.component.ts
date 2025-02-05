@@ -56,7 +56,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
-import { UpdateProductComponent } from 'src/app/update-product/update-product.component';
+import { UpdateProductComponent } from 'src/app/pages/product/update-product/update-product.component';
 
 @Component({
   selector: 'app-product',
@@ -331,11 +331,11 @@ export class ProductComponent implements OnInit {
       width: '50vw',
       modal: true,
       baseZIndex: 10000,
-      maximizable: true,
+      // maximizable: true,
       data: product,
       breakpoints: {
-        '960px': '75vw',
-        '640px': '90vw'
+        '1960px': '75vw',
+        '1640px': '90vw'
       },
     });
 

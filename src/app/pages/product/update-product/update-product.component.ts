@@ -62,14 +62,14 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RippleModule } from 'primeng/ripple';
-import { BrandService } from '../services/brand/brand.service';
-import { ConditioningService } from '../services/conditioning/conditioning.service';
-import { StockService } from '../services/stock/stock.service';
+import { BrandService } from '../../../services/brand/brand.service';
+import { ConditioningService } from '../../../services/conditioning/conditioning.service';
+import { StockService } from '../../../services/stock/stock.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CategoryService } from '../services/category/category.service';
-import { Brand } from '../services/brand/Brand';
-import { Conditioning } from '../services/conditioning/Conditioning';
-import { Currency } from '../services/currency/Currency';
+import { CategoryService } from '../../../services/category/category.service';
+import { Brand } from '../../../services/brand/Brand';
+import { Conditioning } from '../../../services/conditioning/Conditioning';
+import { Currency } from '../../../services/currency/Currency';
 
 @Component({
   selector: 'app-update-product',
@@ -123,12 +123,12 @@ import { Currency } from '../services/currency/Currency';
 })
 export class UpdateProductComponent implements OnInit {
   productData: any = {}
-  ref: DynamicDialogRef | undefined;
+  // ref: DynamicDialogRef | undefined;
   constructor(
       public dialog: MatDialog, private currencyService: CurrencyService, private stockSerevice: StockService,
       private brandService: BrandService, private conditioningService: ConditioningService, private unitService: UnitService, private categoryService: CategoryService,
       private productService: ProductService, private paginateService: PaginateService, private snackBar: MatSnackBar,
-      private tokenService: TokenService, private dialogService: DialogService,
+      private tokenService: TokenService, private dialogService: DialogService,public ref: DynamicDialogRef,
       private router: Router,public config: DynamicDialogConfig,) 
          {
           this.productData=this.config.data
@@ -202,7 +202,7 @@ export class UpdateProductComponent implements OnInit {
           // this.getAll();
           // this.dialog.closeAll();
           // this.resetFields();
-          this.ref?.close;
+          this.ref.close();
         }).catch(err => {
           this.snackBar.open('Erreur lors de la modification du Stock.', 'Fermer', {
             duration: 2000,
@@ -221,7 +221,7 @@ export class UpdateProductComponent implements OnInit {
         // this.getAll();
         // this.dialog.closeAll();
         // this.resetFields();
-        this.ref?.close;  
+        this.ref.close();  
       }).catch(err => {
         this.snackBar.open('Erreur lors de la modification du produit.', 'Fermer', {
           duration: 3000,
