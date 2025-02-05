@@ -18,7 +18,6 @@ import { UnitService } from 'src/app/services/unit/unit.service';
 import { ModalrecipeComponent } from './modalrecipe/modalrecipe.component';
 import { Category } from 'src/app/services/category/Category';
 import { DetailrecipeComponent } from './detailrecipe/detailrecipe.component';
-import { ModalAddProductComponent } from '../course/modal-add-product/modal-add-product.component';
 import { RouterModule } from '@angular/router';
 
 // prime
@@ -556,34 +555,6 @@ showDishesDetail(e:any,recipe:Recipe){
 });
 }
 
-
-
-
-//////////
-//Ajout de produit etant dans approvisionnement
-showProductAddForm(){
-  this.ref = this.dialogService.open(ModalAddProductComponent, {
-    header: 'Ajouter un produit',
-    width: '70%',
-    contentStyle: { overflow: 'auto' },
-    baseZIndex: 10000,
-      maximizable: true
-  });
-
-  this.ref.onClose.subscribe((retour: any) => {
-      if (retour=="ok") {
-          this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-          this.getProducts()
-      }else{
-        this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-
-      }
-  });
-
-  // this.ref.onMaximize.subscribe((value) => {
-  //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-  // });
-}
 
 
 saveAllDetail(recipe:Recipe){

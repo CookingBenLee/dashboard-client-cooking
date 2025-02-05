@@ -17,8 +17,6 @@ import { DetailsrecipeService } from 'src/app/services/detailsrecipe/detailsreci
 import { CategoryrecipeService } from 'src/app/services/categoryrecipe/categoryrecipe.service';
 import { CategoryRecipe } from 'src/app/services/categoryrecipe/CategoryRecipe';
 import { Product } from 'src/app/entity/Product';
-import { ModalAddProductComponent } from '../../course/modal-add-product/modal-add-product.component';
-
 
 // prime
 import { PanelModule } from 'primeng/panel';
@@ -385,35 +383,6 @@ async ngOnInit(): Promise<void> {
       console.log(data)
       this.units=data
     })
-  }
-
-
-
-
-  //////////
-  //Ajout de produit etant dans approvisionnement
-  showProductAddForm(){
-    this.ref = this.dialogService.open(ModalAddProductComponent, {
-      header: 'Ajouter un produit',
-      width: '70%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-        maximizable: true
-    });
-
-    this.ref.onClose.subscribe((retour: any) => {
-        if (retour=="ok") {
-            this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-            this.getProducts()
-        }else{
-          this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-
-        }
-    });
-
-    // this.ref.onMaximize.subscribe((value) => {
-    //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-    // });
   }
 
 

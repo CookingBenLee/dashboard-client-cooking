@@ -41,15 +41,7 @@ import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TabViewModule } from 'primeng/tabview';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { SliderModule } from 'primeng/slider';
-import { RatingModule } from 'primeng/rating';
-import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
@@ -62,8 +54,6 @@ import { TableShortService } from 'src/app/services/tableShort/table-short.servi
 import { PaginatorModule } from 'primeng/paginator';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
-import { CountryService } from 'src/app/services/country/country.service';
-import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
 import { CreateProductComponent } from '../../create-product/create-product.component';
 
 
@@ -475,33 +465,6 @@ cuuren: any
       key: 'positionDialog'
   });
   }
-
-  //////////
-  //Ajout de produit etant dans approvisionnement
-  showProductAddForm(){
-    this.ref = this.dialogService.open(ModalAddProductComponent, {
-      header: 'Ajouter un produit',
-      width: '70%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-        maximizable: true
-    });
-
-    this.ref.onClose.subscribe((retour: any) => {
-        if (retour=="ok") {
-            this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-            this.getProducts()
-        }else{
-          this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-
-        }
-    });
-
-    // this.ref.onMaximize.subscribe((value) => {
-    //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-    // });
-  }
-
 
 
    ///save

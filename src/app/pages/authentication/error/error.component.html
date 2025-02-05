@@ -5,6 +5,9 @@
       <h2 class="auth-title f-w-600">{{'COMPONENT.ERROR.HEAD'|transloco}}</h2>
       <h6 class="f-s-20 f-w-600 m-b-30">{{'COMPONENT.ERROR.BODY_MSG'|transloco}}</h6>
       <a mat-flat-button color="primary" [routerLink]="['/home']">{{'COMPONENT.ERROR.BACK'|transloco}}</a>
+
+      <a mat-flat-button class="bg-red ml-2" (click)="logout()">{{'COMPONENT.ERROR.LOGOUT'|transloco}}</a>
+
     </div>
   </div>
 </div>

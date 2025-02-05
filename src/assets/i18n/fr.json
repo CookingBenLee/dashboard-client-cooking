@@ -104,7 +104,8 @@
     "ERROR":{
       "HEAD": "Oups!!!",
       "BODY_MSG": "Une erreur s'est produite. Cela pourrait être lié à votre connexion Internet.",
-      "BACK": "Retour dans l'application"
+      "BACK": "Retour dans l'application",
+      "LOGOUT": "Se déconnecter"
     }
   }
 }

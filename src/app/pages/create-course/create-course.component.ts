@@ -64,7 +64,6 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { ModalpurchaseComponent } from '../course/modalpurchase/modalpurchase.component';
-import { ModalAddProductComponent } from '../course/modal-add-product/modal-add-product.component';
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { CreateProductComponent } from '../create-product/create-product.component';
 
@@ -897,33 +896,6 @@ retrieveCountryById(): void {
 
  }
 
- //////////
- //Ajout de produit etant dans approvisionnement
- showProductAddForm(){
-   this.ref = this.dialogService.open(ModalAddProductComponent, {
-    focusOnShow: false,
-
-     header: 'Ajouter un produit',
-     width: '70%',
-     contentStyle: { overflow: 'auto' },
-     baseZIndex: 10000,
-       maximizable: true
-   });
-
-   this.ref.onClose.subscribe((retour: any) => {
-       if (retour=="ok") {
-           this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-           this.getProducts()
-       }else{
-         this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-
-       }
-   });
-
-   // this.ref.onMaximize.subscribe((value) => {
-   //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-   // });
- }
 
 
  init(){

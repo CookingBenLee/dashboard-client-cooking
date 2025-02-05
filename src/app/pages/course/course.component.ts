@@ -29,27 +29,10 @@ import { UnitService } from 'src/app/services/unit/unit.service';
 
 
 // prime
-import { PanelModule } from 'primeng/panel';
-import { InputTextModule } from 'primeng/inputtext';
-import { TreeSelectModule } from 'primeng/treeselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { CardModule } from 'primeng/card';
-import { PasswordModule } from 'primeng/password';
-import { SidebarModule } from 'primeng/sidebar';
-import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
-import { CheckboxModule } from 'primeng/checkbox';
 import { TabViewModule } from 'primeng/tabview';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { SliderModule } from 'primeng/slider';
-import { RatingModule } from 'primeng/rating';
-import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
@@ -60,16 +43,12 @@ import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/a
 import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
 import { TableShortService } from 'src/app/services/tableShort/table-short.service';
 import { PaginatorModule } from 'primeng/paginator';
-import { ModalAddProductComponent } from './modal-add-product/modal-add-product.component';
 import { ModalpurchaseComponent } from './modalpurchase/modalpurchase.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { CreateCourseComponent } from '../create-course/create-course.component';
 import { DetailCourseComponent } from './detail-course/detail-course.component';
-import { Brand } from 'src/app/services/brand/Brand';
-import { Conditioning } from 'src/app/services/conditioning/Conditioning';
-import { CreateProductComponent } from '../create-product/create-product.component';
 
 @Component({
   selector: 'app-course',
@@ -835,33 +814,6 @@ retrieveCountryById(): void {
  })
 
  }
-
- //////////
- //Ajout de produit etant dans approvisionnement
- showProductAddForm(){
-   this.ref = this.dialogService.open(ModalAddProductComponent, {
-     header: 'Ajouter un produit',
-     width: '70%',
-     contentStyle: { overflow: 'auto' },
-     baseZIndex: 10000,
-       maximizable: true
-   });
-
-   this.ref.onClose.subscribe((retour: any) => {
-       if (retour=="ok") {
-           this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-           this.getProducts()
-       }else{
-         this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-
-       }
-   });
-
-   // this.ref.onMaximize.subscribe((value) => {
-   //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-   // });
- }
-
 
  init(){
    this.detailPurchasesForms=[
