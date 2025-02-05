@@ -110,7 +110,8 @@ export class CreateCourseComponent implements OnInit {
    unit:new Unit(),
    realQ:0,
    distinctUnit:false,
-   realQuantity:''
+   realQuantity:'',
+    realUnit:''
  }
 ]
 
@@ -380,7 +381,8 @@ retrieveCountryById(): void {
        unit:new Unit(),
        realQ:0,
        distinctUnit:false,
-       realQuantity:''
+       realQuantity:'',
+        realUnit:''
      }
    )
  }
@@ -635,7 +637,8 @@ retrieveCountryById(): void {
      unit:new Unit(),
      realQ:0,
      distinctUnit:false,
-     realQuantity:''
+     realQuantity:'',
+      realUnit:''
    })
  }
 
@@ -756,7 +759,7 @@ retrieveCountryById(): void {
     // Effectuer la conversion
     form.realQ = form.quantity * conversionFactor;
     form.realQuantity = `${form.realQ} ${targetUnit}`;
-    
+    form.realUnit = targetUnitCode;
     // Mettre à jour le prix unitaire (value) après conversion
     if (form.realQ !== 0) {
       form.value = form.totalPrice / form.realQ;
@@ -898,6 +901,8 @@ retrieveCountryById(): void {
  //Ajout de produit etant dans approvisionnement
  showProductAddForm(){
    this.ref = this.dialogService.open(ModalAddProductComponent, {
+    focusOnShow: false,
+
      header: 'Ajouter un produit',
      width: '70%',
      contentStyle: { overflow: 'auto' },
@@ -931,7 +936,8 @@ retrieveCountryById(): void {
      unit:new Unit(),
      realQ:0,
      distinctUnit:false,
-     realQuantity:''
+     realQuantity:'',
+     realUnit:''
    }
  ]
 
@@ -992,7 +998,7 @@ openDialogAdd() {
         this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
         this.getProducts()
     }else{
-      this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+      //this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
 
     }
 });

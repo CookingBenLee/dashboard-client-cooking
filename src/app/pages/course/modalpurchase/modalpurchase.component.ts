@@ -309,6 +309,8 @@ cuuren: any
     console.log(this.products);
  
     const form = this.detailPurchasesForms[i];
+    console.log(form);
+
     const productUnit = form.product?.unit?.code?.toUpperCase();
     const inputUnit = form.unit?.code?.toUpperCase();
 
@@ -356,7 +358,8 @@ cuuren: any
     // Effectuer la conversion
     form.realQ = form.quantity * conversionFactor;
     form.realQuantity = `${form.realQ} ${targetUnit}`;
-    
+    form.realUnit=targetUnitCode
+    //form.quantity=form.realQ
     // Mettre à jour le prix unitaire (value) après conversion
     if (form.realQ !== 0) {
       form.value = form.totalPrice / form.realQ;
@@ -435,7 +438,7 @@ cuuren: any
         distinctUnit:false,
         realQuantity:'',
         realtotalPrice:0,
-        realUnit:""
+        realUnit:"KG"
       }
     )
   }

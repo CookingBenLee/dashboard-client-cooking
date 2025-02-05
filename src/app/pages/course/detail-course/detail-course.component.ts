@@ -116,7 +116,8 @@ export class DetailCourseComponent {
     unit:new Unit(),
     realQ:0,
     distinctUnit:false,
-    realQuantity:''
+    realQuantity:'',
+    realUnit:''
   }
 ]
 
@@ -176,7 +177,8 @@ detailPurchasesForms2:any=[]
           unit:detail.price.product.unit,
           realQ:detail.quantity,
           distinctUnit:false,
-          realQuantity:''
+          realQuantity:'',
+          realUnit:''
         }
         this.detailPurchasesForms.push(d)
         this.detailPurchasesForms2.push(d)
@@ -190,7 +192,8 @@ detailPurchasesForms2:any=[]
           unit:new Unit(),
           realQ:0,
           distinctUnit:false,
-          realQuantity:''
+          realQuantity:'',
+          realUnit:''
         }
       )
 
@@ -338,7 +341,8 @@ detailPurchasesForms2:any=[]
     // Effectuer la conversion
     form.realQ = form.quantity * conversionFactor;
     form.realQuantity = `${form.realQ} ${targetUnit}`;
-    
+    form.realUnit = targetUnitCode;
+
     // Mettre à jour le prix unitaire (value) après conversion
     if (form.realQ !== 0) {
       form.value = form.totalPrice / form.realQ;
@@ -395,7 +399,8 @@ detailPurchasesForms2:any=[]
         unit:new Unit(),
         realQ:0,
         distinctUnit:false,
-        realQuantity:''
+        realQuantity:'',
+        realUnit:''
       }
     )
   }
