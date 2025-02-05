@@ -7,3 +7,10 @@
 label{
   margin-bottom: 15px;
 }
+
+
+.custom-dialog .p-dialog {
+  margin-left: 1000px;
+  position: absolute;  /* Vous pouvez aussi essayer 'fixed' selon votre besoin */
+  z-index: 9999999999999999999999999999 !important;
+}
