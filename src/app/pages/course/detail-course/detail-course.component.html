@@ -81,7 +81,7 @@
                 <th>Conditionnement</th>
                 <th>Quantité(unité)</th>
   
-                <th>Prix/unité</th>
+                <!-- <th>Prix/unité</th> -->
                 <th>Prix Total </th>
                 <th></th>
   
@@ -90,8 +90,8 @@
                 <td>{{detail?.product?.name}}({{detail.product?.category?.name}})</td>
                 <td>{{detail.product.conditioning?.name}}</td>
                 <td>{{detail.quantity}} ({{detail?.unit?.code}})</td>
-                <td>{{detail.value | number:'1.2-2'}}/{{detail?.unit?.code}}</td>
-                <td>{{detail.totalPrice}}</td>
+                <!-- <td>{{detail.value | number:'1.2-2'}}/{{detail?.unit?.code}}</td> -->
+                <td>{{detail.totalPrice}} {{ (curren) }}</td>
                 <td>
                   <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetail(detail,i)"></button>
                 </td>

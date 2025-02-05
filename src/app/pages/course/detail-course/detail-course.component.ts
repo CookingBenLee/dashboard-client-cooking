@@ -121,7 +121,7 @@ export class DetailCourseComponent {
 ]
 
 detailPurchasesForms2:any=[]
-
+  curren: any
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,private tokenService: TokenService,
     private dialogService:DialogService,public config: DynamicDialogConfig,  private detailpurchaseService:DetailspurchasingService,private cdref: ChangeDetectorRef,
     private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,
@@ -132,7 +132,7 @@ detailPurchasesForms2:any=[]
 
       console.log(date);
       this.data.datePurchase=new Date(this.data.datePurchase)
-
+      this.curren = this.data.currency.name;
 
       console.log(this.data);
       

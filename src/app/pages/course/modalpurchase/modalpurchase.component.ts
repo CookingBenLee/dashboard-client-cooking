@@ -122,7 +122,7 @@ export class ModalpurchaseComponent {
 ]
 
 detailPurchasesForms2:any=[]
-
+cuuren: any
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,private tokenService: TokenService,
     private dialogService:DialogService,public config: DynamicDialogConfig,  private detailpurchaseService:DetailspurchasingService,private cdref: ChangeDetectorRef,
     private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,
@@ -133,7 +133,7 @@ detailPurchasesForms2:any=[]
 
       console.log(date);
       this.data.datePurchase=new Date(this.data.datePurchase)
-
+      this.cuuren = this.data.currency.name
       //this.datePurchase=new Date(date)
     }
 
