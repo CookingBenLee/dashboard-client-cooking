@@ -64,7 +64,6 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { ModalpurchaseComponent } from '../course/modalpurchase/modalpurchase.component';
-import { ModalAddProductComponent } from '../course/modal-add-product/modal-add-product.component';
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { CreateProductComponent } from '../create-product/create-product.component';
 
@@ -110,7 +109,8 @@ export class CreateCourseComponent implements OnInit {
    unit:new Unit(),
    realQ:0,
    distinctUnit:false,
-   realQuantity:''
+   realQuantity:'',
+    realUnit:''
  }
 ]
 
@@ -192,7 +192,7 @@ detailPurchasesForms2:any=[]
   countryss: any[] = []; // Ensure this is initialized as an array
   selectedCountry: any; // To store the retrieved country
 
-
+  curenn: any;
  async ngOnInit(): Promise<void> {
 
   /*this.route.queryParams.subscribe(params => {
@@ -207,7 +207,7 @@ detailPurchasesForms2:any=[]
   this.usercurrency = this.utilisateurC.compteUser.address.country.currency
   this.currencys.push(this.usercurrency)
   console.log("currency", this.usercurrency);
-  
+  this.curenn = this.utilisateurC.compteUser.address.country.currency.name
   // console.log("courrency",.name);
   
   
@@ -380,7 +380,8 @@ retrieveCountryById(): void {
        unit:new Unit(),
        realQ:0,
        distinctUnit:false,
-       realQuantity:''
+       realQuantity:'',
+        realUnit:''
      }
    )
  }
@@ -635,7 +636,8 @@ retrieveCountryById(): void {
      unit:new Unit(),
      realQ:0,
      distinctUnit:false,
-     realQuantity:''
+     realQuantity:'',
+      realUnit:''
    })
  }
 
@@ -756,7 +758,7 @@ retrieveCountryById(): void {
     // Effectuer la conversion
     form.realQ = form.quantity * conversionFactor;
     form.realQuantity = `${form.realQ} ${targetUnit}`;
-    
+    form.realUnit = targetUnitCode;
     // Mettre à jour le prix unitaire (value) après conversion
     if (form.realQ !== 0) {
       form.value = form.totalPrice / form.realQ;
@@ -894,31 +896,6 @@ retrieveCountryById(): void {
 
  }
 
- //////////
- //Ajout de produit etant dans approvisionnement
- showProductAddForm(){
-   this.ref = this.dialogService.open(ModalAddProductComponent, {
-     header: 'Ajouter un produit',
-     width: '70%',
-     contentStyle: { overflow: 'auto' },
-     baseZIndex: 10000,
-       maximizable: true
-   });
-
-   this.ref.onClose.subscribe((retour: any) => {
-       if (retour=="ok") {
-           this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-           this.getProducts()
-       }else{
-         this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-
-       }
-   });
-
-   // this.ref.onMaximize.subscribe((value) => {
-   //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-   // });
- }
 
 
  init(){
@@ -931,7 +908,8 @@ retrieveCountryById(): void {
      unit:new Unit(),
      realQ:0,
      distinctUnit:false,
-     realQuantity:''
+     realQuantity:'',
+     realUnit:''
    }
  ]
 
@@ -992,7 +970,7 @@ openDialogAdd() {
         this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
         this.getProducts()
     }else{
-      this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+      //this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
 
     }
 });

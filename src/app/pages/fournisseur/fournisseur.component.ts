@@ -42,7 +42,7 @@ export class FournisseurComponent implements OnInit{
   @ViewChild('dialogTemplateEdit') dialogTemplateEdit!: TemplateRef<any>;
   @ViewChild('dialogTemplateDelete') dialogTemplateDelete!: TemplateRef<any>
   //pagination attributs
-  rows=4
+  rows=10
   totalRows=0
   page=0;
   count=0;

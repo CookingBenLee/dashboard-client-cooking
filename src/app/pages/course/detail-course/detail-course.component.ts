@@ -63,7 +63,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
-import { ModalAddProductComponent } from '../modal-add-product/modal-add-product.component';
 
 
 @Component({
@@ -116,12 +115,13 @@ export class DetailCourseComponent {
     unit:new Unit(),
     realQ:0,
     distinctUnit:false,
-    realQuantity:''
+    realQuantity:'',
+    realUnit:''
   }
 ]
 
 detailPurchasesForms2:any=[]
-
+  curren: any
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,private tokenService: TokenService,
     private dialogService:DialogService,public config: DynamicDialogConfig,  private detailpurchaseService:DetailspurchasingService,private cdref: ChangeDetectorRef,
     private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,
@@ -132,7 +132,7 @@ detailPurchasesForms2:any=[]
 
       console.log(date);
       this.data.datePurchase=new Date(this.data.datePurchase)
-
+      this.curren = this.data.currency.name;
 
       console.log(this.data);
       
@@ -176,7 +176,8 @@ detailPurchasesForms2:any=[]
           unit:detail.price.product.unit,
           realQ:detail.quantity,
           distinctUnit:false,
-          realQuantity:''
+          realQuantity:'',
+          realUnit:''
         }
         this.detailPurchasesForms.push(d)
         this.detailPurchasesForms2.push(d)
@@ -190,7 +191,8 @@ detailPurchasesForms2:any=[]
           unit:new Unit(),
           realQ:0,
           distinctUnit:false,
-          realQuantity:''
+          realQuantity:'',
+          realUnit:''
         }
       )
 
@@ -338,7 +340,8 @@ detailPurchasesForms2:any=[]
     // Effectuer la conversion
     form.realQ = form.quantity * conversionFactor;
     form.realQuantity = `${form.realQ} ${targetUnit}`;
-    
+    form.realUnit = targetUnitCode;
+
     // Mettre à jour le prix unitaire (value) après conversion
     if (form.realQ !== 0) {
       form.value = form.totalPrice / form.realQ;
@@ -395,7 +398,8 @@ detailPurchasesForms2:any=[]
         unit:new Unit(),
         realQ:0,
         distinctUnit:false,
-        realQuantity:''
+        realQuantity:'',
+        realUnit:''
       }
     )
   }
@@ -432,33 +436,6 @@ detailPurchasesForms2:any=[]
       key: 'positionDialog'
   });
   }
-
-  //////////
-  //Ajout de produit etant dans approvisionnement
-  showProductAddForm(){
-    this.ref = this.dialogService.open(ModalAddProductComponent, {
-      header: 'Ajouter un produit',
-      width: '70%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
-        maximizable: true
-    });
-
-    this.ref.onClose.subscribe((retour: any) => {
-        if (retour=="ok") {
-            this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-            this.getProducts()
-        }else{
-          this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-
-        }
-    });
-
-    // this.ref.onMaximize.subscribe((value) => {
-    //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-    // });
-  }
-
 
 
    ///save
