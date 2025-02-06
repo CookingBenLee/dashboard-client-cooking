@@ -39,7 +39,7 @@ export class CatalogueDePrixComponent implements OnInit {
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   @ViewChild('dialogTemplateDelete') dialogTemplateDelete!: TemplateRef<any>
 
-  rows=4
+  rows=10
   totalRows=0
   page=0;
   count=0;
