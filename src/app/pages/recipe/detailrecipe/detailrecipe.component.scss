@@ -1,54 +1,137 @@
-.al-btn{
-  margin: auto;
-  padding-right: 0px;
+/* Suppression des éléments bleus et amélioration du design */
+.entete {
+  background-color: #f1f1f1; /* Fond clair neutre */
+  color: #333; /* Texte sombre pour lisibilité */
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Ombre douce pour ajouter de la profondeur */
+  margin-bottom: 20px;
+}
 
-  button{
-    width: -webkit-fill-available;
+.field p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.grid .field p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Suppression des couleurs de fond bleues en bas */
+.p-button {
+  background-color: #50BE87; /* Vert doux */
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 16px;
+}
+
+.p-button:hover {
+  background-color: darken(#50BE87, 10%);
+}
+
+.p-button-vert {
+  background-color: #50BE87;
+  color: white;
+  font-size: 16px;
+}
+
+.p-button-vert:hover {
+  background-color: darken(#50BE87, 10%);
+}
+
+.p-button-orange {
+  background: #2d674d;
+  border: none;
+}
+
+.p-button-orange:hover {
+  background: #fff;
+  color: #2d674d;
+  border: 1px solid #2d674d;
+}
+
+/* Design du tableau */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  color: #333;
+}
+
+td {
+  background-color: #fafafa;
+}
+
+.divtableau {
+  margin-top: 20px;
+}
+
+/* Design des messages de succès et d'erreur */
+#erreur {
+  color: white;
+  background-color: #e74c3c; /* Rouge doux */
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 1%;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#success {
+  color: white;
+  background-color: #2ecc71; /* Vert doux */
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 1%;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-// .p-button-orange{
-//   background: $vertClair;
-//   border: none;
-// }
-
-$orange:#FF7900;
-$Vert:#50BE87;
-$Jaune:#FFD200;
-$Rose:#FFB4E6;
-$Violet:#A885D8;
-$Bleu:#4BB4E6;
-$Noir:#000000;
-$Blanc:#ffffff;
-
-$color1:#c1853b;
-$color2:#cc1b1b;
-$color3:#2f0505;
-$color4:#85311b;
-$color5:#000000;
-
-$color6:#cf4020;
-$color7:#a4ecdc;
-$color8:#bc2c14;
-$color9:#9e675b;
-$color10:#94c9b2;
-$color11:#2d674d;
-
-.p-button-orange{
-  background: $color11;
-  border: none;
+/* Bouton "Modifier la recette" */
+.p-button-vert {
+  background-color: #50BE87;
+  border-radius: 8px;
+  padding: 12px 24px;
+  text-transform: uppercase;
+  font-size: 14px;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.p-button-orange:hover{
-  background: #fff;
-  color:$color11;
-  border: none;
-  border:1px solid $color11;
+.p-button-vert:hover {
+  background-color: darken(#50BE87, 10%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.fileInput{
+/* Amélioration du design général des champs de formulaire */
+.fileInput {
   display: block;
-  border: 2px solid;
+  border: 2px solid #ddd;
   padding: 10px;
   border-radius: 5px;
   width: 100%;
@@ -57,66 +140,59 @@ $color11:#2d674d;
   color: #000;
 }
 
-
-.divImage{
+.divImage {
   display: flex;
-  img{
-    height: 90%;
-    width: 90%;
-    object-fit: cover;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  label{
-    display: flex;
-    width: 90%;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 14px;
-    color: $orange;
-  }
 }
 
-#erreur{
-  color: white;
-  padding: 5px;
+.divImage img {
+  height: 90%;
+  width: 90%;
+  object-fit: cover;
+  margin: auto;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.divImage label {
+  display: flex;
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  color: #FF7900;
+}
+
+/* Design pour les messages d'erreur et de succès */
+#erreur,
+#success {
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+#erreur {
   background-color: #ff00008f;
-  border-radius: 5px;
-  text-align: center;
-  margin-bottom: 1%;
-  margin: auto;
-  margin-bottom: 5px;
-}
-
-#success{
   color: white;
   padding: 5px;
-  display: flex;
-  justify-content: center;
+}
+
+#success {
   background-color: green;
-  border-radius: 5px;
-  text-align: center;
-  margin-bottom: 1%;
-  margin: auto;
-  margin-bottom: 5px;
+  color: white;
+  padding: 5px;
 }
 
-
-.contientFichier{
+/* Design des cases à cocher */
+.contientFichier {
   display: flex;
-  p-checkbox {
-    margin-left: 5px;
-  }
 }
 
-.pdf{
-  //display: contents;
+.contientFichier p-checkbox {
+  margin-left: 5px;
+}
+
+.pdf {
   width: 100%;
-  //height: 70rem;
 }
