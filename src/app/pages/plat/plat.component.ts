@@ -120,7 +120,7 @@ export class PlatComponent {
 //number for according active
 index=0
 
-rows=5
+rows=10
 totalRows=0
 page=0;
 count=0;

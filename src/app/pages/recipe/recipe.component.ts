@@ -69,7 +69,7 @@ export class RecipeComponent {
 //number for according active
 index=0
 
-rows=3
+rows=10
 totalRows=0
 page=0;
 count=0;
