@@ -83,7 +83,7 @@
                   <button pButton pRipple type="button" (click)="openModifier('top-right',purchase)" icon="pi pi-pencil" class="p-button p-component p-button-text p-button-icon-only"></button>
                 </td>-->
 
-              <td >
+              <td style="width: 45%; min-width: 8rem;" >
                 <button pButton pRipple type="button" (click)="show($event,purchase)" icon="pi pi-pencil"
                   class="p-button p-component p-button-text p-button-icon-only"></button> 
                 <button pButton pRipple type="button" (click)="delete('top-right',purchase)" icon="pi pi-trash"
@@ -94,7 +94,7 @@
           </ng-template>
         </p-table>
         <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [totalRecords]="totalRows"
-          [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
+          [rowsPerPageOptions]="[10, 25, 50]"></p-paginator>
 
       </div>
 

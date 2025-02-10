@@ -10,6 +10,9 @@ export const navItems: NavItem[] = [
     route: 'home/acceuil',
   },
   {
+    navCap: 'Planification de Repas',
+  },
+  {
     displayName: 'Mes Plats',
     iconName: 'material-symbols:dining',
     route: 'home/plat',
@@ -19,9 +22,6 @@ export const navItems: NavItem[] = [
     iconName: 'arcticons:reciper',
     route: 'home/recette',
 
-  },
-  {
-    navCap: 'Planification de Repas',
   },
   {
     displayName: 'Planifier un repas',

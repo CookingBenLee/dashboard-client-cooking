@@ -693,7 +693,6 @@ retrieveCountryById(): void {
   for (let i = 0; i < this.detailPurchasesForms.length; i++) {
     this.montant += this.detailPurchasesForms[i].totalPrice;
   }
-
   this.changeUnit(i);
 }
 
@@ -768,6 +767,8 @@ retrieveCountryById(): void {
     
     } else {
       form.distinctUnit = false; // Pas de différence d'unités
+      form.realUnit = inputUnit;
+
     }
    /*if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || (this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="GR") || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
      console.log(this.detailPurchasesForms[i].product.unit);
