@@ -212,10 +212,10 @@
                     <td>{{ detail?.product?.name }}</td>
                     <td>{{ detail?.product?.category?.name }}</td>
                     <td>{{ detail?.product?.conditioning?.name }}</td>
-                    <td>{{ detail?.realQ }} ({{ detail?.realUnit }})</td>
+                    <td>{{detail.quantity}} ({{detail?.realUnit}})</td>
                     <!-- <td>{{ detail?.value | number:'1.2-2' }}
                       /{{ detail?.unit?.code }}</td> -->
-                    <td>{{ detail?.totalPrice }} ({{curenn}})</td>
+                    <td>{{detail?.totalPrice}} ({{curenn}})</td>
                     <td>
                       <button pButton pRipple type="button" icon="pi pi-trash"
                         class="p-button p-component p-button-text p-button-icon-only"
