@@ -54,11 +54,12 @@ import { MaterialModule } from 'src/app/material.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { TablerIconsModule } from 'angular-tabler-icons';
 
 @Component({
   selector: 'app-recipe',
   standalone: true,
-  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,
+  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,TablerIconsModule,
     RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
     TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
