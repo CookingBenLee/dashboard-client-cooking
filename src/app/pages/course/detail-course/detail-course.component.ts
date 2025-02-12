@@ -289,11 +289,12 @@ detailPurchasesForms2:any=[]
 
   changeUnit(i:any){
     console.log(i);
-    console.log(this.products);
- 
-    const form = this.detailPurchasesForms[i];
-    const productUnit = form.product?.unit?.code?.toUpperCase();
-    const inputUnit = form.unit?.code?.toUpperCase();
+   console.log(this.products);
+
+
+   const form = this.detailPurchasesForms[i];
+   const productUnit = form.product?.unit?.code?.toUpperCase();
+   const inputUnit = form.unit?.code?.toUpperCase();
 
    // Vérifier si les unités sont distinctes
    if (inputUnit !== "L" && inputUnit !== "KG") {
@@ -304,7 +305,6 @@ detailPurchasesForms2:any=[]
     let targetUnit = ""; // Unité de destination
     let targetUnitCode = "";
 
-    // Conversion en fonction des unités
     // Conversion en fonction des unités
     switch (inputUnit) {
       case "KG": // Kilogramme
@@ -341,7 +341,6 @@ detailPurchasesForms2:any=[]
     form.realQ = form.quantity * conversionFactor;
     form.realQuantity = `${form.realQ} ${targetUnit}`;
     form.realUnit = targetUnitCode;
-
     // Mettre à jour le prix unitaire (value) après conversion
     if (form.realQ !== 0) {
       form.value = form.totalPrice / form.realQ;
@@ -351,6 +350,7 @@ detailPurchasesForms2:any=[]
     
     } else {
       form.distinctUnit = false; // Pas de différence d'unités
+      form.realUnit = inputUnit;
     }
     /*if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || (this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="GR") || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
       console.log(this.detailPurchasesForms[i].product.unit);
