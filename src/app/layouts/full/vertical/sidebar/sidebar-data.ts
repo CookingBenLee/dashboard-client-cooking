@@ -13,15 +13,15 @@ export const navItems: NavItem[] = [
     navCap: 'Planification de Repas',
   },
   {
-    displayName: 'Mes Plats',
-    iconName: 'material-symbols:dining',
-    route: 'home/plat',
-  },
-  {
     displayName: 'Mes Recettes',
     iconName: 'arcticons:reciper',
     route: 'home/recette',
 
+  },
+  {
+    displayName: 'Mes Plats',
+    iconName: 'material-symbols:dining',
+    route: 'home/plat',
   },
   {
     displayName: 'Planifier un repas',

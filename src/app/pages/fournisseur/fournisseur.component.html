@@ -44,7 +44,7 @@
             Adresse
           </th>
           <td mat-cell *matCellDef="let shop" class="f-s-14">
-            {{ shop.addressPrincipale?.label }}
+            {{ shop.addressPrincipale?.streetName }}, {{ shop.addressPrincipale?.streetNumber }}, {{ shop.addressPrincipale?.label }}, {{ shop.addressPrincipale?.country.name }}, {{ shop.addressPrincipale?.city }}.
           </td>
         </ng-container>
 
