@@ -55,6 +55,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
+import { PreparationRecipe } from 'src/app/services/preparationRecipe/PreparationRecipe';
+import { PreparationrecipeComponent } from './preparationrecipe/preparationrecipe.component';
 
 @Component({
   selector: 'app-recipe',
@@ -237,6 +239,31 @@ getAll(){
 
   }
 
+  showPrepa() {
+    //this.purchaseSelected=purchase
+    
+  
+     this.ref = this.dialogService.open(PreparationrecipeComponent, {
+         header: 'Preparation',
+         width: '100%',
+         height:'100%',
+         contentStyle: { overflow: 'auto' },
+         baseZIndex: 10000,
+         maximizable: true,
+        //  data:p,
+     });
+    //  this.op.toggle(e)
+  
+      //  this.ref.onClose.subscribe((shop: Shop) => {
+      //      if (shop) {
+      //          this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
+      //      }
+      //  });
+  
+       // this.ref.onMaximize.subscribe((value) => {
+       //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
+       // });
+   }
 
 
 

@@ -13,7 +13,7 @@ export class PreparationRecipeService {
 
   //create
   create(preparation_recipe:PreparationRecipe){
-    return this.http.post<any>(`${this.env.api}/preparation_recipe/new`,preparation_recipe)
+    return this.http.post<any>(`${this.env.apiUrl}/preparation_recipe/new`,preparation_recipe)
     .toPromise()
     .then()
     .then();
@@ -21,26 +21,26 @@ export class PreparationRecipeService {
   //read
 
   getById(id:any | undefined){
-    return this.http.get<any>(`${this.env.api}/preparation_recipe/load/${id}`)
+    return this.http.get<any>(`${this.env.apiUrl}/preparation_recipe/load/${id}`)
         .toPromise()
         .then(res => res.data as PreparationRecipe)
         .then(data => data);
   }
   getAll() {
-    return this.http.get<any>(`${this.env.api}/preparation_recipe/getall`)
+    return this.http.get<any>(`${this.env.apiUrl}/preparation_recipe/getall`)
         .toPromise()
         .then(res => res.data as PreparationRecipe[])
         .then(data => data);
   }
   getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.api}/preparation_recipe/getallpage?page=`+param['page']+'&size='+param['size'])
+    return this.http.get<any>(`${this.env.apiUrl}/preparation_recipe/getallpage?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);
   }
 
   byrecipe(id:number |undefined) {
-    return this.http.get<any>(`${this.env.api}/preparation_recipe/byrecipe?idRecipe=${id}`)
+    return this.http.get<any>(`${this.env.apiUrl}/preparation_recipe/byrecipe?idRecipe=${id}`)
         .toPromise()
         .then(res => res.data as PreparationRecipe[])
         .then(data => data);
@@ -50,7 +50,7 @@ export class PreparationRecipeService {
 
   //update
   update(idpreparation_recipe:number |undefined, preparation_recipe:PreparationRecipe){
-    return this.http.put<any>(`${this.env.api}/preparation_recipe/update/${idpreparation_recipe}`,preparation_recipe)
+    return this.http.put<any>(`${this.env.apiUrl}/preparation_recipe/update/${idpreparation_recipe}`,preparation_recipe)
     .toPromise()
     .then()
     .then();
@@ -58,7 +58,7 @@ export class PreparationRecipeService {
 
   ///delete
   delete(id:number | undefined) {
-  return this.http.delete<any>(`${this.env.api}/preparation_recipe/delete/${id}`)
+  return this.http.delete<any>(`${this.env.apiUrl}/preparation_recipe/delete/${id}`)
   .toPromise()
         .then()
         .then();
