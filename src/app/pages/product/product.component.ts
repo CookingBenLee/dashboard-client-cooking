@@ -323,9 +323,9 @@ export class ProductComponent implements OnInit {
         this.loading=false
         //this.isSuccess=true
         this.sucess="Produit crée !";
-        this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
-        this.resetFields();
         this.camionDialog = false;
+        this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
+        this.resetFields();
       },
       (error: any)=>{
         //this.isError=true
@@ -335,7 +335,8 @@ export class ProductComponent implements OnInit {
           this.erreur="Erreur liée au serveur"
         }
         this.loading=false
-        this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+        this.camionDialog = false;
+        this.messageService.add({severity: 'error', summary: 'Error', detail: this.erreur });
 
       });
     // this.productData.user = { id: user.id };
