@@ -145,6 +145,7 @@ export class ProductComponent implements OnInit {
     'name',
     'category',
     'stock',
+    'conditioning',
     'action',
   ];
 
