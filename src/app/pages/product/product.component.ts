@@ -158,7 +158,7 @@ export class ProductComponent implements OnInit {
     public dialog: MatDialog, private currencyService: CurrencyService, private stockSerevice: StockService,
     private brandService: BrandService, private conditioningService: ConditioningService, private unitService: UnitService, private categoryService: CategoryService,
     private productService: ProductService, private paginateService: PaginateService, private snackBar: MatSnackBar,
-    private tokenService: TokenService, private dialogService: DialogService,
+    private tokenService: TokenService, private dialogService: DialogService,private messageService: MessageService,
     private router: Router
   ) { }
 
@@ -285,11 +285,20 @@ export class ProductComponent implements OnInit {
     }
   }
 
+  // openDialogAdd() {
+  //   this.resetFields();
+  //   this.dialog.open(this.dialogTemplate, {
+  //     width: '1200px', height: '450px'
+  //   });
+  // }
+
+  camionDialog: boolean= false;
   openDialogAdd() {
     this.resetFields();
-    this.dialog.open(this.dialogTemplate, {
-      width: '1200px', height: '450px'
-    });
+    this.camionDialog = true;
+    // this.dialog.open(this.dialogTemplate, {
+    //   width: '1200px', height: '450px'
+    // });
   }
 
   openCourse() {
@@ -307,22 +316,44 @@ export class ProductComponent implements OnInit {
 
   addProduct() {
     const user = this.tokenService.getUser();
-    this.productData.user = { id: user.id };
-    console.log("poduit envoye", this.productData);
-    this.productService.create(this.productData).then(() => {
-      this.snackBar.open('Produit ajouté avec succès !', 'Fermer', {
-        duration: 3000,
-        panelClass: ['snackbar-success']
+      this.productData.user = { id: user.id };
+      console.log(this.productData);
+      
+      this.productService.create(this.productData).then((data) =>{
+        this.loading=false
+        //this.isSuccess=true
+        this.sucess="Produit crée !";
+        this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
+        this.resetFields();
+        this.camionDialog = false;
+      },
+      (error: any)=>{
+        //this.isError=true
+        if(error.error.message=='ko'){
+          this.erreur=error.error.data
+          }else{
+          this.erreur="Erreur liée au serveur"
+        }
+        this.loading=false
+        this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+
       });
-      this.getAll();
-      this.dialog.closeAll();
-      this.resetFields();
-    }).catch(err => {
-      this.snackBar.open('Erreur lors de l\'ajout du produit.', 'Fermer', {
-        duration: 3000,
-        panelClass: ['snackbar-error']
-      });
-    });
+    // this.productData.user = { id: user.id };
+    // console.log("poduit envoye", this.productData);
+    // this.productService.create(this.productData).then(() => {
+    //   this.snackBar.open('Produit ajouté avec succès !', 'Fermer', {
+    //     duration: 3000,
+    //     panelClass: ['snackbar-success']
+    //   });
+    //   this.getAll();
+    //   this.dialog.closeAll();
+    //   this.resetFields();
+    // }).catch(err => {
+    //   this.snackBar.open('Erreur lors de l\'ajout du produit.', 'Fermer', {
+    //     duration: 3000,
+    //     panelClass: ['snackbar-error']
+    //   });
+    // });
   }
 
   productUpdate(product: Stock) {

@@ -10,8 +10,8 @@
         </mat-form-field>
       </div>
       <div class="col-4 d-flex align-items-center justify-content-end">
-        <button mat-flat-button (click)="openCourse()" color="primary">
-          Ajouter une course
+        <button mat-flat-button (click)="openDialogAdd()" color="primary">
+          Ajouter un produit
         </button>
       </div>
     </div>
@@ -260,3 +260,60 @@
   </div>
 
 </ng-template>
+<p-dialog [(visible)]="camionDialog" appendTo="body" [style]="{width: '850px'}" header="Enregistrement d'un produit" [modal]="true"
+            class="p-fluid">
+            <div class="grid">
+              <form class=" newform col-12" #f="ngForm" (ngSubmit)="addProduct()">
+                <div class="card p-fluid">
+                  <div class="grid">
+                    <div class="col-6">
+                      <div class="field">
+                        <label htmlFor="name">Nom</label>
+                        <input pInputText id="name" [(ngModel)]="productData.name" name="name" type="text" placeholder="Nom produit" required />
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="field ">
+                        <label htmlFor="unit">Unité</label>
+                        <p-dropdown [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.unit"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="field ">
+                        <label htmlFor="category">Categorie</label>
+                        <p-dropdown [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.category"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="field ">
+                        <label htmlFor="conditioning">Condition</label>
+                        <p-dropdown [options]="conditionings" optionLabel="name" name="conditioning"
+                          [(ngModel)]="productData.conditioning"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="field">
+                        <label htmlFor="lostpercentage">Pourcentage de perte</label>
+                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="lostpercentage" id="lostpercentage"
+                          [(ngModel)]="productData.lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
+                        </p-inputNumber>
+                      </div>
+            
+                    </div>
+                  </div>
+            
+                  <p>Description</p>
+                  <textarea rows="5" cols="10" [(ngModel)]="productData.description" name="description" placeholder="Description"
+                    pInputTextarea></textarea>
+            
+                  <label id="erreur" *ngIf="isError">{{erreur}}</label>
+                  <label id="success" *ngIf="isSuccess">{{sucess}}</label>
+            
+            
+                  <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4"
+                    [disabled]="!f.valid"></button>
+            
+                </div>
+              </form>
+            </div>
+</p-dialog>
