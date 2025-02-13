@@ -21,7 +21,7 @@
               <ng-template let-shop pTemplate="item">
                 <div class="flex align-items-center operatingSystems-item">
                   <div class="flex align-items-center operatingSystems-item">
-                    <div> {{shop?.name}}({{shop?.addressPrincipale?.label}})</div>
+                    <div> {{shop?.name}}({{ shop.addressPrincipale?.streetName }}, {{ shop.addressPrincipale?.streetNumber }}, {{ shop.addressPrincipale?.label }}, {{ shop.addressPrincipale?.city }}, {{ shop.addressPrincipale?.country.name }}.)</div>
                   </div>
   
                 </div>
