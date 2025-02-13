@@ -42,12 +42,12 @@
 
           <ng-template pTemplate="header">
             <tr>
-              <th pSortableColumn="reference" pColumnFilter="reference">Reference<p-sortIcon
-                  field="reference"></p-sortIcon></th>
+              <!-- <th pSortableColumn="reference" pColumnFilter="reference">Reference<p-sortIcon
+                  field="reference"></p-sortIcon></th> -->
               <th pSortableColumn="shop" pColumnFilter="shop">Fournisseur<p-sortIcon field="shop"></p-sortIcon></th>
 
-              <th pSortableColumn="datePurchase" pColumnFilter="datePurchase">Date Approvisionnement<p-sortIcon
-                  field="datePurchase"></p-sortIcon></th>
+              <!-- <th pSortableColumn="datePurchase" pColumnFilter="datePurchase">Date Approvisionnement<p-sortIcon
+                  field="datePurchase"></p-sortIcon></th> -->
 
               <th pSortableColumn="montant" pColumnFilter="montant">Montant<p-sortIcon field="montant"></p-sortIcon>
               </th>
@@ -63,17 +63,17 @@
           </ng-template>
           <ng-template pTemplate="body" let-purchase>
             <tr class="cursor-pointer">
-              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.reference}}</td>
-              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.shop?.name}}</td>
+              <!-- <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.reference}}</td> -->
+              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.shop?.name}} ({{ purchase?.shop.addressPrincipale?.streetName }}, {{ purchase?.shop.addressPrincipale?.streetNumber }}, {{ purchase?.shop.addressPrincipale?.label }}, {{ purchase?.shop.addressPrincipale?.city }}, {{ purchase?.shop.addressPrincipale?.country.name }}.)</td>
               <!--<td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.address?.address?.label}}</td>-->
 
-              <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.datePurchase |
-                date:'dd-MM-yyyy HH:mm'}}</td>
+              <!-- <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.datePurchase |
+                date:'dd-MM-yyyy'}}</td> -->
 
               <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.montant}}
                 {{purchase?.currency?.name}}</td>
               <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.entryDate |
-                date:'dd-MM-yyyy HH:mm'}}</td>
+                date:'dd-MM-yyyy'}}</td>
 
               <!--<td style="width: 15%;" (click)="show($event,purchase)">
                   <button pButton pRipple type="button"  icon="pi pi-eye" class="p-button p-component p-button-text p-button-icon-only"></button>
