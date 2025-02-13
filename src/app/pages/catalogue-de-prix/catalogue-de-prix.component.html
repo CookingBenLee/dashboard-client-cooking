@@ -86,6 +86,7 @@
           <div class="info-header">
             <div class="info-header-cell">Fournisseur</div>
             <div class="info-header-cell">Prix</div>
+            <div class="info-header-cell">Adresse</div>
           </div>
 
           <!-- Ligne Fournisseur -->
@@ -96,6 +97,9 @@
               {{ pric?.value || 'Non renseigné' }}
               {{ pric?.currency?.symbol || 'Non renseigné'  }} / {{ pric?.product.unit.code }}
             </div>
+            <div class="info-cell value">
+              {{ pric?.shop.addressPrincipale?.streetName }}, {{ pric?.shop.addressPrincipale?.streetNumber }}, {{ pric?.shop.addressPrincipale?.label }}, {{ pric?.shop.addressPrincipale?.country.name }}, {{ pric?.shop.addressPrincipale?.city }}.
+              </div>
           </div>
         </div>
       </div>
