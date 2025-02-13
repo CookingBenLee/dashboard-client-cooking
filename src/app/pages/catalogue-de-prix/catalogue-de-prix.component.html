@@ -78,7 +78,7 @@
     <div *ngIf="priceData; else noPriceData">
       <div class="dialog-container">
         <!-- Titre de la boîte de dialogue -->
-        <h2 class="dialog-title">Détails du Prix</h2>
+        <h2 class="dialog-title">Détails du Prix: {{ prouit.name }}, {{ prouit.category?.name }}, {{ prouit.conditioning?.name }}</h2>
 
         <!-- Tableau élégant -->
         <div class="info-table">
@@ -94,7 +94,7 @@
             <div class="info-cell label">{{ pric?.shop?.name || 'Non renseigné' }}</div>
             <div class="info-cell value">
               {{ pric?.value || 'Non renseigné' }}
-              {{ pric?.currency?.symbol || 'Non renseigné' }}
+              {{ pric?.currency?.symbol || 'Non renseigné'  }} / {{ pric?.product.unit.code }}
             </div>
           </div>
         </div>

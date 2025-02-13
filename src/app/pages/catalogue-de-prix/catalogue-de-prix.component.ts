@@ -219,11 +219,11 @@ export class CatalogueDePrixComponent implements OnInit {
     }
   }
 
-
+  prouit: Product
   openDialog(product: Product) {
     // this.resetFields();
     console.log(product, "id du produit");
-    
+    this.prouit = product;
     
     this.priceService.byProductAndUser(product.id,this.user.id).then(
       (data: any) => {
