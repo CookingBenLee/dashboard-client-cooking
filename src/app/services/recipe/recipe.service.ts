@@ -39,6 +39,13 @@ export class RecipeService {
         .then(data => data);
   }
 
+  getAllUser(id:number) {
+    return this.http.get<any>(`${this.env.apiUrl}/recipe/getallbyuser/${id}`)
+        .toPromise()
+        .then(res => res.data as any)
+        .then(data => data);
+  }
+
   bycategory(id:number |undefined) {
     return this.http.get<any>(`${this.env.apiUrl}/recipe/bycategory?idCategory=${id}`)
         .toPromise()
