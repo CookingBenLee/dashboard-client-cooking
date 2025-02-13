@@ -41,6 +41,15 @@
           </td>
         </ng-container>
 
+        <ng-container  matColumnDef="conditioning">
+          <th   mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Conditionnement
+          </th>
+          <td style="cursor: pointer;" (click)="openDialog(product.product)" mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.product.conditioning?.name }}
+          </td>
+        </ng-container>
+
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
