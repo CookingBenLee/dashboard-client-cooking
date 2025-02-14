@@ -51,10 +51,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-preparationrecipe',
   standalone: true,
-  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,ProgressSpinnerModule,
-      RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
-      TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule],
-      providers: [ConfirmationService, MessageService,DialogService],
+  imports: [MaterialModule, MatButtonModule, MatDialogModule, CommonModule, ProgressSpinnerModule,
+    RouterModule, CalendarModule, ConfirmDialogModule, InputNumberModule, InputTextareaModule, DialogModule, ToastModule, InputTextModule,
+    TableModule, PaginatorModule, DividerModule, TabViewModule, OverlayPanelModule],
+  providers: [ConfirmationService, MessageService, DialogService],
   templateUrl: './preparationrecipe.component.html',
   styleUrl: './preparationrecipe.component.scss'
 })
@@ -62,58 +62,70 @@ export class PreparationrecipeComponent {
 
   @ViewChild('invoice') invoiceElement!: ElementRef;
 
-  recettes:Recipe[]=[]
-  detailsDishes:DetailsRecipe[]=[]
-  loading=false
+  recettes: Recipe[] = []
+  detailsDishes: DetailsRecipe[] = []
+  loading = false
 
-  recetteSelectione:Recipe=new Recipe();
-  poidNet=1
-  poidBrut:number=0
-  prix:number=0
-  rows=5
-  totalRows=0
-  page=0;
-  count=0;
+  recetteSelectione: Recipe = new Recipe();
+  poidNet = 1
+  poidBrut: number = 0
+  prix: number = 0
+  rows = 5
+  totalRows = 0
+  page = 0;
+  count = 0;
 
 
-  totalPages=0
-  resClient:any
+  totalPages = 0
+  resClient: any
 
-  generating=false
+  generating = false
 
-  loadingPage=false
+  loadingPage = false
 
   ///
-  preparationRecipe:PreparationRecipe=new PreparationRecipe()
-  loadingPreparation=false
+  preparationRecipe: PreparationRecipe = new PreparationRecipe()
+  loadingPreparation = false
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
-    private dialogService:DialogService,private preparationRecipeService:PreparationRecipeService,
-    private paginateService:PaginateService,private tokenService: TokenService,
-    private recipeService:RecipeService,private detailRecipeService:DetailsrecipeService,
-    public tableShort:TableShortService) {}
+    private dialogService: DialogService, private preparationRecipeService: PreparationRecipeService,
+    private paginateService: PaginateService, private tokenService: TokenService,
+    private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,
+    public tableShort: TableShortService) { }
 
 
-    async ngOnInit(): Promise<void> {
+  utilisateurC: any;
+  usercurrency: any;
+  selectedCountry: any;
+  async ngOnInit(): Promise<void> {
 
-      this.getAll()
-    }
+    this.utilisateurC = this.tokenService.getUser();
+    this.usercurrency = this.utilisateurC.compteUser.address.country.currency.name
+    // this.currencys.push(this.usercurrency)
+    // console.log("currency", this.usercurrency);
 
-    getAll(){
-      this.recipeService.getAll().then(data =>{
-        this.recettes=data
-      })
-    }
+    this.getAll()
+  }
+
+  getAll() {
+    const user = this.tokenService.getUser();
+    this.recipeService.getAllUser(user.id).then(data => {
+      this.recettes = data
+
+      console.log(this.recettes);
+      
+    })
+  }
 
 
 
 
-     //recuperation de valeurs
-  getAllPaginate(){
-    const params=this.paginateService.getRequestParams(this.page,this.rows)
+  //recuperation de valeurs
+  getAllPaginate() {
+    const params = this.paginateService.getRequestParams(this.page, this.rows)
     console.log(params);
     const user = this.tokenService.getUser();
-    this.recipeService.getAllPage(params, user.id).then(data =>{
+    this.recipeService.getAllPage(params, user.id).then(data => {
       console.log(data)
       //this.menus=data
       console.log(data)
@@ -121,36 +133,36 @@ export class PreparationrecipeComponent {
       console.log(data)
       //this.contenus=data
 
-      this.totalPages=data.totalPages
-        if(this.recettes.length==0 || this.page==0){
-          this.resClient=data
-          console.log(this.resClient)
-          this.recettes=data.content
-          console.log(this.totalPages)
-          this.totalRows=data.totalElements
-          console.log(this.count)
+      this.totalPages = data.totalPages
+      if (this.recettes.length == 0 || this.page == 0) {
+        this.resClient = data
+        console.log(this.resClient)
+        this.recettes = data.content
+        console.log(this.totalPages)
+        this.totalRows = data.totalElements
+        console.log(this.count)
 
-        }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
-          this.resClient.number =data.number
-          console.log(data)
+      } else if ((this.resClient.totalElements < data.totalElements) || this.resClient.number != data.number) {
+        this.resClient.number = data.number
+        console.log(data)
 
-          if(data.content.size>0){
-            this.recettes.concat(data.content)
-          }
-          console.log(this.recettes)
-
+        if (data.content.size > 0) {
+          this.recettes.concat(data.content)
         }
+        console.log(this.recettes)
+
+      }
     }, () => {
       //console.log(error)
     })
   }
 
 
-  async getDetailDishes(recette:Recipe){
-    await this.detailRecipeService.byRecipe(recette.id).then(data =>{
+  async getDetailDishes(recette: Recipe) {
+    await this.detailRecipeService.byRecipe(recette.id).then(data => {
       console.log(data)
-      this.detailsDishes=data
-      this.detailsDishes= this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));
+      this.detailsDishes = data
+      this.detailsDishes = this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));
 
       this.changePoid()
     })
@@ -158,47 +170,47 @@ export class PreparationrecipeComponent {
 
 
 
-  async changePlat(){
+  async changePlat() {
     console.log("changed---------------------------------");
 
     console.log(this.recetteSelectione);
 
-    if(this.recetteSelectione==null || this.recetteSelectione.id ==null ){
-      this.detailsDishes=[]
-      this.recetteSelectione=new Recipe()
+    if (this.recetteSelectione == null || this.recetteSelectione.id == null) {
+      this.detailsDishes = []
+      this.recetteSelectione = new Recipe()
       console.log("Pas de brut");
       //this.loadingPage=true
-      this.messageService.add({key:'tc', severity: 'info', summary: 'Info', detail: "Veuillez sélectionné un plat " });
+      this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: "Veuillez sélectionné un plat " });
       //this.loadingPage=false
-    }else{
-      this.loadingPage=true
-      if(this.recetteSelectione.net==null) this.recetteSelectione.net=1
+    } else {
+      this.loadingPage = true
+      if (this.recetteSelectione.net == null) this.recetteSelectione.net = 1
       //
-      if(this.recetteSelectione.ratio==null){
-        this.messageService.add({key:'tc', severity: 'info', summary: 'Info', detail: "Le plat sélectionné n'a pas de ratio spécifié, impossible d'effectuer les calculs." });
+      if (this.recetteSelectione.ratio == null) {
+        this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: "Le plat sélectionné n'a pas de ratio spécifié, impossible d'effectuer les calculs." });
 
       }
-      this.poidNet= this.recetteSelectione.net
-      this.poidBrut=this.poidNet*this.recetteSelectione.ratio
-      this.recetteSelectione.brut=this.poidBrut
+      this.poidNet = this.recetteSelectione.net
+      this.poidBrut = this.poidNet * this.recetteSelectione.ratio
+      this.recetteSelectione.brut = this.poidBrut
 
       await this.getDetailDishes(this.recetteSelectione)
-      this.loadingPage=false
+      this.loadingPage = false
     }
 
   }
 
-  getDetailPercet(detail:DetailsRecipe,recette:Recipe){
-    var detailValue=detail.net
-    var platValue=recette.net
+  getDetailPercet(detail: DetailsRecipe, recette: Recipe) {
+    var detailValue = detail.net
+    var platValue = recette.net
 
-    var value=(detailValue*100)/platValue
+    var value = (detailValue * 100) / platValue
 
     return value;
   }
 
 
-  async changePoid(){
+  async changePoid() {
     //calcul des poid net des details
     await this.calculDetailNet()
     await this.calculDetailBrut()
@@ -208,44 +220,44 @@ export class PreparationrecipeComponent {
     await this.changeDetailInfos()
   }
 
-  async calculDetailNet(){
-    await this.detailsDishes.forEach(detail=>{
+  async calculDetailNet() {
+    await this.detailsDishes.forEach(detail => {
       //detail.floatingNet=(detail.net*this.poidNet)/this.recetteSelectione.net
-      if(detail.proportion==null){
-        this.messageService.add({key:'tc', severity: 'info', summary: 'Info', detail: `L'ingrédient '${detail.ingredient.name}' n'a pas de proportion spécifié.` });
+      if (detail.proportion == null) {
+        this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: `L'ingrédient '${detail.ingredient.name}' n'a pas de proportion spécifié.` });
       }
-      detail.net=(this.recetteSelectione.brut*(detail.proportion))/100
+      detail.net = (this.recetteSelectione.brut * (detail.proportion)) / 100
     })
   }
 
-  async calculDetailBrut(){
-    await this.detailsDishes.forEach(detail=>{
-      var perte=detail.ingredient.lossPercentage
+  async calculDetailBrut() {
+    await this.detailsDishes.forEach(detail => {
+      var perte = detail.ingredient.lossPercentage
 
-      if (perte!=null) {
+      if (perte != null) {
         console.log(perte);
 
         //detail.floatingBrut=detail.floatingNet/(1-(perte/100))
-        detail.brut=detail.net/(1-perte)
+        detail.brut = detail.net / (1 - perte)
 
       }
     })
   }
 
-  async calculDetailCout(){
-    await this.detailsDishes.forEach(detail=>{
-      var price=detail.ingredient.price
-      if (price!=null) {
+  async calculDetailCout() {
+    await this.detailsDishes.forEach(detail => {
+      var price = detail.ingredient.price
+      if (price != null) {
         //detail.floatingCout=detail.floatingBrut*price
-        detail.cout=detail.brut*price
+        detail.cout = detail.brut * price
       }
     })
   }
 
-  async changeDetailInfos(){
-    this.poidBrut=0
-    this.prix=0
-    this.recetteSelectione.cout=0
+  async changeDetailInfos() {
+    this.poidBrut = 0
+    this.prix = 0
+    this.recetteSelectione.cout = 0
 
     // this.detailsDishes.forEach(detail=>{
     //   this.poidBrut+=detail.floatingBrut
@@ -255,9 +267,9 @@ export class PreparationrecipeComponent {
     //   this.poidBrut+=detail.floatingBrut
     // })
 
-    await this.detailsDishes.forEach(detail=>{
+    await this.detailsDishes.forEach(detail => {
       //this.prix+=detail.floatingCout
-      this.recetteSelectione.cout+=detail.cout
+      this.recetteSelectione.cout += detail.cout
     })
   }
 
@@ -291,15 +303,15 @@ export class PreparationrecipeComponent {
   public async generate(): Promise<void> {
 
 
-  //   html2canvas(DATA).then((canvas) => {
-  //     let fileWidth = 210;
-  //     let fileHeight = (canvas.height * fileWidth) / canvas.width;
-  //     const FILEURI = canvas.toDataURL('image/png');
-  //     let PDF = new jsPDF('portrait', 'mm', 'a4',true);
-  //     let position = 0;
-  //     PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-  //     PDF.save(nom);
-  //   });
+    //   html2canvas(DATA).then((canvas) => {
+    //     let fileWidth = 210;
+    //     let fileHeight = (canvas.height * fileWidth) / canvas.width;
+    //     const FILEURI = canvas.toDataURL('image/png');
+    //     let PDF = new jsPDF('portrait', 'mm', 'a4',true);
+    //     let position = 0;
+    //     PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+    //     PDF.save(nom);
+    //   });
 
     // try{
     //   this.loadingPage=true
@@ -346,32 +358,32 @@ export class PreparationrecipeComponent {
 
 
 
-  async changeGenaratingValue(){
-    this.generating=!this.generating
+  async changeGenaratingValue() {
+    this.generating = !this.generating
   }
 
 
-  savePreparation(){
+  savePreparation() {
 
-    this.loadingPreparation=true
-    this.loadingPage=true
+    this.loadingPreparation = true
+    this.loadingPage = true
 
     //
-    this.preparationRecipe.recipe=this.recetteSelectione;
-    this.preparationRecipe.poidsNet=this.recetteSelectione.net
+    this.preparationRecipe.recipe = this.recetteSelectione;
+    this.preparationRecipe.poidsNet = this.recetteSelectione.net
 
-    this.preparationRecipeService.create(this.preparationRecipe).then(data=>{
+    this.preparationRecipeService.create(this.preparationRecipe).then(data => {
       console.log(data);
-      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Preparation enregistrée !"});
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: "Preparation enregistrée !" });
 
-      this.recetteSelectione=new Recipe()
-      this.detailsDishes=[]
+      this.recetteSelectione = new Recipe()
+      this.detailsDishes = []
 
-      this.loadingPreparation=false
-      this.loadingPage=false
+      this.loadingPreparation = false
+      this.loadingPage = false
 
 
-    }).catch(error=>{
+    }).catch(error => {
       this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Erreur lors de la sauvegarde.' });
 
     })

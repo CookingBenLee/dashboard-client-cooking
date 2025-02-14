@@ -25,19 +25,28 @@
   <mat-card-content class="p-24">
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" class="w-100">
-        <ng-container matColumnDef="nom produit">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom du produit</th>
-          <td mat-cell *matCellDef="let product">
+        <ng-container  matColumnDef="nom produit">
+          <th  mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom du produit</th>
+          <td style="cursor: pointer;" (click)="openDialog(product.product)" mat-cell *matCellDef="let product">
             {{ product.product.name }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="categorie">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+        <ng-container  matColumnDef="categorie">
+          <th   mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Catégorie
           </th>
-          <td mat-cell *matCellDef="let product" class="f-s-14">
+          <td style="cursor: pointer;" (click)="openDialog(product.product)" mat-cell *matCellDef="let product" class="f-s-14">
             {{ product.product.category?.name }}
+          </td>
+        </ng-container>
+
+        <ng-container  matColumnDef="conditioning">
+          <th   mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Conditionnement
+          </th>
+          <td style="cursor: pointer;" (click)="openDialog(product.product)" mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product.product.conditioning?.name }}
           </td>
         </ng-container>
 
@@ -98,7 +107,7 @@
               {{ pric?.currency?.symbol || 'Non renseigné'  }} / {{ pric?.product.unit.code }}
             </div>
             <div class="info-cell value">
-              {{ pric?.shop.addressPrincipale?.streetName }}, {{ pric?.shop.addressPrincipale?.streetNumber }}, {{ pric?.shop.addressPrincipale?.label }}, {{ pric?.shop.addressPrincipale?.country.name }}, {{ pric?.shop.addressPrincipale?.city }}.
+              {{ pric?.shop.addressPrincipale?.streetName }}, {{ pric?.shop.addressPrincipale?.streetNumber }}, {{ pric?.shop.addressPrincipale?.label }}, {{ pric?.shop.addressPrincipale?.city }}, {{ pric?.shop.addressPrincipale?.country.name }}.
               </div>
           </div>
         </div>

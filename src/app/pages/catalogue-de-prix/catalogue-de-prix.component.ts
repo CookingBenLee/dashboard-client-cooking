@@ -91,6 +91,7 @@ export class CatalogueDePrixComponent implements OnInit {
   displayedColumns?: string[] = [
     'nom produit',
     'categorie',
+    'conditioning',
     'action',
     // 'fournisseur',
     // 'prix',

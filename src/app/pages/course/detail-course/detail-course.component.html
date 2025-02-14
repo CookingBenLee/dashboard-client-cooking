@@ -21,7 +21,7 @@
               <ng-template let-shop pTemplate="item">
                 <div class="flex align-items-center operatingSystems-item">
                   <div class="flex align-items-center operatingSystems-item">
-                    <div> {{shop?.name}}({{shop?.addressPrincipale?.label}})</div>
+                    <div> {{shop?.name}}({{ shop.addressPrincipale?.streetName }}, {{ shop.addressPrincipale?.streetNumber }}, {{ shop.addressPrincipale?.label }}, {{ shop.addressPrincipale?.city }}, {{ shop.addressPrincipale?.country.name }}.)</div>
                   </div>
   
                 </div>
@@ -77,7 +77,8 @@
             <div class="divtableau">
               <table *ngIf="detailPurchasesForms2.length!=0">
               <thead>
-                <th>Produit (Catégory)</th>
+                <th>Produit</th>
+                <th>Catégorie</th>
                 <th>Conditionnement</th>
                 <th>Quantité(unité)</th>
   
@@ -87,7 +88,8 @@
   
               </thead>
               <tr *ngFor="let detail of detailPurchasesForms2,let i=index">
-                <td>{{detail?.product?.name}}({{detail.product?.category?.name}})</td>
+                <td>{{detail?.product?.name}}</td>
+                <td>{{detail.product?.category?.name}}</td>
                 <td>{{detail.product.conditioning?.name}}</td>
                 <td>{{detail.quantity}} ({{detail?.realUnit}})</td>
                 <!-- <td>{{detail.value | number:'1.2-2'}}/{{detail?.unit?.code}}</td> -->

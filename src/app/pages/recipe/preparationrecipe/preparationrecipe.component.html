@@ -13,7 +13,7 @@
         <div class="formpart">
           <form class="p-fluid colo">
             <div class="grid">
-              <div class="row">
+              <div  class="row ml-2">
                 <label for="" class="font-bold mb-1" >Préparation de Recette</label>
               </div>
               <div class="row grid">
@@ -54,7 +54,7 @@
                   </div>
   
                   <div class="cout  divgray">
-                    <label for="cout" >Coût Total(FCFA): <span appPriceFormater >{{ recetteSelectione.cout | number: '1.0-0' }} </span> </label>
+                    <label for="cout" >Coût Total( {{ usercurrency }} ): <span appPriceFormater >{{ recetteSelectione.cout | number: '1.0-0' }} </span> </label>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@
         </div>
   
         <p >Pour la preparation de {{recetteSelectione.net| number: '1.0-3' }}Kg de poid net qui equivaut à {{recetteSelectione.brut| number: '1.0-3' }}Kg poid brut.</p>
-        <p  >Cout: {{recetteSelectione.cout| number: '1.0-2' }} FCFA.</p>
+        <p  >Cout: {{recetteSelectione.cout| number: '1.0-2' }} {{ usercurrency }}.</p>
   
       </div>
   
@@ -88,7 +88,7 @@
             <div class="lbl brdr-left pdl"><label for="">Poid Net(KG)</label></div>
             <div class="lbl brdr-left pdl"><label for="">Poid Brut(KG)</label></div>
             <div class="lbl brdr-left pdl"><label for="">Préparation</label></div>
-            <div class="lbl brdr-left pdl" ><label for="">Cout(FCFA)</label></div>
+            <div class="lbl brdr-left pdl" ><label for="">Cout( {{ usercurrency }} )</label></div>
           </div>
   
           <div class="bdylist">
@@ -97,7 +97,7 @@
               <div class="lbl brdr-left pdl"><label for="">{{detail?.net| number: '1.0-3' }} {{detail?.ingredient?.unit?.code}} </label></div>
               <div class="lbl brdr-left pdl"><label for="">{{detail?.brut | number: '1.0-3' }}  {{detail?.ingredient?.unit?.code}}</label></div>
               <div class="lbl brdr-left pdl"><label for="">{{detail?.preparationIngredient }}</label></div>
-              <div class="lbl brdr-left pdl" ><label for="" appPriceFormater  >{{detail?.cout| number: '1.0-2' }} FCFA</label></div>
+              <div class="lbl brdr-left pdl" ><label for="" appPriceFormater  >{{detail?.cout| number: '1.0-2' }} {{ usercurrency }} </label></div>
             </div>
             <div class="nodetail m-2 head-center" *ngIf="!recetteSelectione.name">
               <label for="">
