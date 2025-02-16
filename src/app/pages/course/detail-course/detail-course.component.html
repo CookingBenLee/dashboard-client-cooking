@@ -91,7 +91,9 @@
                 <td>{{detail?.product?.name}}</td>
                 <td>{{detail.product?.category?.name}}</td>
                 <td>{{detail.product.conditioning?.name}}</td>
-                <td>{{detail.quantity}} ({{detail?.realUnit}})</td>
+               <!-- <td>{{detail.quantity}} ({{detail?.realUnit}})</td>-->
+                <td>{{detail?.realQ || detail?.quantity | number:'1.2-5'}} ({{detail?.realUnit || detail?.unit?.code}})</td>
+
                 <!-- <td>{{detail.value | number:'1.2-2'}}/{{detail?.unit?.code}}</td> -->
                 <td>{{detail.totalPrice}} {{ (curren) }}</td>
                 <td>
