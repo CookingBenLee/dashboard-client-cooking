@@ -742,7 +742,7 @@ retrieveCountryById(): void {
  }
  async getProducts(){
     const user= this.tokenService.getUser();
-   await this.productService.getAllProduct().then(data =>{
+   await this.productService.getAllValidated().then(data =>{
      
      this.products=data
      
