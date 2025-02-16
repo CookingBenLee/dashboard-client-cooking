@@ -49,7 +49,7 @@
             Conditionnement
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product?.quantity }} {{ product?.product?.conditioning?.name }}
+            {{ product?.product?.conditioning?.name }}
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
