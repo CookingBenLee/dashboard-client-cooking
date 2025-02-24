@@ -129,18 +129,24 @@
                           <input pInputText id="code" [(ngModel)]="code" name="code" type="text" placeholder="Code du plat" required/>
                         </div>-->
 
-                <div class="field col-6">
+                <div class="field col-4">
                   <label htmlFor="name">Nom de la recette</label>
                   <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom de la recette"
                     required />
                 </div>
 
-                <div class="field col-6">
+                <div class="field col-4">
                   <label htmlFor="ratio">Pourcentage de perte</label>
                   <p-inputNumber mode="decimal" [minFractionDigits]="2" name="ratio" [suffix]="'%'" id="ratio"
                     [(ngModel)]="ratio" [showButtons]="true" [min]="0"></p-inputNumber>
                 </div>
-
+                <div class="field col-4">
+                  <label for="baserecipe">Recette Secondaire</label>
+                  <p-dropdown [(ngModel)]="baserecipe" name="baserecipe"
+                      [options]="reciss" optionLabel="name"
+                      placeholder="OUI ou NON">
+                  </p-dropdown>
+                </div>
 
                 <!-- <div class="field col-5">
                           <label htmlFor="category">Categorie de la recette</label>
