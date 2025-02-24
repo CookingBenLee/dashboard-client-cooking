@@ -236,48 +236,48 @@ resetFields() {}
    
    console.log("dones adress",  this.address)
    console.log("dones shop",  this.shopData)
-  //  this.adressService.create(this.address).then(data1=>{
-  //    this.shopData.addressPrincipale=data1.data
-  //    console.log("dones fournisseur",  this.shopData)
-  //    this.shopService.create(this.shopData).then((data) =>{
-  //      this.getAll();
-  //      this.closeDialog();
-  //      this.loading=false
-  //      //this.isSuccess=true
-  //      this.sucess="Fournisseur créée !"
-  //      this.name=""
-  //      this.acronym=""
-  //      this.contact=""
-  //      this.email=""
-  //      this.activeIndex=0
-  //      //this.addressesSelected=[]
-  //      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
-  //    },
-  //    (error: any)=>{
-  //      //this.isError=true
-  //      if(error.error.message=='ko'){
-  //        this.erreur=error.error.data
-  //        }else{
-  //        this.erreur="Erreur liée au serveur"
-  //      }
-  //      this.closeDialog();
-  //      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+   this.adressService.create(this.address).then(data1=>{
+     this.shopData.addressPrincipale=data1.data
+     console.log("dones fournisseur",  this.shopData)
+     this.shopService.create(this.shopData).then((data) =>{
+       this.getAll();
+       this.closeDialog();
+       this.loading=false
+       //this.isSuccess=true
+       this.sucess="Fournisseur créée !"
+       this.name=""
+       this.acronym=""
+       this.contact=""
+       this.email=""
+       this.activeIndex=0
+       //this.addressesSelected=[]
+       this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
+     },
+     (error: any)=>{
+       //this.isError=true
+       if(error.error.message=='ko'){
+         this.erreur=error.error.data
+         }else{
+         this.erreur="Erreur liée au serveur"
+       }
+       this.closeDialog();
+       this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
-  //      this.loading=false
-  //    });
-  //  },
-  //  (error: any)=>{
-  //    //this.isError=true
-  //    if(error.error.message=='ko'){
-  //      this.erreur=error.error.data
-  //      }else{
-  //      this.erreur="Erreur liée au serveur"
-  //    }
-  //    this.closeDialog();
-  //    this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+       this.loading=false
+     });
+   },
+   (error: any)=>{
+     //this.isError=true
+     if(error.error.message=='ko'){
+       this.erreur=error.error.data
+       }else{
+       this.erreur="Erreur liée au serveur"
+     }
+     this.closeDialog();
+     this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
-  //    this.loading=false
-  //  });
+     this.loading=false
+   });
 
 
  }
