@@ -123,7 +123,7 @@ unit: Unit;
 
 
 recipe: Recipe=new Recipe();
-
+baserecipe: boolean
 isError:boolean
 isSuccess:boolean
 erreur:string
@@ -164,8 +164,13 @@ async ngOnInit(): Promise<void> {
   this.getUnits()
   this.cdref.detectChanges();
 
-}
+  this.reciss = [
+    { name: 'OUI' },
+    { name: 'NON' }
+];
 
+}
+reciss: { name: string }[] = [];
 //recuperation de valeurs
 getAll(){
   const params=this.paginateService.getRequestParams(this.page,this.rows)
