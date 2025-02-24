@@ -57,6 +57,7 @@ import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { PreparationRecipe } from 'src/app/services/preparationRecipe/PreparationRecipe';
 import { PreparationrecipeComponent } from './preparationrecipe/preparationrecipe.component';
+import { Dishes } from 'src/app/services/dishes/Dishes';
 
 @Component({
   selector: 'app-recipe',
@@ -239,7 +240,7 @@ getAll(){
 
   }
 
-  showPrepa() {
+  showPrepa(dishes: Dishes) {
     //this.purchaseSelected=purchase
     
   
@@ -250,7 +251,7 @@ getAll(){
          contentStyle: { overflow: 'auto' },
          baseZIndex: 10000,
          maximizable: true,
-        //  data:p,
+         data:dishes,
      });
     //  this.op.toggle(e)
   
