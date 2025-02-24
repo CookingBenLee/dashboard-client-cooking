@@ -57,6 +57,7 @@ import { CommonModule } from '@angular/common';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { PreparationRecipe } from 'src/app/services/preparationRecipe/PreparationRecipe';
 import { PreparationrecipeComponent } from './preparationrecipe/preparationrecipe.component';
+import { Dishes } from 'src/app/services/dishes/Dishes';
 
 @Component({
   selector: 'app-recipe',
@@ -122,7 +123,7 @@ unit: Unit;
 
 
 recipe: Recipe=new Recipe();
-
+baserecipe: boolean
 isError:boolean
 isSuccess:boolean
 erreur:string
@@ -163,8 +164,13 @@ async ngOnInit(): Promise<void> {
   this.getUnits()
   this.cdref.detectChanges();
 
-}
+  this.reciss = [
+    { name: 'OUI' },
+    { name: 'NON' }
+];
 
+}
+reciss: { name: string }[] = [];
 //recuperation de valeurs
 getAll(){
   const params=this.paginateService.getRequestParams(this.page,this.rows)
@@ -239,7 +245,7 @@ getAll(){
 
   }
 
-  showPrepa() {
+  showPrepa(dishes: Dishes) {
     //this.purchaseSelected=purchase
     
   
@@ -250,7 +256,7 @@ getAll(){
          contentStyle: { overflow: 'auto' },
          baseZIndex: 10000,
          maximizable: true,
-        //  data:p,
+         data:dishes,
      });
     //  this.op.toggle(e)
   

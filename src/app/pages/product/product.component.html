@@ -36,14 +36,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="stock">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Stock
-          </th>
-          <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
-            {{ product?.quantity }} {{ product?.product?.unit?.code }}
-          </td>
-        </ng-container>
         <ng-container matColumnDef="conditioning">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Conditionnement
@@ -52,6 +44,16 @@
             {{ product?.product?.conditioning?.name }}
           </td>
         </ng-container>
+
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Stock
+          </th>
+          <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
+            {{ product?.quantity }} {{ product?.product?.unit?.code }}
+          </td>
+        </ng-container>
+        
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Action
