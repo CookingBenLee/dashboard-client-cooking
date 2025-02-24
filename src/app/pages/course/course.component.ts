@@ -53,102 +53,102 @@ import { DetailCourseComponent } from './detail-course/detail-course.component';
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [ MaterialModule,
-    FormsModule,RouterModule,CalendarModule,
-    ReactiveFormsModule,ConfirmDialogModule,
-    TablerIconsModule,DialogModule,ToastModule,
-    CommonModule,TableModule,PaginatorModule,DividerModule,
-    MatButtonModule, MatDialogModule,TabViewModule,OverlayPanelModule],
-    providers: [ConfirmationService, MessageService,DialogService],
+  imports: [MaterialModule,
+    FormsModule, RouterModule, CalendarModule,
+    ReactiveFormsModule, ConfirmDialogModule,
+    TablerIconsModule, DialogModule, ToastModule,
+    CommonModule, TableModule, PaginatorModule, DividerModule,
+    MatButtonModule, MatDialogModule, TabViewModule, OverlayPanelModule],
+  providers: [ConfirmationService, MessageService, DialogService],
   templateUrl: './course.component.html',
   styleUrl: './course.component.scss'
 })
 export class CourseComponent implements OnInit {
- //number for according active
- index=0
- ///gestion des detailspurchazing
- // detailsPurchases:DetailsPurchasing[]=[]
+  //number for according active
+  index = 0
+  ///gestion des detailspurchazing
+  // detailsPurchases:DetailsPurchasing[]=[]
 
- //pagination attributs
- rows=10
- totalRows=0
- page=0;
- count=0;
- //first: number = 1;
- //maxS=8s;
- totalPages=0
- resClient:any
- //
- price:Price;
+  //pagination attributs
+  rows = 10
+  totalRows = 0
+  page = 0;
+  count = 0;
+  //first: number = 1;
+  //maxS=8s;
+  totalPages = 0
+  resClient: any
+  //
+  price: Price;
 
- showAddProduct=false
- ///
- detailPurchasesForms=[
-   {
-   quantity:0,
-   value:0,
-   totalPrice:0,
-   product:new Product(),
-   unit:new Unit(),
-   realQ:0,
-   distinctUnit:false,
-   realQuantity:''
- }
-]
+  showAddProduct = false
+  ///
+  detailPurchasesForms = [
+    {
+      quantity: 0,
+      value: 0,
+      totalPrice: 0,
+      product: new Product(),
+      unit: new Unit(),
+      realQ: 0,
+      distinctUnit: false,
+      realQuantity: ''
+    }
+  ]
 
-detailPurchasesForms2:any=[]
- // quantitys:any[]=[];
- // values:any[]=[]
- // totalPrices:any[]=[];
- // productes:Product[]=[]//=[new Product()]
- unitys:Unit[]=[]//=[new Unit()]
- @ViewChild('op',{static:true}) op: OverlayPanel;
+  detailPurchasesForms2: any = []
+  // quantitys:any[]=[];
+  // values:any[]=[]
+  // totalPrices:any[]=[];
+  // productes:Product[]=[]//=[new Product()]
+  unitys: Unit[] = []//=[new Unit()]
+  @ViewChild('op', { static: true }) op: OverlayPanel;
 
- activeIndex: number = 0;
- ref: DynamicDialogRef | undefined;
+  activeIndex: number = 0;
+  ref: DynamicDialogRef | undefined;
 
- purchaseSelected:Purchase=new Purchase()
- purchases:Purchase[]=[]
- positionModalConfirm:any
- motRecherche=''
- onSearch=false
- // distinctUnits:any[]=[]
- // realQs:any[]=[]
- // realQuantitys:any[]=[]
-
-
- reference:string
- quantity:number
- montant:any=0
- datePurchase:Date
-
- shop:Shop=new Shop()
- shops:Shop[]=[]
- addresss:Address[]=[]
- categorys:Category[]=[]
- category:Category=new Category()
- address:Address=new Address()
-
- currency:Currency=new Currency()
- currencys:Currency[]=[]
- // detailPurchasings:DetailsPurchasing[]=[]
+  purchaseSelected: Purchase = new Purchase()
+  purchases: Purchase[] = []
+  positionModalConfirm: any
+  motRecherche = ''
+  onSearch = false
+  // distinctUnits:any[]=[]
+  // realQs:any[]=[]
+  // realQuantitys:any[]=[]
 
 
- purchase: Purchase=new Purchase();
+  reference: string
+  quantity: number
+  montant: any = 0
+  datePurchase: Date
 
- isError:boolean
- isSuccess:boolean
- erreur:string
- sucess:string
- loading: boolean = false;
+  shop: Shop = new Shop()
+  shops: Shop[] = []
+  addresss: Address[] = []
+  categorys: Category[] = []
+  category: Category = new Category()
+  address: Address = new Address()
 
- purchaseClicked: Purchase=new Purchase();
- position:string
- isEditpurchaseDialogVisible:boolean=false
- isErrorEdit:boolean
- isSuccessEdit:boolean
- erreurEdit:string
- sucessEdit:string
+  currency: Currency = new Currency()
+  currencys: Currency[] = []
+  // detailPurchasings:DetailsPurchasing[]=[]
+
+
+  purchase: Purchase = new Purchase();
+
+  isError: boolean
+  isSuccess: boolean
+  erreur: string
+  sucess: string
+  loading: boolean = false;
+
+  purchaseClicked: Purchase = new Purchase();
+  position: string
+  isEditpurchaseDialogVisible: boolean = false
+  isErrorEdit: boolean
+  isSuccessEdit: boolean
+  erreurEdit: string
+  sucessEdit: string
   usercurrency: Currency;
 
   dialogAddCourse: boolean = false;
@@ -162,686 +162,696 @@ detailPurchasesForms2:any=[]
 
   dataSource = new MatTableDataSource<Product>([]);
 
- constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
-   private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
-   private addressService:AddressService,private dialogService:DialogService,private currencyService:CurrencyService,private route: ActivatedRoute,
-   private detailPurchaseService:DetailspurchasingService,private categoryService:CategoryService,private tokenService: TokenService,
-   private countryService: CountryService,
-   private purchaseService:PurchaseService,public tableShort:TableShortService,private shopService:ShopService
-   ,private snackBar: MatSnackBar,public dialog: MatDialog
-  ) {}
-   
-   utilisateurC: any;
-countryss: any[] = []; // Ensure this is initialized as an array
-selectedCountry: any; // To store the retrieved country
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private priceService: PriceService,
+    private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
+    private addressService: AddressService, private dialogService: DialogService, private currencyService: CurrencyService, private route: ActivatedRoute,
+    private detailPurchaseService: DetailspurchasingService, private categoryService: CategoryService, private tokenService: TokenService,
+    private countryService: CountryService,
+    private purchaseService: PurchaseService, public tableShort: TableShortService, private shopService: ShopService
+    , private snackBar: MatSnackBar, public dialog: MatDialog
+  ) { }
+
+  utilisateurC: any;
+  countryss: any[] = []; // Ensure this is initialized as an array
+  selectedCountry: any; // To store the retrieved country
 
 
- async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {
 
-  this.route.queryParams.subscribe(params => {
-    if (params['activeTab'] === 'new') {
-        this.activeIndex = 1; 
-    } else {
-        this.activeIndex = 0; 
-    }
-});
+    this.route.queryParams.subscribe(params => {
+      if (params['activeTab'] === 'new') {
+        this.activeIndex = 1;
+      } else {
+        this.activeIndex = 0;
+      }
+    });
 
-  this.utilisateurC =this.tokenService.getUser();
-  this.usercurrency = this.utilisateurC.compteUser.address.country.currency
-  this.currencys.push(this.usercurrency)
-  console.log("currency", this.usercurrency);
-  
-  // console.log("courrency",.name);
-  
-  
-  // this.countryService.getAll().then(
-  //   (data: any) => {
-  //       this.countryss = data;
-  //       console.log(this.countryss);
+    this.utilisateurC = this.tokenService.getUser();
+    this.usercurrency = this.utilisateurC.compteUser.address.country.currency
+    this.currencys.push(this.usercurrency)
+    console.log("currency", this.usercurrency);
 
-  //       this.selectedCountry = this.countryss.find(
-  //           (country: any) => country.id === this.utilisateurC.compteUser.country.id
-  //       );
-  //       console.log("selected", this.selectedCountry);
-  //   }
-// );
+    // console.log("courrency",.name);
 
 
-  
-   //await this.addNewDetails()
- 
-   //ajout dun produit par defaut
-   //initialisation et ajout des premier element par default
-   // this.quantitys.push(0);
-   // this.values.push(0)
-   // this.totalPrices.push(0);
-   // this.productes.push(new Product())
-   // this.unitys.push(new Unit())
-   // var detail=new DetailsPurchasing()
-   //detail.product.name="Nouveau "+this.detailsPurchases.length+1
+    // this.countryService.getAll().then(
+    //   (data: any) => {
+    //       this.countryss = data;
+    //       console.log(this.countryss);
 
-   //this.detailsPurchases.push(detail)
-   //
-   this.getAll()
-   this.getAllShop()
-   //this.getAllAdress()
-   //this.getAllCurrency()
-   await this.getAllCategory()
-   //this.getProductCategory(this.category)
-   // this.detailPurchasings.push(new DetailsPurchasing())
+    //       this.selectedCountry = this.countryss.find(
+    //           (country: any) => country.id === this.utilisateurC.compteUser.country.id
+    //       );
+    //       console.log("selected", this.selectedCountry);
+    //   }
+    // );
 
-   //for details
-   this.getProducts()
-   this.getUnits()
-   this.cdref.detectChanges();
 
- }
 
- dialogAdd(){
-  this.ref = this.dialogService.open(CreateCourseComponent, {
-    focusOnShow: false,
-    header: "Enregistrement d'une course ",
-    width: '90%',
-    // contentStyle: { overflow: 'auto' },
-    // baseZIndex: 10000,
-    maximizable: true,
-  });
- 
- }
+    //await this.addNewDetails()
 
- // Function to retrieve country by ID
-retrieveCountryById(): void {
-  if (this.countryss && this.utilisateurC) {
-    const countryId = this.utilisateurC.compteUser.country.id;
+    //ajout dun produit par defaut
+    //initialisation et ajout des premier element par default
+    // this.quantitys.push(0);
+    // this.values.push(0)
+    // this.totalPrices.push(0);
+    // this.productes.push(new Product())
+    // this.unitys.push(new Unit())
+    // var detail=new DetailsPurchasing()
+    //detail.product.name="Nouveau "+this.detailsPurchases.length+1
 
-    // Find the country in the list
-    this.selectedCountry = this.countryss.find(
-      (country: any) => country.id === countryId
-    );
+    //this.detailsPurchases.push(detail)
+    //
+    this.getAll()
+    this.getAllShop()
+    //this.getAllAdress()
+    //this.getAllCurrency()
+    await this.getAllCategory()
+    //this.getProductCategory(this.category)
+    // this.detailPurchasings.push(new DetailsPurchasing())
 
-    // Log the selected country
-    if (this.selectedCountry) {
-      console.log("Selected Country:", this.selectedCountry);
-    } else {
-      console.error("Country not found for ID:", countryId);
-    }
-  } else {
-    console.error("Countries list or user data not loaded.");
+    //for details
+    this.getProducts()
+    this.getUnits()
+    this.cdref.detectChanges();
+
   }
-}
- //recuperation de valeurs
- getAll(){
-   const user= this.tokenService.getUser();
-   const params=this.paginateService.getRequestParams(this.page,this.rows)
-   console.log(params);
-   this.purchaseService.getAllPage(params, user.id).then(data =>{
-     console.log(data)
-     //this.menus=data
-     console.log(data)
-     //this.infos=data
-     console.log(data)
-     //this.contenus=data
 
-     this.totalPages=data.totalPages
-       if(this.purchases.length==0 || this.page==0){
-         this.resClient=data
-         console.log(this.resClient)
-         this.purchases=data.content
-         console.log(this.totalPages)
-         this.totalRows=data.totalElements
-         console.log(this.count)
+  dialogAdd() {
+    this.ref = this.dialogService.open(CreateCourseComponent, {
+      focusOnShow: false,
+      header: "Enregistrement d'une course ",
+      width: '90%',
+      // contentStyle: { overflow: 'auto' },
+      // baseZIndex: 10000,
+      maximizable: true,
+    });
 
-       }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
-         this.resClient.number =data.number
-         this.purchases=data.content
-         console.log(data)
+  }
 
-       }
-   }, error => {
-     //console.log(error)
-   })
- }
+  // Function to retrieve country by ID
+  retrieveCountryById(): void {
+    if (this.countryss && this.utilisateurC) {
+      const countryId = this.utilisateurC.compteUser.country.id;
 
- recherche(){
+      // Find the country in the list
+      this.selectedCountry = this.countryss.find(
+        (country: any) => country.id === countryId
+      );
 
-   if(this.motRecherche==""){
-     this.onSearch=false
-     this.page=0
-     this.getAll()
+      // Log the selected country
+      if (this.selectedCountry) {
+        console.log("Selected Country:", this.selectedCountry);
+      } else {
+        console.error("Country not found for ID:", countryId);
+      }
+    } else {
+      console.error("Countries list or user data not loaded.");
+    }
+  }
+  //recuperation de valeurs
+  getAll() {
+    const user = this.tokenService.getUser();
+    const params = this.paginateService.getRequestParams(this.page, this.rows)
+    console.log(params);
+    this.purchaseService.getAllPage(params, user.id).then(data => {
+      console.log(data)
+      //this.menus=data
+      console.log(data)
+      //this.infos=data
+      console.log(data)
+      //this.contenus=data
 
-   }else{
-     this.onSearch=true
-     const params=this.paginateService.getRequestParams(this.page,this.rows)
-     console.log(params);
-     this.purchaseService.rechercheParPage(this.motRecherche, params).then(data =>{
-     console.log(data)
-     //this.menus=data
-     console.log(data)
-     //this.infos=data
-     console.log(data)
-     //this.contenus=data
+      this.totalPages = data.totalPages
+      if (this.purchases.length == 0 || this.page == 0) {
+        this.resClient = data
+        console.log(this.resClient)
+        this.purchases = data.content
+        console.log(this.totalPages)
+        this.totalRows = data.totalElements
+        console.log(this.count)
 
-     this.totalPages=data.totalPages
-       if(this.purchases.length==0 || this.page==0){
-         this.resClient=data
-         console.log(this.resClient)
-         this.purchases=data.content
-         console.log(this.totalPages)
-         this.totalRows=data.totalElements
-         console.log(this.count)
+      } else if ((this.resClient.totalElements < data.totalElements) || this.resClient.number != data.number) {
+        this.resClient.number = data.number
+        this.purchases = data.content
+        console.log(data)
 
-       }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
-         this.resClient.number =data.number
-         this.purchases=data.content
-         console.log(data)
+      }
+    }, error => {
+      //console.log(error)
+    })
+  }
 
-       }
-   }, error => {
-     //console.log(error)
-   })
-   }
- }
+  recherche() {
 
- getAllShop(){
-  const user = this.tokenService.getUser();
-   this.shopService.getAll(user.id).then(data =>{
-     console.log(data)
+    if (this.motRecherche == "") {
+      this.onSearch = false
+      this.page = 0
+      this.getAll()
 
-     this.shops=data
-     this.shop=this.shops[0]
-     console.log(this.shop);
+    } else {
+      this.onSearch = true
+      const params = this.paginateService.getRequestParams(this.page, this.rows)
+      console.log(params);
+      this.purchaseService.rechercheParPage(this.motRecherche, params).then(data => {
+        console.log(data)
+        //this.menus=data
+        console.log(data)
+        //this.infos=data
+        console.log(data)
+        //this.contenus=data
 
-     this.changeShop()
-   })
+        this.totalPages = data.totalPages
+        if (this.purchases.length == 0 || this.page == 0) {
+          this.resClient = data
+          console.log(this.resClient)
+          this.purchases = data.content
+          console.log(this.totalPages)
+          this.totalRows = data.totalElements
+          console.log(this.count)
 
- }
+        } else if ((this.resClient.totalElements < data.totalElements) || this.resClient.number != data.number) {
+          this.resClient.number = data.number
+          this.purchases = data.content
+          console.log(data)
 
- showAddProductForm(){
-   this.showAddProduct=!this.showAddProduct
- }
+        }
+      }, error => {
+        //console.log(error)
+      })
+    }
+  }
 
- firstSaveForDetail(detail:any){
-   this.detailPurchasesForms2.push(detail)
-   this.detailPurchasesForms.push(
-     {
-       quantity:0,
-       value:0,
-       totalPrice:0,
-       product:new Product(),
-       unit:new Unit(),
-       realQ:0,
-       distinctUnit:false,
-       realQuantity:''
-     }
-   )
- }
+  getAllShop() {
+    const user = this.tokenService.getUser();
+    this.shopService.getAll(user.id).then(data => {
+      console.log(data)
 
- confirmDeleteDetail(detail:any,i:number){
-   console.log(i);
+      this.shops = data
+      this.shop = this.shops[0]
+      console.log(this.shop);
 
-   this.confirmationService.confirm({
-     message: 'Veuillez confirmer la suppresion de  '+detail.product.name+'('+detail.product.category?.name+')',
-     header: 'Comfirm delete',
-     icon: 'pi pi-info-circle',
-     accept: () => {
-       //this.purchaseService.delete(purchase.id).then(data=>{this.getAll()})
-       this.detailPurchasesForms2 = this.detailPurchasesForms2.filter((item: any) => item !== detail)
-       this.detailPurchasesForms = this.detailPurchasesForms.filter((item: any) => item !== detail)
-      this.montant = this.montant - detail?.totalPrice
-       // this.detailPurchasesForms2.splice(i,i)
-       // this.detailPurchasesForms.splice(i,i)
+      this.changeShop()
+    })
 
-       this.messageService.add({ severity: 'success', summary: 'Confirm', detail: 'Produit supprimé' });
-     },
-     reject: (type:any) => {
-         switch (type) {
-             case ConfirmEventType.REJECT:
-                 this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
-                 break;
-             case ConfirmEventType.CANCEL:
-                 this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
-                 break;
-         }
-     },
-     key: 'positionDialog'
- });
- }
+  }
 
- getAllCurrency(){
-   this.currencyService.getAll().then(data=>{
-     this.currencys=data
-   })
- }
+  showAddProductForm() {
+    this.showAddProduct = !this.showAddProduct
+  }
 
- ///save
- save(){
-   console.log(this.reference)
-   this.isError=false
-   this.isSuccess=false
-   this.loading=true
+  firstSaveForDetail(detail: any) {
+    this.detailPurchasesForms2.push(detail)
+    this.detailPurchasesForms.push(
+      {
+        quantity: 0,
+        value: 0,
+        totalPrice: 0,
+        product: new Product(),
+        unit: new Unit(),
+        realQ: 0,
+        distinctUnit: false,
+        realQuantity: ''
+      }
+    )
+  }
 
-   //recup des valeurs et attribution
-   this.purchase.address=this.address
-   this.purchase.shop=this.shop
+  confirmDeleteDetail(detail: any, i: number) {
+    console.log(i);
 
-   this.purchase.reference=this.reference
-   this.purchase.currency=this.usercurrency
-   // this.purchase.quantity=this.quantity
-   this.purchase.montant=this.montant
-   this.purchase.datePurchase=this.datePurchase
-  const user = this.tokenService.getUser();
-    this.purchase.user = {id: user.id}
-   console.log(this.purchase)
+    this.confirmationService.confirm({
+      message: 'Veuillez confirmer la suppresion de  ' + detail.product.name + '(' + detail.product.category?.name + ')',
+      header: 'Comfirm delete',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        //this.purchaseService.delete(purchase.id).then(data=>{this.getAll()})
+        this.detailPurchasesForms2 = this.detailPurchasesForms2.filter((item: any) => item !== detail)
+        this.detailPurchasesForms = this.detailPurchasesForms.filter((item: any) => item !== detail)
+        this.montant = this.montant - detail?.totalPrice
+        // this.detailPurchasesForms2.splice(i,i)
+        // this.detailPurchasesForms.splice(i,i)
 
-   this.purchaseService.create(this.purchase).then(async (data) =>{
-     this.getAll();
-     this.loading=false
-     console.log(data);
+        this.messageService.add({ severity: 'success', summary: 'Confirm', detail: 'Produit supprimé' });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+  }
 
-     //this.isSuccess=true
-     this.sucess="Commande créée !"
-     this.reference=""
-     // this.quantity=
-     // this.montant=null
-     this.datePurchase=new Date()
-     this.activeIndex=1
-     this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
+  getAllCurrency() {
+    this.currencyService.getAll().then(data => {
+      this.currencys = data
+    })
+  }
 
-     await this.saveAllDetail(data.data)
-     this.init()
+  ///save
+  save() {
+    console.log(this.reference)
+    this.isError = false
+    this.isSuccess = false
+    this.loading = true
 
-   },
-   (error: any)=>{
-     //this.isError=true
-     console.log(error);
-     
-     if(error.error.message=='ko'){
-       this.erreur=error.error.data
-       }else{
-       this.erreur="Erreur lié au serveur"
-     }
-     this.loading=false
-     this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+    //recup des valeurs et attribution
+    this.purchase.address = this.address
+    this.purchase.shop = this.shop
 
-   });
- }
+    this.purchase.reference = this.reference
+    this.purchase.currency = this.usercurrency
+    // this.purchase.quantity=this.quantity
+    this.purchase.montant = this.montant
+    this.purchase.datePurchase = this.datePurchase
+    const user = this.tokenService.getUser();
+    this.purchase.user = { id: user.id }
+    console.log(this.purchase)
 
- openModifier(position:string,info:any){
-   this.isErrorEdit=false
-   this.isSuccessEdit=false
-   this.purchaseClicked=info
-   this.position = position;
-   this.isEditpurchaseDialogVisible = true
-   console.log(this.purchaseClicked)
- }
+    this.purchaseService.create(this.purchase).then(async (data) => {
+      this.getAll();
+      this.loading = false
+      console.log(data);
 
- update(){
-   this.loading=true
-   console.log(this.purchaseClicked)
-   this.purchaseService.update(this.purchaseClicked.id,this.purchaseClicked).then(data=>{
-     this.loading=false
-     //this.isSuccessEdit=true
-     this.sucessEdit="Commande Modifiée"
-     this.getAll()
-     this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucessEdit});
-     this.isEditpurchaseDialogVisible = false
+      //this.isSuccess=true
+      this.sucess = "Commande créée !"
+      this.reference = ""
+      // this.quantity=
+      // this.montant=null
+      this.datePurchase = new Date()
+      this.activeIndex = 1
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
 
-   },
-   (error: any)=>{
-     //this.isErrorEdit=true
-     if(error.error.message=='ko'){
-       //erreurNumero
-       this.erreurEdit=error.error.data
-       }else{
-       this.erreurEdit=error.error.data
-       //this.erreur="Erreur lié au serveur"
-     }
-     this.loading=false
-     this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit });
-     this.getAll()
-   });
- }
+      await this.saveAllDetail(data.data)
+      this.init()
 
- ///delete
- //quand on appui sur le bouton supprimer
- delete(position: string,purchase:Purchase) {
-   this.positionModalConfirm = position;
-   console.log(purchase);
+    },
+      (error: any) => {
+        //this.isError=true
+        console.log(error);
 
-   this.confirmationService.confirm({
-       message: 'Veuillez confirmer la suppresion de  '+purchase.reference,
-       header: 'Comfirm delete',
-       icon: 'pi pi-info-circle',
-       accept: () => {
-         this.purchaseService.delete(purchase.id).then(data=>{this.getAll()})
-         this.messageService.add({ severity: 'error', summary: 'Confirm', detail: 'Commande supprimer' });
-       },
-       reject: (type:any) => {
-           switch (type) {
-               case ConfirmEventType.REJECT:
-                   this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
-                   break;
-               case ConfirmEventType.CANCEL:
-                   this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
-                   break;
-           }
-       },
-       key: 'positionDialog'
-   });
- }
+        if (error.error.message == 'ko') {
+          this.erreur = error.error.data
+        } else {
+          this.erreur = "Erreur lié au serveur"
+        }
+        this.loading = false
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
- changeShop(){
-   // this.addressService.byShop(this.shop.id).then(data=>{
+      });
+  }
 
-   //   this.addresss=data
+  openModifier(position: string, info: any) {
+    this.isErrorEdit = false
+    this.isSuccessEdit = false
+    this.purchaseClicked = info
+    this.position = position;
+    this.isEditpurchaseDialogVisible = true
+    console.log(this.purchaseClicked)
+  }
 
-   //   this.addresss.splice(0,0,this.shop.addressPrincipale)
-   // })
- }
+  update() {
+    this.loading = true
+    console.log(this.purchaseClicked)
+    this.purchaseService.update(this.purchaseClicked.id, this.purchaseClicked).then(data => {
+      this.loading = false
+      //this.isSuccessEdit=true
+      this.sucessEdit = "Commande Modifiée"
+      this.getAll()
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucessEdit });
+      this.isEditpurchaseDialogVisible = false
 
- // getAllAdress(){
- //   this.addressService.getAll().then(data=>{
- //     this.addresss=data
- //   })
- // }
+    },
+      (error: any) => {
+        //this.isErrorEdit=true
+        if (error.error.message == 'ko') {
+          //erreurNumero
+          this.erreurEdit = error.error.data
+        } else {
+          this.erreurEdit = error.error.data
+          //this.erreur="Erreur lié au serveur"
+        }
+        this.loading = false
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit });
+        this.getAll()
+      });
+  }
 
- details(e:any,purchase:Purchase) {
-  var p={...purchase}
-  this.ref = this.dialogService.open(DetailCourseComponent, {
-      header: 'Details de la course '+purchase.reference,
+  ///delete
+  //quand on appui sur le bouton supprimer
+  delete(position: string, purchase: Purchase) {
+    this.positionModalConfirm = position;
+    console.log(purchase);
+
+    this.confirmationService.confirm({
+      message: 'Veuillez confirmer la suppresion de  ' + purchase.reference,
+      header: 'Comfirm delete',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.purchaseService.delete(purchase.id).then(data => { this.getAll() })
+        this.messageService.add({ severity: 'error', summary: 'Confirm', detail: 'Commande supprimer' });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+        }
+      },
+      key: 'positionDialog'
+    });
+  }
+
+  changeShop() {
+    // this.addressService.byShop(this.shop.id).then(data=>{
+
+    //   this.addresss=data
+
+    //   this.addresss.splice(0,0,this.shop.addressPrincipale)
+    // })
+  }
+
+  // getAllAdress(){
+  //   this.addressService.getAll().then(data=>{
+  //     this.addresss=data
+  //   })
+  // }
+
+  details(e: any, purchase: Purchase) {
+    var p = { ...purchase }
+
+    p.shop.displayLabel = [
+      p.shop.name,
+      p.shop.addressPrincipale?.streetName,
+      p.shop.addressPrincipale?.streetNumber,
+      p.shop.addressPrincipale?.label,
+      p.shop.addressPrincipale?.city,
+      p.shop.addressPrincipale?.country?.name
+    ].filter(Boolean).join(' , ');
+
+    this.ref = this.dialogService.open(DetailCourseComponent, {
+      header: 'Details de la course ' + purchase.reference,
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
-      data:p,
-  });
-  //this.purchaseSelected=purchase
-  
-}
+      data: p,
+    });
+    //this.purchaseSelected=purchase
 
-
-
-
- show(e:any,purchase:Purchase) {
-  //this.purchaseSelected=purchase
-  var p={...purchase}
-
-   this.ref = this.dialogService.open(ModalpurchaseComponent, {
-       header: 'Produit '+purchase.reference,
-       width: '90%',
-       contentStyle: { overflow: 'auto' },
-       baseZIndex: 10000,
-       maximizable: true,
-       data:p,
-   });
-   this.op.toggle(e)
-
-     this.ref.onClose.subscribe((shop: Shop) => {
-         if (shop) {
-             this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
-         }
-     });
-
-     // this.ref.onMaximize.subscribe((value) => {
-     //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-     // });
- }
-
- ngOnDestroy() {
-     if (this.ref) {
-         this.ref.close();
-     }
- }
-
- onPageChange(e:any){
-   this.page=e.page;
-   console.log(e);
-
-   this.rows=e.rows
-   console.log(this.page);
-
-   if(this.onSearch==false){
-     this.getAll()
-   }else this.recherche()
- }
-
- ////////////////////
- products:Product[]=[]
- units:Unit[]=[]
-
- //add new details purchazing
- async addNewDetails(){
-   // var detail=new DetailsPurchasing()
-
-   // await this.detailsPurchases.push(detail)
-
-   if(this.index==undefined || this.index==null){
-     this.index=0
-   }else this.index=this.index+1
-
-   // console.log((this.quantitys));
-
-   // this.quantitys.push(this.quantitys,0);
-   // this.values.push(0)
-   // this.totalPrices.push(0);
-   // this.productes.push(new Product())
-   // this.unitys.push(new Unit())
-   // //detail.product.name="Nouveau "+this.detailsPurchases.length+1
-   // console.log("##########################################################################");
-   // console.log((this.quantitys));
-
-   this.detailPurchasesForms.push({
-     quantity:0,
-     value:0,
-     totalPrice:0,
-     product:new Product(),
-     unit:new Unit(),
-     realQ:0,
-     distinctUnit:false,
-     realQuantity:''
-   })
- }
-
- async RemoveLastDetail(){
-   if(this.index==undefined || this.index==null){
-     this.index=0
-   }else this.index=this.index-1
-   await this.detailPurchasesForms.pop();
-
-   this.montant=0
-
-   for(let i=0;i<this.detailPurchasesForms.length;i++){
-     this.montant+=this.detailPurchasesForms[i].totalPrice
-   }
- }
-
- changeProduct(product:Product,i:any){
-   ////this.totalPrice=value*this.quantity
-   this.detailPurchasesForms[i].unit=this.detailPurchasesForms[i].product?.unit
-   //this.unitys[i]=this.productes[i]?.unit
-   //////this.changeUnit()
- }
-
- changeValue(value: any,i:any ){
-  console.log(i);
-
-  this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
-  //this.totalPrices[i]=this.values[i]*this.quantitys[i]
-  ////this.unit=this.product.unit
-  this.changeUnit(i)
-  this.montant=0
-
-  for(let i=0;i<this.detailPurchasesForms.length;i++){
-    this.montant+=this.detailPurchasesForms[i].totalPrice
   }
-}
-
- async findOrCreatePrice(price:Price){
-   await this.priceService.loadOrCreate(price).then(data=>{
-     console.log(data);
-     this.price=data.data
-   })
- }
-
- changeUnit(i:any){
-   console.log(i);
-   console.log(this.products);
 
 
-   if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
-     console.log(this.detailPurchasesForms[i].product.unit);
-     console.log(this.detailPurchasesForms[i].unit);
-
-     if(this.detailPurchasesForms[i]?.product?.unit?.name!=this.detailPurchasesForms[i].unit.name){
-       this.detailPurchasesForms[i].distinctUnit=true
-       if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="KG"){
-         this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity*1000
-         this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Gramme"
-       }else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="G"){
-         this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity/1000
-         this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Kilogramme"
-
-       }else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="L"){
-         this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity*1000
-         this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Millilitre"
-       }
-       else if(this.detailPurchasesForms[i].unit?.code?.toUpperCase()=="ML"){
-         this.detailPurchasesForms[i].realQ=this.detailPurchasesForms[i].quantity/1000
-         this.detailPurchasesForms[i].realQuantity=this.detailPurchasesForms[i].realQ+ " Litre"
-
-       }else{
-         this.detailPurchasesForms[i].realQuantity="Conversion impossible"
-       }
-
-     }else this.detailPurchasesForms[i].distinctUnit=false
-   }
-   console.log(this.products);
 
 
- }
+  show(e: any, purchase: Purchase) {
+    //this.purchaseSelected=purchase
+    var p = { ...purchase }
 
- updateUnitPrice(index: number): void {
-  const detail = this.detailPurchasesForms[index];
-  if (detail.quantity > 0) {
-    detail.value = detail.totalPrice / detail.quantity;
-  } else {
-    detail.value = 0; 
+    this.ref = this.dialogService.open(ModalpurchaseComponent, {
+      header: 'Produit ' + purchase.reference,
+      width: '90%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+      data: p,
+    });
+    this.op.toggle(e)
+
+    this.ref.onClose.subscribe((shop: Shop) => {
+      if (shop) {
+        this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
+      }
+    });
+
+    // this.ref.onMaximize.subscribe((value) => {
+    //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
+    // });
   }
-}
 
- async getAllCategory(){
-   await this.categoryService.getAllCategorys().then(data=>{
-     this.categorys=data
-   })
- }
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
 
- async getProductCategory(category:Category){
-   await this.productService.byCategory(category.id).then(data=>{
-     this.products=data
-   })
- }
- async getProducts(){
-    const user= this.tokenService.getUser();
-   await this.productService.getAllValidated().then(data =>{
-     
-     this.products=data
-     
-     //this.productes[0]=this.products[0]
-     //this.unitys[0]=this.products[0].unit
-   })
- }
- getUnits(){
-   this.unitService.getAllUnits().then(data =>{
-     console.log(data)
-     this.units=data
-   })
- }
+  onPageChange(e: any) {
+    this.page = e.page;
+    console.log(e);
 
- //save all  detailUnit
- async saveAllDetail(purchase:Purchase){
-   console.log(purchase);
+    this.rows = e.rows
+    console.log(this.page);
 
-   this.detailPurchasesForms2.forEach(async (form:any)=>{
-     console.log(form)
+    if (this.onSearch == false) {
+      this.getAll()
+    } else this.recherche()
+  }
+
+  ////////////////////
+  products: Product[] = []
+  units: Unit[] = []
+
+  //add new details purchazing
+  async addNewDetails() {
+    // var detail=new DetailsPurchasing()
+
+    // await this.detailsPurchases.push(detail)
+
+    if (this.index == undefined || this.index == null) {
+      this.index = 0
+    } else this.index = this.index + 1
+
+    // console.log((this.quantitys));
+
+    // this.quantitys.push(this.quantitys,0);
+    // this.values.push(0)
+    // this.totalPrices.push(0);
+    // this.productes.push(new Product())
+    // this.unitys.push(new Unit())
+    // //detail.product.name="Nouveau "+this.detailsPurchases.length+1
+    // console.log("##########################################################################");
+    // console.log((this.quantitys));
+
+    this.detailPurchasesForms.push({
+      quantity: 0,
+      value: 0,
+      totalPrice: 0,
+      product: new Product(),
+      unit: new Unit(),
+      realQ: 0,
+      distinctUnit: false,
+      realQuantity: ''
+    })
+  }
+
+  async RemoveLastDetail() {
+    if (this.index == undefined || this.index == null) {
+      this.index = 0
+    } else this.index = this.index - 1
+    await this.detailPurchasesForms.pop();
+
+    this.montant = 0
+
+    for (let i = 0; i < this.detailPurchasesForms.length; i++) {
+      this.montant += this.detailPurchasesForms[i].totalPrice
+    }
+  }
+
+  changeProduct(product: Product, i: any) {
+    ////this.totalPrice=value*this.quantity
+    this.detailPurchasesForms[i].unit = this.detailPurchasesForms[i].product?.unit
+    //this.unitys[i]=this.productes[i]?.unit
+    //////this.changeUnit()
+  }
+
+  changeValue(value: any, i: any) {
+    console.log(i);
+
+    this.detailPurchasesForms[i].value = this.detailPurchasesForms[i].totalPrice / this.detailPurchasesForms[i].quantity
+    //this.totalPrices[i]=this.values[i]*this.quantitys[i]
+    ////this.unit=this.product.unit
+    this.changeUnit(i)
+    this.montant = 0
+
+    for (let i = 0; i < this.detailPurchasesForms.length; i++) {
+      this.montant += this.detailPurchasesForms[i].totalPrice
+    }
+  }
+
+  async findOrCreatePrice(price: Price) {
+    await this.priceService.loadOrCreate(price).then(data => {
+      console.log(data);
+      this.price = data.data
+    })
+  }
+
+  changeUnit(i: any) {
+    console.log(i);
+    console.log(this.products);
 
 
-   var detail=new DetailsPurchasing()
-   detail.purchase=purchase
+    if (this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase() == "KG" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase() == "G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase() == "L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase() == "ML") {
+      console.log(this.detailPurchasesForms[i].product.unit);
+      console.log(this.detailPurchasesForms[i].unit);
 
-   //recup des valeurs et attribution
-   var price=new Price()
-   price.currency=purchase.currency
-   price.product=form.product
-   price.value=form.value
-   price.shop=purchase.shop
-   await this.findOrCreatePrice(price)
+      if (this.detailPurchasesForms[i]?.product?.unit?.name != this.detailPurchasesForms[i].unit.name) {
+        this.detailPurchasesForms[i].distinctUnit = true
+        if (this.detailPurchasesForms[i].unit?.code?.toUpperCase() == "KG") {
+          this.detailPurchasesForms[i].realQ = this.detailPurchasesForms[i].quantity * 1000
+          this.detailPurchasesForms[i].realQuantity = this.detailPurchasesForms[i].realQ + " Gramme"
+        } else if (this.detailPurchasesForms[i].unit?.code?.toUpperCase() == "G") {
+          this.detailPurchasesForms[i].realQ = this.detailPurchasesForms[i].quantity / 1000
+          this.detailPurchasesForms[i].realQuantity = this.detailPurchasesForms[i].realQ + " Kilogramme"
 
-   detail.product=this.price.product
+        } else if (this.detailPurchasesForms[i].unit?.code?.toUpperCase() == "L") {
+          this.detailPurchasesForms[i].realQ = this.detailPurchasesForms[i].quantity * 1000
+          this.detailPurchasesForms[i].realQuantity = this.detailPurchasesForms[i].realQ + " Millilitre"
+        }
+        else if (this.detailPurchasesForms[i].unit?.code?.toUpperCase() == "ML") {
+          this.detailPurchasesForms[i].realQ = this.detailPurchasesForms[i].quantity / 1000
+          this.detailPurchasesForms[i].realQuantity = this.detailPurchasesForms[i].realQ + " Litre"
 
-   detail.totalPrice=form.totalPrice
-   detail.price=this.price
-   if(form.distinctUnit){
-     detail.quantity=form.realQ
-   }else detail.quantity=form.quantity
+        } else {
+          this.detailPurchasesForms[i].realQuantity = "Conversion impossible"
+        }
 
-
-   this.detailPurchaseService.create(detail).then((data) =>{
-     this.getAll();
-     console.log(data);
-
-     this.loading=false
-     //this.isSuccess=true
-     this.sucess="detailPurchase created !"
-     // this.price=0
-     // this.geolocation=0
-     this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail:detail?.product?.name+' ' +detail.quantity+' '+ detail.product.code+' creer'});
+      } else this.detailPurchasesForms[i].distinctUnit = false
+    }
+    console.log(this.products);
 
 
-   },
-   (error: any)=>{
-     //this.isError=true
-     if(error.error.message=='ko'){
-       this.erreur=error.error.data
-       }else{
-       this.erreur="Server related error"
-     }
-     this.loading=false
-     this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail:this.erreurEdit+detail?.product?.name+' ' +detail.quantity+' '+ detail.product.code });
+  }
 
-   }
-   );
+  updateUnitPrice(index: number): void {
+    const detail = this.detailPurchasesForms[index];
+    if (detail.quantity > 0) {
+      detail.value = detail.totalPrice / detail.quantity;
+    } else {
+      detail.value = 0;
+    }
+  }
 
- })
+  async getAllCategory() {
+    await this.categoryService.getAllCategorys().then(data => {
+      this.categorys = data
+    })
+  }
 
- }
+  async getProductCategory(category: Category) {
+    await this.productService.byCategory(category.id).then(data => {
+      this.products = data
+    })
+  }
+  async getProducts() {
+    const user = this.tokenService.getUser();
+    await this.productService.getAllValidated().then(data => {
 
- init(){
-   this.detailPurchasesForms=[
-     {
-     quantity:0,
-     value:0,
-     totalPrice:0,
-     product:new Product(),
-     unit:new Unit(),
-     realQ:0,
-     distinctUnit:false,
-     realQuantity:''
-   }
- ]
+      this.products = data
 
- this.detailPurchasesForms2=[]
- this.purchase=new Purchase()
- this.ngOnInit()
- }
+      //this.productes[0]=this.products[0]
+      //this.unitys[0]=this.products[0].unit
+    })
+  }
+  getUnits() {
+    this.unitService.getAllUnits().then(data => {
+      console.log(data)
+      this.units = data
+    })
+  }
 
- visibleSelect: boolean = false;
- showDialogSelect(){
+  //save all  detailUnit
+  async saveAllDetail(purchase: Purchase) {
+    console.log(purchase);
 
-  console.log("test");
-  
+    this.detailPurchasesForms2.forEach(async (form: any) => {
+      console.log(form)
+
+
+      var detail = new DetailsPurchasing()
+      detail.purchase = purchase
+
+      //recup des valeurs et attribution
+      var price = new Price()
+      price.currency = purchase.currency
+      price.product = form.product
+      price.value = form.value
+      price.shop = purchase.shop
+      await this.findOrCreatePrice(price)
+
+      detail.product = this.price.product
+
+      detail.totalPrice = form.totalPrice
+      detail.price = this.price
+      if (form.distinctUnit) {
+        detail.quantity = form.realQ
+      } else detail.quantity = form.quantity
+
+
+      this.detailPurchaseService.create(detail).then((data) => {
+        this.getAll();
+        console.log(data);
+
+        this.loading = false
+        //this.isSuccess=true
+        this.sucess = "detailPurchase created !"
+        // this.price=0
+        // this.geolocation=0
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: detail?.product?.name + ' ' + detail.quantity + ' ' + detail.product.code + ' creer' });
+
+
+      },
+        (error: any) => {
+          //this.isError=true
+          if (error.error.message == 'ko') {
+            this.erreur = error.error.data
+          } else {
+            this.erreur = "Server related error"
+          }
+          this.loading = false
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit + detail?.product?.name + ' ' + detail.quantity + ' ' + detail.product.code });
+
+        }
+      );
+
+    })
+
+  }
+
+  init() {
+    this.detailPurchasesForms = [
+      {
+        quantity: 0,
+        value: 0,
+        totalPrice: 0,
+        product: new Product(),
+        unit: new Unit(),
+        realQ: 0,
+        distinctUnit: false,
+        realQuantity: ''
+      }
+    ]
+
+    this.detailPurchasesForms2 = []
+    this.purchase = new Purchase()
+    this.ngOnInit()
+  }
+
+  visibleSelect: boolean = false;
+  showDialogSelect() {
+
+    console.log("test");
+
     this.visibleSelect = true;
-    
- }
 
- 
+  }
+
+
 }

@@ -17,18 +17,17 @@
   
           <div class="field col-5">
             <label htmlFor="shop">Fournisseur</label>
-            <p-dropdown [options]="shops" [disabled]="true" optionLabel="name" [(ngModel)]="shop"  name="shop1"  >
+            <p-dropdown [disabled]="true" [options]="[shop]" optionLabel="displayLabel" [(ngModel)]="shop" name="shop1">
               <ng-template let-shop pTemplate="item">
-                <div class="flex align-items-center operatingSystems-item">
                   <div class="flex align-items-center operatingSystems-item">
-                    <div> {{shop?.name}}({{ shop.addressPrincipale?.streetName }}, {{ shop.addressPrincipale?.streetNumber }}, {{ shop.addressPrincipale?.label }}, {{ shop.addressPrincipale?.city }}, {{ shop.addressPrincipale?.country.name }}.)</div>
+                      <div> 
+                          {{ shop?.displayLabel }}
+                      </div>
                   </div>
-  
-                </div>
               </ng-template>
-            </p-dropdown>
-          </div>
-  
+          </p-dropdown>
+        </div>
+        
           <!--<div class="field col-3">
             <label htmlFor="addresse">Adresse</label>
             <p-dropdown [options]="addresss"   name="addresse" [(ngModel)]="data.address" >
@@ -96,9 +95,9 @@
 
                 <!-- <td>{{detail.value | number:'1.2-2'}}/{{detail?.unit?.code}}</td> -->
                 <td>{{detail.totalPrice}} {{ (curren) }}</td>
-                <td>
+                <!-- <td>
                   <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteDetail(detail,i)"></button>
-                </td>
+                </td> -->
   
               </tr>
   
