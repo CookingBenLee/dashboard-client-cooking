@@ -25,7 +25,6 @@
                   <div> {{shop.name}}({{ shop.addressPrincipale?.streetName }}, {{ shop.addressPrincipale?.streetNumber }}, {{ shop.addressPrincipale?.label }}, {{ shop.addressPrincipale?.city }}, {{ shop.addressPrincipale?.country.name }}.)</div>
                 </div>
               </ng-template>
-
             </p-dropdown>
           </div>
 
@@ -228,26 +227,12 @@
               </table>
             </div>
           </div>
-
-
-
-
-
-
-
-
-
         </div>
-
-
 
         <label id="erreur" *ngIf="isError">{{erreur}}</label>
         <label id="success" *ngIf="isSuccess">{{sucess}}</label>
 
-
         <p class="divider-b"></p>
-
-        
       </div>
       <!--<div class="col mt-10 p-5">
     <h5>Produit non trouvé ?</h5>
