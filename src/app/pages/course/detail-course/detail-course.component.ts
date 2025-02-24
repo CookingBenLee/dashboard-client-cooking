@@ -68,84 +68,91 @@ import { CountryService } from 'src/app/services/country/country.service';
 @Component({
   selector: 'app-detail-course',
   standalone: true,
-  imports: [ MaterialModule,
-    FormsModule,RouterModule,CalendarModule,
-    ReactiveFormsModule,ConfirmDialogModule,
-    TablerIconsModule,DialogModule,ToastModule,
-    CommonModule,TableModule,PaginatorModule,DividerModule,
-    MatButtonModule, MatDialogModule,TabViewModule,OverlayPanelModule],
-  providers: [ConfirmationService, MessageService,DialogService],
+  imports: [MaterialModule,
+    FormsModule, RouterModule, CalendarModule,
+    ReactiveFormsModule, ConfirmDialogModule,
+    TablerIconsModule, DialogModule, ToastModule,
+    CommonModule, TableModule, PaginatorModule, DividerModule,
+    MatButtonModule, MatDialogModule, TabViewModule, OverlayPanelModule],
+  providers: [ConfirmationService, MessageService, DialogService],
   templateUrl: './detail-course.component.html',
   styleUrl: './detail-course.component.scss'
 })
 export class DetailCourseComponent {
-  data:Purchase=new Purchase();
+  data: Purchase = new Purchase();
   //detailpurchases:DetailsPurchasing[]=[]
 
   ref: DynamicDialogRef | undefined;
 
-  shops:Shop[]=[]
-  addresss:Address[]=[]
-  categorys:Category[]=[]
-  currencys:Currency[]=[]
+  shops: Shop[] = []
+  addresss: Address[] = []
+  categorys: Category[] = []
+  currencys: Currency[] = []
 
-  datePurchase:Date
-  products:Product[]=[]
-  units:Unit[]=[]
+  datePurchase: Date
+  products: Product[] = []
+  units: Unit[] = []
 
-  isError:boolean
-  isSuccess:boolean
-  erreur:string
-  sucess:string
+  isError: boolean
+  isSuccess: boolean
+  erreur: string
+  sucess: string
   loading: boolean = false;
   // ref: DynamicDialogRef | undefined;
-  showAddProduct=false
+  showAddProduct = false
 
-  price:Price;
-  positionModalConfirm:any
+  price: Price;
+  positionModalConfirm: any
 
-  shop:Shop=new Shop()
+  shop: Shop = new Shop()
   ///
-  detailPurchasesForms=[
+  detailPurchasesForms = [
     {
-    quantity:0,
-    value:0,
-    totalPrice:0,
-    product:new Product(),
-    unit:new Unit(),
-    realQ:0,
-    distinctUnit:false,
-    realQuantity:'',
-    realUnit:''
-  }
-]
-
-detailPurchasesForms2:any=[]
-  curren: any
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,private tokenService: TokenService,
-    private dialogService:DialogService,public config: DynamicDialogConfig,  private detailpurchaseService:DetailspurchasingService,private cdref: ChangeDetectorRef,
-    private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,
-    private currencyService:CurrencyService,private productService:ProductService,private unitService:UnitService,private priceService:PriceService) {
-      this.data=this.config.data
-
-      var date  = new Date(this.data.datePurchase).getMonth() + '/' + new Date(this.data.datePurchase).getDate() + '/' + new Date(this.data.datePurchase).getFullYear();
-
-      console.log(date);
-      this.data.datePurchase=new Date(this.data.datePurchase)
-      this.curren = this.data.currency.name;
-
-      console.log(this.data);
-      
-      //this.datePurchase=new Date(date)
+      quantity: 0,
+      value: 0,
+      totalPrice: 0,
+      product: new Product(),
+      unit: new Unit(),
+      realQ: 0,
+      distinctUnit: false,
+      realQuantity: '',
+      realUnit: ''
     }
+  ]
+
+  detailPurchasesForms2: any = []
+  curren: any
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private shopService: ShopService, private tokenService: TokenService,
+    private dialogService: DialogService, public config: DynamicDialogConfig, private detailpurchaseService: DetailspurchasingService, private cdref: ChangeDetectorRef,
+    private purchaseService: PurchaseService, public tableShort: TableShortService, private addressService: AddressService, private categoryService: CategoryService,
+    private currencyService: CurrencyService, private productService: ProductService, private unitService: UnitService, private priceService: PriceService) {
+    this.data = this.config.data
+
+    var date = new Date(this.data.datePurchase).getMonth() + '/' + new Date(this.data.datePurchase).getDate() + '/' + new Date(this.data.datePurchase).getFullYear();
+
+    console.log(date);
+    this.data.datePurchase = new Date(this.data.datePurchase)
+    this.curren = this.data.currency.name;
+
+    console.log(this.data);
+
+    //this.datePurchase=new Date(date)
+  }
 
 
   async ngOnInit(): Promise<void> {
+    console.log("data",this.data);
+
+
+    this.shop = this.data.shop;
+
+    // if (this.shop) {
+    //   this.shop.displayLabel = `${this.shop.name} , ${this.shop.addressPrincipale?.streetName} , ${this.shop.addressPrincipale?.streetNumber} , ${this.shop.addressPrincipale?.label} , ${this.shop.addressPrincipale?.city} , ${this.shop.addressPrincipale?.country?.name}`;
+    // }
+
     console.log(this.data);
 
-
-    this.shop=this.data.shop
-    this.getAll(this.data.id)
+    this.getAll(this.shop.displayLabel)
 
     this.getAllShop()
     //this.getAllAdress()
@@ -162,37 +169,37 @@ detailPurchasesForms2:any=[]
   }
 
 
-   //recuperation de valeurs
-   getAll(id:any){
-    this.detailpurchaseService.byPurchase(this.data.id).then(data =>{
+  //recuperation de valeurs
+  getAll(id: any) {
+    this.detailpurchaseService.byPurchase(this.data.id).then(data => {
       console.log(data)
       //this.detailpurchases=data
-      data.forEach((detail: DetailsPurchasing)=>{
-        var d={
-          quantity:detail.quantity,
-          value:detail.price.value,
-          totalPrice:detail.totalPrice,
-          product:detail.price.product,
-          unit:detail.price.product.unit,
-          realQ:detail.quantity,
-          distinctUnit:false,
-          realQuantity:'',
-          realUnit:''
+      data.forEach((detail: DetailsPurchasing) => {
+        var d = {
+          quantity: detail.quantity,
+          value: detail.price.value,
+          totalPrice: detail.totalPrice,
+          product: detail.price.product,
+          unit: detail.price.product.unit,
+          realQ: detail.quantity,
+          distinctUnit: false,
+          realQuantity: '',
+          realUnit: ''
         }
         this.detailPurchasesForms.push(d)
         this.detailPurchasesForms2.push(d)
       })
       this.detailPurchasesForms.push(
         {
-          quantity:0,
-          value:0,
-          totalPrice:0,
-          product:new Product(),
-          unit:new Unit(),
-          realQ:0,
-          distinctUnit:false,
-          realQuantity:'',
-          realUnit:''
+          quantity: 0,
+          value: 0,
+          totalPrice: 0,
+          product: new Product(),
+          unit: new Unit(),
+          realQ: 0,
+          distinctUnit: false,
+          realQuantity: '',
+          realUnit: ''
         }
       )
 
@@ -202,13 +209,19 @@ detailPurchasesForms2:any=[]
   }
 
 
-  getAllShop(){
+  getAllShop() {
     const user = this.tokenService.getUser()
-    this.shopService.getAll(user.id).then(data =>{
-      console.log(data)
+    this.shopService.getAll(user.id).then((data) => {
+      // console.log(data)
 
-      this.shops=data
+      this.shops = data;
+      // this.shops = data.map(shop => ({
+      //   ...shop,
+      //   displayLabel: `${shop.name} , ${shop.addressPrincipale?.streetName} , ${shop.addressPrincipale?.streetNumber} , ${shop.addressPrincipale?.label} , ${shop.addressPrincipale?.city} , ${shop.addressPrincipale?.country.name}`     
+      // }));
       //this.data.shop=this.shops[0]
+      console.log(this.shops);
+
 
       //this.changeShop()
     })
@@ -225,129 +238,129 @@ detailPurchasesForms2:any=[]
   // }
 
 
-  getAllCurrency(){
-    this.currencyService.getAll().then(data=>{
-      this.currencys=data
+  getAllCurrency() {
+    this.currencyService.getAll().then(data => {
+      this.currencys = data
     })
   }
 
-  async getProducts(){
+  async getProducts() {
     const user = this.tokenService.getUser();
-    await this.productService.getAllProduct().then(data =>{
+    await this.productService.getAllValidated().then(data => {
       console.log(data)
-      this.products=data
+      this.products = data
       //this.productes[0]=this.products[0]
       //this.unitys[0]=this.products[0].unit
     })
   }
 
-  getUnits(){
-    this.unitService.getAllUnits().then(data =>{
+  getUnits() {
+    this.unitService.getAllUnits().then(data => {
       console.log(data)
-      this.units=data
+      this.units = data
     })
   }
 
-  async getAllCategory(){
-    await this.categoryService.getAllCategorys().then(data=>{
-      this.categorys=data
+  async getAllCategory() {
+    await this.categoryService.getAllCategorys().then(data => {
+      this.categorys = data
     })
   }
 
-  showAddProductForm(){
-    this.showAddProduct=!this.showAddProduct
+  showAddProductForm() {
+    this.showAddProduct = !this.showAddProduct
   }
 
-   changeProduct(product:Product,i:any){
-   ////this.totalPrice=value*this.quantity
-   this.detailPurchasesForms[i].unit=this.detailPurchasesForms[i].product?.unit
-   //this.unitys[i]=this.productes[i]?.unit
-   //////this.changeUnit()
- }
-
- changeValue(value: any,i:any ){
-  console.log(i);
-
-  this.detailPurchasesForms[i].value=this.detailPurchasesForms[i].totalPrice/this.detailPurchasesForms[i].quantity
-  //this.totalPrices[i]=this.values[i]*this.quantitys[i]
-  ////this.unit=this.product.unit
-  this.changeUnit(i)
-  this.data.montant=0
-
-  for(let i=0;i<this.detailPurchasesForms.length;i++){
-    this.data.montant+=this.detailPurchasesForms[i].totalPrice
-  }
-}
-
-
-  async findOrCreatePrice(price:Price){
-    await this.priceService.loadOrCreate(price).then(data=>{
-      console.log(data);
-      this.price=data.data
-    })
+  changeProduct(product: Product, i: any) {
+    ////this.totalPrice=value*this.quantity
+    this.detailPurchasesForms[i].unit = this.detailPurchasesForms[i].product?.unit
+    //this.unitys[i]=this.productes[i]?.unit
+    //////this.changeUnit()
   }
 
-  changeUnit(i:any){
+  changeValue(value: any, i: any) {
     console.log(i);
-   console.log(this.products);
 
+    this.detailPurchasesForms[i].value = this.detailPurchasesForms[i].totalPrice / this.detailPurchasesForms[i].quantity
+    //this.totalPrices[i]=this.values[i]*this.quantitys[i]
+    ////this.unit=this.product.unit
+    this.changeUnit(i)
+    this.data.montant = 0
 
-   const form = this.detailPurchasesForms[i];
-   const productUnit = form.product?.unit?.code?.toUpperCase();
-   const inputUnit = form.unit?.code?.toUpperCase();
-
-   // Vérifier si les unités sont distinctes
-   if (inputUnit !== "L" && inputUnit !== "KG") {
-    form.distinctUnit = true;
-
-    // Initialiser les variables de conversion
-    let conversionFactor = 1; // Facteur de conversion
-    let targetUnit = ""; // Unité de destination
-    let targetUnitCode = "";
-
-    // Conversion en fonction des unités
-    switch (inputUnit) {
-      case "KG": // Kilogramme
-        conversionFactor = 1; // Déjà en kilogramme
-        targetUnit = "Kilogramme";
-        targetUnitCode = "KG";
-        break;
-    
-      case "G": // Gramme
-      case "GR":
-        conversionFactor = 1 / 1000; // Convertir en kilogrammes
-        targetUnit = "Kilogramme";
-        targetUnitCode = "KG";
-        break;
-    
-      case "L": // Litre
-        conversionFactor = 1; // Déjà en litre
-        targetUnit = "Litre";
-        targetUnitCode = "L";
-        break;
-    
-      case "ML": // Millilitre
-        conversionFactor = 1 / 1000; // Convertir en litres
-        targetUnit = "Litre";
-        targetUnitCode = "L";
-        break;
-    
-      default: // Cas où l'unité ne peut pas être convertie
-        form.realQuantity = "Conversion impossible";
-        return; // Arrêter l'exécution
+    for (let i = 0; i < this.detailPurchasesForms.length; i++) {
+      this.data.montant += this.detailPurchasesForms[i].totalPrice
     }
-    
-    // Effectuer la conversion
-    form.realQ = form.quantity * conversionFactor;
-    form.realQuantity = `${form.realQ} ${targetUnit}`;
-    form.realUnit = targetUnitCode;
-    // Mettre à jour le prix unitaire (value) après conversion
-    if (form.realQ !== 0) {
-      form.value = form.totalPrice / form.realQ;
-    } else {
-      form.value = 0; // Éviter la division par zéro
-    }
-    
+  }
+
+
+  async findOrCreatePrice(price: Price) {
+    await this.priceService.loadOrCreate(price).then(data => {
+      console.log(data);
+      this.price = data.data
+    })
+  }
+
+  changeUnit(i: any) {
+    console.log(i);
+    console.log(this.products);
+
+
+    const form = this.detailPurchasesForms[i];
+    const productUnit = form.product?.unit?.code?.toUpperCase();
+    const inputUnit = form.unit?.code?.toUpperCase();
+
+    // Vérifier si les unités sont distinctes
+    if (inputUnit !== "L" && inputUnit !== "KG") {
+      form.distinctUnit = true;
+
+      // Initialiser les variables de conversion
+      let conversionFactor = 1; // Facteur de conversion
+      let targetUnit = ""; // Unité de destination
+      let targetUnitCode = "";
+
+      // Conversion en fonction des unités
+      switch (inputUnit) {
+        case "KG": // Kilogramme
+          conversionFactor = 1; // Déjà en kilogramme
+          targetUnit = "Kilogramme";
+          targetUnitCode = "KG";
+          break;
+
+        case "G": // Gramme
+        case "GR":
+          conversionFactor = 1 / 1000; // Convertir en kilogrammes
+          targetUnit = "Kilogramme";
+          targetUnitCode = "KG";
+          break;
+
+        case "L": // Litre
+          conversionFactor = 1; // Déjà en litre
+          targetUnit = "Litre";
+          targetUnitCode = "L";
+          break;
+
+        case "ML": // Millilitre
+          conversionFactor = 1 / 1000; // Convertir en litres
+          targetUnit = "Litre";
+          targetUnitCode = "L";
+          break;
+
+        default: // Cas où l'unité ne peut pas être convertie
+          form.realQuantity = "Conversion impossible";
+          return; // Arrêter l'exécution
+      }
+
+      // Effectuer la conversion
+      form.realQ = form.quantity * conversionFactor;
+      form.realQuantity = `${form.realQ} ${targetUnit}`;
+      form.realUnit = targetUnitCode;
+      // Mettre à jour le prix unitaire (value) après conversion
+      if (form.realQ !== 0) {
+        form.value = form.totalPrice / form.realQ;
+      } else {
+        form.value = 0; // Éviter la division par zéro
+      }
+
     } else {
       form.distinctUnit = false; // Pas de différence d'unités
       form.realUnit = inputUnit;
@@ -383,33 +396,33 @@ detailPurchasesForms2:any=[]
       }else this.detailPurchasesForms[i].distinctUnit=false
     }
     console.log(this.products);*/
- 
- 
+
+
   }
 
-  firstSaveForDetail(detail:any){
+  firstSaveForDetail(detail: any) {
     this.detailPurchasesForms2.push(detail)
     this.detailPurchasesForms.push(
       {
-        quantity:0,
-        value:0,
-        totalPrice:0,
-        product:new Product(),
-        unit:new Unit(),
-        realQ:0,
-        distinctUnit:false,
-        realQuantity:'',
-        realUnit:''
+        quantity: 0,
+        value: 0,
+        totalPrice: 0,
+        product: new Product(),
+        unit: new Unit(),
+        realQ: 0,
+        distinctUnit: false,
+        realQuantity: '',
+        realUnit: ''
       }
     )
   }
 
 
-  confirmDeleteDetail(detail:any,i:number){
+  confirmDeleteDetail(detail: any, i: number) {
     console.log(detail);
 
     this.confirmationService.confirm({
-      message: 'Veuillez confirmer la suppresion de  '+detail.product.name+'('+detail.product.category?.name+')',
+      message: 'Veuillez confirmer la suppresion de  ' + detail.product.name + '(' + detail.product.category?.name + ')',
       header: 'Comfirm delete',
       icon: 'pi pi-info-circle',
       accept: () => {
@@ -423,103 +436,103 @@ detailPurchasesForms2:any=[]
         // this.detailPurchasesForms.splice(i,i)
         this.messageService.add({ severity: 'success', summary: 'Confirm', detail: 'Produit supprimé' });
       },
-      reject: (type:any) => {
-          switch (type) {
-              case ConfirmEventType.REJECT:
-                  this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
-                  break;
-              case ConfirmEventType.CANCEL:
-                  this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
-                  break;
-          }
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+        }
       },
       key: 'positionDialog'
-  });
+    });
   }
 
 
-   ///save
-   save(){
-    this.isError=false
-    this.isSuccess=false
-    this.loading=true
+  ///save
+  save() {
+    this.isError = false
+    this.isSuccess = false
+    this.loading = true
 
     //recup des valeurs et attribution
 
 
-    this.data.datePurchase=new Date(this.datePurchase);
-    this.purchaseService.update(this.data.id,this.data).then(async (data) =>{
+    this.data.datePurchase = new Date(this.datePurchase);
+    this.purchaseService.update(this.data.id, this.data).then(async (data) => {
       //this.getAll();
 
-      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée"});
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée" });
 
       await this.saveAllDetail(data.data)
 
     },
-    (error: any)=>{
-      //this.isError=true
-      if(error.error.message=='ko'){
-        this.erreur=error.error.data
-        }else{
-        this.erreur="Erreur lié au serveur"
-      }
-      this.loading=false
-      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+      (error: any) => {
+        //this.isError=true
+        if (error.error.message == 'ko') {
+          this.erreur = error.error.data
+        } else {
+          this.erreur = "Erreur lié au serveur"
+        }
+        this.loading = false
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
-    });
+      });
   }
 
 
 
   //save all  detailUnit
-  saveAllDetail(purchase:Purchase){
-    this.detailPurchasesForms2.forEach(async (form:any)=>{
+  saveAllDetail(purchase: Purchase) {
+    this.detailPurchasesForms2.forEach(async (form: any) => {
 
-    var detail=new DetailsPurchasing()
-    detail.purchase=purchase
+      var detail = new DetailsPurchasing()
+      detail.purchase = purchase
 
-    //recup des valeurs et attribution
-    var price=new Price()
-    price.currency=purchase.currency
-    price.product=form.product
-    price.value=form.value
-    price.shop=purchase.shop
-    await this.findOrCreatePrice(price)
+      //recup des valeurs et attribution
+      var price = new Price()
+      price.currency = purchase.currency
+      price.product = form.product
+      price.value = form.value
+      price.shop = purchase.shop
+      await this.findOrCreatePrice(price)
 
-    detail.product=this.price.product
+      detail.product = this.price.product
 
-    detail.totalPrice=form.totalPrice
-    detail.price=this.price
-    if(form.distinctUnit){
-      detail.quantity=form.realQ
-    }else detail.quantity=form.quantity
+      detail.totalPrice = form.totalPrice
+      detail.price = this.price
+      if (form.distinctUnit) {
+        detail.quantity = form.realQ
+      } else detail.quantity = form.quantity
 
 
-    this.detailpurchaseService.create(detail).then((data) =>{
-      //this.getAll();
-      this.loading=false
-      //this.isSuccess=true
-      this.sucess="detailPurchase created !"
-      // this.price=0
-      // this.geolocation=0
-      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail:detail?.product?.name+' ' +detail.quantity+' '+ detail.product.code+' creer'});
-      this.ref?.close
+      this.detailpurchaseService.create(detail).then((data) => {
+        //this.getAll();
+        this.loading = false
+        //this.isSuccess=true
+        this.sucess = "detailPurchase created !"
+        // this.price=0
+        // this.geolocation=0
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: detail?.product?.name + ' ' + detail.quantity + ' ' + detail.product.code + ' creer' });
+        this.ref?.close
 
-    },
-    (error: any)=>{
-      //this.isError=true
-      if(error.error.message=='ko'){
-        this.erreur=error.error.data
-        }else{
-        this.erreur="Server related error"
-      }
-      this.loading=false
-      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail:this.erreur+" "+detail?.product?.name+' ' +detail.quantity+' '+ detail.product.code });
+      },
+        (error: any) => {
+          //this.isError=true
+          if (error.error.message == 'ko') {
+            this.erreur = error.error.data
+          } else {
+            this.erreur = "Server related error"
+          }
+          this.loading = false
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur + " " + detail?.product?.name + ' ' + detail.quantity + ' ' + detail.product.code });
 
-    }
-    );
+        }
+      );
 
-  })
+    })
 
   }
 }

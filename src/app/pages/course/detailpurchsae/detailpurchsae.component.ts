@@ -120,7 +120,7 @@ export class DetailpurchsaeComponent {
   // }
 
   getProducts(){
-    this.productService.getActive().then(data =>{
+    this.productService.getAllValidated().then(data =>{
       console.log(data)
       this.products=data
     })

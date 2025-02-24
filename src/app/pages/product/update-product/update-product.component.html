@@ -5,19 +5,19 @@
           <div class="col-4">
             <div class="field">
               <label htmlFor="name">Nom</label>
-              <input [disabled]="true" pInputText id="name" [(ngModel)]="productData.product.name" name="name" type="text" placeholder="Nom produit" required />
+              <input  pInputText id="name" [(ngModel)]="productData.product.name" name="name" type="text" placeholder="Nom produit" required />
             </div>
           </div>
           <div class="col-4">
             <div class="field ">
               <label htmlFor="category">Categorie</label>
-              <p-dropdown [disabled]="true" [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.product.category"></p-dropdown>
+              <p-dropdown  [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.product.category"></p-dropdown>
             </div>
           </div>
           <div class="col-4">
             <div class="field ">
               <label htmlFor="conditioning">Conditionnement</label>
-              <p-dropdown [disabled]="true" [options]="conditionings" optionLabel="name" name="conditioning"
+              <p-dropdown  [options]="conditionings" optionLabel="name" name="conditioning"
                 [(ngModel)]="productData.product.conditioning"></p-dropdown>
             </div>
           </div>
@@ -46,13 +46,13 @@
           <div class="col-4">
             <div class="field ">
               <label htmlFor="unit">Unité</label>
-              <p-dropdown  [disabled]="true" [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.product.unit"></p-dropdown>
+              <p-dropdown   [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.product.unit"></p-dropdown>
             </div>
           </div>
         </div>
   
         <p>Description</p>
-        <textarea rows="5" [disabled]="true"  cols="10" [(ngModel)]="productData.description" name="description" placeholder="Description"
+        <textarea rows="5"   cols="10" [(ngModel)]="productData.description" name="description" placeholder="Description"
           pInputTextarea></textarea>
   
         <!-- <label id="erreur" *ngIf="isError">{{erreur}}</label>

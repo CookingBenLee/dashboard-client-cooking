@@ -235,6 +235,7 @@ resetFields() {}
 
    
    console.log("dones adress",  this.address)
+   console.log("dones shop",  this.shopData)
    this.adressService.create(this.address).then(data1=>{
      this.shopData.addressPrincipale=data1.data
      console.log("dones fournisseur",  this.shopData)

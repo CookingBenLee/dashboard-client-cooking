@@ -92,10 +92,10 @@
                     </p-dropdown>
                   </div>
                 </div>
-                <div (click)="showDialogSelect()" style="margin-top: 5px; margin-left: -5px;" class="col-1">
+                <!-- <div (click)="showDialogSelect()" style="margin-top: 5px; margin-left: -5px;" class="col-1">
                   <button pButton pRipple icon="pi pi-filter-fill" style="margin-top: 20px;"
                     class="p-button-rounded p-button-primary mr-2"></button>
-                </div>
+                </div> -->
                 <!--<div class="col-3">
                <div class="field ">
                  <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>-->
@@ -212,7 +212,9 @@
                     <td>{{ detail?.product?.name }}</td>
                     <td>{{ detail?.product?.category?.name }}</td>
                     <td>{{ detail?.product?.conditioning?.name }}</td>
-                    <td>{{detail.quantity}} ({{detail?.realUnit}})</td>
+                    <!--<td>{{detail.quantity}} ({{detail?.realUnit}})</td>-->
+                    <td>{{detail?.realQ || detail?.quantity}} ({{detail?.realUnit || detail?.unit?.code}})</td>
+
                     <!-- <td>{{ detail?.value | number:'1.2-2' }}
                       /{{ detail?.unit?.code }}</td> -->
                     <td>{{detail?.totalPrice}} ({{curenn}})</td>

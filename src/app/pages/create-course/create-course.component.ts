@@ -768,7 +768,6 @@ retrieveCountryById(): void {
     } else {
       form.distinctUnit = false; // Pas de différence d'unités
       form.realUnit = inputUnit;
-
     }
    /*if(this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="KG" || (this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="G" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="GR") || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="L" || this.detailPurchasesForms[i].product?.unit?.code?.toUpperCase()=="ML"){
      console.log(this.detailPurchasesForms[i].product.unit);
@@ -824,7 +823,7 @@ retrieveCountryById(): void {
  }
  async getProducts(){
     const user= this.tokenService.getUser();
-   await this.productService.getAllProduct().then(data =>{
+   await this.productService.getAllValidated().then(data =>{
      
      this.products=data
      

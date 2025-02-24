@@ -22,4 +22,5 @@ export class Shop{
   // purchaseList: Purchase[];
   priceList :Price[];
   adressList :Address[];
+  displayLabel?: string;
 }

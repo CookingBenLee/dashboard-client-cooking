@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { DetailsRecipe } from 'src/app/services/detailsrecipe/DetailsRecipe';
 import { DetailsrecipeService } from 'src/app/services/detailsrecipe/detailsrecipe.service';
 import { PaginateService } from 'src/app/services/paginate/paginate.service';
@@ -47,6 +47,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { Purchase } from 'src/app/services/purchase/Purchase';
 
 @Component({
   selector: 'app-preparationrecipe',
@@ -86,24 +87,28 @@ export class PreparationrecipeComponent {
   ///
   preparationRecipe: PreparationRecipe = new PreparationRecipe()
   loadingPreparation = false
-
+  data: Recipe = new Recipe();
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
     private dialogService: DialogService, private preparationRecipeService: PreparationRecipeService,
-    private paginateService: PaginateService, private tokenService: TokenService,
+    private paginateService: PaginateService, private tokenService: TokenService, public config: DynamicDialogConfig,
     private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,
-    public tableShort: TableShortService) { }
+    public tableShort: TableShortService) { 
+      this.data = this.config.data
+    }
 
 
   utilisateurC: any;
   usercurrency: any;
   selectedCountry: any;
   async ngOnInit(): Promise<void> {
-
+    console.log("data",this.data);
+    
     this.utilisateurC = this.tokenService.getUser();
     this.usercurrency = this.utilisateurC.compteUser.address.country.currency.name
     // this.currencys.push(this.usercurrency)
     // console.log("currency", this.usercurrency);
-
+    this.recetteSelectione = this.data;
+    this.changePlat();
     this.getAll()
   }
 
