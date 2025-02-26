@@ -548,7 +548,8 @@ async getProductCategory(category:Category){
   })
 }
 async getProducts(){
-  await this.productService.getActive().then(data =>{
+  const user = this.tokenService.getUser();
+  await this.productService.getAll(user.id).then(data =>{
     console.log(data)
     this.products=data
     this.products= this.products.sort((a, b) => (a.name < b.name ? -1 : 1));
