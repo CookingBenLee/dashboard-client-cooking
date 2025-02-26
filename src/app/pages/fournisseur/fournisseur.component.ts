@@ -133,7 +133,16 @@ addProduct(){}
 closeDialog() {
   this.dialog.closeAll();
 }
-resetFields() {}
+resetFields() {
+  this.address.streetName = null;
+  this.address.streetNumber = null;
+  this.address.label = null;
+  this.address.city = null;
+  this.address.country = new Country();
+  this.address.geolocation = null;
+  this.shopData.is_active = false;
+  this.shopData.name = null;
+}
  //recuperation de valeurs
  getAll(){
   const user = this.tokenService.getUser();
