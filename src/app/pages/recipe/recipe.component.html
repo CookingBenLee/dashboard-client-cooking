@@ -113,7 +113,7 @@
 
 
 
-      <p-tabPanel header="Nouvelle Recette">
+      <p-tabPanel (onFocus)="reset()" header="Nouvelle Recette">
         <div class="">
           <form class="grid newform " #f="ngForm" (ngSubmit)="save()">
 
