@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -27,7 +28,7 @@ import { TokenService } from 'src/app/services/token/token.service';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    TablerIconsModule,
+    TablerIconsModule,MatCardModule,MatTableModule,
     CommonModule,ToastModule,
     MatButtonModule, MatDialogModule,ConfirmDialogModule
   ],
@@ -98,6 +99,7 @@ export class FournisseurComponent implements OnInit{
    displayedColumns: string[] = [
     'nom',
     'adresse',
+    'isActive',
     'action',
   ];
 
@@ -304,6 +306,7 @@ resetFields() {
   this.shopData = { ...shop };
   this.address = { ...shop.addressPrincipale };
 
+  this.shopData.isActive = !!shop.isActive;
 
   console.log(this.shopData, this.address, this.address.country);
   this.dialog.open(this.dialogTemplateEdit, {
