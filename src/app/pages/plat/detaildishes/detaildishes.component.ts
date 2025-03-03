@@ -115,7 +115,7 @@ import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-f
          PaginatorModule],
            providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './detaildishes.component.html',
-  styleUrls: ['./detaildishes.component.scss','../newdishes/newdishes.component.scss']
+  styleUrls: ['./detaildishes.component.scss',]
 })
 export class DetaildishesComponent {
   loadingPage=false

@@ -1,109 +1,71 @@
-<div class="content ">
-    <div class="formpart">
-      <div class="p-fluid colo ">
-  
-        <div class="firstrow col-12 grid " >
-  
-          <div class="col-5 field namePlat" pTooltip="Nom du Plat">
-            <div class=" ">
-              <label for="">{{plat.name}}</label>
-            </div>
-          </div>
-  
-          <div class="field col-3 categorie"  pTooltip="Categorie du Plat">
-            <label for="">{{plat?.categoryMenu?.name}} {{plat?.categoryMenu?.code}}</label>
-  
-          </div>
-  
-          <div class=" grid detailPlat col-4">
-            <div class="cout  divgray">
-              <label for="cout" >Coût Total(FCFA): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-0'">{{plat.cout| number: '1.0-0' }}</span></label>
-            </div>
-  
-            <div class="poid  divgray">
-              <label for="poit" >Poid Total : {{plat.poids| number: '1.0-3' }} G</label>
-            </div>
-  
-          </div>
-  
-        </div>
-  
-        <div class="secaindrow grid mt-2">
-  
-          <div class="row2 col-12">
-            <div class="ingredients ">
-              <div class="listIngredients  ">
-                <div class="entetelist divblue">
-                  <div class="lbl brdr-right pdr"><label for="">Recette</label></div>
-                  <div class="lbl brdr-left pdl"><label for="">Quantité</label></div>
-                  <div class="lbl brdr-left pdl"><label for="">Cout</label></div>
-                  <div></div>
-  
-                </div>
-  
-                <div class="bdylist">
-                  <div class="linebdy"  *ngFor="let detail of compositionDishes,let i=index">
-                    <div class="lbl brdr-right pdr"><label for="">{{detail?.recipe?.name}}</label></div>
-                    <div class="lbl brdr-left pdl"><label for="">{{detail?.quantity| number: '1.0-3' }} G </label></div>
-                    <div class="lbl brdr-left pdl"><label for=""><span appPriceFormater [priceValue]="detail?.cout | number: '1.0-2'">{{detail?.cout| number: '1.0-3' }}</span> FCFA</label></div>
-                    <div></div>
-  
-                  </div>
-                  <div class="nodetail m-2 head-center" *ngIf="compositionDishes.length==0">
-                    <label for="">
-                      Aucune recettes
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-          </div>
-        </div>
-  
-        <!--Image-->
-        <div class="thirdrow grid col-12">
-          <div class="list col-12">
-  
-            <div class="ingredientsImages ">
-              <div class="listIngredientsImages  ">
-                <div class="entetelist divblue">
-                  <div class="lbl brdr-right pdr"><label for="">Listes des images</label></div>
-                  <div></div>
-                </div>
-  
-                <div class="bdylist divblanc">
-                  <p-overlayPanel #op2>
-                    <img style="height: 200px" [src]="'data:image/jpeg;base64,'+pictureClicked.file"  alt="{{pictureClicked.label}}" />
-                  </p-overlayPanel>
-                  <div class="linebdy" style="cursor: pointer;" *ngFor="let picture of picturesDishes,let i=index" (click)="showImage(picture,$event)" >
-                    <div class="lbl brdr-right pdr" pTooltip="Clicquer pour voir l'image">
-                      <label for="">{{picture?.label}}</label>
-                    </div>
-                    <div>
-                      <img style="height: 50px; width: 50px; object-fit:cover;cursor:pointer" [src]="'data:image/jpeg;base64,'+picture.file" alt="{{picture?.label}}" >
-                    </div>
-  
-                  </div>
-                  <div class="nodetail m-2 head-center" *ngIf="picturesDishes.length==0">
-                    <label for="">
-                      Aucune images
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-         <!-- <div class="btn col-2">
-            <button pButton label="Ajouter une image" type="button" [loading]="loading" class="p-button-newline-red mt-2" (click)="clickFileSelector()" ></button>
-          </div>-->
-        </div>
-  
-  
-        <button pButton label="Modifier le plat" type="submit" class="p-button-vert mt-3"  (click)="show($event,plat)"></button>
-      </div>
-  
+<div class="dialog-container">
+  <h2 class="dialog-title">Détails du Plat</h2>
+
+  <div class="info-table">
+    <div class="info-header">
+      <div class="info-header-cell">Attribut</div>
+      <div class="info-header-cell">Valeur</div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-cell label">Nom</div>
+      <div class="info-cell value">{{ plat.name }}</div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-cell label">Catégorie</div>
+      <div class="info-cell value">{{ plat?.categoryMenu?.name }} ({{ plat?.categoryMenu?.code }})</div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-cell label">Coût Total</div>
+      <div class="info-cell value">{{ plat.cout | number: '1.0-0' }} FCFA</div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-cell label">Poids Total</div>
+      <div class="info-cell value">{{ plat.poids | number: '1.0-3' }} G</div>
+    </div>
   </div>
-  
-  
+
+  <p class="divider mt-4"></p>
+
+  <h3 class="dialog-title">Composition du Plat</h3>
+  <div class="info-table">
+    <div class="info-header">
+      <div class="info-header-cell">Recette</div>
+      <div class="info-header-cell">Quantité</div>
+      <div class="info-header-cell">Coût</div>
+    </div>
+
+    <div *ngFor="let detail of compositionDishes" class="info-row">
+      <div class="info-cell">{{ detail?.recipe?.name }}</div>
+      <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
+      <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} FCFA</div>
+    </div>
+
+    <div class="info-row" *ngIf="compositionDishes.length == 0">
+      <div class="info-cell label" colspan="3">Aucune recette</div>
+    </div>
+  </div>
+
+  <p class="divider mt-4"></p>
+
+  <h3 class="dialog-title">Images du Plat</h3>
+  <div class="info-table">
+    <div class="info-row" *ngFor="let picture of picturesDishes" (click)="showImage(picture, $event)">
+      <div class="info-cell label">{{ picture?.label }}</div>
+      <div class="info-cell">
+        <img style="height: 50px; width: 50px; object-fit:cover; cursor:pointer" 
+             [src]="'data:image/jpeg;base64,' + picture.file" 
+             alt="{{ picture?.label }}">
+      </div>
+    </div>
+
+    <div class="info-row" *ngIf="picturesDishes.length == 0">
+      <div class="info-cell label">Aucune image</div>
+    </div>
+  </div>
+
+  <button pButton label="Modifier le plat" type="submit" class="p-button-vert mt-3" (click)="show($event, plat)"></button>
+</div>
