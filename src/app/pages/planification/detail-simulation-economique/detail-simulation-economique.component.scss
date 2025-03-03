@@ -1,0 +1,328 @@
+
+$orange:#FF7900;
+$Vert:#50BE87;
+$Jaune:#FFD200;
+$Rose:#FFB4E6;
+$Violet:#A885D8;
+$Bleu:#4BB4E6;
+$Noir:#000000;
+$Blanc:#ffffff;
+
+$color1:#c1853b;
+$color2:#cc1b1b;
+$color3:#2f0505;
+$color4:#85311b;
+$color5:#000000;
+
+$color6:#cf4020;
+$color7:#a4ecdc;
+$color8:#bc2c14;
+$color9:#9e675b;
+$color10:#94c9b2;
+$color11:#2d674d;
+
+$gray:#d8d8d8;
+$bilan:#e8fdc9;
+$fonced-gray:#c0c5cb54;
+
+$color12:#a9d18d;
+$vertClair:#32ff34;
+
+
+.title{
+  background-color: $fonced-gray;
+  padding: 5px;
+  border-bottom: 1px solid #000;
+}
+.title-estimation-situation{
+  height: fit-content;
+}
+.bigContaint{
+  //height: 100vh;
+  font-size: 12px !important;
+
+
+
+}
+
+.facteur-div{
+  >*{
+    height: 50px;
+  }
+}
+
+.container2{
+  .devise-head{
+    font-size: 15px;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(192, 197, 203, 0.3294117647);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+}
+
+.devise-div{
+  display: grid;
+  grid-template-columns: 40% 20% 40%;
+
+}
+
+.simulation-div{
+
+  display:grid ;
+  //grid-template-columns: 68% 2% 30%;
+  // grid-template-column:75%
+
+
+  .separator-part{
+
+    #separator{
+      width: 3px;
+      background-color: black;
+      margin: auto;
+      min-height: 90vh;
+      float: center;
+    }
+  }
+
+  // Rigth part of the simulation
+  .right-part{
+    display: flex;
+    gap: 5%;
+    flex-direction: column;
+
+    >*{
+      padding-bottom: 20px;
+      background-color: $gray;
+      border: 1px solid black;
+    }
+
+  }
+
+  .left-part{
+
+    .bilan{
+      padding-bottom: 20px;
+
+    }
+  }
+}
+.contenu-situation{
+  margin:  20px 0 0 0;
+  padding: 0 2%;
+
+  >*{
+    margin: 0 !important;
+  }
+}
+
+
+.contenu-estimation-vente{
+  .plat-list{
+    margin-bottom: 10px !important;
+  }
+}
+
+.list-passifs,.list-actifs{
+  >*{
+    margin-bottom: 10px !important;
+  }
+}
+
+
+.entete-haut{
+  margin-top: -20px;
+  padding: 5px 10px;
+  // border: 1px solid black;
+}
+
+.entete-center{
+  margin: auto;
+  display: flex;
+  border: 0px !important;
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  width: 50%;
+  padding: 10px;
+
+}
+.entete-bilan{
+  margin-top: -25px;
+}
+
+.entete-passif{
+  margin-top: 20px;
+  color: $Blanc;
+}
+
+.bg-white{
+  background-color: #fff;
+  width: max-content !important;
+}
+
+.bg-bleu-foncer{
+  background-color:#1f497d;
+}
+
+.bg-green{
+  background-color:$vertClair;
+}
+
+.child-align{
+  >*{
+    // border-radius: 5px;
+    display: flex;
+    align-items: center !important;
+  }
+}
+
+
+.fs-12{
+  font-size: 10px;
+  color: white;
+}
+
+.fs-20{
+  color: white;
+  font-size: 18px;
+}
+
+.bg-gray{
+  background-color: $gray !important;
+}
+
+.bg-bilan{
+  background-color: $bilan !important;
+}
+
+.bg-red{
+  background-color: $color2 !important;
+}
+
+.sliderCol{
+  background: #eff3f8;
+  // border-radius: 5px;
+  align-items: center !important;
+}
+
+
+.sh{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.bar_horizontal{
+  border-top: 3px solid black ;
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.big-shadow{
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.with-web-kit-number {
+  width: -webkit-fill-available;
+  overflow: hidden;
+
+}
+
+
+@media screen and (max-width:800px){
+
+  .devise-div{
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+
+  }
+  .simulation-div{
+
+    display:grid !important;
+    grid-template-rows: auto auto auto;
+    grid-template-columns:none !important;
+
+
+    .separator-part{
+      width: 100%;
+      // display: none !important;;
+      #separator{
+        width: 90%;
+        background-color: black;
+        margin: auto;
+        min-height: 3px;
+        float: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width:1300px){
+
+  .estimation-vente{
+
+    .entete-haut{
+      display: grid !important;
+      grid-template-rows: auto auto !important;
+      .lbl-estimation.facteur-div{
+        width: 100% !important;
+      }
+    }
+
+  }
+}
+
+.loader{
+  position: absolute;
+  margin: auto;
+  display: flex;
+  width: -webkit-fill-available;
+  .card{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #3b80f660;
+    p-progressSpinner{
+      margin: auto;
+    }
+  }
+}
+
+
+
+
+.no-bg{
+  background-color: transparent !important;
+  border: none !important;
+  width: 100%;
+  display: flex;
+}
+
+
+.p-button-saved{
+  background: $vertClair;
+  color:$Blanc;
+  border: none;
+  border:1px solid $vertClair;
+
+}
+
+.p-button-annuler{
+  background: $color2;
+  color:$Blanc;
+  border: none;
+  border:1px solid $color2;
+}
+
+
+.nbreEmplyeSlider{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+  .slider{
+    display: flex;
+  align-items: center;
+  }
+}

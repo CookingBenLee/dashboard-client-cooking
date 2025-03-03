@@ -1,0 +1,302 @@
+
+$orange:#FF7900;
+$Vert:#50BE87;
+$Jaune:#FFD200;
+$Rose:#FFB4E6;
+$Violet:#A885D8;
+$Bleu:#4BB4E6;
+$Noir:#000000;
+$Blanc:#ffffff;
+
+$color1:#c1853b;
+$color2:#cc1b1b;
+$color3:#2f0505;
+$color4:#85311b;
+$color5:#000000;
+
+$color6:#cf4020;
+$color7:#a4ecdc;
+$color8:#bc2c14;
+$color9:#9e675b;
+$color10:#94c9b2;
+$color11:#2d674d;
+
+$overBleu:#3b81f6;
+$newgray:#595959;
+
+$margintopValu:10px;
+$paddindValu:8px;
+$borderRadiusValu:8px;
+
+$color12:#a9d18d;
+$vertClair:#32ff34;
+
+
+////
+.firstrow{
+  background-color: $color12;
+  .formpart>.colo>.grid{
+    //margin-top: $margintopValu;
+
+    display: grid;
+    grid-template-rows: auto auto;
+  }
+
+
+    .detailPlat{
+      //width: 100%;
+      //border-left: 8px solid $overBleu;
+      margin: auto;
+      display: grid !important;
+      grid-template-columns: 58% 40%;
+      gap: 2%;
+    }
+    .categorie, .namePlat{
+      margin: auto;
+    }
+
+  
+
+}
+
+.secaindrow{
+  .row2{
+    width: 100%;
+  }
+  >div{
+    >div{
+      margin: auto;
+    }
+  }
+
+  .ingredients{
+    margin:0px !important;
+    width: 100%;
+  }
+
+  .listIngredients{
+    transition: 1s ease;
+    font-size: 10px;
+    margin-top: $margintopValu;
+    margin-bottom:  $margintopValu;
+
+    .entetelist,.linebdy{
+      display: grid;
+      grid-template-columns: 45% 15% 15%  25%;
+      .lbl{
+        word-wrap: break-word;
+        align-items: center;
+        display: flex;
+      }
+    }
+
+    .linebdy{
+      border: 2px solid rgba(0, 0, 0, 0);
+      padding: 0px $paddindValu;
+      color: $Noir !important;
+    }
+  }
+}
+
+.thirdrow{
+  background-color: $color12;
+
+  .listIngredientsImages{
+    transition: 1s ease;
+    font-size: 10px;
+    margin-top: $margintopValu;
+    margin-bottom:  $margintopValu;
+
+    .entetelist,.linebdy{
+      display: grid;
+      grid-template-columns: 55% 45% ;
+      .lbl{
+        word-wrap: break-word;
+        align-items: center;
+        display: flex;
+      }
+    }
+
+    .linebdy{
+      border: 2px solid rgba(0, 0, 0, 0);
+      padding: 0  $paddindValu;
+      color: $Noir !important;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+// ///
+.head{
+  font-size: 1.3rem;
+  font-weight: bold;
+  width: 100%;
+  border: 2px solid $color5;
+  padding: 2%;
+}
+
+.mini-head{
+  font-weight: bold;
+  width: 100%;
+  border: 2px solid $color5;
+  padding: 5px;
+}
+
+
+
+
+.head-no-border{
+  font-size: 1.3rem;
+  font-weight: bold;
+  width: 100%;
+  padding: 2%;
+}
+.bighead{
+  font-size: 1.7rem;;
+}
+.head-center{
+  display: flex;
+  justify-content: center;
+}
+
+
+.divblue{
+  padding: $paddindValu;
+  border: 2px solid black;
+  color: $Blanc;
+  background-color: $overBleu;
+  border-radius: $borderRadiusValu;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+
+.divgray{
+  padding: $paddindValu;
+  border: 2px solid $Noir;
+  font-size: 12px;
+  color: $Blanc;
+  background-color: $newgray;
+  border-radius: $borderRadiusValu;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+
+  label{
+    margin: auto;
+  }
+}
+
+.divblanc{
+
+  background-color: $Blanc;
+
+}
+
+
+.p-button-nouveau{
+  background: $color1;
+  color:$Blanc;
+  border:1px solid $color1;
+}
+
+.p-button-saved{
+  background: $vertClair;
+  color:$Blanc;
+  border: none;
+  border:1px solid $vertClair;
+  margin: auto;
+  width: auto;
+  display: block;
+}
+
+.p-button-annuler{
+  background: $color2;
+  color:$Blanc;
+  border: none;
+  border:1px solid $color2;
+}
+
+.p-button-newline{
+  margin: auto;
+  background: #fff;
+  color: #3b82f6;
+  border: 1px solid #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
+
+.p-button-newline-red{
+  margin: auto;
+  background: $color2;
+  color: #fff;
+  border: 1px solid $color2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
+.p-button-newline-red:hover{
+  margin: auto;
+  background: #fff;
+  color: $color2;
+  border: 1px solid $color2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
+
+.p-button-vert{
+  border: none;
+  width: auto;
+  margin: auto;
+  display: block;
+}
+
+
+
+.brdr-left{
+  border-left: 2px solid $Blanc;
+}
+
+.brdr-right{
+  border-right: 2px solid $Blanc;
+}
+
+.pdl{
+  padding-left: 5px;
+}
+.pdr{
+  padding-right: 5px;
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .firstrow,.secaindrow>.row1,.thirdrow{
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    display: grid;
+    >div{
+      width: 100%;
+    }
+
+
+  }
+
+  .listIngredients{
+    overflow-x: scroll;
+  }
+}

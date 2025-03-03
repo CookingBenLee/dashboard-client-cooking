@@ -70,7 +70,7 @@ import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-f
 @Component({
   selector: 'app-detaildishes',
   standalone: true,
-  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,PriceFormaterDirective,
+  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,
            RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
            TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule,
          //prime module
@@ -115,7 +115,7 @@ import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-f
          PaginatorModule],
            providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './detaildishes.component.html',
-  styleUrls: ['./detaildishes.component.scss','../newdishes/newdishes.component.scss']
+  styleUrls: ['./detaildishes.component.scss',]
 })
 export class DetaildishesComponent {
   loadingPage=false

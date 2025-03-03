@@ -1,15 +1,55 @@
+<div class="dialog-container">
+  <!-- Titre de la boîte de dialogue -->
+  <h2 class="dialog-title">Détails du Produit: {{ data.name }}</h2>
 
-<div class="product-details">
-  <h2>{{ data.name }}</h2>
-  <p>Stock: {{ product?.quantity }} {{ data.unit.code }}</p>
-  <p>Prix: {{ data.price }}</p>
-  <p>Marque: {{ data.brand?.name }}</p>
-  <p>Category: {{ data.category?.name }}</p>
-  <!-- <p>Code: {{ data.code }}</p> -->
+  <!-- Tableau élégant -->
+  <div class="info-table">
+    <!-- En-tête des colonnes -->
+    <div class="info-header">
+      <div class="info-header-cell">Attribut</div>
+      <div class="info-header-cell">Valeur</div>
+    </div>
 
-  <p>Condition: {{ data.conditioning?.name }}</p>
-  <p>Poucentage de perte: {{ data.lossPercentage }}%</p>
-  <p>Description: {{ data.description }}</p>
+    <!-- Ligne Stock -->
+    <div class="info-row">
+      <div class="info-cell label">Stock</div>
+      <div class="info-cell value">{{ product?.quantity }} {{ data.unit.code }}</div>
+    </div>
 
+    <!-- Ligne Prix -->
+    <div class="info-row">
+      <div class="info-cell label">Prix</div>
+      <div class="info-cell value">{{ data.price }}</div>
+    </div>
+
+    <!-- Ligne Marque -->
+    <div class="info-row">
+      <div class="info-cell label">Marque</div>
+      <div class="info-cell value">{{ data.brand?.name }}</div>
+    </div>
+
+    <!-- Ligne Catégorie -->
+    <div class="info-row">
+      <div class="info-cell label">Catégorie</div>
+      <div class="info-cell value">{{ data.category?.name }}</div>
+    </div>
+
+    <!-- Ligne Conditionnement -->
+    <div class="info-row">
+      <div class="info-cell label">Conditionnement</div>
+      <div class="info-cell value">{{ data.conditioning?.name }}</div>
+    </div>
+
+    <!-- Ligne Pourcentage de perte -->
+    <div class="info-row">
+      <div class="info-cell label">Pourcentage de perte</div>
+      <div class="info-cell value">{{ data.lossPercentage }}%</div>
+    </div>
+
+    <!-- Ligne Description -->
+    <div class="info-row">
+      <div class="info-cell label">Description</div>
+      <div class="info-cell value">{{ data.description }}</div>
+    </div>
+  </div>
 </div>
-
