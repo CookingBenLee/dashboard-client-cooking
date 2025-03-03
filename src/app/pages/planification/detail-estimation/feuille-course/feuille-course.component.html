@@ -1,0 +1,48 @@
+<div class="loader " *ngIf="loadingPage">
+    <div class="card flex  justify-content-center">
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+    </div>
+  </div>
+  <p-toast position="top-center" key="tc"></p-toast>
+
+
+  <div style="padding-top: 100px; padding-left: 50px; padding-right: 50px;" id="invoice">
+    <div style="text-align: center; align-items:center; justify-content: center;">
+        <h2 > 
+            Feuille de course
+        </h2>
+    </div>
+
+    <div class="currency" style="text-align: center; margin-top: 5px;">
+        Devise : FCFA
+    </div>
+    
+    <table style="margin-bottom: 35px;"> 
+        <thead>
+            <tr>
+                <th>Ingrédient</th>
+                <th>Qté à acheter (correspond à la somme des stocks après) Kg</th>
+                <th>Prix Unitaire du produit</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let detail of detailRecipeList" >
+                <td>{{detail?.ingredient?.name}}</td>
+                <td>{{detail.stockApres }}</td>
+                <td>{{detail?.ingredient?.price}}</td>
+                <td appPriceFormater [priceValue]="detail.totalPrice| number: '.0-0'"></td>
+            </tr>
+            
+            <tr class="total-row">
+                <th colspan="3" style="text-align: left;">Total</th>
+                <th appPriceFormater [priceValue]="total | number: '.0-0'">/th>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div style="text-align: center;" class="bouttonn"> 
+        <p-button (onClick)="generate()" label="Imprimer" icon="pi pi-print" />
+    </div>
+</div>

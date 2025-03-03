@@ -1,1 +1,12 @@
-<p>planification works!</p>
+<p-tabView [(activeIndex)]="activeIndex">
+    <!--Panel liste des shops-->
+  
+    <p-tabPanel header="Nouvelle simulation">
+      <app-new-simulation-economique (parentFun)="changeTabs()"></app-new-simulation-economique>
+    </p-tabPanel>
+  
+    <p-tabPanel  header="Liste des simulations"> 
+      <app-list-simulation-economique></app-list-simulation-economique>
+    </p-tabPanel>
+  </p-tabView>
+  

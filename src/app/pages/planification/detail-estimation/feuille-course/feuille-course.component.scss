@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+#invoice {
+    padding-top: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+h2 {
+    margin-bottom: 50px; /* Increased space below the header */
+    text-align: center;
+}
+
+table {
+    margin-top: 30px; /* Increased margin for spacing */
+    margin-bottom: 35px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Assure que toutes les colonnes aient la même taille */
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px; /* Augmente la taille du padding pour un meilleur espacement */
+    text-align: center;
+    font-size: 18px; /* Augmente encore la taille de la police à 18px */
+}
+
+th {
+    background-color: #f4f4f4;
+    font-size: 20px; /* Agrandit la police pour les en-têtes */
+}
+
+/* Barre jaune de séparation */
+.separator1 {
+    height: 2px;
+    background-color: rgba(129, 2, 255, 0.348);
+    margin: 5px 0;
+}
+
+.separator {
+    height: 10px;
+    background-color: yellow;
+    margin: 20px 0;
+}
+
+/* Styling for the "Insuffisant" text in red */
+.insufficient {
+    color: red;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 5px;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        font-weight: bold;
+    }
+}

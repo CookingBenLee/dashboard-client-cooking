@@ -1,0 +1,240 @@
+
+  
+  
+<div class="bigContaint">
+    <div class="container2">
+      <div class="devise-div ">
+        <div class=""></div>
+        <label class="devise-head w-full" for="">Devise: FCFA</label>
+        <div class=""></div>
+      </div>
+  
+  
+      <div class="simulation-div grid">
+        <div class="right-part w-full mt-5">
+          <!--Situation des employes-->
+          <div class="employe-situation">
+              <div class="title-employe-situation entete-haut ml-3 bg-white  border-1">
+                <label class="" for="">Situation des Employés</label>
+              </div>
+  
+              <div class="contenu-situation-employe contenu-situation grid gap-2">
+                <div class="plat-list grid gap-2 col-12">
+                  <div class="col-4 p-2 border-1 surface-border	 sh">Profil</div>
+                  <div class="col-2 p-2 border-1 surface-border	 sh">Slaire</div>
+                  <div class="col-3 p-2 border-1 surface-border	 sh">Nombre</div>
+                  <div class="col-2  p-2 border-1 surface-border sh">Total</div>
+                </div>
+  
+                <div class="plat-list grid gap-2 col-12" *ngFor="let profil of simulationEmployeList,let i=index">
+                  <div class="col-4 p-2 border-1 sh justify-content-center align-items-center flex">{{profil?.refProfilEmploye?.libelle}}</div>
+                  <div class="col-2 p-2 border-1 sh justify-content-center align-items-center flex">
+                    <span appPriceFormater [priceValue]="profil.montantUnitaire | number: '1.0-0'"></span>
+                </div>
+                  <div class="col-3 p-2 border-1 sh justify-content-center align-items-center flex">{{profil?.nombreEmploye}}</div>
+                  <div class="col-2 p-2 border-1 sh justify-content-center align-items-center flex">
+                    <span appPriceFormater [priceValue]="profil.total | number: '1.0-0'"></span>
+
+                </div>
+
+              
+                  
+                </div>
+  
+              
+              </div>
+  
+          </div>
+  
+  
+          <!--Estimation des ventes-->
+          <div class="estimation-vente ">
+            <div class=" entete-haut ml-2 grid flex gap-2" >
+              <div class="lbl-estimation col-3 mr-1 title-estimation-situation  border-1 bg-white sh" >
+                <label for="">Estimation des ventes</label>
+              </div>
+              <div class="lbl-estimation facteur-div col grid title-employe-situation child-align flex gap-3 align-items-end" >
+                <div class="facteur-lab border-1 bg-bleu-foncer col-10 sh">
+                  <div class="fs-12" for="txtfacteur">
+                    Période du 
+                    {{estimationVenteList[0]?.dateDebut | date:'dd-MM-yyyy' }}
+                    Au 
+                    {{estimationVenteList[0]?.dateFin | date:'dd-MM-yyyy'}}
+
+                    Freq:
+                        {{estimationVenteList[0]?.frequence}}
+                    
+                  </div>
+                </div>
+                
+               
+  
+              </div>
+              <p-button class="col-1"   icon="pi pi-eye" (click)="showDetailAllEstimation()" />
+            </div>
+  
+            <div class="contenu-estimation-vente contenu-situation ">
+              <div class="plat-list grid gap-2">
+                <div class="col-2 p-2 border-1 surface-border	 sh">Plat</div>
+                <div class="col-2 p-1 border-1 surface-border	 sh">Prix de Vente Unitaire</div>
+                <div class="col-1 p-1 border-1 surface-border	 sh">Facteur Multiplicatif</div>
+  
+                <div class="col-2 p-1 border-1 surface-border	 sh">Prix de Revient</div>
+  
+                <div class="col-1 p-1 border-1 surface-border	 sh">Quantité</div>
+  
+  
+                <!--<div class="col-1 p-1 border-1 surface-border	 sh">Stock</div>
+                <div class="col-1 p-1 border-1 surface-border	 sh">Qte Estimée</div>-->
+  
+                <div class="col-3  p-1 border-1 surface-border	 sh">Total</div>
+                <!--<div class="col-1">
+  
+                </div>-->
+              </div>
+              <div class="plat-list grid gap-2" *ngFor="let plat of estimationVenteList,let i=index">
+                <div class="col-2 p-2 border-1 sh justify-content-center align-items-center flex">{{plat.dishesId?.name}}</div>
+                
+                <div class="col-2 p-1 border-1 sh justify-content-center align-items-center flex">
+                    <span appPriceFormater [priceValue]="plat?.prixUnitaire| number: '1.0-0'"></span>
+                </div>
+                <div class="col-1 p-1 border-1 sh justify-content-center align-items-center flex">{{plat?.facteurMultiplicatif}}</div>
+                <div class="col-2 p-1 border-1 sh justify-content-center align-items-center flex">
+                    <span appPriceFormater [priceValue]="plat?.prixRevient| number: '1.0-0'"></span>
+                </div>
+                <div class="col-1 p-1 border-1 sh justify-content-center align-items-center flex">{{plat?.nbreEstime}}</div>
+                <div class="col-3 p-1 border-1 sh justify-content-center align-items-center flex">
+                    <span appPriceFormater [priceValue]="plat.total| number: '1.0-0'"></span>
+
+                </div>
+              </div>
+  
+            </div>
+  
+  
+            <!--Separator bar-->
+            <div class="bar_horizontal mt-3"></div>
+  
+            <!--Total Estimation Part -->
+  
+            <div class="totalEstimationPart grid gap-2 mt-3" >
+              <div class="col-4">
+              </div>
+                <!--<p-button class="col-3" label="Voir details"  icon="pi pi-eye" (click)="showDetailAllEstimation()" />-->
+  
+              
+              <div class="col-4 p-2 border-1 sh">Total Estimation</div>
+  
+              <div class="col-3  p-2 border-1 sh" appPriceFormater [priceValue]="totalEstimation | number: '1.0-0'"></div>
+            </div>
+          </div>
+  
+          <!--Btn part-->
+  
+          </div>
+  
+        </div>
+  
+        <div class="separator-part col-1">
+          <div id="separator"></div>
+        </div>
+        <div class="left-part w-full  mt-5">
+          <!--Bilan-->
+          <div class="bilan bg-gray col-12 w-full border-1">
+            <div class="entete-haut entete-center big-shadow entete-bilan bg-bilan  border-1">
+              <label class="" for="">Bilan</label>
+            </div>
+  
+            <!--Situation Passifs-->
+            <div class="entete-passif entete-center bg-red big-shadow">
+              <label class="" for="">Liste des dépenses</label>
+            </div>
+  
+            <div class="list-passifs mt-4" >
+              <div class="grid mb-1" >
+                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Totale Salaire</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1">
+                    <span appPriceFormater [priceValue]="totalSalaire | number: '1.0-0'"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="grid"  *ngFor="let passif of passifTypeOperationsList">
+                <div class="col-6 p-2 "> <span class="h-full col-12 border-1 justify-content-center align-items-center flex  sh">{{passif?.refTypeOperation?.libelle}}</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1">
+                    <span appPriceFormater [priceValue]="passif?.refTypeOperation?.montant| number: '1.0-0'"></span>
+
+                  </span>
+                </div>
+              </div>
+  
+              <div class="grid mb-1" >
+                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Coût Achats de produits</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1">
+                    <span appPriceFormater [priceValue]="coutPlat | number: '1.0-0'"></span>
+
+                  </span>
+                </div>
+              </div>
+  
+  
+              <div class="bar_horizontal w-2  mt-1"></div>
+  
+              <div class="grid mb-1" >
+                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Total dépenses</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1">
+                    <span appPriceFormater [priceValue]="totalDepenses | number: '1.0-0'"></span>
+
+                    <!--<input type="text"  name="total-passif" pInputText [(ngModel)]="totalDepenses" class="sh w-full" (ngModelChange)="calculTotalDepenses()"/>-->
+                  </span>
+                </div>
+              </div>
+            </div>
+  
+  
+            <!--Situation Actifs-->
+            <div class="entete-passif entete-center bg-bleu-foncer big-shadow mb-2">
+              <label class="" for="">Liste des revenus</label>
+            </div>
+  
+  
+            <div class="list-actifs " >
+              <div class="grid"  *ngFor="let actif of actifTypeOperationsList">
+                <div class="col-6 p-2 "> <span class="h-full col-12 border-1 justify-content-center align-items-center flex  sh">{{actif?.refTypeOperation?.libelle}}</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1">
+                    <span appPriceFormater [priceValue]="actif.montant | number: '1.0-0'"></span>
+
+                </span>
+                </div>
+              </div>
+  
+              <div class="grid mb-1" >
+                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Total revenus</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1">
+                    <span appPriceFormater [priceValue]="totalRevenus | number: '1.0-0'"></span>
+                   </span>
+                </div>
+              </div>
+            </div>
+  
+             <!--Separator bar-->
+             <div class="bar_horizontal w-7  mt-3"></div>
+  
+  
+             <!--Bilan final-->
+  
+             <div class="bilan-final big-shadow entete-center bg-bilan mt-3">
+                <p>Bilan = <span appPriceFormater [priceValue]="totalRevenus-totalDepenses | number: '1.0-0'"></span></p>
+             </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  
+  
