@@ -1,58 +1,67 @@
-<div class="">
-  <form class="grid newform" #f="ngForm">
-    <div class="col-12 card p-fluid">
-      <div class="grid p-1 entete m-auto">
-        <div class="field col-6">
-          <p>Nom: {{ recipe.name }}</p>
-        </div>
-        <div class="field col-2">
-          <p>Pourcentage de perte: {{ recipe.ratio | number:'1.2-2' }}</p>
-        </div>
-      </div>
-      <p class="divider mt-4"></p>
+<div class="dialog-container">
+  <h2 class="dialog-title">Détails de la Recette</h2>
 
-      <div class="mb-2 mt-1">
-        <div class="flex-1 mb-2">
-          <h5>Liste des Détails de la recette</h5>
-        </div>
-        <div class="ListProduct">
-          <p *ngIf="detailRecipe2.length == 0">Aucun détail de la recette pour l'instant! Veuillez remplir le formulaire pour ajouter un détail.</p>
-          <div class="divtableau">
-            <table *ngIf="detailRecipe2.length != 0">
-              <thead>
-                <th>Produit</th>
-                <th>Proportion %</th>
-                <th>Préparation Ingrédient</th>
-              </thead>
-              <tr *ngFor="let detail of detailRecipe2; let i = index">
-                <td>{{ detail?.ingredient?.name }}</td>
-                <td>{{ detail?.proportion }}</td>
-                <td>{{ detail?.preparationIngredient }}</td>
-              </tr>
-              <tr>
-                <td>Total Proportion</td>
-                <td>{{ totalProportion | number: '1.0-3' }}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
+  <div class="info-table">
+    <div class="info-header">
+      <div class="info-header-cell">Attribut</div>
+      <div class="info-header-cell">Valeur</div>
+    </div>
 
-      <p class="divider mt-4"></p>
-      <p class="divider"></p>
+    <div class="info-row">
+      <div class="info-cell label">Nom</div>
+      <div class="info-cell value">{{ recipe.name }}</div>
+    </div>
 
-      <div class="grid p-2">
-        <div class="field col-12">
-          <div class="field">
-            <label htmlFor="detailCuisine">Détail cuisine</label>
-            <p>{{ recipe.detailCuisine }}</p>
-          </div>
-        </div>
-      </div>
+    <div class="info-row">
+      <div class="info-cell label">Pourcentage de perte</div>
+      <div class="info-cell value">{{ recipe.ratio | number:'1.2-2' }}%</div>
+    </div>
 
-      <div class="field m-auto mt-2">
-        <button pButton pRipple type="button" label="Modifier la recette" icon="pi pi-pencil" class="p-button p-component p-button-vert" (click)="show($event, recipe)"></button>
+    <!-- Ajout du Stock -->
+    <div class="info-row">
+      <div class="info-cell label">Stock</div>
+      <div class="info-cell value">{{ recipe.stock }} Kg</div>
+    </div>
+
+    <!-- Ajout de Base Recipe -->
+    <div class="info-row">
+      <div class="info-cell label">Recette Secondaire</div>
+      <div class="info-cell value">
+        <span [class]="recipe.baseRecipe ? 'text-green-500' : 'text-red-500'">
+          {{ recipe.baseRecipe ? 'OUI' : 'NON' }}
+        </span>
       </div>
     </div>
-  </form>
+  </div>
+
+  <p class="divider mt-4"></p>
+
+  <h3 class="dialog-title">Liste des Détails de la Recette</h3>
+  <div class="info-table">
+    <div class="info-header">
+      <div class="info-header-cell">Produit</div>
+      <div class="info-header-cell">Proportion %</div>
+      <div class="info-header-cell">Préparation Ingrédient</div>
+    </div>
+
+    <div *ngFor="let detail of detailRecipe2" class="info-row">
+      <div class="info-cell">{{ detail?.ingredient?.name }}</div>
+      <div class="info-cell">{{ detail?.proportion }}</div>
+      <div class="info-cell">{{ detail?.preparationIngredient }}</div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-cell label">Total Proportion</div>
+      <div class="info-cell value">{{ totalProportion | number: '1.0-3' }}</div>
+    </div>
+  </div>
+
+  <p class="divider mt-4"></p>
+
+  <h3 class="dialog-title">Détail Cuisine</h3>
+  <div class="info-table">
+    <div class="info-row">
+      <div class="info-cell value">{{ recipe.detailCuisine }}</div>
+    </div>
+  </div>
 </div>
