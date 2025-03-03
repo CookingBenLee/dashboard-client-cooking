@@ -58,6 +58,10 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 import { PreparationRecipe } from 'src/app/services/preparationRecipe/PreparationRecipe';
 import { PreparationrecipeComponent } from './preparationrecipe/preparationrecipe.component';
 import { Dishes } from 'src/app/services/dishes/Dishes';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { Brand } from 'src/app/services/brand/Brand';
+import { Conditioning } from 'src/app/services/conditioning/Conditioning';
+import { ConditioningService } from 'src/app/services/conditioning/conditioning.service';
 
 @Component({
   selector: 'app-recipe',
@@ -137,7 +141,7 @@ export class RecipeComponent {
   isSuccessEdit: boolean
   erreurEdit: string
   sucessEdit: string
-
+  baseRecipe: boolean;
   showAddDetailRecipe = false
 
   maxRatio = 100
@@ -147,7 +151,8 @@ export class RecipeComponent {
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private priceService: PriceService,
     private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
     private dialogService: DialogService, private currencyService: CurrencyService, private tokenService: TokenService,
-    private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,
+    private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,private categoryService: CategoryService,
+    // private conditioningService: ConditioningService,
     //  private categoryRecipeService:CategoryrecipeService,
     public tableShort: TableShortService) { }
 
@@ -163,7 +168,7 @@ export class RecipeComponent {
     await this.getProducts()
     this.getUnits()
     this.cdref.detectChanges();
-
+    this.getCategorys();
     this.reciss = [
       { name: 'OUI' },
       { name: 'NON' }
@@ -363,7 +368,7 @@ export class RecipeComponent {
     // this.recipe.poids=this.poids
     // this.recipe.quantite=this.quantite
     this.recipe.ratio = this.ratio
-
+    
     // this.recipe.cout=this.cout
     // this.recipe.brut=this.brut
     // this.recipe.net=this.net
@@ -374,7 +379,12 @@ export class RecipeComponent {
     this.recipe.categoryRecipe = this.categorySelected
     const user = this.tokenService.getUser();
     this.recipe.user = { id: user.id }
-
+    if (this.base.name === "OUI") {
+      this.recipe.baseRecipe = true;
+    }
+    if (this.base.name === "NON") {
+      this.recipe.baseRecipe = false;
+    }
     console.log(this.recipe)
 
     this.recipeService.create(this.recipe).then(async (data) => {
@@ -561,6 +571,83 @@ export class RecipeComponent {
     })
   }
 
+  categorys: Category[] = [];
+  getCategorys(){
+    this.categoryService.getAllCategorys().then(data =>{
+      console.log(data)
+      this.categorys=data})
+  }
+
+  // conditionings: Conditioning[] = []
+  // getConditioning() {
+  //   this.conditioningService.getAllConditionings().then(data => {
+  //     console.log(data)
+  //     this.conditionings = data
+  //   })
+  // }
+
+  openDialogProduct(event: any){
+    console.log(event.value);
+    if (event.value.name === 'OUI') {
+      this.productData.name = this.name;
+      // console.log("product name",this.productData.name);
+      this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
+      // console.log("Product unit:", this.productData.unit);
+      this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
+      // console.log("Product category:", this.productData.category);
+      this.productData.lostpercentage = 0;
+      this.productDialog = true;
+      this.recipe.baseRecipe = true;
+    }
+    if (event.value.name === 'OUI') {
+      this.recipe.baseRecipe = false;
+    }
+  }
+  
+  base: any ={}
+  productDialog: boolean = false;
+  productData: any = {}
+  addProduct(){
+    const user = this.tokenService.getUser();
+      this.productData.user = { id: user.id };
+      console.log(this.productData);
+      
+      this.productService.create(this.productData).then((data) =>{
+        this.loading=false
+        //this.isSuccess=true
+        this.sucess="Produit crée !";
+        this.productDialog = false;
+        this.getProducts();
+        this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
+        this.resetFields();
+      },
+      (error: any)=>{
+        //this.isError=true
+        if(error.error.message=='ko'){
+          this.erreur=error.error.data
+          }else{
+          this.erreur="Erreur liée au serveur"
+        }
+        this.loading=false
+        this.productDialog = false;
+        this.messageService.add({severity: 'error', summary: 'Error', detail: this.erreur });
+
+      });
+  }
+  resetFields() {
+    this.productData = {}; 
+    this.productData.name = '';
+    this.productData.code = '';
+    this.productData.description = '';
+    this.productData.price = 0;
+    this.productData.lostpercentage = 0;
+  
+    this.productData.unit = {} as Unit;
+    this.productData.brand = {} as Brand;
+    this.productData.category = {} as Category;
+    this.productData.conditioning = {} as Conditioning;
+    this.productData.stock = 0;
+  }
   reset() {
     this.code = "";
     this.name = "";
