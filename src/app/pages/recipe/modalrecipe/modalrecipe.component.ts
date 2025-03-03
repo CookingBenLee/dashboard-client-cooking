@@ -120,7 +120,7 @@ totalProportion=0
 constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
   private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
   private dialogService:DialogService,private currencyService:CurrencyService,private ref: DynamicDialogRef,
-
+  private categoryService: CategoryrecipeService,private tokenService: TokenService,
   private recipeService:RecipeService,private detaiRecipeService:DetailsrecipeService,
   // private categoryRecipeService:CategoryrecipeService,
   public tableShort:TableShortService,public config: DynamicDialogConfig,) {
@@ -128,6 +128,7 @@ constructor(private confirmationService: ConfirmationService, private messageSer
 
   }
 
+  reciss: { name: string }[] = [];
 async ngOnInit(): Promise<void> {
   await this.getAllCategory()
 
@@ -135,11 +136,83 @@ async ngOnInit(): Promise<void> {
   await this.getAll(this.recipe.id)
   //for details
   await this.getProducts()
-  this.getUnits()
+  this.getUnits();
+  this.getCategorys();
   this.cdref.detectChanges();
-
+  this.reciss = [
+    { name: 'OUI' },
+    { name: 'NON' }
+  ];
 }
 
+categorys: Category[] = [];
+  getCategorys(){
+    this.categoryService.getAllCategorys().then(data =>{
+      console.log(data)
+      this.categorys=data})
+  }
+
+  resetFields() {
+      this.productData = {}; 
+      this.productData.name = '';
+      this.productData.code = '';
+      this.productData.description = '';
+      this.productData.price = 0;
+      this.productData.lostpercentage = 0;
+    
+      this.productData.unit = {} as Unit;
+      this.productData.category = {} as Category;
+      this.productData.stock = 0;
+    }
+
+  addProduct(){
+    const user = this.tokenService.getUser();
+      this.productData.user = { id: user.id };
+      console.log(this.productData);
+      
+      this.productService.create(this.productData).then((data) =>{
+        this.loading=false
+        //this.isSuccess=true
+        this.sucess="Produit crée !";
+        this.productDialog = false;
+        this.getProducts();
+        this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
+        this.resetFields();
+      },
+      (error: any)=>{
+        //this.isError=true
+        if(error.error.message=='ko'){
+          this.erreur=error.error.data
+          }else{
+          this.erreur="Erreur liée au serveur"
+        }
+        this.loading=false
+        this.productDialog = false;
+        this.messageService.add({severity: 'error', summary: 'Error', detail: this.erreur });
+
+      });
+  }
+
+base: any = {}
+productData: any = {}
+productDialog: boolean = false;
+openDialogProduct(event: any){
+  console.log(event.value);
+  if (event.value.name === 'OUI') {
+    this.productData.name = this.recipe.name;
+    // console.log("product name",this.productData.name);
+    this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
+    // console.log("Product unit:", this.productData.unit);
+    this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
+    // console.log("Product category:", this.productData.category);
+    this.productData.lostpercentage = 0;
+    this.productDialog = true;
+    this.recipe.baseRecipe = true;
+  }
+  if (event.value.name === 'OUI') {
+    this.recipe.baseRecipe = false;
+  }
+}
 
    //recuperation de valeurs
    async getAll(id:any){
@@ -251,7 +324,12 @@ async ngOnInit(): Promise<void> {
     console.log(this.recipe)
     this.recipe.categoryRecipe=this.categorySelected
     var success=false
-
+    if (this.base.name === "OUI") {
+      this.recipe.baseRecipe = true;
+    }
+    if (this.base.name === "NON") {
+      this.recipe.baseRecipe = false;
+    }
     await this.recipeService.update(this.recipe.id,this.recipe).then( async data=>{
       this.loading=false
       //this.isSuccessEdit=true

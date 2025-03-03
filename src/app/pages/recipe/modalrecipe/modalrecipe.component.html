@@ -13,16 +13,22 @@
               <input pInputText id="code" [(ngModel)]="dishe.code" name="code" type="text" placeholder="Code du plat" required/>
             </div>-->
   
-            <div class="field col-5">
-              <!--<label htmlFor="name">Nom de la recette</label>-->
+            <div class="field col-4">
+              <label htmlFor="name">Nom de la recette</label>
               <input pInputText id="name" [(ngModel)]="recipe.name" name="name" type="text" placeholder="Nom du plat" required/>
             </div>
   
-              <div class="field col-2">
-                <!--<label htmlFor="ratio">Ratio</label>-->
+              <div class="field col-4">
+                <label htmlFor="ratio">Ratio</label>
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="ratio" id="ratio" [(ngModel)]="recipe.ratio" [showButtons]="true" [min]="0" ></p-inputNumber>
               </div>
-  
+              <div class="field col-4">
+                <label for="baseRecipe">Recette Secondaire</label>
+                <p-dropdown [disabled]="recipe.name==null" [(ngModel)]="base" name="baseRecipe"
+                    [options]="reciss" optionLabel="name" (onChange)="openDialogProduct($event)"
+                    placeholder="OUI ou NON">
+                </p-dropdown>
+              </div>
             <!--<div class="field col-5 grid">
               <label htmlFor="category" style="justify-content: end;"  class="col-3">Categorie: </label>
               <p-dropdown class="col" [options]="categoryRecipes" optionLabel="name"  name="category" [(ngModel)]="categorySelected" (onChange)="changeCategory()" >
@@ -388,4 +394,60 @@
   </p-dialog>
   <!---->
   
-  
+  <p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" header="Enregistrement du recette de base" [modal]="true"
+            class="p-fluid">
+            <div class="grid">
+              <form class=" newform col-12" #f="ngForm" (ngSubmit)="addProduct()">
+                <div class="card p-fluid">
+                  <div class="grid">
+                    <div class="col-6">
+                      <div class="field">
+                        <label htmlFor="name">Nom</label>
+                        <input pInputText id="name" [(ngModel)]="productData.name" name="name" type="text" placeholder="Nom produit" required />
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="field ">
+                        <label htmlFor="unit">Unité</label>
+                        <p-dropdown [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.unit"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="field ">
+                        <label htmlFor="category">Categorie</label>
+                        <p-dropdown [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.category"></p-dropdown>
+                      </div>
+                    </div>
+                    <!-- <div class="col-6">
+                      <div class="field ">
+                        <label htmlFor="conditioning">Condition</label>
+                        <p-dropdown [options]="conditionings" optionLabel="name" name="conditioning"
+                          [(ngModel)]="productData.conditioning"></p-dropdown>
+                      </div>
+                    </div> -->
+                    <div class="col-6">
+                      <div class="field">
+                        <label htmlFor="lostpercentage">Pourcentage de perte</label>
+                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="lostpercentage" id="lostpercentage"
+                          [(ngModel)]="productData.lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
+                        </p-inputNumber>
+                      </div>
+            
+                    </div>
+                  </div>
+            
+                  <!-- <p>Description</p>
+                  <textarea rows="5" cols="10" [(ngModel)]="productData.description" name="description" placeholder="Description"
+                    pInputTextarea></textarea> -->
+            
+                  <label id="erreur" *ngIf="isError">{{erreur}}</label>
+                  <label id="success" *ngIf="isSuccess">{{sucess}}</label>
+            
+            
+                  <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4"
+                    [disabled]="!f.valid"></button>
+            
+                </div>
+              </form>
+            </div>
+</p-dialog>

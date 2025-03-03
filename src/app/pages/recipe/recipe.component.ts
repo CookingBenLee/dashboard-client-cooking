@@ -606,7 +606,6 @@ export class RecipeComponent {
   
   base: any ={}
   productDialog: boolean = false;
-  productData: any = {}
   addProduct(){
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
@@ -634,6 +633,7 @@ export class RecipeComponent {
 
       });
   }
+  productData: any = {}
   resetFields() {
     this.productData = {}; 
     this.productData.name = '';
