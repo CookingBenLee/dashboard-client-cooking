@@ -57,12 +57,12 @@
                 <div class="facteur-lab border-1 bg-bleu-foncer col-10 sh">
                   <div class="fs-12" for="txtfacteur">
                     Période du 
-                    {{estimationVenteList[0]?.dateDebut | date:'dd-MM-yyyy' }}
+                    {{estimationVenteList[0].dateDebut | date:'dd-MM-yyyy' }}
                     Au 
-                    {{estimationVenteList[0]?.dateFin | date:'dd-MM-yyyy'}}
+                    {{estimationVenteList[0].dateFin | date:'dd-MM-yyyy'}}
 
                     Freq:
-                        {{estimationVenteList[0]?.frequence}}
+                        {{estimationVenteList[0].frequence}}
                     
                   </div>
                 </div>
@@ -93,7 +93,7 @@
                 </div>-->
               </div>
               <div class="plat-list grid gap-2" *ngFor="let plat of estimationVenteList,let i=index">
-                <div class="col-2 p-2 border-1 sh justify-content-center align-items-center flex">{{plat.dishesId?.name}}</div>
+                <div class="col-2 p-2 border-1 sh justify-content-center align-items-center flex">{{plat.dishesId.name}}</div>
                 
                 <div class="col-2 p-1 border-1 sh justify-content-center align-items-center flex">
                     <span appPriceFormater [priceValue]="plat?.prixUnitaire| number: '1.0-0'"></span>

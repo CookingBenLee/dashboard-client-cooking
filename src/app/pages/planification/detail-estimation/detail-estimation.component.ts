@@ -70,7 +70,7 @@ import { FeuilleCourseComponent } from './feuille-course/feuille-course.componen
   selector: 'app-detail-estimation',
   standalone: true,
   imports: [FormsModule,RouterModule,CalendarModule,
-    InputTextModule,InputTextareaModule,PriceFormaterDirective,
+    InputTextModule,InputTextareaModule,
     ConfirmDialogModule,DialogModule,ToastModule,SliderModule,
       CommonModule,TableModule,PaginatorModule,DividerModule,TabViewModule,OverlayPanelModule],
   providers: [ConfirmationService, MessageService,DialogService],

@@ -60,7 +60,7 @@ import { NewSimulationEconomiqueComponent } from './new-simulation-economique/ne
   selector: 'app-planification',
   standalone: true,
   imports: [FormsModule,RouterModule,CalendarModule,
-    InputTextModule,InputTextareaModule,PriceFormaterDirective,
+    InputTextModule,InputTextareaModule,
     ConfirmDialogModule,DialogModule,ToastModule,SliderModule,NewSimulationEconomiqueComponent,ListSimulationEconomiqueComponent,
     CommonModule,TableModule,PaginatorModule,DividerModule,TabViewModule,OverlayPanelModule],
   providers: [ConfirmationService, MessageService,DialogService],

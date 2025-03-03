@@ -70,7 +70,7 @@ import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-f
 @Component({
   selector: 'app-detaildishes',
   standalone: true,
-  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,PriceFormaterDirective,
+  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,
            RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
            TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule,
          //prime module
