@@ -53,6 +53,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
   selector: 'app-modalrecipe',
@@ -120,7 +121,7 @@ totalProportion=0
 constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
   private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
   private dialogService:DialogService,private currencyService:CurrencyService,private ref: DynamicDialogRef,
-  private categoryService: CategoryrecipeService,private tokenService: TokenService,
+  private categoryService: CategoryService,private tokenService: TokenService,
   private recipeService:RecipeService,private detaiRecipeService:DetailsrecipeService,
   // private categoryRecipeService:CategoryrecipeService,
   public tableShort:TableShortService,public config: DynamicDialogConfig,) {
