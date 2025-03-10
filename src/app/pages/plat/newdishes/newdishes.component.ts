@@ -147,6 +147,7 @@ export class NewdishesComponent implements OnInit{
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private fileSaverService:FileSaverService,private priceDishesService:DishesPriceService,
     private dialogService:DialogService,private pictureDishesService:PictiuredishesService,private dishesService:DishesService,private categoryMenuService:CategoryMenuService,
     private recipeService:RecipeService,private detailRecipeService:DetailsrecipeService,private categoryRecipeService:CategoryrecipeService,
+    private tokenService: TokenService,
     public tableShort:TableShortService,private compositionDishesService:CompositiondishesService) {}
 
 
@@ -175,6 +176,8 @@ export class NewdishesComponent implements OnInit{
     this.loadingSave=true
     var okay=false
     //save dishes
+    const user = this.tokenService.getUser();
+    this.plat.user = {id: user.id}
     this.dishesService.create(this.plat).then(async data=>{
       await new Promise(resolve=>{this.messageService.add({ severity: 'success', summary: 'Plat', detail: 'Plat Crée' });setTimeout(resolve, 500);})
       await new Promise(resolve=>{this.messageService.add({ severity: 'info', summary: 'Info...', detail: 'Ajout des compositions et images du plat...' });setTimeout(resolve, 500);})

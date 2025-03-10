@@ -1,120 +1,135 @@
-// Couleurs principales
-$orange: #ff7900;
-$vert: #50be87;
-$jaune: #ffd200;
-$rose: #ffb4e6;
-$violet: #a885d8;
-$bleu: #4bb4e6;
-$noir: #000000;
-$blanc: #ffffff;
-
-// Couleurs secondaires
-$color1: #c1853b;
-$color2: #cc1b1b;
-$color3: #2f0505;
-$color4: #85311b;
-$color5: #000000;
-
-$color6: #cf4020;
-$color7: #a4ecdc;
-$color8: #bc2c14;
-$color9: #9e675b;
-$color10: #94c9b2;
-$color11: #2d674d;
-
-// Boutons
-.p-button-nouveau {
-  background: $color1;
-  color: $blanc;
-  border: 1px solid $color1;
-}
-
-.p-button-saved {
-  background: $color11;
-  color: $blanc;
-  border: 1px solid $color11;
-}
-
-.p-button-annuler {
-  background: $color2;
-  color: $blanc;
-  border: 1px solid $color2;
-}
-
-.p-button-newline {
+/* Conteneur principal */
+.dialog-container {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #f7f8fa;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 800px;
   margin: auto;
-  background: $blanc;
-  color: #3b82f6;
-  border: 1px solid #3b82f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-// Carte et flexibilité
-.card {
-  border: none !important;
-}
-
-.cardnew {
-  padding: 10px;
-  border-radius: 5px;
-  border: 5px solid #3b82f6;
-}
-
-.flex-1 {
-  justify-content: center;
-  align-items: center;
-  display: flex;
+/* Titres */
+.dialog-title {
   text-align: center;
-
-  h5,
-  button {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  h5 {
-    margin-left: 0;
-  }
-
-  button {
-    margin-right: 0;
-  }
+  font-size: 22px;
+  font-weight: bold;
+  color: #4a4a4a;
+  margin-bottom: 16px;
 }
 
-// Tableau
-.table {
+/* En-tête */
+.entete {
+  background-color: #d1d1d1 !important; /* Gris clair au lieu de bleu */
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* Formulaire et champs */
+.field {
+  margin-bottom: 12px;
+}
+
+label {
+  font-weight: bold;
+  color: #444;
+}
+
+input,
+select,
+.p-dropdown,
+.p-inputnumber {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* Tableau */
+.divtableau {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
-
-  thead {
-    background-color: $bleu;
-    color: $blanc;
-  }
-
-  th,
-  td {
-    border: 1px solid $noir;
-    padding: 5px;
-    text-align: left;
-  }
-
-  tr:nth-child(even) {
-    background-color: rgba(185, 181, 181, 0.2);
-  }
-
-  tr:hover {
-    background-color: rgba(185, 181, 181, 0.5);
-  }
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.divtableau {
-  // max-height: 160px;
-  padding: 5px;
-  overflow: auto;
-  border: 1px solid $noir;
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #e0e0e0; /* Gris clair */
+  color: #444;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Boutons */
+.p-button {
+  background-color: #666 !important; /* Gris foncé au lieu de bleu */
+  color: white !important;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.p-button:hover {
+  background-color: #444 !important;
+}
+
+/* Bouton Annuler */
+.p-button-annuler {
+  background-color: #999 !important;
+}
+
+.p-button-annuler:hover {
+  background-color: #777 !important;
+}
+
+/* Bouton "Produit non existant" */
+.p-button-nouveau {
+  background-color: #555 !important;
+}
+
+.p-button-nouveau:hover {
+  background-color: #333 !important;
+}
+
+/* Séparateur */
+.divider {
+  border-top: 1px solid #bbb;
+  margin: 20px 0;
+}
+
+.mt-3 {
+  margin-top: 12px;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+/* Boîte de dialogue de confirmation */
+.p-confirmDialog {
+  background-color: #f7f7f7;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  color: #333;
 }

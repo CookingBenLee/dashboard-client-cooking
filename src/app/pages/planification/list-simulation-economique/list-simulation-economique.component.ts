@@ -113,7 +113,7 @@ export class ListSimulationEconomiqueComponent {
   onSearch=true
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
     private dialogService:DialogService,
-    private paginateService:PaginateService,
+    private paginateService:PaginateService,private tokenService: TokenService,
     private simulationService:SimulationService,public tableShort:TableShortService) {}
 
   ngOnInit(): void {
@@ -125,7 +125,8 @@ export class ListSimulationEconomiqueComponent {
   getAll(){
     const params=this.paginateService.getRequestParams(this.page,this.rows)
     console.log(params);
-    this.simulationService.getAllPage(params).then(data =>{
+    const user = this.tokenService.getUser();
+    this.simulationService.getAllPage(user.id,params).then(data =>{
       console.log(data)
         //this.menus=data
         console.log(data)

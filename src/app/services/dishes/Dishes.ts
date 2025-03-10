@@ -50,7 +50,7 @@ export class Dishes{
   stock:number
   qteEstimee:number
   prixRevient:number
-
+  user: any
   
 
 }

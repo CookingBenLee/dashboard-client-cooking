@@ -26,14 +26,14 @@ export class SimulationService {
         .then(res => res.data as Simulation)
         .then(data => data);
   }
-  getAll() {
-    return this.http.get<any>(`${this.env.apiUrl}/simulation/getall`)
+  getAll(idUser:number) {
+    return this.http.get<any>(`${this.env.apiUrl}/simulation/getallbyuser/${idUser}`)
         .toPromise()
         .then(res => res.data as Simulation[])
         .then(data => data);
   }
-  getAllPage(param:any) {
-    return this.http.get<any>(`${this.env.apiUrl}/simulation/getallpage?page=`+param['page']+'&size='+param['size'])
+  getAllPage(idUser: number,param:any) {
+    return this.http.get<any>(`${this.env.apiUrl}/simulation/getallpagebyuser/${idUser}?page=`+param['page']+'&size='+param['size'])
         .toPromise()
         .then(res => res.data as any)
         .then(data => data);

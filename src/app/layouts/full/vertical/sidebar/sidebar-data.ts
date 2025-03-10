@@ -26,7 +26,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Planifier un repas',
     iconName: 'tabler:point',
-    route: 'home/repas',
+    route: 'home/planifier',
   },
   {
     displayName: 'Liste des planifications',

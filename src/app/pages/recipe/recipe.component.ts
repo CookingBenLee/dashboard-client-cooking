@@ -152,7 +152,7 @@ export class RecipeComponent {
     private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
     private dialogService: DialogService, private currencyService: CurrencyService, private tokenService: TokenService,
     private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,private categoryService: CategoryService,
-    // private conditioningService: ConditioningService,
+    private conditioningService: ConditioningService,
     //  private categoryRecipeService:CategoryrecipeService,
     public tableShort: TableShortService) { }
 
@@ -173,7 +173,7 @@ export class RecipeComponent {
       { name: 'OUI' },
       { name: 'NON' }
     ];
-
+    this.getConditioning();
   }
   reciss: { name: string }[] = [];
   //recuperation de valeurs
@@ -381,51 +381,52 @@ export class RecipeComponent {
     this.recipe.user = { id: user.id }
     if (this.base.name === "OUI") {
       this.recipe.baseRecipe = true;
+      this.productDialog = true;
+      this.openDialogProduct(this.recipe);
     }
     if (this.base.name === "NON") {
       this.recipe.baseRecipe = false;
-    }
-    console.log(this.recipe)
-
-    this.recipeService.create(this.recipe).then(async (data) => {
-      this.getAll();
-      this.loading = false
-      console.log(data);
-
-
-      this.code = ""
-      this.name = ""
-      this.ratio = 0
-      this.showAddDetailRecipe = false;
-      this.detailCuisine = "";
-      // this.recipe.quantite=0
-      // this.recipe.cout=0
-      // this.recipe.brut=0
-      // this.recipe.net=0
-
-
-      this.activeIndex = 1
-      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
-
-      await this.saveAllDetail(data.data)
-      //this.ngOnInit()
-      this.activeIndex = 0
-
-      this.recipe = new Recipe()
-      // this.detailDishes=[]
-      // this.detailDishesProvisoire=[]
-    },
-      (error: any) => {
-        //this.isError=true
-        if (error.error.message == 'ko') {
-          this.erreur = error.error.data
-        } else {
-          this.erreur = "Erreur lié au serveur"
-        }
+      this.recipeService.create(this.recipe).then(async (data) => {
+        this.getAll();
         this.loading = false
-        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
-
-      });
+        console.log(data);
+        this.code = ""
+        this.name = ""
+        this.ratio = 0
+        this.showAddDetailRecipe = false;
+        this.detailCuisine = "";
+        // this.recipe.quantite=0
+        // this.recipe.cout=0
+        // this.recipe.brut=0
+        // this.recipe.net=0
+  
+  
+        this.activeIndex = 1
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
+  
+        await this.saveAllDetail(data.data)
+        //this.ngOnInit()
+        this.activeIndex = 0
+  
+        this.recipe = new Recipe()
+        this.detailRecipesProvisoire.push(new DetailsRecipe())
+        // this.detailDishes=[]
+        // this.detailDishesProvisoire=[]
+      },
+        (error: any) => {
+          //this.isError=true
+          if (error.error.message == 'ko') {
+            this.erreur = error.error.data
+          } else {
+            this.erreur = "Erreur lié au serveur"
+          }
+          this.loading = false
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+  
+        });
+        return;
+    }
+    // console.log(this.recipe);
   }
 
   openModifier(position: string, info: any) {
@@ -578,17 +579,17 @@ export class RecipeComponent {
       this.categorys=data})
   }
 
-  // conditionings: Conditioning[] = []
-  // getConditioning() {
-  //   this.conditioningService.getAllConditionings().then(data => {
-  //     console.log(data)
-  //     this.conditionings = data
-  //   })
-  // }
+  conditionings: Conditioning[] = []
+  getConditioning() {
+    this.conditioningService.getAllConditionings().then(data => {
+      console.log(data)
+      this.conditionings = data
+    })
+  }
 
-  openDialogProduct(event: any){
-    console.log(event.value);
-    if (event.value.name === 'OUI') {
+  openDialogProduct(recipe: Recipe){
+    // console.log(event.value);
+    if (this.base.name === 'OUI') {
       this.productData.name = this.name;
       // console.log("product name",this.productData.name);
       this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
@@ -599,9 +600,49 @@ export class RecipeComponent {
       this.productDialog = true;
       this.recipe.baseRecipe = true;
     }
-    if (event.value.name === 'OUI') {
+    if (this.base.name === 'NON') {
       this.recipe.baseRecipe = false;
     }
+    this.recipeService.create(this.recipe).then(async (data) => {
+      this.getAll();
+      this.loading = false
+      console.log(data);
+
+
+      this.code = ""
+      this.name = ""
+      this.ratio = 0
+      this.showAddDetailRecipe = false;
+      this.detailCuisine = "";
+      // this.recipe.quantite=0
+      // this.recipe.cout=0
+      // this.recipe.brut=0
+      // this.recipe.net=0
+
+
+      this.activeIndex = 1
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
+
+      await this.saveAllDetail(data.data)
+      //this.ngOnInit()
+      this.activeIndex = 0
+
+      this.recipe = new Recipe()
+      this.detailRecipesProvisoire.push(new DetailsRecipe())
+      // this.detailDishes=[]
+      // this.detailDishesProvisoire=[]
+    },
+      (error: any) => {
+        //this.isError=true
+        if (error.error.message == 'ko') {
+          this.erreur = error.error.data
+        } else {
+          this.erreur = "Erreur lié au serveur"
+        }
+        this.loading = false
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+
+      });
   }
   
   base: any ={}

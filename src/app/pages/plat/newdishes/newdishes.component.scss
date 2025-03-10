@@ -1,302 +1,254 @@
+// Définition des couleurs en nuances de gris
+$noir: #00000085;
+$blanc: #ffffff;
+$grisFonce: #22222269;
+$grisMoyen: #555555;
+$grisClair: #aaaaaa;
+$newgray: #595959;
 
-$orange:#FF7900;
-$Vert:#50BE87;
-$Jaune:#FFD200;
-$Rose:#FFB4E6;
-$Violet:#A885D8;
-$Bleu:#4BB4E6;
-$Noir:#000000;
-$Blanc:#ffffff;
+$margintopValu: 10px;
+$paddindValu: 8px;
+$borderRadiusValu: 8px;
 
-$color1:#c1853b;
-$color2:#cc1b1b;
-$color3:#2f0505;
-$color4:#85311b;
-$color5:#000000;
+.firstrow {
+  background-color: $grisClair;
 
-$color6:#cf4020;
-$color7:#a4ecdc;
-$color8:#bc2c14;
-$color9:#9e675b;
-$color10:#94c9b2;
-$color11:#2d674d;
-
-$overBleu:#3b81f6;
-$newgray:#595959;
-
-$margintopValu:10px;
-$paddindValu:8px;
-$borderRadiusValu:8px;
-
-$color12:#a9d18d;
-$vertClair:#32ff34;
-
-
-////
-.firstrow{
-  background-color: $color12;
-  .formpart>.colo>.grid{
-    //margin-top: $margintopValu;
-
+  .formpart > .colo > .grid {
     display: grid;
     grid-template-rows: auto auto;
   }
 
+  .detailPlat {
+    margin: auto;
+    display: grid !important;
+    grid-template-columns: 58% 40%;
+    gap: 2%;
+  }
 
-    .detailPlat{
-      //width: 100%;
-      //border-left: 8px solid $overBleu;
-      margin: auto;
-      display: grid !important;
-      grid-template-columns: 58% 40%;
-      gap: 2%;
-    }
-    .categorie, .namePlat{
-      margin: auto;
-    }
-
- 
-
+  .categorie, .namePlat {
+    margin: auto;
+  }
 }
 
-.secaindrow{
-  .row2{
+.secaindrow {
+  .row2 {
     width: 100%;
   }
-  >div{
-    >div{
+
+  > div {
+    > div {
       margin: auto;
     }
   }
 
-  .ingredients{
-    margin:0px !important;
+  .ingredients {
+    margin: 0px !important;
     width: 100%;
   }
 
-  .listIngredients{
+  .listIngredients {
     transition: 1s ease;
     font-size: 10px;
     margin-top: $margintopValu;
-    margin-bottom:  $margintopValu;
+    margin-bottom: $margintopValu;
 
-    .entetelist,.linebdy{
+    .entetelist, .linebdy {
       display: grid;
-      grid-template-columns: 45% 15% 15%  25%;
-      .lbl{
+      grid-template-columns: 45% 15% 15% 25%;
+
+      .lbl {
         word-wrap: break-word;
         align-items: center;
         display: flex;
       }
     }
 
-    .linebdy{
+    .linebdy {
       border: 2px solid rgba(0, 0, 0, 0);
       padding: 0px $paddindValu;
-      color: $Noir !important;
+      color: $noir !important;
     }
   }
 }
 
-.thirdrow{
-  background-color: $color12;
+.thirdrow {
+  background-color: $grisClair;
 
-  .listIngredientsImages{
+  .listIngredientsImages {
     transition: 1s ease;
     font-size: 10px;
     margin-top: $margintopValu;
-    margin-bottom:  $margintopValu;
+    margin-bottom: $margintopValu;
 
-    .entetelist,.linebdy{
+    .entetelist, .linebdy {
       display: grid;
-      grid-template-columns: 55% 45% ;
-      .lbl{
+      grid-template-columns: 55% 45%;
+
+      .lbl {
         word-wrap: break-word;
         align-items: center;
         display: flex;
       }
     }
 
-    .linebdy{
+    .linebdy {
       border: 2px solid rgba(0, 0, 0, 0);
-      padding: 0  $paddindValu;
-      color: $Noir !important;
+      padding: 0 $paddindValu;
+      color: $noir !important;
     }
   }
 }
 
-
-
-
-
-
-
-
-// ///
-.head{
+// Titres et en-têtes
+.head {
   font-size: 1.3rem;
   font-weight: bold;
   width: 100%;
-  border: 2px solid $color5;
+  border: 2px solid $grisFonce;
   padding: 2%;
 }
 
-.mini-head{
+.mini-head {
   font-weight: bold;
   width: 100%;
-  border: 2px solid $color5;
+  border: 2px solid $grisFonce;
   padding: 5px;
 }
 
-
-
-
-.head-no-border{
+.head-no-border {
   font-size: 1.3rem;
   font-weight: bold;
   width: 100%;
   padding: 2%;
 }
-.bighead{
-  font-size: 1.7rem;;
+
+.bighead {
+  font-size: 1.7rem;
 }
-.head-center{
+
+.head-center {
   display: flex;
   justify-content: center;
 }
 
-
-.divblue{
+// Divs colorées
+.divblue {
   padding: $paddindValu;
   border: 2px solid black;
-  color: $Blanc;
-  background-color: $overBleu;
+  color: $blanc;
+  background-color: $grisFonce;
   border-radius: $borderRadiusValu;
   font-weight: bold;
   display: flex;
   justify-content: center;
 }
 
-
-.divgray{
+.divgray {
   padding: $paddindValu;
-  border: 2px solid $Noir;
+  border: 2px solid $noir;
   font-size: 12px;
-  color: $Blanc;
+  color: $blanc;
   background-color: $newgray;
   border-radius: $borderRadiusValu;
   font-weight: bold;
   display: flex;
   justify-content: center;
 
-  label{
+  label {
     margin: auto;
   }
 }
 
-.divblanc{
-
-  background-color: $Blanc;
-
+.divblanc {
+  background-color: $blanc;
 }
 
-
-.p-button-nouveau{
-  background: $color1;
-  color:$Blanc;
-  border:1px solid $color1;
+// Boutons
+.p-button-nouveau {
+  background: $grisMoyen;
+  color: $blanc;
+  border: 1px solid $grisMoyen;
 }
 
-.p-button-saved{
-  background: $vertClair;
-  color:$Blanc;
-  border: none;
-  border:1px solid $vertClair;
+.p-button-saved {
+  background: $grisClair;
+  color: $noir;
+  border: 1px solid $grisClair;
   margin: auto;
   width: auto;
   display: block;
 }
 
-.p-button-annuler{
-  background: $color2;
-  color:$Blanc;
-  border: none;
-  border:1px solid $color2;
+.p-button-annuler {
+  background: $grisFonce;
+  color: $blanc;
+  border: 1px solid $grisFonce;
 }
 
-.p-button-newline{
+.p-button-newline {
   margin: auto;
-  background: #fff;
-  color: #3b82f6;
-  border: 1px solid #3b82f6;
+  background: $blanc;
+  color: $grisMoyen;
+  border: 1px solid $grisMoyen;
   display: flex;
   align-items: center;
   justify-content: center;
   width: auto;
 }
 
-
-.p-button-newline-red{
+.p-button-newline-red {
   margin: auto;
-  background: $color2;
-  color: #fff;
-  border: 1px solid $color2;
+  background: $grisFonce;
+  color: $blanc;
+  border: 1px solid $grisFonce;
   display: flex;
   align-items: center;
   justify-content: center;
   width: auto;
 }
 
-.p-button-newline-red:hover{
-  margin: auto;
-  background: #fff;
-  color: $color2;
-  border: 1px solid $color2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
+.p-button-newline-red:hover {
+  background: $blanc;
+  color: $grisFonce;
+  border: 1px solid $grisFonce;
 }
 
-
-.p-button-vert{
+.p-button-vert {
   border: none;
   width: auto;
   margin: auto;
   display: block;
 }
 
-
-
-.brdr-left{
-  border-left: 2px solid $Blanc;
+// Bordures
+.brdr-left {
+  border-left: 2px solid $blanc;
 }
 
-.brdr-right{
-  border-right: 2px solid $Blanc;
+.brdr-right {
+  border-right: 2px solid $blanc;
 }
 
-.pdl{
+.pdl {
   padding-left: 5px;
 }
-.pdr{
+
+.pdr {
   padding-right: 5px;
 }
 
-
-
+// Media Queries
 @media screen and (max-width: 600px) {
-  .firstrow,.secaindrow>.row1,.thirdrow{
-    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+  .firstrow, .secaindrow > .row1, .thirdrow {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     display: grid;
-    >div{
+
+    > div {
       width: 100%;
     }
-
-
   }
 
-  .listIngredients{
+  .listIngredients {
     overflow-x: scroll;
   }
 }
