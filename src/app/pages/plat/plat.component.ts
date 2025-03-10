@@ -69,92 +69,92 @@ import { DetaildishesComponent } from './detaildishes/detaildishes.component';
 @Component({
   selector: 'app-plat',
   standalone: true,
-  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,
-          RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
-          TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule,NewdishesComponent,
-        //prime module
-        InputTextModule,
-        TreeSelectModule,
-        DropdownModule,
-        CardModule,
-        PasswordModule,
-        PanelModule,
-        SidebarModule,
-        CheckboxModule,
-        TabViewModule,
-        ConfirmDialogModule,
-        ToastModule,
-        InputNumberModule,
-        InputTextareaModule,
-        TableModule,
-        RatingModule,
-        ButtonModule,
-        SliderModule,
-        InputTextModule,
-        ToggleButtonModule,
-        RippleModule,
-        MultiSelectModule,
-        DropdownModule,
-        ProgressBarModule,
-        DialogModule,
-        OverlayPanelModule,
-        EditorModule,
-        ListboxModule,
-        CalendarModule,
-        DynamicDialogModule,
-        DividerModule,
-        FieldsetModule,
-        TreeModule,
-        AccordionModule,
-        PanelMenuModule,
-        ChipModule,
-        ProgressSpinnerModule,
-        SplitButtonModule,
-        FileUploadModule,
-        PaginatorModule],
-          providers: [ConfirmationService, MessageService,DialogService],
+  imports: [MaterialModule, MatButtonModule, MatDialogModule, CommonModule,
+    RouterModule, CalendarModule, ConfirmDialogModule, InputNumberModule, InputTextareaModule, DialogModule, ToastModule, InputTextModule,
+    TableModule, PaginatorModule, DividerModule, TabViewModule, OverlayPanelModule, NewdishesComponent,
+    //prime module
+    InputTextModule,
+    TreeSelectModule,
+    DropdownModule,
+    CardModule,
+    PasswordModule,
+    PanelModule,
+    SidebarModule,
+    CheckboxModule,
+    TabViewModule,
+    ConfirmDialogModule,
+    ToastModule,
+    InputNumberModule,
+    InputTextareaModule,
+    TableModule,
+    RatingModule,
+    ButtonModule,
+    SliderModule,
+    InputTextModule,
+    ToggleButtonModule,
+    RippleModule,
+    MultiSelectModule,
+    DropdownModule,
+    ProgressBarModule,
+    DialogModule,
+    OverlayPanelModule,
+    EditorModule,
+    ListboxModule,
+    CalendarModule,
+    DynamicDialogModule,
+    DividerModule,
+    FieldsetModule,
+    TreeModule,
+    AccordionModule,
+    PanelMenuModule,
+    ChipModule,
+    ProgressSpinnerModule,
+    SplitButtonModule,
+    FileUploadModule,
+    PaginatorModule],
+  providers: [ConfirmationService, MessageService, DialogService],
   templateUrl: './plat.component.html',
-  styleUrls: ['./plat.component.scss','./brand.component.scss']
+  styleUrls: ['./plat.component.scss', './brand.component.scss']
 })
 export class PlatComponent {
-//number for according active
-index=0
+  //number for according active
+  index = 0
 
-rows=10
-totalRows=0
-page=0;
-count=0;
-
-
-totalPages=0
-resClient:any
-//
-
-showAddCategory=false
-///
-compositionDishe:DetailDishes[]=[]
-detailDisheProvisoire:DetailDishes[]=[]
-
-pictureDishes:PicturesDishes;
-
-@ViewChild('op',{static:true}) op: OverlayPanel;
-
-activeIndex: number = 0;
-ref: DynamicDialogRef | undefined;
+  rows = 10
+  totalRows = 0
+  page = 0;
+  count = 0;
 
 
-dishes:Dishes[]=[]
-categoryDishes:CategoryDishes[]=[]
+  totalPages = 0
+  resClient: any
+  //
 
-positionModalConfirm:any
-motRecherche=''
-onSearch=false
+  showAddCategory = false
+  ///
+  compositionDishe: DetailDishes[] = []
+  detailDisheProvisoire: DetailDishes[] = []
 
-constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private priceService:PriceService,
-  private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
-  private dialogService:DialogService,private currencyService:CurrencyService,
-  private dishesService:DishesService,private detailDishesService:DetaildishesService,private categoryMenuService:CategoryMenuService,
-  public tableShort:TableShortService) {}
+  pictureDishes: PicturesDishes;
+
+  @ViewChild('op', { static: true }) op: OverlayPanel;
+
+  activeIndex: number = 0;
+  ref: DynamicDialogRef | undefined;
+
+
+  dishes: Dishes[] = []
+  categoryDishes: CategoryDishes[] = []
+
+  positionModalConfirm: any
+  motRecherche = ''
+  onSearch = false
+
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private priceService: PriceService,
+    private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
+    private dialogService: DialogService, private currencyService: CurrencyService,
+    private dishesService: DishesService, private detailDishesService: DetaildishesService, private categoryMenuService: CategoryMenuService,
+    public tableShort: TableShortService) { }
 
 
   async ngOnInit(): Promise<void> {
@@ -171,184 +171,184 @@ constructor(private confirmationService: ConfirmationService, private messageSer
 
 
 
-//recuperation de valeurs
-getAll(){
-const params=this.paginateService.getRequestParams(this.page,this.rows)
-console.log(params);
-this.dishesService.getAllPage(params).then(data =>{
-  console.log(data)
-  //this.menus=data
-  console.log(data)
-  //this.infos=data
-  console.log(data)
-  //this.contenus=data
-
-  this.totalPages=data.totalPages
-    if(this.dishes.length==0 || this.page==0){
-      this.resClient=data
-      console.log(this.resClient)
-      this.dishes=data.content
-      console.log(this.totalPages)
-      this.totalRows=data.totalElements
-      console.log(this.count)
-
-    }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
-      this.resClient.number =data.number
-      this.dishes=data.content
-      console.log(data)
-
-    }
-}, error => {
-  //console.log(error)
-})
-}
-///
-recherche(){
-
-  if(this.motRecherche==""){
-    this.onSearch=false
-    this.page=0
-    this.getAll()
-
-  }else{
-    this.onSearch=true
-    const params=this.paginateService.getRequestParams(this.page,this.rows)
+  //recuperation de valeurs
+  getAll() {
+    const params = this.paginateService.getRequestParams(this.page, this.rows)
     console.log(params);
-    this.dishesService.rechercheParPage(this.motRecherche, params).then(data =>{
-    console.log(data)
-    //this.menus=data
-    console.log(data)
-    //this.infos=data
-    console.log(data)
-    //this.contenus=data
+    this.dishesService.getAllPage(params).then(data => {
+      console.log(data)
+      //this.menus=data
+      console.log(data)
+      //this.infos=data
+      console.log(data)
+      //this.contenus=data
 
-    this.totalPages=data.totalPages
-      if(this.dishes.length==0 || this.page==0){
-        this.resClient=data
+      this.totalPages = data.totalPages
+      if (this.dishes.length == 0 || this.page == 0) {
+        this.resClient = data
         console.log(this.resClient)
-        this.dishes=data.content
+        this.dishes = data.content
         console.log(this.totalPages)
-        this.totalRows=data.totalElements
+        this.totalRows = data.totalElements
         console.log(this.count)
 
-      }else if((this.resClient.totalElements < data.totalElements)||this.resClient.number != data.number){
-        this.resClient.number =data.number
-        this.dishes=data.content
+      } else if ((this.resClient.totalElements < data.totalElements) || this.resClient.number != data.number) {
+        this.resClient.number = data.number
+        this.dishes = data.content
         console.log(data)
 
       }
-  }, error => {
-    //console.log(error)
-  })
+    }, error => {
+      //console.log(error)
+    })
+  }
+  ///
+  recherche() {
+
+    if (this.motRecherche == "") {
+      this.onSearch = false
+      this.page = 0
+      this.getAll()
+
+    } else {
+      this.onSearch = true
+      const params = this.paginateService.getRequestParams(this.page, this.rows)
+      console.log(params);
+      this.dishesService.rechercheParPage(this.motRecherche, params).then(data => {
+        console.log(data)
+        //this.menus=data
+        console.log(data)
+        //this.infos=data
+        console.log(data)
+        //this.contenus=data
+
+        this.totalPages = data.totalPages
+        if (this.dishes.length == 0 || this.page == 0) {
+          this.resClient = data
+          console.log(this.resClient)
+          this.dishes = data.content
+          console.log(this.totalPages)
+          this.totalRows = data.totalElements
+          console.log(this.count)
+
+        } else if ((this.resClient.totalElements < data.totalElements) || this.resClient.number != data.number) {
+          this.resClient.number = data.number
+          this.dishes = data.content
+          console.log(data)
+
+        }
+      }, error => {
+        //console.log(error)
+      })
+    }
+
   }
 
-}
+
+  show(e: any, dishe: Dishes) {
+    this.ref = this.dialogService.open(ModaldishesComponent, {
+      header: "Modification d'un plat",
+      width: '90%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+      data: dishe,
+    });
 
 
-show(e:any,dishe:Dishes) {
-  this.ref = this.dialogService.open(ModaldishesComponent, {
-    header: 'Plat '+dishe?.reference,
-    width: '90%',
-    contentStyle: { overflow: 'auto' },
-    baseZIndex: 10000,
-    maximizable: true,
-    data:dishe,
-  });
+    this.ref.onClose.subscribe((retour: any) => {
+      console.log("hhhhhhhhhhhh....///jkjhghf");
 
+    });
+  }
 
-  this.ref.onClose.subscribe((retour: any) => {
-    console.log("hhhhhhhhhhhh....///jkjhghf");
-
-  });
-}
-
-ngOnDestroy() {
+  ngOnDestroy() {
     if (this.ref) {
-        this.ref.close();
+      this.ref.close();
     }
-}
+  }
 
-onPageChange(e:any){
-  this.page=e.page;
-  console.log(e);
+  onPageChange(e: any) {
+    this.page = e.page;
+    console.log(e);
 
-  this.rows=e.rows
-  console.log(this.page);
+    this.rows = e.rows
+    console.log(this.page);
 
-  if(this.onSearch==false){
-    this.getAll()
-  }else this.recherche()
+    if (this.onSearch == false) {
+      this.getAll()
+    } else this.recherche()
 
-}
-
-
+  }
 
 
 
-async getAllCategory(){
-  await this.categoryMenuService.getAllCategorys().then(data=>{
-    this.categoryDishes=data
-  })
-}
 
 
-showDishesDetail(e:any,dishe:Dishes){
-  this.ref = this.dialogService.open(DetaildishesComponent, {
-    header: 'Plat '+dishe?.reference,
-    width: '90%',
-    contentStyle: { overflow: 'auto' },
-    baseZIndex: 10000,
-    maximizable: true,
-    data:dishe,
-  });
+  async getAllCategory() {
+    await this.categoryMenuService.getAllCategorys().then(data => {
+      this.categoryDishes = data
+    })
+  }
 
 
-  this.ref.onClose.subscribe((retour: any) => {
-    if (retour=="edit") {
-      this.show(e,dishe);
+  showDishesDetail(e: any, dishe: Dishes) {
+    this.ref = this.dialogService.open(DetaildishesComponent, {
+      header: 'Plat ' + dishe?.reference,
+      width: '90%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+      data: dishe,
+    });
+
+
+    this.ref.onClose.subscribe((retour: any) => {
+      if (retour == "edit") {
+        this.show(e, dishe);
         // this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
         // this.getProducts()
-    }else{
-      this.ref?.close
-      //this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+      } else {
+        this.ref?.close
+        //this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
 
-    }
-});
-}
+      }
+    });
+  }
 
-///delete
-//quand on appui sur le bouton supprimer
-delete(position: string,dishe:Dishes) {
-  this.positionModalConfirm = position;
-  console.log(dishe);
+  ///delete
+  //quand on appui sur le bouton supprimer
+  delete(position: string, dishe: Dishes) {
+    this.positionModalConfirm = position;
+    console.log(dishe);
 
-  this.confirmationService.confirm({
-      message: 'Veuillez confirmer la suppresion de  '+dishe.reference,
+    this.confirmationService.confirm({
+      message: 'Veuillez confirmer la suppresion de  ' + dishe.reference,
       header: 'Comfirm delete',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.dishesService.delete(dishe.id).then(data=>{this.getAll()})
-          this.messageService.add({ severity: 'error', summary: 'Confirm', detail: 'Plat supprimée' });
-        },
-        reject: (type:any) => {
-            switch (type) {
-                case ConfirmEventType.REJECT:
-                    this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
-                    break;
-                case ConfirmEventType.CANCEL:
-                    this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
-                    break;
-            }
-        },
-        key: 'positionDialog'
+        this.dishesService.delete(dishe.id).then(data => { this.getAll() })
+        this.messageService.add({ severity: 'error', summary: 'Confirm', detail: 'Plat supprimée' });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({ severity: 'warn', summary: 'Cancel', detail: 'Suppresion annulée' });
+            break;
+        }
+      },
+      key: 'positionDialog'
     });
-}
+  }
 
 
 
-changeTabs(){
-  this.ngOnInit()
-  if(this.activeIndex==0) this.activeIndex=1
-  else {this.activeIndex=0,this.getAll()}
-}
+  changeTabs() {
+    this.ngOnInit()
+    if (this.activeIndex == 0) this.activeIndex = 1
+    else { this.activeIndex = 0, this.getAll() }
+  }
 }
