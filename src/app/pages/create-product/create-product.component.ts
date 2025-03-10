@@ -130,9 +130,6 @@ export class CreateProductComponent implements OnInit {
       this.lostpercentage = 5;
     }
 
-    
-
-   
 
     getBrands(){
       this.brandService.getAllBrands().then(data =>{
