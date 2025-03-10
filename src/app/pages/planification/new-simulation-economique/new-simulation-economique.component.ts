@@ -121,6 +121,7 @@ export class NewSimulationEconomiqueComponent {
     private simulationService:SimulationService,private simulationEmployeService:SimulationEmployeService,
     private simulationOperationService:SimulationOperationService,private estimationVenteService:EstimationVenteService,
    //  private categoryRecipeService:CategoryrecipeService,
+    private tokenService:TokenService,
     public tableShort:TableShortService) {}
 
   ngOnInit() {
@@ -164,7 +165,8 @@ export class NewSimulationEconomiqueComponent {
   }
 
   getDishes(){
-    this.dishesService.getAll().then(async data=>{
+    const user = this.tokenService.getUser();
+    this.dishesService.getAll(user.id).then(async data=>{
       console.log(data);
       this.dishesList=await this.addPriceToPlat(data);
 
@@ -365,6 +367,8 @@ export class NewSimulationEconomiqueComponent {
     this.simulation.totalPassif=this.totalDepenses
     var okay=false
     this.loadingPage=true
+    const user = this.tokenService.getUser();
+    this.simulation.user = {id : user.id}
     this.simulationService.create(this.simulation).then(data=>{
       console.log("data simulation:::::");
       console.log(data);

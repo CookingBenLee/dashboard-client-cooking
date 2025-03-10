@@ -152,7 +152,7 @@ export class PlatComponent {
 
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private priceService: PriceService,
     private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
-    private dialogService: DialogService, private currencyService: CurrencyService,
+    private dialogService: DialogService, private currencyService: CurrencyService,private tokenService:TokenService,
     private dishesService: DishesService, private detailDishesService: DetaildishesService, private categoryMenuService: CategoryMenuService,
     public tableShort: TableShortService) { }
 
@@ -175,7 +175,8 @@ export class PlatComponent {
   getAll() {
     const params = this.paginateService.getRequestParams(this.page, this.rows)
     console.log(params);
-    this.dishesService.getAllPage(params).then(data => {
+    const user = this.tokenService.getUser();
+    this.dishesService.getAllPage(user.id,params).then(data => {
       console.log(data)
       //this.menus=data
       console.log(data)

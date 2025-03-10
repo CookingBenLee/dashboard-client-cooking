@@ -4,4 +4,5 @@ export class Simulation {
     totalPassif?: number | 0;
     totalActif?: number | 0;
     bilan?: number | 0;
+    user?: any
   }
