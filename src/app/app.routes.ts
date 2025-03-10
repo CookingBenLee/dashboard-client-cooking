@@ -17,6 +17,8 @@ import { PlanificationComponent } from './pages/planification/planification.comp
 import { RecetteComponent } from './pages/recette/recette.component';
 import { RecipeComponent } from './pages/recipe/recipe.component';
 import { LoginGuard } from './guards/login.guard';
+import { NewSimulationEconomiqueComponent } from './pages/planification/new-simulation-economique/new-simulation-economique.component';
+import { ListSimulationEconomiqueComponent } from './pages/planification/list-simulation-economique/list-simulation-economique.component';
 
 export const routes: Routes = [
   {
@@ -80,7 +82,11 @@ export const routes: Routes = [
       },
       {
         path:'planification',
-        component:PlanificationComponent,
+        component:ListSimulationEconomiqueComponent,
+      },
+      {
+        path:'planifier',
+        component:NewSimulationEconomiqueComponent,
       },
       {
         path:'recette',
