@@ -144,8 +144,8 @@
                 </div>
                 <div class="field col-4">
                   <label for="baseRecipe">Recette Secondaire</label>
-                  <p-dropdown [disabled]="name==null" [(ngModel)]="base" name="baseRecipe"
-                      [options]="reciss" optionLabel="name" (onChange)="openDialogProduct($event)"
+                  <p-dropdown [(ngModel)]="base" name="baseRecipe"
+                      [options]="reciss" optionLabel="name" 
                       placeholder="OUI ou NON">
                   </p-dropdown>
                 </div>
@@ -343,7 +343,7 @@
                     <div class="col-6">
                       <div class="field">
                         <label htmlFor="name">Nom</label>
-                        <input pInputText id="name" [(ngModel)]="productData.name" name="name" type="text" placeholder="Nom produit" required />
+                        <input pInputText id="name" disabled="true" [(ngModel)]="productData.name" name="name" type="text" placeholder="Nom produit" required />
                       </div>
                     </div>
                     <div class="col-6">
@@ -358,13 +358,13 @@
                         <p-dropdown [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.category"></p-dropdown>
                       </div>
                     </div>
-                    <!-- <div class="col-6">
+                    <div class="col-6">
                       <div class="field ">
                         <label htmlFor="conditioning">Condition</label>
                         <p-dropdown [options]="conditionings" optionLabel="name" name="conditioning"
                           [(ngModel)]="productData.conditioning"></p-dropdown>
                       </div>
-                    </div> -->
+                    </div>
                     <div class="col-6">
                       <div class="field">
                         <label htmlFor="lostpercentage">Pourcentage de perte</label>
@@ -372,7 +372,6 @@
                           [(ngModel)]="productData.lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
                         </p-inputNumber>
                       </div>
-            
                     </div>
                   </div>
             
@@ -385,7 +384,7 @@
             
             
                   <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4"
-                    [disabled]="!f.valid"></button>
+                   ></button>
             
                 </div>
               </form>
