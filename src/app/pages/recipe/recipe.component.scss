@@ -1,146 +1,150 @@
-// Définition des nouvelles couleurs
-$grisFonce: #333333;
-$grisMoyen: #666666;
-$grisClair: #999999;
-$grisTrèsClair: #D1D1D1;
-$noir: #000000;
-$blanc: #ffffff;
 
-// Boutons
-.p-button-vert {
-  background: $grisMoyen;
+$orange:#FF7900;
+$Vert:#50BE87;
+$Jaune:#FFD200;
+$Rose:#FFB4E6;
+$Violet:#A885D8;
+$Bleu:#22222269;
+$Noir:#000000;
+$Blanc:#ffffff;
+
+$color1:#c1853b;
+$color2:#cc1b1b;
+$color3:#2f0505;
+$color4:#85311b;
+$color5:#000000;
+
+$color6:#cf4020;
+$color7:#a4ecdc;
+$color8:#bc2c14;
+$color9:#9e675b;
+$color10:#94c9b2;
+$color11:#2d674d;
+
+$vertClair:gray;
+
+.p-button-vert{
+  background: $vertClair;
   border: none;
+
+
   width: auto;
   margin: auto;
   display: block;
-  color: $blanc;
-  &:hover {
-    background: $grisClair;
-    color: $noir;
-  }
 }
-
 .disabled-option {
-  color: $grisTrèsClair; /* Couleur grise pour les éléments désactivés */
+  color: #999; /* Couleur grise pour les éléments désactivés */
 }
 
-.card {
+.card{
   border: none !important;
-  background: $grisFonce;
-  color: $blanc;
 }
-
-.btnspart {
+.btnspart{
   display: flex;
   justify-content: end;
 }
 
-.divider {
-  border-bottom: 1px solid $grisClair;
+.divider{
+  border-bottom: 1px solid;
+  color:#22222269 ;
 }
 
-.divider-b {
-  border-bottom: 4px solid $grisMoyen;
+.divider-b{
+  border-bottom: 4px solid;
+  color:gray ;
 }
 
-// Styles des boutons
-.p-button-nouveau {
-  background: $grisMoyen;
-  color: $blanc;
-  border: 1px solid $grisMoyen;
+
+.p-button-nouveau{
+  background: $color1;
+  color:$Blanc;
+  border:1px solid $color1;
 }
 
-.p-button-saved {
-  background: $grisClair;
-  color: $noir;
-  border: 1px solid $grisClair;
+.p-button-saved{
+  background: $vertClair;
+  color:$Blanc;
+  border: none;
+  border:1px solid $vertClair;
   margin: auto;
   width: auto;
   display: block;
 }
 
-.p-button-annuler {
-  background: $grisFonce;
-  color: $blanc;
-  border: 1px solid $grisFonce;
+.p-button-annuler{
+  background: $color2;
+  color:$Blanc;
+  border: none;
+  border:1px solid $color2;
 }
 
-.p-button-newline {
+.p-button-newline{
   margin: auto;
-  background: $blanc;
-  color: $grisMoyen;
-  border: 1px solid $grisMoyen;
+  background: #fff;
+  color: #22222269;
+  border: 1px solid #22222269;
   display: flex;
   align-items: center;
   justify-content: center;
   width: auto;
 }
 
-.cardnew {
+.cardnew{
+  //margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
-  border: 5px solid $grisMoyen;
-  background: $grisFonce;
-  color: $blanc;
+  border: 5px solid #22222269;
 }
 
-// Alignement flexbox
-.flex-1 {
+.flex-1{
   justify-content: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-
-  h5,
-  button {
-    margin: auto;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    text-align: left;
-  }
+    display: flex;
+    text-align: center;
 
-  h5 {
-    margin-left: 0;
-  }
+    h5,button{
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: left;
+    }
 
-  button {
-    margin-right: 0;
-  }
+    h5{
+      margin-left: 0;
+    }
+    button{
+      margin-right: 0;
+    }
 }
 
-// Tableaux
-table {
+
+table{
   width: 100%;
-  background: $grisFonce;
-  color: $blanc;
-}
 
-table > tr {
-  background-color: $grisMoyen;
+}
+// table,thead,td,th {
+//   border: 1px solid black;
+//   border-collapse: collapse;
+
+// }
+table>tr{
+  background-color: rgba(185, 181, 181, 0.596);
   border-radius: 5px;
   padding: 3px;
 }
 
-.divtableau {
+.divtableau{
+  //max-height: 160px;
   padding: 5px;
   overflow: hidden;
   overflow-y: scroll;
-  background: $grisFonce;
 }
-
-.al-btn {
+.al-btn{
   margin: auto;
   padding-right: 0px;
 
-  button {
+  button{
     width: -webkit-fill-available;
-    background: $grisClair;
-    color: $noir;
-    border: 1px solid $grisMoyen;
-    &:hover {
-      background: $grisMoyen;
-      color: $blanc;
-    }
   }
 }

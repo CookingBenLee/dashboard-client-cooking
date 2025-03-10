@@ -123,7 +123,7 @@
             <div class="col-12 card p-fluid">
               <!--<h5>Ajouter un nouveau plat</h5>-->
 
-              <div class="grid entete bg-primary">
+              <div style="background-color: #555555;" class="grid entete">
 
 
                 <!--<div class="field col-2">
@@ -149,74 +149,6 @@
                       placeholder="OUI ou NON">
                   </p-dropdown>
                 </div>
-
-                <!-- <div class="field col-5">
-                          <label htmlFor="category">Categorie de la recette</label>
-                          <p-dropdown [options]="CategoryRecipes" optionLabel="name"  name="category" [(ngModel)]="categorySelected" (onChange)="changeCategory()" >
-                            <ng-template let-category pTemplate="item">
-                              <div class="flex align-items-center operatingSystems-item">
-                                <div> {{category.name}}({{category?.code}})</div>
-                              </div>
-                            </ng-template>
-                          </p-dropdown>
-                        </div> -->
-
-
-
-                <!--<div class="field col-3">
-                            <label htmlFor="poids">Poids</label>
-                            <p-inputNumber mode="decimal" [minFractionDigits]="2" name="poids" id="poids" [(ngModel)]="poids" [showButtons]="true" [min]="0" ></p-inputNumber>
-                        </div>-->
-
-
-
-                <!--<div class="field col-4">
-                            <div class="field">
-                              <label htmlFor="quantite">Quantite</label>
-                              <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="quantite" [showButtons]="true" [min]="0" ></p-inputNumber>
-                            </div>
-                          </div>-->
-
-                <!--<div class="field col-2">
-                      <div class="field">
-                        <label htmlFor="brut">Brut</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="brut" id="brut" [(ngModel)]="brut" [showButtons]="true" [min]="0" ></p-inputNumber>
-                      </div>
-                    </div>
-          
-          
-                    <div class="field col-2">
-                      <div class="field">
-                        <label htmlFor="net">Net</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="net" id="net" [(ngModel)]="net" [showButtons]="true" [min]="0" ></p-inputNumber>
-                      </div>
-                    </div>
-          
-          
-                    <div class="field col-3">
-                      <div class="field">
-                        <label htmlFor="cout">Cout</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="cout" id="cout" [(ngModel)]="cout" [showButtons]="true" [min]="0" ></p-inputNumber>
-                      </div>
-                    </div>
-          
-          
-                    <div class="field col-3">
-                      <div class="field">
-                        <label htmlFor="preparationInitial">Preparation Initial</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="preparationInitial" id="preparationInitial" [(ngModel)]="preparationInitial" [showButtons]="true" [min]="0" ></p-inputNumber>
-                      </div>
-                    </div>
-          
-                    <div class="field col-6">
-                      <div class="field">
-                        <label htmlFor="preparationIngredient">Preparation ingredient</label>
-                        <textarea rows="4" cols="30" name="preparationIgredient" pInputTextarea [(ngModel)]="preparationIngredient"></textarea>
-                      </div>
-                    </div>-->
-
-
-
 
               </div>
               <p class="divider mt-4"></p>
@@ -292,76 +224,10 @@
                         <button pButton pRipple icon="pi pi-times" type="reset"
                           class="col p-button-annuler p-button p-component " (click)="RemoveLastDetail()"></button>
                       </div>
-                      <!--<div class="col-3">
-                            <div class="field">
-                              <label htmlFor="poids">Poids</label>
-                              <p-inputNumber mode="decimal" [minFractionDigits]="2" name="poids" id="poids" [showButtons]="true" [min]="0" [(ngModel)]="detailDishesProvisoire[detailDishesProvisoire.length-1].poids" (ngModelChange)="changeDetailPoids(detailDishesProvisoire[detailDishesProvisoire.length-1],detailDishesProvisoire.length-1,true)"></p-inputNumber>
-                            </div>
-                          </div>
-          
-          
-                          <div class="field col-2">
-                            <label htmlFor="unit">Unite</label>
-                            <p-dropdown [options]="units" optionLabel="name"  name="unit" [(ngModel)]="detailDishesProvisoire[detailDishesProvisoire.length-1].unit"  >
-                              <ng-template let-unit pTemplate="item">
-                                <div class="flex align-items-center operatingSystems-item">
-                                  <div> {{unit?.name}}({{unit?.code}})</div>
-                                </div>
-                              </ng-template>
-                            </p-dropdown>
-                          </div>
-          
-                          <div class="col-3">
-                            <div class="field">
-                              <label htmlFor="cout">Cout</label>
-                              <p-inputNumber mode="decimal" [minFractionDigits]="2" name="cout" id="cout" [(ngModel)]="detailDishesProvisoire[detailDishesProvisoire.length-1].cout" [showButtons]="true" [min]="0" (ngModelChange)="changeDetailCout(detailDishesProvisoire[detailDishesProvisoire.length-1],detailDishesProvisoire.length-1,true)"></p-inputNumber>
-                            </div>
-                          </div>-->
-
-                      <!--<div class="grid col-12">
-                            <div class="grid col-6">
-                              <div class="col row">
-                               <div class="col">
-                                  <div class="field">
-                                    <label htmlFor="brut">Brut</label>
-                                    <p-inputNumber mode="decimal" [minFractionDigits]="2" name="brut" id="brut" [(ngModel)]="detailDishesProvisoire[detailDishesProvisoire.length-1].brut" [showButtons]="true" [min]="0" (ngModelChange)="changeDetailBrut(detailDishesProvisoire[detailDishesProvisoire.length-1],detailDishesProvisoire.length-1,true)" ></p-inputNumber>
-                                  </div>
-                                </div>
-          
-          
-                                <div class="col">
-                                  <div class="field">
-                                    <label htmlFor="net">Net</label>
-                                    <p-inputNumber mode="decimal" [minFractionDigits]="2" name="net" id="net" [(ngModel)]="detailDishesProvisoire[detailDishesProvisoire.length-1].net" [showButtons]="true" [min]="0" (ngModelChange)="changeDetailNet(detailDishesProvisoire[detailDishesProvisoire.length-1],detailDishesProvisoire.length-1,true)"></p-inputNumber>
-                                  </div>
-                                </div>
-          
-          
-                              </div>
-          
-                              <div class="col row">
-          
-          
-                                -<div class="col">
-                                  <div class="field">
-                                    <label htmlFor="preparationInitial">Preparation Initial</label>
-                                    <p-inputNumber mode="decimal" [minFractionDigits]="2" name="preparationInitial" id="preparationInitial" [(ngModel)]="detailDishesProvisoire[detailDishesProvisoire.length-1].preparationInitial" (ngModelChange)="changeDetailPrepaInit(detailDishesProvisoire[detailDishesProvisoire.length-1],detailDishesProvisoire.length-1,true)" [showButtons]="true" [min]="0" ></p-inputNumber>
-                                  </div>
-                                </div>->
-          
-                              </div>
-                            </div>
-          
-          
-          
-                          </div>-->
                     </div>
 
                   </form>
-                  <!---->
-                  <!--<div class="ml-auto btnspart  grid mt-3">
-                        <button pButton pRipple label="Annuler" type="reset"   class="col p-button-annuler p-button p-component " (click)="RemoveLastDetail()"></button>
-                      </div>-->
+                 
                 </div>
 
                 <!-- List of created product-->
@@ -378,14 +244,7 @@
 
                         <!--<th>Preparation Initial</th>-->
                         <th>Preparation Ingredient</th>
-                        <!--<th>Poids</th>
-          
-                            <th>Unité</th>
-          
-                            <th>Brut</th>
-                            <th>Net</th>
-          
-                            <th>Cout</th>-->
+                  
 
                         <th></th>
 
@@ -398,13 +257,7 @@
 
                         <!--<td>{{detail.preparationInitial}}</td>-->
                         <td>{{detail.preparationIngredient}}</td>
-                        <!--<td>{{detail.poids}}</td>
-                            <td>{{detail.unit.code}}</td>
-          
-                            <td>{{detail.brut}}</td>
-                            <td>{{detail.net}}</td>
-          
-                            <td>{{detail.cout}}</td>-->
+                      
 
                         <td>
                           <button pButton pRipple type="button" icon="pi pi-trash"
@@ -424,7 +277,7 @@
               <p class="divider mt-4"></p>
               <p class="divider"></p>
 
-              <div class="grid p-2 entete bg-primary">
+              <div style="background-color: #555555;"  class="grid p-2 entete">
                 <div class="field  col-12">
                   <div class="field">
                     <label htmlFor="detailCuisine">Detail cuisine</label>

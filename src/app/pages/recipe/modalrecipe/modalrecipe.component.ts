@@ -63,7 +63,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
       TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule],
       providers: [ConfirmationService, MessageService,DialogService],
   templateUrl: './modalrecipe.component.html',
-  styleUrls: ['./modalrecipe.component.scss','../../recipe/recipe.component.scss',]
+  styleUrls: ['./modalrecipe.component.scss',]
 })
 export class ModalrecipeComponent {
 //number for according active
