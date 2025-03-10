@@ -126,7 +126,8 @@ export class CreateProductComponent implements OnInit {
       this.getBrands()
       this.getCategorys()
       this.getConditioning()
-      this.getUnit()
+      this.getUnit();
+      this.lostpercentage = 5;
     }
 
     
