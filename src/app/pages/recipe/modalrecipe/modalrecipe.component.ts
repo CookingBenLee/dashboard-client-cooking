@@ -126,7 +126,12 @@ constructor(private confirmationService: ConfirmationService, private messageSer
   // private categoryRecipeService:CategoryrecipeService,
   public tableShort:TableShortService,public config: DynamicDialogConfig,) {
     this.recipe=this.config.data
-
+    if (this.recipe.baseRecipe) {
+      this.base = { name: 'OUI' }
+    }
+    if (!this.recipe.baseRecipe) {
+      this.base = { name: 'NON' }
+    }
   }
 
   reciss: { name: string }[] = [];
@@ -211,7 +216,41 @@ openDialogProduct(event: any){
     this.recipe.baseRecipe = true;
   }
   if (event.value.name === 'OUI') {
-    this.recipe.baseRecipe = false;
+    this.recipe.baseRecipe = true;
+
+    this.recipeService.update(this.recipe.id,this.recipe).then( async data=>{
+      this.loading=false
+      //this.isSuccessEdit=true
+      this.sucessEdit="Recette Modifié"
+      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucessEdit});
+      console.log("part11111111111");
+
+       this.saveAllDetail(data.data)
+      console.log("part1111111111122222222222222");
+
+      this.isEditRecipeDialogVisible = false
+      await this.getAll(this.recipe.id)
+      console.log("part1111111111122222222222222333333333333");
+
+
+      console.log("part11111111111222222222222223333333333334444444444444");
+  
+      this.ref?.close()
+    },
+    (error: any)=>{
+      //this.isErrorEdit=true
+      if(error.error.message=='ko'){
+        //erreurNumero
+        this.erreurEdit=error.error.data
+        }else{
+        this.erreurEdit=error.error.data
+        //this.erreur="Erreur lié au serveur"
+      }
+      this.loading=false
+      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit });
+    });
+
+    
   }
 }
 
@@ -327,47 +366,50 @@ openDialogProduct(event: any){
     var success=false
     if (this.base.name === "OUI") {
       this.recipe.baseRecipe = true;
+      this.productDialog = true;
+      this.openDialogProduct(this.recipe);
     }
     if (this.base.name === "NON") {
       this.recipe.baseRecipe = false;
-    }
-    await this.recipeService.update(this.recipe.id,this.recipe).then( async data=>{
-      this.loading=false
-      //this.isSuccessEdit=true
-      this.sucessEdit="Recette Modifié"
-      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucessEdit});
-      console.log("part11111111111");
-
-      await this.saveAllDetail(data.data)
-      console.log("part1111111111122222222222222");
-
-      this.isEditRecipeDialogVisible = false
-      await this.getAll(this.recipe.id)
-      console.log("part1111111111122222222222222333333333333");
-
-
-      console.log("part11111111111222222222222223333333333334444444444444");
-      success=true
-      this.ref?.close()
-    },
-    (error: any)=>{
-      //this.isErrorEdit=true
-      if(error.error.message=='ko'){
-        //erreurNumero
-        this.erreurEdit=error.error.data
-        }else{
-        this.erreurEdit=error.error.data
-        //this.erreur="Erreur lié au serveur"
+      await this.recipeService.update(this.recipe.id,this.recipe).then( async data=>{
+        this.loading=false
+        //this.isSuccessEdit=true
+        this.sucessEdit="Recette Modifié"
+        this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucessEdit});
+        console.log("part11111111111");
+  
+        await this.saveAllDetail(data.data)
+        console.log("part1111111111122222222222222");
+  
+        this.isEditRecipeDialogVisible = false
+        await this.getAll(this.recipe.id)
+        console.log("part1111111111122222222222222333333333333");
+  
+  
+        console.log("part11111111111222222222222223333333333334444444444444");
+        success=true
+        this.ref?.close()
+      },
+      (error: any)=>{
+        //this.isErrorEdit=true
+        if(error.error.message=='ko'){
+          //erreurNumero
+          this.erreurEdit=error.error.data
+          }else{
+          this.erreurEdit=error.error.data
+          //this.erreur="Erreur lié au serveur"
+        }
+        this.loading=false
+        this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit });
+      });
+  
+      if(success){
+        console.log("sucesssssssssss");
+  
+  
       }
-      this.loading=false
-      this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit });
-    });
-
-    if(success){
-      console.log("sucesssssssssss");
-
-
     }
+    
   }
 
   ///delete
