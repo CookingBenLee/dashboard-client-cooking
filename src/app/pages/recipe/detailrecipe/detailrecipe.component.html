@@ -46,13 +46,14 @@
 
     <div style="text-align: center;" *ngFor="let detail of detailRecipe2" class="info-row">
       <div class="info-cell">{{ detail?.ingredient?.name }}</div>
-      <div class="info-cell">{{ detail?.proportion }} %</div>
+      <div class="info-cell text-center">{{ detail?.proportion }} %</div>
       <div class="info-cell">{{ detail?.preparationIngredient }}</div>
     </div>
 
     <div class="info-row">
-      <div class="info-cell label">Total Proportion</div>
-      <div class="info-cell value">{{ totalProportion | number: '1.0-3' }} %</div>
+      <div class="info-cell label text-center">Total Proportion</div>
+      <div class="info-cell value text-center">{{ totalProportion | number: '1.0-3' }} %</div>
+      <div class="info-cell label text-center">                  </div>
     </div>
   </div>
 
