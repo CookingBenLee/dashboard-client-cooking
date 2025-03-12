@@ -502,7 +502,7 @@ export class RecipeComponent {
         this.activeIndex = 0
   
         this.recipe = new Recipe()
-        this.detailRecipesProvisoire.push(new DetailsRecipe())
+        this.detailRecipesProvisoire.push(new DetailsRecipe());
         // this.detailDishes=[]
         // this.detailDishesProvisoire=[]
       },
@@ -751,8 +751,7 @@ export class RecipeComponent {
         // this.geolocation=0
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: detail?.ingredient?.name + ' ' + detail.proportion + ' ' + detail.ingredient.code + ' creer' });
         this.showAddDetailRecipe = !this.showAddDetailRecipe
-        this.detailRecipesProvisoire.push(new DetailsRecipe())
-
+        this.detailRecipesProvisoire.push(new DetailsRecipe());
       }, (error: any) => {
         //this.isError=true
         if (error.error.message == 'ko') {

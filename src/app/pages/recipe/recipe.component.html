@@ -276,8 +276,9 @@
     <!---->
   </mat-card-content>
 </mat-card>
-<p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}"
-  header="Enregistrement du recette de base" [modal]="true" class="p-fluid">
+<p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" 
+  maskStyleClass="backdrop-blur-sm" header="Enregistrement du recette de base" 
+  class="p-fluid" [modal]="true" [closable]="false">
   <div class="grid">
     <form class=" newform col-12" #f="ngForm" (ngSubmit)="addProduct()">
       <div class="card p-fluid">

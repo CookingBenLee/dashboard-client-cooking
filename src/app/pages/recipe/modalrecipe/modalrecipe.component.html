@@ -158,7 +158,7 @@
   </p-dialog>
   <!---->
   
-  <p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" header="Enregistrement du recette de base" [modal]="true"
+  <p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" [closable]="false" header="Enregistrement du recette de base" [modal]="true"
             class="p-fluid">
             <div class="grid">
               <form class=" newform col-12" #f="ngForm" (ngSubmit)="addProduct()">
