@@ -216,8 +216,7 @@ openDialogProduct(event: any){
     this.recipe.baseRecipe = true;
   }
   if (event.value.name === 'OUI') {
-    this.recipe.baseRecipe = true;
-
+    this.recipe.baseRecipe = true;  
     this.recipeService.update(this.recipe.id,this.recipe).then( async data=>{
       this.loading=false
       //this.isSuccessEdit=true
@@ -248,9 +247,7 @@ openDialogProduct(event: any){
       }
       this.loading=false
       this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit });
-    });
-
-    
+    }); 
   }
 }
 
