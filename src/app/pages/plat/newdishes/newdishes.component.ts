@@ -73,7 +73,7 @@ import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-f
         RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
         TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule,
       //prime module
-      InputTextModule,NewdishesComponent,
+      InputTextModule,
       TreeSelectModule,
       DropdownModule,
       CardModule,
