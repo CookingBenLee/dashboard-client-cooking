@@ -158,7 +158,8 @@ export class NewdishesComponent implements OnInit{
 
 
   getRecipes(){
-      this.recipeService.getAll().then(data=>{
+      const user = this.tokenService.getUser();
+      this.recipeService.getAllUser(user.id).then(data=>{
         this.recettes=data
       })
   }
