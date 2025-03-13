@@ -138,8 +138,10 @@
               </div>
 
               <h5 class="dialog-title">Liste des Détails de la Recette</h5>
-              <button pButton label="Ajouter un ingrédient" type="button" [loading]="loading"
-                class="p-button-newline mt-2" (click)="showAddDetailDishesForm()"></button>
+             
+                <button pButton label="Ajouter un ingrédient" type="button" [loading]="loading"
+                  class="p-button-primary mt-2" (click)="showAddDetailDishesForm()"></button>
+       
 
               <div *ngIf="showAddDetailRecipe" class="cardnew mt-5">
                 <form class="p-fluid">
@@ -206,7 +208,7 @@
                   <div class="info-header-cell">Préparation</div>
                   <div class="info-header-cell">Actions</div>
                 </div>
-              
+
                 <!-- Loop to display details -->
                 <div *ngFor="let detail of detailRecipes; let i = index" class="info-row">
                   <div class="info-cell">{{ detail?.ingredient?.name }}</div>
@@ -218,7 +220,7 @@
                       (click)="confirmDeleteDetail(detail, i)"></button>
                   </div>
                 </div>
-              
+
                 <!-- Total Row -->
                 <div class="info-row total-row">
                   <div class="info-cell">Total</div>
@@ -227,7 +229,7 @@
                   <div class="info-cell"></div> <!-- Empty cell for "Actions" -->
                 </div>
               </div>
-              
+
 
               <p class="divider"></p>
               <div class="field  col-12">
@@ -276,9 +278,8 @@
     <!---->
   </mat-card-content>
 </mat-card>
-<p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" 
-  maskStyleClass="backdrop-blur-sm" header="Enregistrement du recette de base" 
-  class="p-fluid" [modal]="true" [closable]="false">
+<p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" maskStyleClass="backdrop-blur-sm"
+  header="Enregistrement du recette de base" class="p-fluid" [modal]="true" [closable]="false">
   <div class="grid">
     <form class=" newform col-12" #f="ngForm" (ngSubmit)="addProduct()">
       <div class="card p-fluid">
@@ -328,7 +329,7 @@
         <label id="success" *ngIf="isSuccess">{{sucess}}</label>
 
 
-        <button pButton label="Enregistrer" type="submit"  class="p-button-orange mt-4"></button>
+        <button pButton label="Enregistrer" type="submit" class="p-button-orange mt-4"></button>
 
       </div>
     </form>

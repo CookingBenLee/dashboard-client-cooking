@@ -62,13 +62,20 @@
   color: white;
 }
 
-.p-button-newline {
-  background: #fff;
-  color: #555;
-  border: 1px solid #ddd;
-  padding: 8px 12px;
-  border-radius: 4px;
+.p-button-primary {
+  border: none;
+  width: auto;
+  margin: auto;
+  display: block;
 }
+
+// .p-button-newline {
+//   // background: #fff;
+//   color: #ffffff;
+//   border: 1px solid #ddd;
+//   padding: 8px 12px;
+//   border-radius: 4px;
+// }
 
 .divider {
   border-bottom: 1px solid #ddd;
