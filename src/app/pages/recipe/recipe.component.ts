@@ -408,7 +408,7 @@ export class RecipeComponent {
         await this.saveAllDetail(data.data)
         //this.ngOnInit()
         this.activeIndex = 0
-  
+        this.resetFields();
         this.recipe = new Recipe()
         this.detailRecipesProvisoire.push(new DetailsRecipe())
         // this.detailDishes=[]
@@ -680,19 +680,18 @@ export class RecipeComponent {
 
   productData: any = {}
   resetFields() {
-    this.productData = {}; 
-    this.productData.name = '';
-    this.productData.code = '';
-    this.productData.description = '';
-    this.productData.price = 0;
-    this.productData.lostpercentage = 0;
-  
-    this.productData.unit = {} as Unit;
-    this.productData.brand = {} as Brand;
-    this.productData.category = {} as Category;
-    this.productData.conditioning = {} as Conditioning;
-    this.productData.stock = 0;
+    this.code = "";
+    this.name = "";
+    this.ratio = 0;
+    this.detailCuisine = "";
+    this.detailRecipes = [];
+    this.detailRecipesProvisoire = [];
+    this.showAddDetailRecipe = false;
+    this.base = {}; // Réinitialiser la sélection
+    this.recipe = new Recipe();
+    this.totalProportion = 0;
   }
+  
   reset() {
     this.code = "";
     this.name = "";

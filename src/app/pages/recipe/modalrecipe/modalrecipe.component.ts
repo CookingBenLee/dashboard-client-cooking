@@ -158,18 +158,6 @@ categorys: Category[] = [];
       this.categorys=data})
   }
 
-  resetFields() {
-      this.productData = {}; 
-      this.productData.name = '';
-      this.productData.code = '';
-      this.productData.description = '';
-      this.productData.price = 0;
-      this.productData.lostpercentage = 0;
-    
-      this.productData.unit = {} as Unit;
-      this.productData.category = {} as Category;
-      this.productData.stock = 0;
-    }
 
   addProduct(){
     const user = this.tokenService.getUser();
@@ -197,6 +185,16 @@ categorys: Category[] = [];
         this.messageService.add({severity: 'error', summary: 'Error', detail: this.erreur });
 
       });
+  }
+
+  resetFields() {
+    this.recipe.code = "";
+    this.recipe.name = "";
+    this.recipe.ratio = 0;
+    this.recipe.detailCuisine = "";
+    this.base = {}; // Réinitialiser la sélection
+    this.recipe = new Recipe();
+    this.totalProportion = 0;
   }
 
 base: any = {}
