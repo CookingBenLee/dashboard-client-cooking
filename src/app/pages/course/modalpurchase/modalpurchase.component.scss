@@ -80,37 +80,37 @@ tr:nth-child(even) {
 }
 
 /* Boutons */
-.p-button {
-  background-color: #666 !important; /* Gris foncé au lieu de bleu */
-  color: white !important;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  transition: background 0.3s;
-  cursor: pointer;
-}
+// .p-button {
+//   background-color: #666 !important; /* Gris foncé au lieu de bleu */
+//   color: white !important;
+//   border: none;
+//   padding: 10px 16px;
+//   border-radius: 6px;
+//   transition: background 0.3s;
+//   cursor: pointer;
+// }
 
-.p-button:hover {
-  background-color: #444 !important;
-}
+// .p-button:hover {
+//   background-color: #444 !important;
+// }
 
-/* Bouton Annuler */
-.p-button-annuler {
-  background-color: #999 !important;
-}
+// /* Bouton Annuler */
+// .p-button-annuler {
+//   background-color: #999 !important;
+// }
 
-.p-button-annuler:hover {
-  background-color: #777 !important;
-}
+// .p-button-annuler:hover {
+//   background-color: #777 !important;
+// }
 
-/* Bouton "Produit non existant" */
-.p-button-nouveau {
-  background-color: #555 !important;
-}
+// /* Bouton "Produit non existant" */
+// .p-button-nouveau {
+//   background-color: #555 !important;
+// }
 
-.p-button-nouveau:hover {
-  background-color: #333 !important;
-}
+// .p-button-nouveau:hover {
+//   background-color: #333 !important;
+// }
 
 /* Séparateur */
 .divider {
