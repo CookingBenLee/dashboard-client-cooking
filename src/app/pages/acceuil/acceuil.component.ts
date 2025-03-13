@@ -41,8 +41,11 @@ import { CountryService } from 'src/app/services/country/country.service';
 export class AcceuilComponent  implements OnInit{
 
   ngOnInit(): void {
-      this.getCountry()
+      this.getCountry();
+      this.source = 'src/assets/images/screen.png'
   }
+
+  source: any;
 
   pays: any
   constructor( private countryService: CountryService){}
