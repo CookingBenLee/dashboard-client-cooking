@@ -153,6 +153,7 @@ export class ModaldishesComponent {
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private fileSaverService:FileSaverService,
     private ref: DynamicDialogRef,private pictureDishesService:PictiuredishesService,private dishesService:DishesService,private categoryMenuService:CategoryMenuService,
     private recipeService:RecipeService,private detailRecipeService:DetailsrecipeService,private categoryRecipeService:CategoryrecipeService,
+    private tokenService: TokenService,
     public tableShort:TableShortService,private compositionDishesService:CompositiondishesService,public config: DynamicDialogConfig,)
   {
     this.plat=this.config.data
@@ -205,7 +206,8 @@ export class ModaldishesComponent {
 
 
   getRecipes(){
-    this.recipeService.getAll().then(data=>{
+    const user = this.tokenService.getUser();
+    this.recipeService.getAllUser(user.id).then(data=>{
       this.recettes=data
     })
   }

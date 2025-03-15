@@ -73,7 +73,7 @@ import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-f
         RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
         TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule,
       //prime module
-      InputTextModule,NewdishesComponent,
+      InputTextModule,
       TreeSelectModule,
       DropdownModule,
       CardModule,
@@ -158,7 +158,8 @@ export class NewdishesComponent implements OnInit{
 
 
   getRecipes(){
-      this.recipeService.getAll().then(data=>{
+      const user = this.tokenService.getUser();
+      this.recipeService.getAllUser(user.id).then(data=>{
         this.recettes=data
       })
   }

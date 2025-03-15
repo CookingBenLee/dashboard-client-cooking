@@ -35,7 +35,8 @@
                   <!--<th pSortableColumn="categorie" pColumnFilter="categorie">Categorie<p-sortIcon field="categorie"></p-sortIcon></th>-->
 
                   <th pSortableColumn="stock" pColumnFilter="stock">Stock<p-sortIcon field="stock"></p-sortIcon></th>
-                  <th pSortableColumn="stock" pColumnFilter="stock">Recette Secondaire<p-sortIcon field="stock"></p-sortIcon></th>
+                  <th pSortableColumn="stock" pColumnFilter="stock">Recette Secondaire<p-sortIcon
+                      field="stock"></p-sortIcon></th>
 
                   <!--<th pSortableColumn="cout" pColumnFilter="cout">Cout<p-sortIcon field="cout"></p-sortIcon></th>-->
 
@@ -58,11 +59,11 @@
                   <td (click)="show($event,dishes)" style="width: 20%; min-width: 8rem;">{{dishes?.stock}} <span
                       *ngIf="dishes.stock"> Kg</span></td>
 
-                      <td (click)="show($event,dishes)" style="width: 5%; min-width: 8rem;"> 
-                        <span [class]="dishes.baseRecipe ? 'text-green-500' : 'text-red-500'">
-                          {{ dishes.baseRecipe ? 'OUI' : 'NON' }}
-                      </span>
-                      </td>
+                  <td (click)="show($event,dishes)" style="width: 5%; min-width: 8rem;">
+                    <span [class]="dishes.baseRecipe ? 'text-green-500' : 'text-red-500'">
+                      {{ dishes.baseRecipe ? 'OUI' : 'NON' }}
+                    </span>
+                  </td>
                   <!-- <td (click)="show($event,dishes)"  style="width: 35%; min-width: 8rem;">{{dishes?.cout }}</td>-->
 
                   <!-- <td (click)="show($event,dishes)"  style="width: 35%; min-width: 8rem;">{{dishes.entryDate | date:'yyyy-MM-dd HH:mm'}}</td> -->
@@ -74,7 +75,7 @@
                   <td style="width: 45%; text-align: center;">
                     <button pButton pRipple type="button" (click)="show('top-right',dishes)" icon="pi pi-pencil"
                       class="p-button p-component p-button-text p-button-icon-only"></button>
-                 
+
                     <button pButton pRipple type="button" icon="pi pi-some-icon" (click)="showPrepa(dishes)"
                       class="p-button p-component p-button-text p-button-icon-only">
                       <!-- Vous pouvez insérer votre SVG ici -->
@@ -97,7 +98,7 @@
                         </g>
                       </svg>
                     </button>
-                
+
                     <button pButton pRipple type="button" (click)="delete('top-right',dishes)" icon="pi pi-trash"
                       class="p-button p-component p-button-text p-button-icon-only"></button>
                   </td>
@@ -114,192 +115,135 @@
       </p-tabPanel>
 
 
-
       <p-tabPanel (onFocus)="reset()" header="Nouvelle Recette">
-        <div class="">
-          <form class="grid newform " #f="ngForm" (ngSubmit)="save()">
-
-
+        <div class="dialog-container">
+          <form class="grid newform" #f="ngForm" (ngSubmit)="save()">
             <div class="col-12 card p-fluid">
-              <!--<h5>Ajouter un nouveau plat</h5>-->
-
-              <div style="background-color: #555555;" class="grid entete">
-
-
-                <!--<div class="field col-2">
-                          <label htmlFor="code">Code du Plat</label>
-                          <input pInputText id="code" [(ngModel)]="code" name="code" type="text" placeholder="Code du plat" required/>
-                        </div>-->
-
+              <div class="grid entete">
                 <div class="field col-4">
-                  <label htmlFor="name">Nom de la recette</label>
+                  <label for="name">Nom de la recette</label>
                   <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom de la recette"
                     required />
                 </div>
-
                 <div class="field col-4">
-                  <label htmlFor="ratio">Pourcentage de perte</label>
+                  <label for="ratio">Pourcentage de perte</label>
                   <p-inputNumber mode="decimal" [minFractionDigits]="2" name="ratio" [suffix]="'%'" id="ratio"
                     [(ngModel)]="ratio" [showButtons]="true" [min]="0"></p-inputNumber>
                 </div>
                 <div class="field col-4">
                   <label for="baseRecipe">Recette Secondaire</label>
-                  <p-dropdown [(ngModel)]="base" name="baseRecipe"
-                      [options]="reciss" optionLabel="name" 
-                      placeholder="OUI ou NON">
-                  </p-dropdown>
+                  <p-dropdown [(ngModel)]="base" name="baseRecipe" [options]="reciss" optionLabel="name"
+                    placeholder="OUI ou NON"></p-dropdown>
                 </div>
-
               </div>
-              <p class="divider mt-4"></p>
-              <p class="divider"></p>
 
-              <!--Partit produit-->
-              <div class="mb-2 mt-1">
-                <div class="flex-1 mb-2">
-                  <h5>Liste des Details de la recette</h5>
-                  <button pButton label="Ajouter un ingrédient" type="button" [loading]="loading"
-                    class="p-button-newline mt-2" (click)="showAddDetailDishesForm()"></button>
-                </div>
+              <h5 class="dialog-title">Liste des Détails de la Recette</h5>
+             
+                <button pButton label="Ajouter un ingrédient" type="button" [loading]="loading"
+                  class="p-button-primary mt-2" (click)="showAddDetailDishesForm()"></button>
+       
 
-
-                <!--Formulaire d'ajout-->
-                <h3 *ngIf="showAddDetailRecipe">Saisie d'un ingrédient</h3>
-                <div *ngIf="showAddDetailRecipe" class="cardnew mt-5">
-                  <form class="p-fluid  ">
-                    <div class="grid">
-                      <div class="col-3">
-                        <div class="field ">
-                          <label htmlFor="product{{detailRecipesProvisoire.length-1}}">Produit</label>
-                          <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
-                          <p-dropdown [options]="products" optionLabel="name" [filter]="true" filterBy="name"
-                            name="product{{detailRecipesProvisoire.length-1}}"
-                            [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient"
-                            (ngModelChange)="changeProduct(detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient,detailRecipesProvisoire.length-1)">
-                            <ng-template let-product pFilter="product.category.name" pTemplate="item">
-                              <div class="flex align-items-center operatingSystems-item">
-                                <div>{{product.name}} ({{product?.category?.name}} / {{product?.conditioning?.name}})
-                                </div>
-                              </div>
-                            </ng-template>
-
-                            <ng-template let-product pTemplate="item">
-                              <div class="flex align-items-center gap-2">
-                                <div>{{product.name}} ({{product?.category?.name}} / {{product?.conditioning?.name}})
-                                </div>
-                              </div>
-                            </ng-template>
-                          </p-dropdown>
-                        </div>
-                      </div>
-
-                      <div class="col-2">
-                        <div class="field">
-                          <label htmlFor="quantity{{detailRecipesProvisoire.length-1}}">Proportion %</label>
-                          <p-inputNumber mode="decimal" [minFractionDigits]="2"
-                            name="quantity{{detailRecipesProvisoire.length-1}}" id="quantity{i}"
-                            [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion"
-                            (ngModelChange)="changeDetailQuantite(detailRecipesProvisoire[detailRecipesProvisoire.length-1],detailRecipesProvisoire.length-1,true)"
-                            [showButtons]="true" [min]="0"></p-inputNumber>
-                          <!--[max]="maxRatio"-->
-                        </div>
-                      </div>
-
-                      <div class="col-5">
-                        <div class="field">
-                          <label htmlFor="preparationIngredient">Preparation ingredient</label>
-                          <textarea rows="1" cols="30" name="preparationIgredient" pInputTextarea
-                            [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].preparationIngredient"></textarea>
-                        </div>
-                      </div>
-
-                      <div class="col-1 al-btn">
-                        <button pButton pRipple icon="pi pi-check"
-                          [disabled]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion <= 0"
-                          type="button" class="col p-button-saved p-button p-component"
-                          (click)="firstSaveForDetail(detailRecipesProvisoire[detailRecipesProvisoire.length-1])"></button>
-                      </div>
-
-                      <div class="col-1 al-btn">
-                        <button pButton pRipple icon="pi pi-times" type="reset"
-                          class="col p-button-annuler p-button p-component " (click)="RemoveLastDetail()"></button>
-                      </div>
+              <div *ngIf="showAddDetailRecipe" class="cardnew mt-5">
+                <form class="p-fluid">
+                  <div class="grid single-line">
+                    <!-- Produit dropdown -->
+                    <div class="field col">
+                      <label htmlFor="product{{detailRecipesProvisoire.length-1}}">Produit</label>
+                      <p-dropdown [options]="products" optionLabel="name" [filter]="true" filterBy="name"
+                        name="product{{detailRecipesProvisoire.length-1}}"
+                        [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient"
+                        (ngModelChange)="changeProduct(detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient,detailRecipesProvisoire.length-1)">
+                        <ng-template let-product pTemplate="item">
+                          <div class="flex align-items-center gap-2">
+                            <div>{{product.name}} ({{product?.category?.name}} / {{product?.conditioning?.name}})</div>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
                     </div>
 
-                  </form>
-                 
+                    <!-- Proportion input -->
+                    <div class="field col">
+                      <label htmlFor="quantity{{detailRecipesProvisoire.length-1}}">Proportion %</label>
+                      <p-inputNumber mode="decimal" [minFractionDigits]="2"
+                        name="quantity{{detailRecipesProvisoire.length-1}}" id="quantity{i}"
+                        [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion"
+                        (ngModelChange)="changeDetailQuantite(detailRecipesProvisoire[detailRecipesProvisoire.length-1],detailRecipesProvisoire.length-1,true)"
+                        [showButtons]="true" [min]="0"></p-inputNumber>
+                    </div>
+
+                    <!-- Preparation textarea -->
+                    <div class="field col">
+                      <label htmlFor="preparationIngredient">Préparation ingredient</label>
+                      <textarea rows="1" cols="30" name="preparationIngredient" pInputTextarea
+                        [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].preparationIngredient"></textarea>
+                    </div>
+
+                    <!-- Save Button -->
+                    <div class="field col-1">
+                      <label htmlFor="savee" class="button-label"></label>
+                      <button pButton pRipple icon="pi pi-check"
+                        [disabled]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion <= 0"
+                        type="button" class="p-button-saved p-button p-component"
+                        (click)="firstSaveForDetail(detailRecipesProvisoire[detailRecipesProvisoire.length-1])"></button>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <div class="field col-1">
+                      <label htmlFor="del" class="button-label"></label>
+                      <button pButton pRipple icon="pi pi-times" type="reset"
+                        class="p-button-annuler p-button p-component" (click)="RemoveLastDetail()"></button>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+
+
+
+
+              <div class="info-table">
+                <div class="info-header">
+                  <div class="info-header-cell">Produit</div>
+                  <div class="info-header-cell">Proportion %</div>
+                  <div class="info-header-cell">Préparation</div>
+                  <div class="info-header-cell">Actions</div>
                 </div>
 
-                <!-- List of created product-->
-                <div class="ListProduct">
-                  <p *ngIf="detailRecipes.length==0">Aucun detail de la recette pour l'instant! Veuillez remplir le
-                    formulaire pour ajouter un detail.</p>
-
-                  <div class="divtableau">
-                    <table *ngIf="detailRecipes.length!=0">
-                      <thead>
-                        <!--<th>Catégory</th>-->
-                        <th>Produit </th>
-                        <th>Proportion %</th>
-
-                        <!--<th>Preparation Initial</th>-->
-                        <th>Preparation Ingredient</th>
-                  
-
-                        <th></th>
-
-                      </thead>
-                      <tr *ngFor="let detail of detailRecipes,let i=index">
-                        <!--<td>{{detail.ingredient?.category?.name}}</td>-->
-
-                        <td>{{detail?.ingredient?.name}}</td>
-                        <td>{{detail.proportion}}</td>
-
-                        <!--<td>{{detail.preparationInitial}}</td>-->
-                        <td>{{detail.preparationIngredient}}</td>
-                      
-
-                        <td>
-                          <button pButton pRipple type="button" icon="pi pi-trash"
-                            class="p-button p-component p-button-text p-button-icon-only"
-                            (click)="confirmDeleteDetail(detail,i)"></button>
-                        </td>
-
-                      </tr>
-                      <td>Total Proportion</td>
-                      <td>{{totalProportion }}</td>
-
-                    </table>
+                <!-- Loop to display details -->
+                <div *ngFor="let detail of detailRecipes; let i = index" class="info-row">
+                  <div class="info-cell">{{ detail?.ingredient?.name }}</div>
+                  <div class="info-cell">{{ detail.proportion }}</div>
+                  <div class="info-cell">{{ detail.preparationIngredient }}</div>
+                  <div class="info-cell">
+                    <button pButton pRipple type="button" icon="pi pi-trash"
+                      class="p-button p-component p-button-text p-button-icon-only"
+                      (click)="confirmDeleteDetail(detail, i)"></button>
                   </div>
+                </div>
+
+                <!-- Total Row -->
+                <div class="info-row total-row">
+                  <div class="info-cell">Total</div>
+                  <div class="info-cell">{{ totalProportion }}</div>
+                  <div class="info-cell"></div> <!-- Empty cell for "Préparation" -->
+                  <div class="info-cell"></div> <!-- Empty cell for "Actions" -->
                 </div>
               </div>
 
-              <p class="divider mt-4"></p>
+
               <p class="divider"></p>
-
-              <div style="background-color: #555555;"  class="grid p-2 entete">
-                <div class="field  col-12">
-                  <div class="field">
-                    <label htmlFor="detailCuisine">Detail cuisine</label>
-                    <textarea rows="1" cols="30" name="detailCuisine" pInputTextarea
-                      [(ngModel)]="detailCuisine"></textarea>
-                  </div>
+              <div class="field  col-12">
+                <div class="field">
+                  <label htmlFor="detailCuisine">Detail cuisine</label>
+                  <textarea rows="1" cols="30" name="detailCuisine" pInputTextarea
+                    [(ngModel)]="detailCuisine"></textarea>
                 </div>
               </div>
-
-              <label id="erreur" *ngIf="isError">{{erreur}}</label>
-              <label id="success" *ngIf="isSuccess">{{sucess}}</label>
-
-
-              <p class="divider-b"></p>
               <button pButton label="Enregistrer la recette" type="submit" [loading]="loading" class="p-button-vert"
-                [disabled]="!f.valid "></button>
-
+                [disabled]="!f.valid"></button>
             </div>
           </form>
-
         </div>
-
       </p-tabPanel>
     </p-tabView>
 
@@ -334,59 +278,60 @@
     <!---->
   </mat-card-content>
 </mat-card>
-<p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" header="Enregistrement du recette de base" [modal]="true"
-            class="p-fluid">
-            <div class="grid">
-              <form class=" newform col-12" #f="ngForm" (ngSubmit)="addProduct()">
-                <div class="card p-fluid">
-                  <div class="grid">
-                    <div class="col-6">
-                      <div class="field">
-                        <label htmlFor="name">Nom</label>
-                        <input pInputText id="name" disabled="true" [(ngModel)]="productData.name" name="name" type="text" placeholder="Nom produit" required />
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="field ">
-                        <label htmlFor="unit">Unité</label>
-                        <p-dropdown [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.unit"></p-dropdown>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="field ">
-                        <label htmlFor="category">Categorie</label>
-                        <p-dropdown [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.category"></p-dropdown>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="field ">
-                        <label htmlFor="conditioning">Condition</label>
-                        <p-dropdown [options]="conditionings" optionLabel="name" name="conditioning"
-                          [(ngModel)]="productData.conditioning"></p-dropdown>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="field">
-                        <label htmlFor="lostpercentage">Pourcentage de perte</label>
-                        <p-inputNumber mode="decimal" [minFractionDigits]="2" name="lostpercentage" id="lostpercentage"
-                          [(ngModel)]="productData.lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
-                        </p-inputNumber>
-                      </div>
-                    </div>
-                  </div>
-            
-                  <!-- <p>Description</p>
+<p-dialog [(visible)]="productDialog" appendTo="body" [style]="{width: '850px'}" maskStyleClass="backdrop-blur-sm"
+  header="Enregistrement du recette de base" class="p-fluid" [modal]="true" [closable]="false">
+  <div class="grid">
+    <form class=" newform col-12" #f="ngForm" (ngSubmit)="addProduct()">
+      <div class="card p-fluid">
+        <div class="grid">
+          <div class="col-6">
+            <div class="field">
+              <label htmlFor="name">Nom</label>
+              <input pInputText id="name" disabled="true" [(ngModel)]="productData.name" name="name" type="text"
+                placeholder="Nom produit" required />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field ">
+              <label htmlFor="unit">Unité</label>
+              <p-dropdown [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.unit"></p-dropdown>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field ">
+              <label htmlFor="category">Categorie</label>
+              <p-dropdown [options]="categorys" optionLabel="name" name="category"
+                [(ngModel)]="productData.category"></p-dropdown>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field ">
+              <label htmlFor="conditioning">Condition</label>
+              <p-dropdown [options]="conditionings" optionLabel="name" name="conditioning"
+                [(ngModel)]="productData.conditioning"></p-dropdown>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field">
+              <label htmlFor="lostpercentage">Pourcentage de perte</label>
+              <p-inputNumber mode="decimal" [minFractionDigits]="2" name="lostpercentage" id="lostpercentage"
+                [(ngModel)]="productData.lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
+              </p-inputNumber>
+            </div>
+          </div>
+        </div>
+
+        <!-- <p>Description</p>
                   <textarea rows="5" cols="10" [(ngModel)]="productData.description" name="description" placeholder="Description"
                     pInputTextarea></textarea> -->
-            
-                  <label id="erreur" *ngIf="isError">{{erreur}}</label>
-                  <label id="success" *ngIf="isSuccess">{{sucess}}</label>
-            
-            
-                  <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4"
-                   ></button>
-            
-                </div>
-              </form>
-            </div>
+
+        <label id="erreur" *ngIf="isError">{{erreur}}</label>
+        <label id="success" *ngIf="isSuccess">{{sucess}}</label>
+
+
+        <button pButton label="Enregistrer" type="submit" class="p-button-orange mt-4"></button>
+
+      </div>
+    </form>
+  </div>
 </p-dialog>

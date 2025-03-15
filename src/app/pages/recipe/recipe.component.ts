@@ -383,6 +383,7 @@ export class RecipeComponent {
       this.recipe.baseRecipe = true;
       this.productDialog = true;
       this.openDialogProduct(this.recipe);
+      return;
     }
     if (this.base.name === "NON") {
       this.recipe.baseRecipe = false;
@@ -407,7 +408,7 @@ export class RecipeComponent {
         await this.saveAllDetail(data.data)
         //this.ngOnInit()
         this.activeIndex = 0
-  
+        this.resetFields();
         this.recipe = new Recipe()
         this.detailRecipesProvisoire.push(new DetailsRecipe())
         // this.detailDishes=[]
@@ -427,6 +428,95 @@ export class RecipeComponent {
         return;
     }
     // console.log(this.recipe);
+  }
+
+  openDialogProduct(recipe: Recipe){
+    // console.log(event.value);
+    if (this.base.name === 'OUI') {
+      this.productData.name = this.name;
+      // console.log("product name",this.productData.name);
+      this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
+      // console.log("Product unit:", this.productData.unit);
+      this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
+      // console.log("Product category:", this.productData.category);
+      this.productData.lostpercentage = 0;
+      this.productDialog = true;
+      this.recipe.baseRecipe = true;
+    }
+    if (this.base.name === 'NON') {
+      this.recipe.baseRecipe = false;
+    }
+  }
+  
+  base: any ={}
+  productDialog: boolean = false;
+  addProduct(){
+    const user = this.tokenService.getUser();
+      this.productData.user = { id: user.id };
+      console.log(this.productData);
+      
+      this.productService.create(this.productData).then((data) =>{
+        this.loading=false
+        //this.isSuccess=true
+        this.sucess="Produit crée !";
+        this.productDialog = false;
+        this.getProducts();
+        this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
+        this.resetFields();
+      },
+      (error: any)=>{
+        //this.isError=true
+        if(error.error.message=='ko'){
+          this.erreur=error.error.data
+          }else{
+          this.erreur="Erreur liée au serveur"
+        }
+        this.loading=false
+        this.productDialog = false;
+        this.messageService.add({severity: 'error', summary: 'Error', detail: this.erreur });
+
+      });
+
+      this.recipeService.create(this.recipe).then(async (data) => {
+        this.getAll();
+        this.loading = false
+        console.log(data);
+  
+  
+        this.code = ""
+        this.name = ""
+        this.ratio = 0
+        this.showAddDetailRecipe = false;
+        this.detailCuisine = "";
+        // this.recipe.quantite=0
+        // this.recipe.cout=0
+        // this.recipe.brut=0
+        // this.recipe.net=0
+  
+  
+        this.activeIndex = 1
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
+  
+        await this.saveAllDetail(data.data)
+        //this.ngOnInit()
+        this.activeIndex = 0
+  
+        this.recipe = new Recipe()
+        this.detailRecipesProvisoire.push(new DetailsRecipe());
+        // this.detailDishes=[]
+        // this.detailDishesProvisoire=[]
+      },
+        (error: any) => {
+          //this.isError=true
+          if (error.error.message == 'ko') {
+            this.erreur = error.error.data
+          } else {
+            this.erreur = "Erreur lié au serveur"
+          }
+          this.loading = false
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+  
+        });
   }
 
   openModifier(position: string, info: any) {
@@ -587,108 +677,21 @@ export class RecipeComponent {
     })
   }
 
-  openDialogProduct(recipe: Recipe){
-    // console.log(event.value);
-    if (this.base.name === 'OUI') {
-      this.productData.name = this.name;
-      // console.log("product name",this.productData.name);
-      this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
-      // console.log("Product unit:", this.productData.unit);
-      this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
-      // console.log("Product category:", this.productData.category);
-      this.productData.lostpercentage = 0;
-      this.productDialog = true;
-      this.recipe.baseRecipe = true;
-    }
-    if (this.base.name === 'NON') {
-      this.recipe.baseRecipe = false;
-    }
-    this.recipeService.create(this.recipe).then(async (data) => {
-      this.getAll();
-      this.loading = false
-      console.log(data);
 
-
-      this.code = ""
-      this.name = ""
-      this.ratio = 0
-      this.showAddDetailRecipe = false;
-      this.detailCuisine = "";
-      // this.recipe.quantite=0
-      // this.recipe.cout=0
-      // this.recipe.brut=0
-      // this.recipe.net=0
-
-
-      this.activeIndex = 1
-      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
-
-      await this.saveAllDetail(data.data)
-      //this.ngOnInit()
-      this.activeIndex = 0
-
-      this.recipe = new Recipe()
-      this.detailRecipesProvisoire.push(new DetailsRecipe())
-      // this.detailDishes=[]
-      // this.detailDishesProvisoire=[]
-    },
-      (error: any) => {
-        //this.isError=true
-        if (error.error.message == 'ko') {
-          this.erreur = error.error.data
-        } else {
-          this.erreur = "Erreur lié au serveur"
-        }
-        this.loading = false
-        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
-
-      });
-  }
-  
-  base: any ={}
-  productDialog: boolean = false;
-  addProduct(){
-    const user = this.tokenService.getUser();
-      this.productData.user = { id: user.id };
-      console.log(this.productData);
-      
-      this.productService.create(this.productData).then((data) =>{
-        this.loading=false
-        //this.isSuccess=true
-        this.sucess="Produit crée !";
-        this.productDialog = false;
-        this.getProducts();
-        this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
-        this.resetFields();
-      },
-      (error: any)=>{
-        //this.isError=true
-        if(error.error.message=='ko'){
-          this.erreur=error.error.data
-          }else{
-          this.erreur="Erreur liée au serveur"
-        }
-        this.loading=false
-        this.productDialog = false;
-        this.messageService.add({severity: 'error', summary: 'Error', detail: this.erreur });
-
-      });
-  }
   productData: any = {}
   resetFields() {
-    this.productData = {}; 
-    this.productData.name = '';
-    this.productData.code = '';
-    this.productData.description = '';
-    this.productData.price = 0;
-    this.productData.lostpercentage = 0;
-  
-    this.productData.unit = {} as Unit;
-    this.productData.brand = {} as Brand;
-    this.productData.category = {} as Category;
-    this.productData.conditioning = {} as Conditioning;
-    this.productData.stock = 0;
+    this.code = "";
+    this.name = "";
+    this.ratio = 0;
+    this.detailCuisine = "";
+    this.detailRecipes = [];
+    this.detailRecipesProvisoire = [];
+    this.showAddDetailRecipe = false;
+    this.base = {}; // Réinitialiser la sélection
+    this.recipe = new Recipe();
+    this.totalProportion = 0;
   }
+  
   reset() {
     this.code = "";
     this.name = "";
@@ -747,8 +750,7 @@ export class RecipeComponent {
         // this.geolocation=0
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: detail?.ingredient?.name + ' ' + detail.proportion + ' ' + detail.ingredient.code + ' creer' });
         this.showAddDetailRecipe = !this.showAddDetailRecipe
-        this.detailRecipesProvisoire.push(new DetailsRecipe())
-
+        this.detailRecipesProvisoire.push(new DetailsRecipe());
       }, (error: any) => {
         //this.isError=true
         if (error.error.message == 'ko') {
