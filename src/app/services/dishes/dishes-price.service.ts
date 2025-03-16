@@ -69,7 +69,7 @@ export class DishesPriceService {
       //update detail brut
       await detailsRecepe.forEach(detail=>{
         var perte=detail.ingredient.lossPercentage
-        if (perte!=null)  detail.brut=detail.net/(1-perte)
+        if (perte!=null)  detail.brut=detail.net/(1-(perte/100))
       })
 
       //update detail cout

@@ -21,32 +21,16 @@ import { DetailrecipeComponent } from './detailrecipe/detailrecipe.component';
 import { RouterModule } from '@angular/router';
 
 // prime
-import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
-import { TreeSelectModule } from 'primeng/treeselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { CardModule } from 'primeng/card';
-import { PasswordModule } from 'primeng/password';
-import { SidebarModule } from 'primeng/sidebar';
-import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
-import { CheckboxModule } from 'primeng/checkbox';
 import { TabViewModule } from 'primeng/tabview';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { SliderModule } from 'primeng/slider';
-import { RatingModule } from 'primeng/rating';
-import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
-import { EditorModule } from 'primeng/editor';
-import { DetailsPurchasing } from 'src/app/services/detailspurchasing/DetailsPurchasing';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CountryService } from 'src/app/services/country/country.service';
 import { PaginatorModule } from 'primeng/paginator';
@@ -62,6 +46,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { Brand } from 'src/app/services/brand/Brand';
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { ConditioningService } from 'src/app/services/conditioning/conditioning.service';
+import { DishesPriceService } from 'src/app/services/dishes/dishes-price.service';
 
 @Component({
   selector: 'app-recipe',
@@ -152,7 +137,7 @@ export class RecipeComponent {
     private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
     private dialogService: DialogService, private currencyService: CurrencyService, private tokenService: TokenService,
     private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,private categoryService: CategoryService,
-    private conditioningService: ConditioningService,
+    private conditioningService: ConditioningService,private dishesPriceService: DishesPriceService,
     //  private categoryRecipeService:CategoryrecipeService,
     public tableShort: TableShortService) { }
 
@@ -353,7 +338,7 @@ export class RecipeComponent {
 
 
   ///save
-  save() {
+  async save() {
     //console.log(this.reference)
     this.isError = false
     this.isSuccess = false
@@ -379,16 +364,16 @@ export class RecipeComponent {
     this.recipe.categoryRecipe = this.categorySelected
     const user = this.tokenService.getUser();
     this.recipe.user = { id: user.id }
-    if (this.base.name === "OUI") {
-      this.recipe.baseRecipe = true;
+  if (this.base.name === "OUI") this.recipe.baseRecipe = true;
+     /*  this.recipe.baseRecipe = true;
       this.productDialog = true;
-      this.openDialogProduct(this.recipe);
+      this.openDialogProduct(await this.dishesPriceService.getDetailRecipeWithRecipeInfos(this.recipe));
       return;
-    }
-    if (this.base.name === "NON") {
-      this.recipe.baseRecipe = false;
+    }*/
+    else if(this.base.name === "NON") this.recipe.baseRecipe = false;
+      
       this.recipeService.create(this.recipe).then(async (data) => {
-        this.getAll();
+        //this.getAll();
         this.loading = false
         console.log(data);
         this.code = ""
@@ -406,8 +391,11 @@ export class RecipeComponent {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
   
         await this.saveAllDetail(data.data)
+
+        if(this.base.name === "NON") this.openDialogProduct(await this.dishesPriceService.getDetailRecipeWithRecipeInfos(data.data));
+
         //this.ngOnInit()
-        this.activeIndex = 0
+        //this.activeIndex = 0
         this.resetFields();
         this.recipe = new Recipe()
         this.detailRecipesProvisoire.push(new DetailsRecipe())
@@ -426,24 +414,28 @@ export class RecipeComponent {
   
         });
         return;
-    }
+   // }
     // console.log(this.recipe);
   }
 
   openDialogProduct(recipe: Recipe){
-    // console.log(event.value);
-    if (this.base.name === 'OUI') {
-      this.productData.name = this.name;
+    console.log("*****************recipe*****************");
+    console.log(recipe);
+    if (this.base.name === 'NON') {
+      this.productData.name = recipe.name;
+      this.productData.price=recipe.cout
+      //this.productData.
       // console.log("product name",this.productData.name);
       this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
       // console.log("Product unit:", this.productData.unit);
       this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
       // console.log("Product category:", this.productData.category);
-      this.productData.lostpercentage = 0;
+      this.productData.lossPercentage = 0;
       this.productDialog = true;
-      this.recipe.baseRecipe = true;
+      this.productData.baseRecipe = false;
+      //this.recipe.baseRecipe = false;
     }
-    if (this.base.name === 'NON') {
+    if (this.base.name === 'OUI') {
       this.recipe.baseRecipe = false;
     }
   }
@@ -463,6 +455,7 @@ export class RecipeComponent {
         this.getProducts();
         this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
         this.resetFields();
+        this.activeIndex = 0
       },
       (error: any)=>{
         //this.isError=true
@@ -477,7 +470,7 @@ export class RecipeComponent {
 
       });
 
-      this.recipeService.create(this.recipe).then(async (data) => {
+      /*this.recipeService.create(this.recipe).then(async (data) => {
         this.getAll();
         this.loading = false
         console.log(data);
@@ -516,7 +509,7 @@ export class RecipeComponent {
           this.loading = false
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreur });
   
-        });
+        });*/
   }
 
   openModifier(position: string, info: any) {
@@ -738,7 +731,7 @@ export class RecipeComponent {
   saveAllDetail(recipe: Recipe) {
     this.detailRecipes.forEach(detail => {
       detail.recipe = recipe;
-      this.detailRecipeService.create(detail).then(data => {
+      this.detailRecipeService.create(detail).then(async data => {
 
         this.getAll();
         console.log(data);
@@ -751,6 +744,13 @@ export class RecipeComponent {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: detail?.ingredient?.name + ' ' + detail.proportion + ' ' + detail.ingredient.code + ' creer' });
         this.showAddDetailRecipe = !this.showAddDetailRecipe
         this.detailRecipesProvisoire.push(new DetailsRecipe());
+
+        //open dialog 
+        this.recipe.baseRecipe = true;
+        //this.productDialog = true;
+
+        
+        return;
       }, (error: any) => {
         //this.isError=true
         if (error.error.message == 'ko') {
