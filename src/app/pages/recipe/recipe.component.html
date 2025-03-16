@@ -35,7 +35,7 @@
                   <!--<th pSortableColumn="categorie" pColumnFilter="categorie">Categorie<p-sortIcon field="categorie"></p-sortIcon></th>-->
 
                   <th pSortableColumn="stock" pColumnFilter="stock">Stock<p-sortIcon field="stock"></p-sortIcon></th>
-                  <th pSortableColumn="stock" pColumnFilter="stock">Recette Secondaire<p-sortIcon
+                  <th pSortableColumn="stock" pColumnFilter="stock">Recette de base<p-sortIcon
                       field="stock"></p-sortIcon></th>
 
                   <!--<th pSortableColumn="cout" pColumnFilter="cout">Cout<p-sortIcon field="cout"></p-sortIcon></th>-->
@@ -131,7 +131,7 @@
                     [(ngModel)]="ratio" [showButtons]="true" [min]="0"></p-inputNumber>
                 </div>
                 <div class="field col-4">
-                  <label for="baseRecipe">Recette Secondaire</label>
+                  <label for="baseRecipe">Recette de base</label>
                   <p-dropdown [(ngModel)]="base" name="baseRecipe" [options]="reciss" optionLabel="name"
                     placeholder="OUI ou NON"></p-dropdown>
                 </div>

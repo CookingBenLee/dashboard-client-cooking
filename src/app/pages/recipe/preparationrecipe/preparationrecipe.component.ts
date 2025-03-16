@@ -94,6 +94,9 @@ export class PreparationrecipeComponent {
     private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,
     public tableShort: TableShortService) { 
       this.data = this.config.data
+      this.recetteSelectione = this.data;
+      console.log(typeof(this.recetteSelectione));
+      
     }
 
 
@@ -108,6 +111,8 @@ export class PreparationrecipeComponent {
     // this.currencys.push(this.usercurrency)
     // console.log("currency", this.usercurrency);
     this.recetteSelectione = this.data;
+    console.log(this.recetteSelectione);
+    
     this.changePlat();
     this.getAll()
   }

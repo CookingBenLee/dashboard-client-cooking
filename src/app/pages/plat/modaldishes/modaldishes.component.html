@@ -38,7 +38,7 @@
           <div class="row row1 grid col-12">
             <div class=" plat col-3"  pTooltip="Choisir une recette">
               <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
-                <ng-template pTemplate="selectedItem">
+                <!-- <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
                         <div>{{ recetteSelectione.name }}</div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="flex align-items-center gap-2">
                         <div>{{ plat.name }}</div>
                     </div>
-                </ng-template>
+                </ng-template> -->
               </p-dropdown>
             </div>
   
