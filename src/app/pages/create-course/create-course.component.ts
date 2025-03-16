@@ -353,7 +353,7 @@ retrieveCountryById(): void {
 
  getAllShop(){
   const user = this.tokenService.getUser();
-   this.shopService.getAll(user.id).then(data =>{
+   this.shopService.getActive(user.id).then(data =>{
      console.log(data)
 
      this.shops=data

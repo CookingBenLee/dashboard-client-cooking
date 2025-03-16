@@ -39,8 +39,8 @@ export class ShopService {
         .then(data => data);
   }
 
-  getActive() {
-    return this.http.get<any>(`${this.env.apiUrl}/shop/getactive`)
+  getActive(id: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/shop//getactivebyuser/${id}`)
         .toPromise()
         .then(res => res.data as Shop[])
         .then(data => data);
