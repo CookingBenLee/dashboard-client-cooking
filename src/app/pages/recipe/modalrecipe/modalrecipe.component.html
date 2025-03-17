@@ -14,7 +14,6 @@
         </div>
         <div class="field col-4">
           <label for="baseRecipe">Recette de base</label>
-            <label for="baseRecipe">Recette de base</label>
                 <p-dropdown [disabled]="recipe.name==null" [(ngModel)]="base" name="baseRecipe"
                     [options]="reciss" optionLabel="name" (onChange)="openDialogProduct($event)"
                     placeholder="OUI ou NON">
@@ -47,7 +46,7 @@
             <div class="field col">
 
               <label htmlFor="quantity{{detailRecipeProvisoire2.length-1}}">Proportion %</label>
-              <p-inputNumber mode="decimal" [minFractionDigits]="2" 
+              <p-inputNumber mode="decimal" [minFractionDigits]="2" suffix="'%"
               name="quantity{{detailRecipeProvisoire2.length-1}}" id="quantity{i}"
                [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].proportion"  
                (ngModelChange)="changeDetailQuantite(detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].proportion,detailRecipeProvisoire2.length-1,true)" 
