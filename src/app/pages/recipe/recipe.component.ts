@@ -446,7 +446,7 @@ export class RecipeComponent {
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
       console.log(this.productData);
-      
+      this.productData.baseRecipe = false;
       this.productService.create(this.productData).then((data) =>{
         this.loading=false
         //this.isSuccess=true
