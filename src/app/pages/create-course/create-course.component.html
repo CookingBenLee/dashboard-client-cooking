@@ -62,22 +62,26 @@
             <div class="grid">
 
               <div class="col-3">
-                <div class="field ">
-                  <label htmlFor="product{{detailPurchasesForms.length-1}}">Produit</label>
-                  <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
-                  <p-dropdown [filter]="true" filterBy="name" [options]="products" optionLabel="name"
-                    name="product{{detailPurchasesForms.length-1}}" (onFocus)="getProducts()"
-                    [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product"
-                    (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
-                    <ng-template let-product pFilter="product.category.name" pTemplate="item">
-                      <div class="flex align-items-center operatingSystems-item">
-                        <div>{{product.name}} ({{product.category.name}} / {{product?.conditioning?.name}})
-                        </div>
-                      </div>
-                    </ng-template>
-                  </p-dropdown>
+                <div style="margin-top: -12px;" class="field flex align-items-center gap-2">
+                  <label htmlFor="product{{detailPurchasesForms.length-1}}" class="w-6rem">Produit</label>
+                  <button style="margin-top: -15px;" pButton pRipple type="button" icon="pi pi-plus"  pTooltip="Ajouter un produit non existant" 
+                  tooltipPosition="top"
+                    class="p-button-rounded p-button-success small-button p-mr-2 h-full"  (click)="openDialogAdd()">
+                  </button>
                 </div>
+
+                <p-dropdown [filter]="true" filterBy="name" [options]="products" optionLabel="name"
+                  name="product{{detailPurchasesForms.length-1}}" (onFocus)="getProducts()"
+                  [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product"
+                  (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
+                  <ng-template let-product pFilter="product.category.name" pTemplate="item">
+                    <div class="flex align-items-center operatingSystems-item">
+                      <div>{{product.name}} ({{product.category.name}} / {{product?.conditioning?.name}})</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
               </div>
+
 
               <div class="col">
                 <div class="field">
@@ -120,6 +124,16 @@
                     [min]="0"></p-inputNumber>
                 </div>
               </div>
+              <div class="col mt-5">
+                <div class="field">
+                  <label htmlFor="price{{detailPurchasesForms.length-1}}"> </label>
+                  <button pButton pRipple label="Ajouter"
+                    [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0" type="button"
+                    class="col p-button p-button-success p-component"
+                    (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])">
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div *ngIf="detailPurchasesForms[detailPurchasesForms.length-1].distinctUnit" class="field">
@@ -131,7 +145,7 @@
 
           </form>
           <!---->
-          <div class="ml-auto btnspart  grid mt-3">
+          <!-- <div class="ml-auto btnspart  grid mt-3">
             <button (click)="openDialogAdd()" style="margin: 10px;" pButton label="Produit non existant" pRipple
               type="button" class="col p-button p-button-primary p-component">
             </button>
@@ -146,7 +160,7 @@
               class="col p-button p-button-danger p-component" (click)="showAddProductForm()">
             </button>
 
-          </div>
+          </div> -->
         </div>
         <div class="ml-auto btnspart  grid mt-3">
           <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange"

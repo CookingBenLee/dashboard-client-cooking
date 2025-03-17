@@ -92,7 +92,7 @@ export class CatalogueDePrixComponent implements OnInit {
     'nom produit',
     'categorie',
     'conditioning',
-    'action',
+    // 'action',
     // 'fournisseur',
     // 'prix',
   ];

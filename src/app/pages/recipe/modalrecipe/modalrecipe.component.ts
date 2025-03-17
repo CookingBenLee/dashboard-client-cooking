@@ -54,6 +54,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from 'src/app/services/category/category.service';
+import { DishesPriceService } from 'src/app/services/dishes/dishes-price.service';
 
 @Component({
   selector: 'app-modalrecipe',
@@ -122,7 +123,7 @@ constructor(private confirmationService: ConfirmationService, private messageSer
   private paginateService:PaginateService,private unitService:UnitService,private productService:ProductService,private cdref: ChangeDetectorRef,
   private dialogService:DialogService,private currencyService:CurrencyService,private ref: DynamicDialogRef,
   private categoryService: CategoryService,private tokenService: TokenService,
-  private recipeService:RecipeService,private detaiRecipeService:DetailsrecipeService,
+  private recipeService:RecipeService,private detaiRecipeService:DetailsrecipeService,private dishePriceService:DishesPriceService,
   // private categoryRecipeService:CategoryrecipeService,
   public tableShort:TableShortService,public config: DynamicDialogConfig,) {
     this.recipe=this.config.data
@@ -202,6 +203,8 @@ productData: any = {}
 productDialog: boolean = false;
 openDialogProduct(event: any){
   console.log(event.value);
+  console.log(event);
+
   if (event.value.name === 'OUI') {
     this.productData.name = this.recipe.name;
     // console.log("product name",this.productData.name);
@@ -362,7 +365,7 @@ openDialogProduct(event: any){
     if (this.base.name === "OUI") {
       this.recipe.baseRecipe = true;
       this.productDialog = true;
-      this.openDialogProduct(this.recipe);
+      this.openDialogProduct(await this.dishePriceService.getDetailRecipeWithRecipeInfos(this.recipe));
     }
     if (this.base.name === "NON") {
       this.recipe.baseRecipe = false;

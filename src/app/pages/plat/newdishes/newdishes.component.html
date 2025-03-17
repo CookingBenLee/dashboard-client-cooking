@@ -38,7 +38,7 @@
           <div class="row row1 grid col-12">
             <div class=" plat col-4"  pTooltip="Choisir une recette">
               <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
-                <ng-template pTemplate="selectedItem">
+                <!-- <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
                         <div>{{ recetteSelectione.name }}</div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="flex align-items-center gap-2">
                         <div>{{ plat.name }}</div>
                     </div>
-                </ng-template>
+                </ng-template> -->
               </p-dropdown>
             </div>
   
@@ -124,28 +124,26 @@
         <div class="thirdrow grid col-12">
           <div class="list col-10">
   
-            <div class="ingredientsImages ">
-              <div class="listIngredientsImages  ">
-                <div class="entetelist divblue">
-                  <div class="lbl brdr-right pdr"><label for="">Listes des images</label></div>
-                  <div class="lbl brdr-left pdl"><label for="">Action</label></div>
-                </div>
-  
-                <div class="bdylist divblanc">
-                  <div class="linebdy"  *ngFor="let picture of picturesDishes,let i=index">
-                    <div class="lbl brdr-right pdr"><label for="">{{picture?.label}}</label></div>
-                    <div class="lbl brdr-left pdl" >
-                      <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeletePicture(picture,i)"></button>
-                    </div>
-                  </div>
-                  <div class="nodetail m-2 head-center" *ngIf="picturesDishes.length==0">
-                    <label for="">
-                      Aucune images
-                    </label>
-                  </div>
+            <div class="info-table">
+              <div class="info-header">
+                <div class="info-header-cell">Liste des images</div>
+                <div class="info-header-cell">Action</div>
+              </div>
+            
+              <!-- Loop pour afficher les images -->
+              <div *ngFor="let picture of picturesDishes, let i = index" class="info-row">
+                <div class="info-cell">{{ picture?.label }}</div>
+                <div class="info-cell">
+                  <button pButton pRipple type="button" icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeletePicture(picture, i)"></button>
                 </div>
               </div>
+            
+              <!-- Message si aucune image -->
+              <div class="nodetail m-2 head-center" *ngIf="picturesDishes.length == 0">
+                <label for="">Aucune image</label>
+              </div>
             </div>
+            
           </div>
   
           <div class="btn col-2">

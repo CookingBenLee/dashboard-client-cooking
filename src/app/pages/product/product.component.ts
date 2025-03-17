@@ -115,7 +115,7 @@ export class ProductComponent implements OnInit {
   code: string
   description: string
   price: number
-  lostpercentage: number
+  lossPercentage: number
 
   unit: Unit
   brand: Brand
@@ -170,7 +170,7 @@ export class ProductComponent implements OnInit {
     this.getConditioning()
     this.getUnit()
     this.getCurrency();
-    this.productData.lostpercentage = 5;
+    this.productData.lossPercentage = 5;
   }
 
   getAll() {
@@ -515,7 +515,7 @@ resetFields() {
   this.code = '';
   this.description = '';
   this.price = 0;
-  this.productData.lostpercentage = 5;
+  this.productData.lossPercentage = 5;
 
   this.unit = {} as Unit;
   this.brand = {} as Brand;

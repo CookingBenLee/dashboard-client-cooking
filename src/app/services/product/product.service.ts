@@ -69,6 +69,21 @@ export class ProductService {
         .then(data => data);
   }
 
+  getUndeletedByUserAndBaseRecipe(baseRecipe: boolean) {
+    return this.http.get<any>(`${this.env.apiUrl}/product/getallbybaserecipe?baseRecipe=`+baseRecipe)
+        .toPromise()
+        .then(res => res.data as Product[])
+        .then(data => data);
+  }
+
+  getUndeletedByPageByUserAndBaseRecipe(param:any,baseRecipe: boolean ) {
+    return this.http.get<any>(`${this.env.apiUrl}/product/getallpagegetallbybaserecipe?page=`+param['page']+'&size='+param['size']+'&baseRecipe='+baseRecipe)
+        .toPromise()
+        .then(res => res.data as any)
+        .then(data => data);
+  }
+  
+
   recherche(mot:String) {
     return this.http.get<any>(`${this.env.apiUrl}/product/search?mot=${mot}`,)
         .toPromise()

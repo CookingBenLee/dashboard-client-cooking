@@ -66,6 +66,7 @@ import { CountryService } from 'src/app/services/country/country.service';
 import { ModalpurchaseComponent } from '../course/modalpurchase/modalpurchase.component';
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { CreateProductComponent } from '../create-product/create-product.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-create-course',
@@ -73,7 +74,7 @@ import { CreateProductComponent } from '../create-product/create-product.compone
   imports: [ MaterialModule,
     FormsModule,RouterModule,CalendarModule,
     ReactiveFormsModule,ConfirmDialogModule,
-    TablerIconsModule,DialogModule,ToastModule,
+    TablerIconsModule,DialogModule,ToastModule,TooltipModule,
     CommonModule,TableModule,PaginatorModule,DividerModule,
     MatButtonModule, MatDialogModule,TabViewModule,OverlayPanelModule],
     providers: [ConfirmationService, MessageService,DialogService],
@@ -353,7 +354,7 @@ retrieveCountryById(): void {
 
  getAllShop(){
   const user = this.tokenService.getUser();
-   this.shopService.getAll(user.id).then(data =>{
+   this.shopService.getActive(user.id).then(data =>{
      console.log(data)
 
      this.shops=data
