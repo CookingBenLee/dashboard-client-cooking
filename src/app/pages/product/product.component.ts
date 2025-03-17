@@ -328,6 +328,7 @@ export class ProductComponent implements OnInit {
         this.camionDialog = false;
         this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
         this.resetFields();
+        this.getAll();
       },
       (error: any)=>{
         //this.isError=true
