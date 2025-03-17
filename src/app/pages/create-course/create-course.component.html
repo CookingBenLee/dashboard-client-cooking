@@ -120,6 +120,16 @@
                     [min]="0"></p-inputNumber>
                 </div>
               </div>
+              <div class="col mt-5">
+                <div class="field">
+                  <label htmlFor="price{{detailPurchasesForms.length-1}}">           </label>
+                  <button pButton pRipple label="Ajouter"
+                    [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0" type="button"
+                    class="col p-button p-button-success p-component"
+                    (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])">
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div *ngIf="detailPurchasesForms[detailPurchasesForms.length-1].distinctUnit" class="field">
@@ -131,7 +141,7 @@
 
           </form>
           <!---->
-          <div class="ml-auto btnspart  grid mt-3">
+          <!-- <div class="ml-auto btnspart  grid mt-3">
             <button (click)="openDialogAdd()" style="margin: 10px;" pButton label="Produit non existant" pRipple
               type="button" class="col p-button p-button-primary p-component">
             </button>
@@ -146,7 +156,7 @@
               class="col p-button p-button-danger p-component" (click)="showAddProductForm()">
             </button>
 
-          </div>
+          </div> -->
         </div>
         <div class="ml-auto btnspart  grid mt-3">
           <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange"
