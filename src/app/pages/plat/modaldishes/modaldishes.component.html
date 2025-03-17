@@ -36,7 +36,7 @@
         <div class="secaindrow grid mt-2">
   
           <div class="row row1 grid col-12">
-            <div class=" plat col-3"  pTooltip="Choisir une recette">
+            <div class=" plat col-4"  pTooltip="Choisir une recette">
               <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
                 <!-- <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
@@ -51,92 +51,94 @@
               </p-dropdown>
             </div>
   
-            <div class="field col-2"  pTooltip="Saisissez la quantité">
+            <div class="field col-4"  pTooltip="Saisissez la quantité">
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0" (ngModelChange)="changePoid()" ></p-inputNumber>
             </div>
   
-            <div class="field col-2"  pTooltip="Choisir l'unité">
+            <div class="field col-4"  pTooltip="Choisir l'unité">
               <p-dropdown [options]="units"  name="unit" [(ngModel)]="unitSelectionne" (ngModelChange)="changeUnit()" >
               </p-dropdown>
             </div>
-            <div class="col">
   
-            </div>
-  
-            <div class="field col-2">
-              <button pButton label="Ajouter la recette" type="button" [loading]="loading" class="p-button-newline-red mt-2" (click)="addNewComposition()" ></button>
-            </div>
+            <button pButton label="Ajouter la recette" type="button" [loading]="loading" class="p-button-primary mt-2" (click)="addNewComposition()" ></button>
+
           </div>
   
-          <div class="row2 ">
-            <div class="ingredients ">
-              <div class="listIngredients  ">
-                <div class="entetelist divblue">
-                  <div class="lbl brdr-right pdr"><label for="">Recette</label></div>
-                  <div class="lbl brdr-left pdl"><label for="">Quantité</label></div>
-                  <div class="lbl brdr-left pdl"><label for="">Cout</label></div>
-                  <div class="lbl brdr-left pdl"><label for="">Action</label></div>
-                </div>
-  
-                <div class="bdylist">
-                  <div class="linebdy"  *ngFor="let detail of compositionDishes,let i=index">
-                    <div class="lbl brdr-right pdr"><label for="">{{detail?.recipe?.name}}</label></div>
-                    <div class="lbl brdr-left pdl"><label for="">{{detail?.quantity| number: '1.0-3' }} G </label></div>
-                    <div class="lbl brdr-left pdl"><label for=""> <span appPriceFormater [priceValue]="detail?.cout | number: '1.0-2'">{{detail?.cout| number: '1.0-3' }}</span>  FCFA</label></div>
-                    <div class="lbl brdr-left pdl" >
-                      <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteComposition(detail,i)"></button>
-                    </div>
-                  </div>
-                  <div class="nodetail m-2 head-center" *ngIf="compositionDishes.length==0">
-                    <label for="">
-                      Aucune recettes
-                    </label>
-                  </div>
-                </div>
+          <div class="info-table">
+            <div class="info-header">
+              <div class="info-header-cell">Recette</div>
+              <div class="info-header-cell">Quantité</div>
+              <div class="info-header-cell">Coût</div>
+              <div class="info-header-cell">Action</div>
+            </div>
+          
+            <!-- Boucle pour afficher les recettes -->
+            <div *ngFor="let detail of compositionDishes; let i = index" class="info-row">
+              <div class="info-cell">{{ detail?.recipe?.name }}</div>
+              <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
+              <div class="info-cell">
+                <span appPriceFormater [priceValue]="detail?.cout | number: '1.0-2'">
+                  {{ detail?.cout | number: '1.0-3' }}
+                </span> FCFA
+              </div>
+              <div class="info-cell">
+                <button pButton pRipple type="button" icon="pi pi-trash" 
+                        class="p-button p-component p-button-text p-button-icon-only" 
+                        (click)="confirmDeleteComposition(detail, i)">
+                </button>
               </div>
             </div>
-  
+          
+            <!-- Message si aucune recette -->
+            <div class="nodetail m-2 head-center" *ngIf="compositionDishes.length == 0">
+              <label for="">Aucune recette</label>
+            </div>
           </div>
+          
         </div>
   
         <!--Image-->
         <div class="thirdrow grid col-12">
           <div class="list col-10">
   
-            <div class="ingredientsImages ">
-              <div class="listIngredientsImages  ">
-                <div class="entetelist divblue">
-                  <div class="lbl brdr-right pdr"><label for="">Listes des images</label></div>
-                  <div class="lbl brdr-left pdl"><label for="">Action</label></div>
-                </div>
-  
-                <div class="bdylist divblanc">
-                  <p-overlayPanel #op3>
-                    <img style="height: 200px" *ngIf="pictureClicked.file" [src]="'data:image/jpeg;base64,'+pictureClicked.file"  alt="{{pictureClicked.label}}" />
-                  </p-overlayPanel>
-                  <div class="linebdy" style="cursor: pointer;" *ngFor="let picture of picturesDishes,let i=index" (click)="showImage(picture,$event)">
-                    <div class="lbl brdr-right pdr" pTooltip="Clicquer pour voir l'image"><label for="">{{picture?.label}}</label></div>
-                    <div class="lbl brdr-left pdl" >
-                      <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeletePicture(picture,i)"></button>
-                    </div>
-                  </div>
-                  <div class="nodetail m-2 head-center" *ngIf="picturesDishes.length==0">
-                    <label for="">
-                      Aucune images
-                    </label>
-                  </div>
+            <div class="info-table">
+              <div class="info-header">
+                <div class="info-header-cell">Liste des images</div>
+                <div class="info-header-cell">Action</div>
+              </div>
+            
+              <p-overlayPanel #op3>
+                <img style="height: 200px" *ngIf="pictureClicked.file" 
+                     [src]="'data:image/jpeg;base64,'+pictureClicked.file"  
+                     alt="{{ pictureClicked.label }}" />
+              </p-overlayPanel>
+            
+              <!-- Boucle pour afficher les images -->
+              <div *ngFor="let picture of picturesDishes; let i = index" class="info-row" (click)="showImage(picture, $event)" style="cursor: pointer;">
+                <div class="info-cell" pTooltip="Cliquez pour voir l'image">{{ picture?.label }}</div>
+                <div class="info-cell">
+                  <button pButton pRipple type="button" icon="pi pi-trash" 
+                          class="p-button p-component p-button-text p-button-icon-only" 
+                          (click)="confirmDeletePicture(picture, i)">
+                  </button>
                 </div>
               </div>
+            
+              <!-- Message si aucune image -->
+              <div class="nodetail m-2 head-center" *ngIf="picturesDishes.length == 0">
+                <label for="">Aucune image</label>
+              </div>
             </div>
+            
           </div>
   
           <div class="btn col-2">
-            <button pButton label="Ajouter une image" type="button" [loading]="loading" class="p-button-newline-red mt-2" (click)="clickFileSelector()" ></button>
+            <button pButton label="Ajouter une image" type="button" [loading]="loading" class="p-button-primary mt-2" (click)="clickFileSelector()" ></button>
           </div>
         </div>
   
   
-        <button style="background-color: #222222;" pButton label="Modifier le plat" type="submit" [loading]="loadingSave" class="p-button-vert mt-3" [disabled]="!f.valid" ></button>
+        <button  pButton label="Modifier le plat" type="submit" [loading]="loadingSave" class="p-button-primary mt-3" [disabled]="!f.valid" ></button>
       </form>
   
   </div>
