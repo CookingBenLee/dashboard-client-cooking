@@ -320,7 +320,7 @@ export class ProductComponent implements OnInit {
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
       console.log(this.productData);
-      
+      this.productData.baseRecipe = false;
       this.productService.create(this.productData).then((data) =>{
         this.loading=false
         //this.isSuccess=true
@@ -328,6 +328,7 @@ export class ProductComponent implements OnInit {
         this.camionDialog = false;
         this.messageService.add({severity: 'success', summary: 'Success', detail: this.sucess});
         this.resetFields();
+        this.getAll();
       },
       (error: any)=>{
         //this.isError=true

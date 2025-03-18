@@ -824,7 +824,8 @@ retrieveCountryById(): void {
  }
  async getProducts(){
     const user= this.tokenService.getUser();
-   await this.productService.getAll(user.id).then(data =>{
+    const base = false
+   await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data =>{
      
      this.products=data
      
