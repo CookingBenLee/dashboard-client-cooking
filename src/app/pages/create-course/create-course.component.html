@@ -72,7 +72,7 @@
 
                 <p-dropdown [filter]="true" filterBy="name" [options]="products" optionLabel="name"
                   name="product{{detailPurchasesForms.length-1}}" (onFocus)="getProducts()"
-                  [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product"
+                  [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].product" appendTo="body"
                   (ngModelChange)="changeProduct(detailPurchasesForms[detailPurchasesForms.length-1].product,detailPurchasesForms.length-1)">
                   <ng-template let-product pFilter="product.category.name" pTemplate="item">
                     <div class="flex align-items-center operatingSystems-item">

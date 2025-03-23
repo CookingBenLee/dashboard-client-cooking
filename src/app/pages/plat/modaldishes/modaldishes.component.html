@@ -36,7 +36,8 @@
         <div class="secaindrow grid mt-2">
   
           <div class="row row1 grid col-12">
-            <div class=" plat col-4"  pTooltip="Choisir une recette">
+            <div class=" plat col-3"  pTooltip="Choisir une recette">
+              <label for="">Recette</label>
               <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
                 <!-- <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
@@ -51,16 +52,19 @@
               </p-dropdown>
             </div>
   
-            <div class="field col-4"  pTooltip="Saisissez la quantité">
+            <div class="field col-3"  pTooltip="Saisissez la quantité">
+              <label for="">Quantité</label>
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0" (ngModelChange)="changePoid()" ></p-inputNumber>
             </div>
   
-            <div class="field col-4"  pTooltip="Choisir l'unité">
+            <div class="field col-3"  pTooltip="Choisir l'unité">
+              <label for="">Unité</label>
               <p-dropdown [options]="units"  name="unit" [(ngModel)]="unitSelectionne" (ngModelChange)="changeUnit()" >
               </p-dropdown>
             </div>
-  
-            <button pButton label="Ajouter la recette" type="button" [loading]="loading" class="p-button-primary mt-2" (click)="addNewComposition()" ></button>
+            <div class="field col-3">
+              <button pButton label="Ajouter la recette" type="button" [loading]="loading" class="p-button-primary mt-4" (click)="addNewComposition()" ></button>
+            </div>
 
           </div>
   
