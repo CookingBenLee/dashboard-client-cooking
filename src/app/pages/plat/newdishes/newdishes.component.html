@@ -22,7 +22,7 @@
   
           <div class=" grid detailPlat col-4">
             <div class="cout  divgray">
-              <label for="cout" >Coût Total(FCFA): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-0'">{{plat.cout| number: '1.0-0' }}</span> </label>
+              <label for="cout" >Coût Total({{ usercurrency }}): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-0'">{{plat.cout| number: '1.0-0' }}</span> </label>
             </div>
   
             <div class="poid  divgray">
@@ -36,7 +36,8 @@
         <div class="secaindrow grid mt-2">
   
           <div class="row row1 grid col-12">
-            <div class=" plat col-4"  pTooltip="Choisir une recette">
+            <div class=" plat col-3"  pTooltip="Choisir une recette">
+              <label for="">Recette</label>
               <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
                 <!-- <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
@@ -51,16 +52,19 @@
               </p-dropdown>
             </div>
   
-            <div class="field col-4"  pTooltip="Saisissez la quantité">
+            <div class="field col-3"  pTooltip="Saisissez la quantité">
+              <label for="">Quantité</label>
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0" (ngModelChange)="changePoid()" ></p-inputNumber>
             </div>
   
-            <div class="field col-4"  pTooltip="Choisir l'unité">
+            <div class="field col-3"  pTooltip="Choisir l'unité">
+              <label for="">Unité</label>
               <p-dropdown [options]="units"  name="unit" [(ngModel)]="unitSelectionne" (ngModelChange)="changeUnit()" >
               </p-dropdown>
             </div>
-  
-            <button pButton label="Ajouter la recette" type="button" [loading]="loadingLine" class="p-button-primary mt-2" (click)="addNewComposition()" ></button>
+            <div class="field col-3">
+              <button pButton label="Ajouter la recette" type="button" [loading]="loadingLine" class="p-button-primary mt-4" (click)="addNewComposition()" ></button>
+            </div>
      
           </div>
 
@@ -76,7 +80,7 @@
             <div *ngFor="let detail of compositionDishes,let i=index" class="info-row">
               <div class="info-cell">{{detail?.recipe?.name}}</div>
               <div class="info-cell">{{detail?.quantity| number: '1.0-3' }} G</div>
-              <div class="info-cell"><span appPriceFormater [priceValue]="detail.cout | number: '1.0-2'">{{detail?.cout| number: '1.0-3' }}</span>  FCFA</div>
+              <div class="info-cell"><span appPriceFormater [priceValue]="detail.cout | number: '1.0-2'">{{detail?.cout| number: '1.0-3' }}</span>  {{ usercurrency }}</div>
               <div class="info-cell">
                 <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteComposition(detail,i)"></button>
               </div>

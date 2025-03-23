@@ -150,8 +150,11 @@ export class NewdishesComponent implements OnInit{
     private tokenService: TokenService,
     public tableShort:TableShortService,private compositionDishesService:CompositiondishesService) {}
 
-
+    utilisateurC:any;
+    usercurrency:any;
   ngOnInit(): void {
+    this.utilisateurC = this.tokenService.getUser();
+    this.usercurrency = this.utilisateurC.compteUser.address.country.currency.symbol
     this.getRecipes()
     this.getCategoriesDishes()
   }
