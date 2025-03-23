@@ -22,7 +22,7 @@
   
           <div class=" grid detailPlat col-4">
             <div class="cout  divgray">
-              <label for="cout" >Coût Total(FCFA): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-0'">{{plat.cout| number: '1.0-0' }}</span></label>
+              <label for="cout" >Coût Total({{ usercurrency }}): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-0'">{{plat.cout| number: '1.0-0' }}</span></label>
             </div>
   
             <div class="poid  divgray">
@@ -83,7 +83,7 @@
               <div class="info-cell">
                 <span appPriceFormater [priceValue]="detail?.cout | number: '1.0-2'">
                   {{ detail?.cout | number: '1.0-3' }}
-                </span> FCFA
+                </span> {{ usercurrency }}
               </div>
               <div class="info-cell">
                 <button pButton pRipple type="button" icon="pi pi-trash" 

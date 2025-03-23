@@ -19,7 +19,7 @@
 
     <div class="info-row">
       <div class="info-cell label">Coût Total</div>
-      <div class="info-cell value">{{ plat.cout | number: '1.0-0' }} FCFA</div>
+      <div class="info-cell value">{{ plat.cout | number: '1.0-0' }} {{ usercurrency }}</div>
     </div>
 
     <div class="info-row">
@@ -41,7 +41,7 @@
     <div *ngFor="let detail of compositionDishes" class="info-row">
       <div class="info-cell">{{ detail?.recipe?.name }}</div>
       <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
-      <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} FCFA</div>
+      <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} {{ usercurrency }}</div>
     </div>
 
     <div class="info-row" *ngIf="compositionDishes.length == 0">

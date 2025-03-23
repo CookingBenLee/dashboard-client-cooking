@@ -70,217 +70,220 @@ import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-f
 @Component({
   selector: 'app-detaildishes',
   standalone: true,
-  imports: [MaterialModule, MatButtonModule, MatDialogModule,CommonModule,
-           RouterModule,CalendarModule ,ConfirmDialogModule,InputNumberModule,InputTextareaModule, DialogModule,ToastModule,InputTextModule,
-           TableModule,PaginatorModule,DividerModule, TabViewModule,OverlayPanelModule,
-         //prime module
-         InputTextModule,
-         TreeSelectModule,
-         DropdownModule,
-         CardModule,
-         PasswordModule,
-         PanelModule,
-         SidebarModule,
-         CheckboxModule,
-         TabViewModule,
-         ConfirmDialogModule,
-         ToastModule,
-         InputNumberModule,
-         InputTextareaModule,
-         TableModule,
-         RatingModule,
-         ButtonModule,
-         SliderModule,
-         InputTextModule,
-         ToggleButtonModule,
-         RippleModule,
-         MultiSelectModule,
-         DropdownModule,
-         ProgressBarModule,
-         DialogModule,
-         OverlayPanelModule,
-         EditorModule,
-         ListboxModule,
-         CalendarModule,
-         DynamicDialogModule,
-         DividerModule,
-         FieldsetModule,
-         TreeModule,
-         AccordionModule,
-         PanelMenuModule,
-         ChipModule,
-         ProgressSpinnerModule,
-         SplitButtonModule,
-         FileUploadModule,
-         PaginatorModule],
-           providers: [ConfirmationService, MessageService,DialogService],
+  imports: [MaterialModule, MatButtonModule, MatDialogModule, CommonModule,
+    RouterModule, CalendarModule, ConfirmDialogModule, InputNumberModule, InputTextareaModule, DialogModule, ToastModule, InputTextModule,
+    TableModule, PaginatorModule, DividerModule, TabViewModule, OverlayPanelModule,
+    //prime module
+    InputTextModule,
+    TreeSelectModule,
+    DropdownModule,
+    CardModule,
+    PasswordModule,
+    PanelModule,
+    SidebarModule,
+    CheckboxModule,
+    TabViewModule,
+    ConfirmDialogModule,
+    ToastModule,
+    InputNumberModule,
+    InputTextareaModule,
+    TableModule,
+    RatingModule,
+    ButtonModule,
+    SliderModule,
+    InputTextModule,
+    ToggleButtonModule,
+    RippleModule,
+    MultiSelectModule,
+    DropdownModule,
+    ProgressBarModule,
+    DialogModule,
+    OverlayPanelModule,
+    EditorModule,
+    ListboxModule,
+    CalendarModule,
+    DynamicDialogModule,
+    DividerModule,
+    FieldsetModule,
+    TreeModule,
+    AccordionModule,
+    PanelMenuModule,
+    ChipModule,
+    ProgressSpinnerModule,
+    SplitButtonModule,
+    FileUploadModule,
+    PaginatorModule],
+  providers: [ConfirmationService, MessageService, DialogService],
   templateUrl: './detaildishes.component.html',
   styleUrls: ['./detaildishes.component.scss',]
 })
 export class DetaildishesComponent {
-  loadingPage=false
-  plat:Dishes=new Dishes()
-  categoryDishes:CategoryDishes[]=[]
-  recettes:Recipe[]=[]
-  pictureClicked:PicturesDishes=new PicturesDishes()
+  loadingPage = false
+  plat: Dishes = new Dishes()
+  categoryDishes: CategoryDishes[] = []
+  recettes: Recipe[] = []
+  pictureClicked: PicturesDishes = new PicturesDishes()
 
-  positionModalConfirm:any
+  positionModalConfirm: any
 
-  picturesDishes:PicturesDishes[]=[]
+  picturesDishes: PicturesDishes[] = []
 
   ////
   ///
-  picture:PicturesDishes=new PicturesDishes()
-  fileBase64:any=null
-  file=null
+  picture: PicturesDishes = new PicturesDishes()
+  fileBase64: any = null
+  file = null
 
-  loading=false
-  loadingSave=false
-  visibleImdDialog=false
-  compositionDishes:CompositionDishes[]=[]
+  loading = false
+  loadingSave = false
+  visibleImdDialog = false
+  compositionDishes: CompositionDishes[] = []
 
-  @ViewChild('op2', {static: false}) model:OverlayPanel;
+  @ViewChild('op2', { static: false }) model: OverlayPanel;
 
-  env=environment;
+  env = environment;
 
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private fileSaverService:FileSaverService,
-    private ref: DynamicDialogRef,private pictureDishesService:PictiuredishesService,private dishesService:DishesService,private categoryMenuService:CategoryMenuService,
-    private recipeService:RecipeService,private detailRecipeService:DetailsrecipeService,private categoryRecipeService:CategoryrecipeService,
-    public tableShort:TableShortService,private compositionDishesService:CompositiondishesService,public config: DynamicDialogConfig,)
-  {
-    this.plat=this.config.data
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private fileSaverService: FileSaverService,
+    private ref: DynamicDialogRef, private pictureDishesService: PictiuredishesService, private dishesService: DishesService, private categoryMenuService: CategoryMenuService,
+    private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService, private categoryRecipeService: CategoryrecipeService,private tokenService:TokenService,
+    public tableShort: TableShortService, private compositionDishesService: CompositiondishesService, public config: DynamicDialogConfig,) {
+    this.plat = this.config.data
 
   }
 
+  utilisateurC: any;
+  usercurrency: any;
   ngOnInit(): void {
+    this.utilisateurC = this.tokenService.getUser();
+    this.usercurrency = this.utilisateurC.compteUser.address.country.currency.symbol
     this.getAll(this.plat.id)
 
   }
 
-    //recuperation de valeurs
-    async getAll(id:any){
-      await this.compositionDishesService.byDishes(id).then(data =>{
-        console.log(data)
-        this.compositionDishes=data
+  //recuperation de valeurs
+  async getAll(id: any) {
+    await this.compositionDishesService.byDishes(id).then(data => {
+      console.log(data)
+      this.compositionDishes = data
 
-      }).finally(async ()=>{
-        await this.updateCompoPrice()
-        this.calculPlat()
-      })
-      await this.pictureDishesService.byDishes(id).then(async data =>{
-        console.log(data)
-        this.picturesDishes=data
+    }).finally(async () => {
+      await this.updateCompoPrice()
+      this.calculPlat()
+    })
+    await this.pictureDishesService.byDishes(id).then(async data => {
+      console.log(data)
+      this.picturesDishes = data
 
 
-      }).finally(async ()=>{
-        //this.updateCompoPrice()
-        //this.calculPlat()
-        console.log((this.picturesDishes));
-      })
-      // for(const p inn PicturesDishes){
-
-      // }
-
-      await this.picturesDishes.forEach(p=>{
-        console.log(p.link);
-        this.fileSaverService.getFile(p.link).then(data =>{
-          console.log(data)
-          p.file=data.data
-        }).finally(()=>{
-
-        })
-      })
+    }).finally(async () => {
+      //this.updateCompoPrice()
+      //this.calculPlat()
       console.log((this.picturesDishes));
-      //this.detailRecipe2=this.detailRecipeProvisoire2
-    }
+    })
+    // for(const p inn PicturesDishes){
 
-      //calcul total infos pour le plat
-    calculPlat(){
-      this.plat.poids=0
-      this.plat.cout=0
-      this.compositionDishes.forEach(cp=>{
-        this.plat.poids+=cp.quantity
-        this.plat.cout+=cp.cout
+    // }
 
-        console.log(cp.cout);
-
-      })
-    }
-
-    async getCompoPrice(composition:CompositionDishes):Promise<number>{
-
-      var recipe:Recipe=composition.recipe
-      recipe.cout=0
-      var detailRecipes:DetailsRecipe[]=recipe.detailList;
-      var brut=(composition.quantity/1000)*recipe.ratio
-      console.log("----------------------------------------------------------------{}",composition);
-      console.log("----------------------------------------------------------------{}",brut);
-
-
-
-      await this.detailRecipeService.byRecipe(recipe.id).then(data=>{
-        console.log(data);
-        detailRecipes=data
-      }).finally( async ()=>{
-        for(const detail of detailRecipes){
-          console.log(detail);
-
-          console.log(detail.net);
-          console.log(detail.proportion);
-
-          detail.net=  (brut*(detail.proportion))/100
-          ////
-          var perte=  detail.ingredient.lossPercentage
-
-          if (perte!=null) {
-            console.log(perte);
-            detail.brut=  detail.net/(1-(perte))
-          }
-          ///
-          var price=  detail.ingredient.price
-          if (price!=null) {
-            //detail.floatingCout=detail.floatingBrut*price
-            detail.cout=  detail.brut*price
-            console.log(detail.brut);
-            console.log(price);
-          }else detail.cout=0
-          ///
-          console.log(detail.cout);
-          recipe.cout= (recipe.cout + detail.cout)
-        }
-
+    await this.picturesDishes.forEach(p => {
+      console.log(p.link);
+      this.fileSaverService.getFile(p.link).then(data => {
+        console.log(data)
+        p.file = data.data
+      }).finally(() => {
 
       })
-      console.log(recipe.cout);
-      console.log(detailRecipes);
-      return recipe.cout;
+    })
+    console.log((this.picturesDishes));
+    //this.detailRecipe2=this.detailRecipeProvisoire2
+  }
 
-    }
+  //calcul total infos pour le plat
+  calculPlat() {
+    this.plat.poids = 0
+    this.plat.cout = 0
+    this.compositionDishes.forEach(cp => {
+      this.plat.poids += cp.quantity
+      this.plat.cout += cp.cout
 
-     async updateCompoPrice(){
-      for(const cp of this.compositionDishes){
-        //console.log(await this.getCompoPrice(cp));
-        cp.cout=await this.getCompoPrice(cp);
-        console.log(cp);
-      }
+      console.log(cp.cout);
 
-    }
-
-    async show(e:any,plat:Dishes) {
-      //if (this.ref) {
-      this.ref.close("edit");
-
-    }
-
-  async getFile(link:any){
-    await this.fileSaverService.getFile(link).then(data=>{
-      console.log(data);
-      this.pictureClicked.file=data
     })
   }
 
-  showImage(picture:any,e:any){
-    this.pictureClicked=picture
+  async getCompoPrice(composition: CompositionDishes): Promise<number> {
+
+    var recipe: Recipe = composition.recipe
+    recipe.cout = 0
+    var detailRecipes: DetailsRecipe[] = recipe.detailList;
+    var brut = (composition.quantity / 1000) * recipe.ratio
+    console.log("----------------------------------------------------------------{}", composition);
+    console.log("----------------------------------------------------------------{}", brut);
+
+
+
+    await this.detailRecipeService.byRecipe(recipe.id).then(data => {
+      console.log(data);
+      detailRecipes = data
+    }).finally(async () => {
+      for (const detail of detailRecipes) {
+        console.log(detail);
+
+        console.log(detail.net);
+        console.log(detail.proportion);
+
+        detail.net = (brut * (detail.proportion)) / 100
+        ////
+        var perte = detail.ingredient.lossPercentage
+
+        if (perte != null) {
+          console.log(perte);
+          detail.brut = detail.net / (1 - (perte))
+        }
+        ///
+        var price = detail.ingredient.price
+        if (price != null) {
+          //detail.floatingCout=detail.floatingBrut*price
+          detail.cout = detail.brut * price
+          console.log(detail.brut);
+          console.log(price);
+        } else detail.cout = 0
+        ///
+        console.log(detail.cout);
+        recipe.cout = (recipe.cout + detail.cout)
+      }
+
+
+    })
+    console.log(recipe.cout);
+    console.log(detailRecipes);
+    return recipe.cout;
+
+  }
+
+  async updateCompoPrice() {
+    for (const cp of this.compositionDishes) {
+      //console.log(await this.getCompoPrice(cp));
+      cp.cout = await this.getCompoPrice(cp);
+      console.log(cp);
+    }
+
+  }
+
+  async show(e: any, plat: Dishes) {
+    //if (this.ref) {
+    this.ref.close("edit");
+
+  }
+
+  async getFile(link: any) {
+    await this.fileSaverService.getFile(link).then(data => {
+      console.log(data);
+      this.pictureClicked.file = data
+    })
+  }
+
+  showImage(picture: any, e: any) {
+    this.pictureClicked = picture
     this.model.hide()
     this.model.show(e)
     //this.getFile(picture.link)
