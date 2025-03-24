@@ -245,7 +245,6 @@ export class RecipeComponent {
       maximizable: true,
       data: dishes,
     });
-  
     // Exécuter une fonction après la fermeture du dialog
     this.ref.onClose.subscribe((result) => {
       if (result) {

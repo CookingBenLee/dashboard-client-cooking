@@ -19,16 +19,6 @@
               <div class="row grid">
                 <div class=" plat col-4">
                   <p-dropdown [options]="recettes" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" (ngModelChange)="changePlat()" placeholder="Selectionnez une recette">
-                    <!-- <ng-template pTemplate="selectedItem">
-                        <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
-                            <div>{{ recetteSelectione.name }}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-plat pTemplate="item">
-                        <div class="flex align-items-center gap-2">
-                            <div>{{ plat.name }}</div>
-                        </div>
-                    </ng-template> -->
                   </p-dropdown>
                 </div>
   

@@ -87,7 +87,7 @@ export class PreparationrecipeComponent {
   ///
   preparationRecipe: PreparationRecipe = new PreparationRecipe()
   loadingPreparation = false
-  data: Recipe = new Recipe();
+  data: any;
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
     private dialogService: DialogService, private preparationRecipeService: PreparationRecipeService,
     private paginateService: PaginateService, private tokenService: TokenService, public config: DynamicDialogConfig,
@@ -95,7 +95,7 @@ export class PreparationrecipeComponent {
     public tableShort: TableShortService,public ref: DynamicDialogRef ) { 
       this.data = this.config.data
       this.recetteSelectione = this.data;
-      console.log(typeof(this.recetteSelectione));
+      console.log(this.config.data);
       
     }
 
@@ -110,8 +110,8 @@ export class PreparationrecipeComponent {
     this.usercurrency = this.utilisateurC.compteUser.address.country.currency.name
     // this.currencys.push(this.usercurrency)
     // console.log("currency", this.usercurrency);
-    this.recetteSelectione = this.data;
-    console.log(this.recetteSelectione);
+    this.recetteSelectione = this.config.data;
+    // console.log(this.recetteSelectione);
     
     this.changePlat();
     this.getAll()
@@ -121,7 +121,8 @@ export class PreparationrecipeComponent {
     const user = this.tokenService.getUser();
     this.recipeService.getAllUser(user.id).then(data => {
       this.recettes = data
-
+      this.recetteSelectione = this.recettes.find(e => e.id === this.data.id)!;
+      console.log(this.recetteSelectione);
       console.log(this.recettes);
       
     })
