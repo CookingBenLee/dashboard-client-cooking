@@ -7,49 +7,63 @@
 </head>
 <body>
   <div class="login-container">
-    <div class="login-image-section" style="background-image: url('assets/images/logimage.jpg');"></div>
+    <div class="login-image-section" style="background-image: url('assets/images/cook.jpeg');"></div>
 
     <div class="login-form-section">
-      <div class="form-container">
-        <div class="toast" [ngClass]="{ 'show': successMessage }">
-          {{ successMessage }}
+      <div class="grid">
+        <div style="text-align: center;" class="row">
+          <div class="footer">
+            <h1>You Cook Network</h1>
+            <a href="https://you-cook.net" target="_blank">(you-cook.net)</a>
+            <p>“Tasty healthy meal, cooked and shared by anyone in the world”</p>
+          </div>
         </div>
+        <div class="row">
+          <div class="form-container">
 
-
-        <h2>Se connecter à votre compte</h2>
-        <p>Veuillez entrer votre email et votre mot de passe pour continuer</p>
-        <h3 style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</h3>
-        <form #fCreate="ngForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label for="email">Email :</label>
-            <div class="input-container">
-              <input type="text" name="login" id="login" [(ngModel)]="login" placeholder="Email" required />
+        
+            <div class="toast" [ngClass]="{ 'show': successMessage }">
+              {{ successMessage }}
             </div>
-          </div>
-
-          <div class="form-group">
-            <label for="password">Mot de passe :</label>
-            <div class="input-container password-container">
-              <input type="password" name="password" id="password" [(ngModel)]="password" placeholder="Mot de passe" required />
+    
+    
+            <h2>Se connecter à votre compte</h2>
+            <p>Veuillez entrer votre email et votre mot de passe pour continuer</p>
+            <h3 style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</h3>
+            <form #fCreate="ngForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="email">Email :</label>
+                <div class="input-container">
+                  <input type="text" name="login" id="login" [(ngModel)]="login" placeholder="Email" required />
+                </div>
+              </div>
+    
+              <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <div class="input-container password-container">
+                  <input type="password" name="password" id="password" [(ngModel)]="password" placeholder="Mot de passe" required />
+                </div>
+              </div>
+    
+              <div class="form-group">
+                <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Se connecter</button>
+              </div>
+            </form>
+    
+            <div class="err_msg mt-3">
+              <p class="text-danger">
+                <small id="username-help">Pas de compte ? <a href="#" [routerLink]="['/signup']" style="color: red;">Créer un compte</a></small>
+              </p>
             </div>
+            <div class="err_msg mt-3">
+              <p class="text-danger">
+                <small id="username-help"> Les accès non autorisés sont strictement interdits.</small>
+              </p>
           </div>
-
-          <div class="form-group">
-            <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Se connecter</button>
           </div>
-        </form>
-
-        <div class="err_msg mt-3">
-          <p class="text-danger">
-            <small id="username-help">Pas de compte ? <a href="#" [routerLink]="['/signup']" style="color: red;">Créer un compte</a></small>
-          </p>
         </div>
-        <div class="err_msg mt-3">
-          <p class="text-danger">
-            <small id="username-help"> Les accès non autorisés sont strictement interdits.</small>
-          </p>
       </div>
-      </div>
+       
     </div>
   </div>
 </body>
