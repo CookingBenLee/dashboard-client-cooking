@@ -67,6 +67,7 @@ import { ModalpurchaseComponent } from '../course/modalpurchase/modalpurchase.co
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { CreateProductComponent } from '../create-product/create-product.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { isEmpty } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-create-course',
@@ -371,6 +372,13 @@ retrieveCountryById(): void {
  }
 
  firstSaveForDetail(detail:any){
+
+  if (Object.keys(detail.product).length === 0) {
+    this.messageService.add({ severity: 'error', summary: 'Produit', detail: 'Merci de selectionner un produit' });
+    return;
+  }
+  
+ 
    this.detailPurchasesForms2.push(detail)
    this.detailPurchasesForms.push(
      {
@@ -382,7 +390,7 @@ retrieveCountryById(): void {
        realQ:0,
        distinctUnit:false,
        realQuantity:'',
-        realUnit:''
+       realUnit:''
      }
    )
  }
