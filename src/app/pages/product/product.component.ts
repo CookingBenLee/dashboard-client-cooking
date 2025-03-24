@@ -170,7 +170,7 @@ export class ProductComponent implements OnInit {
     this.getConditioning()
     this.getUnit()
     this.getCurrency();
-    this.productData.lossPercentage = 5;
+    this.productData.lossPercentage = 10.00;
   }
 
   getAll() {
@@ -319,6 +319,7 @@ export class ProductComponent implements OnInit {
   addProduct() {
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
+      this.productData.lossPercentage = parseFloat(this.productData.lossPercentage) / 100;
       console.log(this.productData);
       this.productData.baseRecipe = false;
       this.productService.create(this.productData).then((data) =>{
@@ -516,7 +517,7 @@ resetFields() {
   this.code = '';
   this.description = '';
   this.price = 0;
-  this.productData.lossPercentage = 5;
+  this.productData.lossPercentage = 10.00;
 
   this.unit = {} as Unit;
   this.brand = {} as Brand;

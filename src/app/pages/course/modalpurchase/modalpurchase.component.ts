@@ -239,9 +239,11 @@ cuuren: any
 
   async getProducts(){
     const user = this.tokenService.getUser();
-    await this.productService.getAll(user.id).then(data =>{
+    const base= false;
+    await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data =>{
       console.log(data)
-      this.products=data
+      this.products=data;
+      this.products = this.products.filter((element:any) => element.user.id === user.id);
       //this.productes[0]=this.products[0]
       //this.unitys[0]=this.products[0].unit
     })

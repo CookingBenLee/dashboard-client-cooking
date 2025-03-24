@@ -130,7 +130,7 @@ export class NewdishesComponent implements OnInit{
   recetteSelectione:Recipe=new Recipe()
   detailsRecepeSelectione:any[]=[]
   quantite:number=0
-  units=["Gramme","Kilogramme"]
+  units=["Gramme"]
   unitSelectionne:any
   ///
   picture:PicturesDishes=new PicturesDishes()
@@ -270,6 +270,8 @@ export class NewdishesComponent implements OnInit{
 
 
     await this.compositionDishes.push(cp)
+    console.log(this.compositionDishes);
+    
     this.recetteSelectione=new Recipe()
     this.calculPlat()
   }

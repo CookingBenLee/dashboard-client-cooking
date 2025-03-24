@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DetailsRecipe } from 'src/app/services/detailsrecipe/DetailsRecipe';
 import { DetailsrecipeService } from 'src/app/services/detailsrecipe/detailsrecipe.service';
 import { PaginateService } from 'src/app/services/paginate/paginate.service';
@@ -87,19 +87,19 @@ export class PreparationrecipeComponent {
   ///
   preparationRecipe: PreparationRecipe = new PreparationRecipe()
   loadingPreparation = false
-  data: Recipe = new Recipe();
+  data: any;
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
     private dialogService: DialogService, private preparationRecipeService: PreparationRecipeService,
     private paginateService: PaginateService, private tokenService: TokenService, public config: DynamicDialogConfig,
     private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,
-    public tableShort: TableShortService) { 
+    public tableShort: TableShortService,public ref: DynamicDialogRef ) { 
       this.data = this.config.data
       this.recetteSelectione = this.data;
-      console.log(typeof(this.recetteSelectione));
+      console.log(this.config.data);
       
     }
 
-
+    
   utilisateurC: any;
   usercurrency: any;
   selectedCountry: any;
@@ -110,8 +110,8 @@ export class PreparationrecipeComponent {
     this.usercurrency = this.utilisateurC.compteUser.address.country.currency.name
     // this.currencys.push(this.usercurrency)
     // console.log("currency", this.usercurrency);
-    this.recetteSelectione = this.data;
-    console.log(this.recetteSelectione);
+    this.recetteSelectione = this.config.data;
+    // console.log(this.recetteSelectione);
     
     this.changePlat();
     this.getAll()
@@ -121,7 +121,8 @@ export class PreparationrecipeComponent {
     const user = this.tokenService.getUser();
     this.recipeService.getAllUser(user.id).then(data => {
       this.recettes = data
-
+      this.recetteSelectione = this.recettes.find(e => e.id === this.data.id)!;
+      console.log(this.recetteSelectione);
       console.log(this.recettes);
       
     })
@@ -391,8 +392,8 @@ export class PreparationrecipeComponent {
 
       this.loadingPreparation = false
       this.loadingPage = false
-
-
+      this.ref.close(this.recetteSelectione);
+      this
     }).catch(error => {
       this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Erreur lors de la sauvegarde.' });
 
