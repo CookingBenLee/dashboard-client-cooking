@@ -128,7 +128,7 @@
                 <div class="field">
                   <label htmlFor="price{{detailPurchasesForms.length-1}}"> </label>
                   <button pButton pRipple label="Ajouter"
-                    [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0" type="button"
+                    [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0 || !detailPurchasesForms[detailPurchasesForms.length-1].product" type="button"
                     class="col p-button p-button-success p-component"
                     (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])">
                   </button>
