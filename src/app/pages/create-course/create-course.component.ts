@@ -828,6 +828,10 @@ retrieveCountryById(): void {
    await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data =>{
      
      this.products=data
+     console.log(this.products);
+     
+     this.products = this.products.filter((element:any) => element.user.id === user.id);
+
      
      //this.productes[0]=this.products[0]
      //this.unitys[0]=this.products[0].unit

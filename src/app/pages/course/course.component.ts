@@ -242,6 +242,7 @@ export class CourseComponent implements OnInit {
       focusOnShow: false,
       header: "Enregistrement d'une course ",
       width: '90%',
+      height: '90%',
       // contentStyle: { overflow: 'auto' },
       // baseZIndex: 10000,
       maximizable: true,
