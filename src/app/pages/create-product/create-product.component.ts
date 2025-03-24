@@ -90,7 +90,7 @@ export class CreateProductComponent implements OnInit {
   code:string
   description:string
   price:number
-  lostpercentage:number = 10.00
+  lossPercentage:number = 10.00
 
   unit:Unit
   brand:Brand
@@ -127,7 +127,7 @@ export class CreateProductComponent implements OnInit {
       this.getCategorys()
       this.getConditioning()
       this.getUnit();
-      this.lostpercentage = 10.00;
+      this.lossPercentage = 10.00;
     }
 
 
@@ -167,7 +167,7 @@ export class CreateProductComponent implements OnInit {
       this.product.name=this.name
       this.product.description=this.description
       this.product.price=this.price
-      this.product.lostpercentage=this.lostpercentage
+      this.product.lossPercentage= parseFloat(this.lossPercentage.toString()) / 100
 
       this.product.brand=this.brand
       this.product.category=this.category
@@ -179,30 +179,30 @@ export class CreateProductComponent implements OnInit {
       console.log(this.product)
       const user = this.tokenService.getUser();
       this.product.user = { id: user.id };
-      console.log(this.product);
+      console.log("produit envoyer",this.product);
       
-      this.productService.create(this.product).then((data) =>{
-        this.loading=false
-        //this.isSuccess=true
-        this.sucess="Produit crée !"
-        this.name=""
-        this.description=""
-        this.activeIndex=0
-        this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
-        this.ref?.close();
+      // this.productService.create(this.product).then((data) =>{
+      //   this.loading=false
+      //   //this.isSuccess=true
+      //   this.sucess="Produit crée !"
+      //   this.name=""
+      //   this.description=""
+      //   this.activeIndex=0
+      //   this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
+      //   this.ref?.close();
 
-      },
-      (error: any)=>{
-        //this.isError=true
-        if(error.error.message=='ko'){
-          this.erreur=error.error.data
-          }else{
-          this.erreur="Erreur liée au serveur"
-        }
-        this.loading=false
-        this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+      // },
+      // (error: any)=>{
+      //   //this.isError=true
+      //   if(error.error.message=='ko'){
+      //     this.erreur=error.error.data
+      //     }else{
+      //     this.erreur="Erreur liée au serveur"
+      //   }
+      //   this.loading=false
+      //   this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
-      });
+      // });
     }
 
     openModifier(position:string,info:any){
