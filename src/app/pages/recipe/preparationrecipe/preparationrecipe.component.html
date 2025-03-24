@@ -33,9 +33,9 @@
                 </div>
   
                 <div class=" poid col-2 gap-1 ">
+                  <!-- <span class="ml-2 m-auto font-bold"> Kg</span> -->
                   <p-inputNumber pTooltip="Quantité à préparer" tooltipPosition="top"class="number" mode="decimal" [minFractionDigits]="2" name="poidnet" id="poidnet" [(ngModel)]="recetteSelectione.net" (ngModelChange)="changePlat()" [showButtons]="true" [min]="0.1"  placeholder="Qté"></p-inputNumber>
                   <!-- [inputStyle]="{background: '#3b81f6',color:'#fff'}" -->
-                   <span class="ml-2 m-auto font-bold"> Kg</span>
                 </div>
   
   
@@ -81,24 +81,23 @@
         <!--<div class="head-no-border head-center">
           <label for="head">Détails des Ingrédients</label>
         </div>-->
-  
-        <div class="listIngredients">
-          <div class="entetelist divblue">
-            <div class="lbl brdr-right pdr"><label for="">Nom Ingrédient</label></div>
-            <div class="lbl brdr-left pdl"><label for="">Poid Net(KG)</label></div>
-            <div class="lbl brdr-left pdl"><label for="">Poid Brut(KG)</label></div>
-            <div class="lbl brdr-left pdl"><label for="">Préparation</label></div>
-            <div class="lbl brdr-left pdl" ><label for="">Cout( {{ usercurrency }} )</label></div>
+
+        <div class="info-table">
+          <div class="info-header">
+            <div class="info-header-cell">Nom Ingrédient</div>
+            <div class="info-header-cell">Poid Net(KG)</div>
+            <div class="info-header-cell">Poid Brut(KG)</div>
+            <div class="info-header-cell">Préparation</div>
+            <div class="info-header-cell">Préparation</div>
           </div>
-  
-          <div class="bdylist">
-            <div class="linebdy"  *ngFor="let detail of detailsDishes,let i=index">
-              <div class="lbl brdr-right pdr"><label for="">{{detail?.ingredient?.name}}</label></div>
-              <div class="lbl brdr-left pdl"><label for="">{{detail?.net| number: '1.0-3' }} {{detail?.ingredient?.unit?.code}} </label></div>
-              <div class="lbl brdr-left pdl"><label for="">{{detail?.brut | number: '1.0-3' }}  {{detail?.ingredient?.unit?.code}}</label></div>
-              <div class="lbl brdr-left pdl"><label for="">{{detail?.preparationIngredient }}</label></div>
-              <div class="lbl brdr-left pdl" ><label for="" appPriceFormater  >{{detail?.cout| number: '1.0-2' }} {{ usercurrency }} </label></div>
-            </div>
+
+          <!-- Loop to display details -->
+          <div *ngFor="let detail of detailsDishes,let i=index" class="info-row">
+            <div class="info-cell">{{detail?.ingredient?.name}}</div>
+            <div class="info-cell">{{detail?.net| number: '1.0-3' }} {{detail?.ingredient?.unit?.code}}</div>
+            <div class="info-cell">{{detail?.brut | number: '1.0-3' }}  {{detail?.ingredient?.unit?.code}}</div>
+            <div class="info-cell">{{detail?.preparationIngredient }}</div>
+            <div class="info-cell">{{detail?.cout| number: '1.0-2' }} {{ usercurrency }} </div>
             <div class="nodetail m-2 head-center" *ngIf="!recetteSelectione.name">
               <label for="">
                 Aucun ingrédients

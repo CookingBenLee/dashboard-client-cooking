@@ -131,7 +131,7 @@ export class ModaldishesComponent {
   recetteSelectione: Recipe = new Recipe()
   detailsRecepeSelectione: any[] = []
   quantite: number = 0
-  units = ["Gramme", "Kilogramme"]
+  units = ["Gramme"]
   unitSelectionne: any
   ///
   pictureClicked: PicturesDishes = new PicturesDishes()

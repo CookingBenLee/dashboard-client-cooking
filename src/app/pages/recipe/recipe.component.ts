@@ -132,7 +132,6 @@ export class RecipeComponent {
   maxRatio = 100
   // this.totalProportion+=detail.proportion
   totalProportion = 0
-
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private priceService: PriceService,
     private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
     private dialogService: DialogService, private currencyService: CurrencyService, private tokenService: TokenService,
@@ -236,30 +235,36 @@ export class RecipeComponent {
   }
 
   showPrepa(dishes: Dishes) {
-    //this.purchaseSelected=purchase
-
-
     this.ref = this.dialogService.open(PreparationrecipeComponent, {
       header: 'Preparation',
-      width: '100%',
+      width: '80%',
       height: '100%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
       data: dishes,
     });
-    //  this.op.toggle(e)
-
-    //  this.ref.onClose.subscribe((shop: Shop) => {
-    //      if (shop) {
-    //          this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: shop.name });
-    //      }
-    //  });
-
-    // this.ref.onMaximize.subscribe((value) => {
-    //     this.messageService.add({ severity: 'info', summary: 'Maximized', detail: `maximized: ${value.maximized}` });
-    // });
+  
+    // Exécuter une fonction après la fermeture du dialog
+    this.ref.onClose.subscribe((result) => {
+      if (result) {
+        console.log("Retour du dialog :", result);
+        this.someFunction(result); // Fonction à exécuter dans le premier composant
+        this.getAll();
+      }
+    });
   }
+  
+  // Exemple de fonction qui sera exécutée après la fermeture du dialog
+  someFunction(data: any) {
+    console.log("Données reçues après fermeture :", data);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Préparation',
+      detail: 'La préparation a été effectuée avec succès.'
+    });
+  }
+  
 
 
 
