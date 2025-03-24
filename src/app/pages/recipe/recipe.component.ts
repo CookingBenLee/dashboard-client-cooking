@@ -607,7 +607,7 @@ export class RecipeComponent {
 
     this.ref.onClose.subscribe((retour: any) => {
       console.log("hhhhhhhhhhhh....///jkjhghf");
-
+      this.getAll();
     });
   }
 
