@@ -120,17 +120,17 @@
           <form class="grid newform" #f="ngForm" (ngSubmit)="save()">
             <div class="col-12 card p-fluid">
               <div class="grid entete">
-                <div class="field col-4">
+                <div class="field col-6">
                   <label for="name">Nom de la recette</label>
                   <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom de la recette"
                     required />
                 </div>
-                <div class="field col-4">
+                <!-- <div class="field col-4">
                   <label for="ratio">Pourcentage de perte</label>
                   <p-inputNumber mode="decimal" [minFractionDigits]="2" name="ratio" [suffix]="'%'" id="ratio"
                     [(ngModel)]="ratio" [showButtons]="true" [min]="0"></p-inputNumber>
-                </div>
-                <div class="field col-4">
+                </div> -->
+                <div class="field col-6">
                   <label for="baseRecipe">Recette de base</label>
                   <p-dropdown [(ngModel)]="base" name="baseRecipe" [options]="reciss" optionLabel="name"
                     placeholder="OUI ou NON"></p-dropdown>
