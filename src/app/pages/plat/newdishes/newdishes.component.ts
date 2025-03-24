@@ -270,6 +270,8 @@ export class NewdishesComponent implements OnInit{
 
 
     await this.compositionDishes.push(cp)
+    console.log(this.compositionDishes);
+    
     this.recetteSelectione=new Recipe()
     this.calculPlat()
   }
