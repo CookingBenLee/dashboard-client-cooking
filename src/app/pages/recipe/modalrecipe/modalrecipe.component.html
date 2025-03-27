@@ -13,7 +13,7 @@
             [(ngModel)]="recipe.ratio" [showButtons]="true" [min]="0"></p-inputNumber>
         </div> -->
         <div class="field col-6">
-          <label for="baseRecipe">Recette de base</label>
+          <label for="baseRecipe">Recette principale</label>
                 <p-dropdown [disabled]="recipe.name==null" [(ngModel)]="base" name="baseRecipe"
                     [options]="reciss" optionLabel="name" (onChange)="openDialogProduct($event)"
                     placeholder="OUI ou NON">

@@ -60,8 +60,8 @@
                       *ngIf="dishes.stock"> Kg</span></td>
 
                   <td (click)="show($event,dishes)" style="width: 5%; min-width: 8rem;">
-                    <span [class]="dishes.baseRecipe ? 'text-green-500' : 'text-red-500'">
-                      {{ dishes.baseRecipe ? 'OUI' : 'NON' }}
+                    <span [class]="dishes.principaleRecipe ? 'text-green-500' : 'text-red-500'">
+                      {{ dishes.principaleRecipe ? 'OUI' : 'NON' }}
                     </span>
                   </td>
                   <!-- <td (click)="show($event,dishes)"  style="width: 35%; min-width: 8rem;">{{dishes?.cout }}</td>-->
@@ -131,8 +131,8 @@
                     [(ngModel)]="ratio" [showButtons]="true" [min]="0"></p-inputNumber>
                 </div> -->
                 <div class="field col-6">
-                  <label for="baseRecipe">Recette de base</label>
-                  <p-dropdown [(ngModel)]="base" name="baseRecipe" [options]="reciss" optionLabel="name"
+                  <label for="principaleRecipe">Recette principale</label>
+                  <p-dropdown [(ngModel)]="base" name="principaleRecipe" [options]="reciss" optionLabel="name"
                     placeholder="OUI ou NON"></p-dropdown>
                 </div>
               </div>

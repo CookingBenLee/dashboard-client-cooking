@@ -181,28 +181,28 @@ export class CreateProductComponent implements OnInit {
       this.product.user = { id: user.id };
       console.log("produit envoyer",this.product);
       
-      // this.productService.create(this.product).then((data) =>{
-      //   this.loading=false
-      //   //this.isSuccess=true
-      //   this.sucess="Produit crée !"
-      //   this.name=""
-      //   this.description=""
-      //   this.activeIndex=0
-      //   this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
-      //   this.ref?.close();
+       this.productService.create(this.product).then(async (data) =>{
+         this.loading=false
+         //this.isSuccess=true
+         this.sucess="Produit crée !"
+         this.name=""
+         this.description=""
+         this.activeIndex=0
+         await this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
+          this.ref?.close();
 
-      // },
-      // (error: any)=>{
-      //   //this.isError=true
-      //   if(error.error.message=='ko'){
-      //     this.erreur=error.error.data
-      //     }else{
-      //     this.erreur="Erreur liée au serveur"
-      //   }
-      //   this.loading=false
-      //   this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+       },
+       (error: any)=>{
+         //this.isError=true
+         if(error.error.message=='ko'){
+           this.erreur=error.error.data
+           }else{
+           this.erreur="Erreur liée au serveur"
+         }
+         this.loading=false
+         this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
 
-      // });
+       });
     }
 
     openModifier(position:string,info:any){

@@ -47,6 +47,7 @@ import { Brand } from 'src/app/services/brand/Brand';
 import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { ConditioningService } from 'src/app/services/conditioning/conditioning.service';
 import { DishesPriceService } from 'src/app/services/dishes/dishes-price.service';
+import { tr } from 'date-fns/locale';
 
 @Component({
   selector: 'app-recipe',
@@ -296,7 +297,7 @@ export class RecipeComponent {
       somme += detail.proportion
     })
 
-    if (somme > 100) {
+    if (somme > 100.10) {
       this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Impossible d\'ajouter ce détail, la proportion totale est dépassée.' });
     } else {
       this.detailRecipes.push(detail)
@@ -345,6 +346,11 @@ export class RecipeComponent {
   ///save
   async save() {
     //console.log(this.reference)
+
+    if(this.totalProportion > 100.10 || this.totalProportion < 99.90){
+      this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Impossible d\'ajouter cette recette, la proportion doit être comprise entre 99.90 et 100.10.' });
+      return;
+    }
     this.isError = false
     this.isSuccess = false
     this.loading = true
@@ -369,13 +375,13 @@ export class RecipeComponent {
     this.recipe.categoryRecipe = this.categorySelected
     const user = this.tokenService.getUser();
     this.recipe.user = { id: user.id }
-  if (this.base.name === "OUI") this.recipe.baseRecipe = true;
+  if (this.base.name === "OUI") this.recipe.principaleRecipe = true;
      /*  this.recipe.baseRecipe = true;
       this.productDialog = true;
       this.openDialogProduct(await this.dishesPriceService.getDetailRecipeWithRecipeInfos(this.recipe));
       return;
     }*/
-    else if(this.base.name === "NON") this.recipe.baseRecipe = false;
+    else if(this.base.name === "NON") this.recipe.principaleRecipe = false;
       
       this.recipeService.create(this.recipe).then(async (data) => {
         //this.getAll();
@@ -435,13 +441,13 @@ export class RecipeComponent {
       // console.log("Product unit:", this.productData.unit);
       this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
       // console.log("Product category:", this.productData.category);
-      this.productData.lossPercentage = 0;
+      this.productData.lossPercentage = 15;
       this.productDialog = true;
-      this.productData.baseRecipe = false;
+      this.productData.secondaryRecipe = true;
       //this.recipe.baseRecipe = false;
     }
     if (this.base.name === 'OUI') {
-      this.recipe.baseRecipe = false;
+      this.recipe.principaleRecipe = false;
     }
   }
   
@@ -451,7 +457,7 @@ export class RecipeComponent {
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
       console.log(this.productData);
-      this.productData.baseRecipe = false;
+      this.productData.secondaryRecipe = true;
       this.productService.create(this.productData).then((data) =>{
         this.loading=false
         //this.isSuccess=true
@@ -753,7 +759,7 @@ export class RecipeComponent {
         this.detailRecipesProvisoire.push(new DetailsRecipe());
 
         //open dialog 
-        this.recipe.baseRecipe = true;
+        this.recipe.principaleRecipe = true;
         //this.productDialog = true;
 
         

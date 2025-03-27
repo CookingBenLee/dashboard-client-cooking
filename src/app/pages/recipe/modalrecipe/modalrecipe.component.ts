@@ -127,10 +127,10 @@ constructor(private confirmationService: ConfirmationService, private messageSer
   // private categoryRecipeService:CategoryrecipeService,
   public tableShort:TableShortService,public config: DynamicDialogConfig,) {
     this.recipe=this.config.data
-    if (this.recipe.baseRecipe) {
+    if (this.recipe.principaleRecipe) {
       this.base = { name: 'OUI' }
     }
-    if (!this.recipe.baseRecipe) {
+    if (!this.recipe.principaleRecipe) {
       this.base = { name: 'NON' }
     }
   }
@@ -164,7 +164,7 @@ categorys: Category[] = [];
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
       console.log(this.productData);
-      this.productData.baseRecipe = false;
+      this.productData.secondaryRecipe = false;
       this.productService.create(this.productData).then((data) =>{
         this.loading=false
         //this.isSuccess=true
@@ -214,10 +214,10 @@ openDialogProduct(event: any){
     // console.log("Product category:", this.productData.category);
     this.productData.lostpercentage = 0;
     this.productDialog = true;
-    this.recipe.baseRecipe = true;
+    this.recipe.principaleRecipe = true;
   }
   if (event.value.name === 'OUI') {
-    this.recipe.baseRecipe = true;  
+    this.recipe.principaleRecipe = true;  
     this.recipeService.update(this.recipe.id,this.recipe).then( async data=>{
       this.loading=false
       //this.isSuccessEdit=true
@@ -363,12 +363,12 @@ openDialogProduct(event: any){
     this.recipe.categoryRecipe=this.categorySelected
     var success=false
     if (this.base.name === "OUI") {
-      this.recipe.baseRecipe = true;
+      this.recipe.principaleRecipe = true;
       this.productDialog = true;
       this.openDialogProduct(await this.dishePriceService.getDetailRecipeWithRecipeInfos(this.recipe));
     }
     if (this.base.name === "NON") {
-      this.recipe.baseRecipe = false;
+      this.recipe.principaleRecipe = false;
       await this.recipeService.update(this.recipe.id,this.recipe).then( async data=>{
         this.loading=false
         //this.isSuccessEdit=true

@@ -321,7 +321,7 @@ export class ProductComponent implements OnInit {
       this.productData.user = { id: user.id };
       this.productData.lossPercentage = parseFloat(this.productData.lossPercentage) / 100;
       console.log(this.productData);
-      this.productData.baseRecipe = false;
+      this.productData.secondaryRecipe = false;
       this.productService.create(this.productData).then((data) =>{
         this.loading=false
         //this.isSuccess=true

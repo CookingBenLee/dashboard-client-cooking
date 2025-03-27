@@ -11,7 +11,7 @@ export class Recipe{
   name: string;
 
   ratio: number;
-  baseRecipe: boolean;
+  principaleRecipe: boolean;
 
   createdDate: Date;
   isDeleted: boolean;
