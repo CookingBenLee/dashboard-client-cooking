@@ -22,7 +22,7 @@ export class Recipe{
 
   detailList: DetailsRecipe[];
   compositionList: CompositionDishes[];
-
+  lossPercentage?: number;
   ///
   cout: number;
 

@@ -174,7 +174,7 @@ export class CreateProductComponent implements OnInit {
       this.product.conditioning=this.conditioning
       this.product.unit=this.unit
       this.product.code=this.name
-
+      this.product.secondaryRecipe= false;
 
       console.log(this.product)
       const user = this.tokenService.getUser();
