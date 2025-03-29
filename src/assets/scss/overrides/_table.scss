@@ -24,3 +24,8 @@
     overflow-x: auto;
   }
 }
+
+
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+  padding: 4px 16px !important;
+}

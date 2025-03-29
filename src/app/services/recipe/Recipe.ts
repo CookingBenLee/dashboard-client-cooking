@@ -11,7 +11,7 @@ export class Recipe{
   name: string;
 
   ratio: number;
-  baseRecipe: boolean;
+  principaleRecipe: boolean;
 
   createdDate: Date;
   isDeleted: boolean;
@@ -22,7 +22,7 @@ export class Recipe{
 
   detailList: DetailsRecipe[];
   compositionList: CompositionDishes[];
-
+  lossPercentage?: number;
   ///
   cout: number;
 
