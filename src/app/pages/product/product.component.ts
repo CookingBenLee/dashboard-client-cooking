@@ -189,10 +189,11 @@ export class ProductComponent implements OnInit {
       if (this.products.length === 0 || this.page === 0) {
         this.resClient = data;
         this.products = data.content;
+        this.products = this.products.filter((element:any)=> element.user.id === user.id);
         console.log(this.products);
 
         this.totalRows = data.totalElements;
-        this.dataSource.data = data.content; // Ajoutez cette ligne
+        this.dataSource.data = data.content.filter((element:any)=> element.user.id === user.id); // Ajoutez cette ligne
         console.log("new call")
 
       } else if (
