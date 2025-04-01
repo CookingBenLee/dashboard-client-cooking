@@ -407,7 +407,7 @@ export class RecipeComponent {
         if(this.base.name === "NON") this.openDialogProduct(await this.dishesPriceService.getDetailRecipeWithRecipeInfos(data.data));
 
         //this.ngOnInit()
-        //this.activeIndex = 0
+        this.activeIndex = 0
         this.resetFields();
         this.recipe = new Recipe()
         this.detailRecipesProvisoire.push(new DetailsRecipe())
