@@ -320,7 +320,7 @@ export class ProductComponent implements OnInit {
   addProduct() {
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
-      this.productData.lossPercentage = parseFloat(this.productData.lossPercentage) / 100;
+      this.productData.lossPercentage = 10 / 100;
       console.log(this.productData);
       this.productData.secondaryRecipe = false;
       this.productService.create(this.productData).then((data) =>{
