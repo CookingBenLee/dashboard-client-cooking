@@ -9,6 +9,14 @@
   margin: auto;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+.center-button {
+  display: flex;
+  justify-content: center; /* Centre les boutons horizontalement */
+  align-items: center; /* Aligne verticalement */
+  gap: 10px; /* Ajoute un espacement entre les boutons */
+  width: 100%; /* Assure une largeur suffisante */
+}
+
 
 .small-button {
   width: 24px !important;

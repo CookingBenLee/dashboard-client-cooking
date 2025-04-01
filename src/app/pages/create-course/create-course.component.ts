@@ -845,6 +845,31 @@ retrieveCountryById(): void {
      //this.unitys[0]=this.products[0].unit
    })
  }
+
+ confirm2(event: Event) {
+  console.log("Bouton Annuler cliqué !");
+  // this.ref.close();
+  this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'voulez-vous vraiment annulez ?',
+      header: 'Annulation',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass:"p-button-danger p-button-text",
+      rejectButtonStyleClass:"p-button-text p-button-text",
+      acceptIcon:"none",
+      rejectIcon:"none",
+
+      accept: () => {
+          this.messageService.add({ severity: 'info', summary: 'Confirmer', detail: 'Annulée' });
+          this.ref.close();
+      },
+      reject: () => {
+          // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+      },
+      key: 'positionDialog'
+  });
+}
+
  getUnits(){
    this.unitService.getAllUnits().then(data =>{
      console.log(data)

@@ -126,6 +126,14 @@ tr:nth-child(even) {
   margin-top: 16px;
 }
 
+.center-button {
+  display: flex;
+  justify-content: center; /* Centre les boutons horizontalement */
+  align-items: center; /* Aligne verticalement */
+  gap: 10px; /* Ajoute un espacement entre les boutons */
+  width: 100%; /* Assure une largeur suffisante */
+}
+
 /* Boîte de dialogue de confirmation */
 .p-confirmDialog {
   background-color: #f7f7f7;
