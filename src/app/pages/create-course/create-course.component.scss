@@ -12,10 +12,12 @@
 .center-button {
   display: flex;
   justify-content: center; /* Centre les boutons horizontalement */
-  align-items: center; /* Aligne verticalement */
-  gap: 10px; /* Ajoute un espacement entre les boutons */
-  width: 100%; /* Assure une largeur suffisante */
+  align-items: center; /* Centre verticalement */
+  gap: 10px; /* Espacement entre les boutons */
+  width: 100%; /* S'assure que la div prend toute la largeur */
 }
+
+
 
 
 .small-button {

@@ -661,7 +661,7 @@ export class RecipeComponent {
     await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data => {
       console.log(data)
       this.products = data;
-      this.products = this.products.filter((element:any) => element.user.id === user.id);
+      // this.products = this.products.filter((element:any) => element.user.id === user.id);
       // this.products = this.products.sort((a, b) => (a.name < b.name ? -1 : 1));
 
       //this.productes[0]=this.products[0]
