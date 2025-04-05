@@ -89,7 +89,6 @@ export class ModalpurchaseComponent {
   erreur:string
   sucess:string
   loading: boolean = false;
-  ref: DynamicDialogRef | undefined;
   showAddProduct=false
 
   price:Price;
@@ -115,7 +114,7 @@ detailPurchasesForms2:any=[]
 cuuren: any
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,private shopService:ShopService,private tokenService: TokenService,
     private dialogService:DialogService,public config: DynamicDialogConfig,  private detailpurchaseService:DetailspurchasingService,private cdref: ChangeDetectorRef,
-    private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,
+    private purchaseService:PurchaseService,public tableShort:TableShortService,private addressService:AddressService,private categoryService:CategoryService,private ref: DynamicDialogRef,
     private currencyService:CurrencyService,private productService:ProductService,private unitService:UnitService,private priceService:PriceService) {
       this.data=this.config.data
 
@@ -236,6 +235,30 @@ cuuren: any
       this.currencys=data
     })
   }
+
+  confirm2(event: Event) {
+    console.log("Bouton Annuler cliqué !");
+    // this.ref.close();
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'voulez-vous vraiment annulez ?',
+        header: 'Annulation',
+        icon: 'pi pi-info-circle',
+        acceptButtonStyleClass:"p-button-danger p-button-text",
+        rejectButtonStyleClass:"p-button-text p-button-text",
+        acceptIcon:"none",
+        rejectIcon:"none",
+
+        accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmer', detail: 'Annulée' });
+            this.ref.close();
+        },
+        reject: () => {
+            // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+        },
+        key: 'positionDialog'
+    });
+}
 
   async getProducts(){
     const user = this.tokenService.getUser();
@@ -485,7 +508,7 @@ cuuren: any
       this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée"});
 
       await this.saveAllDetail(data.data)
-      this.ref?.close;
+      this.ref?.close();
 
     },
     (error: any)=>{

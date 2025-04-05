@@ -30,7 +30,7 @@
 
               <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="code" pColumnFilter="code">Code<p-sortIcon field="code"></p-sortIcon></th>
+                  <!-- <th pSortableColumn="code" pColumnFilter="code">Code<p-sortIcon field="code"></p-sortIcon></th> -->
                   <th pSortableColumn="name" pColumnFilter="name">Nom<p-sortIcon field="name"></p-sortIcon></th>
                   <!--<th pSortableColumn="categorie" pColumnFilter="categorie">Categorie<p-sortIcon field="categorie"></p-sortIcon></th>-->
 
@@ -48,8 +48,8 @@
               </ng-template>
               <ng-template pTemplate="body" let-dishes>
                 <tr class="cursor-pointer">
-                  <td (click)="showDishesDetail($event,dishes)" style="width: 20%; min-width: 8rem;">{{dishes?.code}}
-                  </td>
+                  <!-- <td (click)="showDishesDetail($event,dishes)" style="width: 20%; min-width: 8rem;">{{dishes?.code}}
+                  </td> -->
                   <td (click)="showDishesDetail($event,dishes)" style="width: 20%; min-width: 8rem;">{{dishes?.name}}
                   </td>
                   <!--<td (click)="show($event,dishes)" style="width: 35%; min-width: 8rem;">{{dishes?.address?.address?.label}}</td>

@@ -175,7 +175,9 @@ export class ProductComponent implements OnInit {
 
   getAll() {
     const user = this.tokenService.getUser();
+    const baseRecipe = false;
     const params = this.paginateService.getRequestParams(this.page, this.rows)
+    params['baseRecipe'] = baseRecipe;
     console.log(params);
     this.productService.getActivePage(params, user.id).then(data => {
       console.log(data)
@@ -189,10 +191,11 @@ export class ProductComponent implements OnInit {
       if (this.products.length === 0 || this.page === 0) {
         this.resClient = data;
         this.products = data.content;
+        this.products = this.products.filter((element:any)=> element.user.id === user.id);
         console.log(this.products);
 
         this.totalRows = data.totalElements;
-        this.dataSource.data = data.content; // Ajoutez cette ligne
+        this.dataSource.data = data.content.filter((element:any)=> element.user.id === user.id); // Ajoutez cette ligne
         console.log("new call")
 
       } else if (
@@ -319,7 +322,7 @@ export class ProductComponent implements OnInit {
   addProduct() {
     const user = this.tokenService.getUser();
       this.productData.user = { id: user.id };
-      this.productData.lossPercentage = parseFloat(this.productData.lossPercentage) / 100;
+      this.productData.lossPercentage = 10 / 100;
       console.log(this.productData);
       this.productData.secondaryRecipe = false;
       this.productService.create(this.productData).then((data) =>{
