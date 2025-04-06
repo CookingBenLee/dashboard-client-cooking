@@ -105,7 +105,9 @@ export class CatalogueDePrixComponent implements OnInit {
   getAll(){
     const user = this.tokenService.getUser();
     this.user=user
-    const params=this.paginateService.getRequestParams(this.page,this.rows)
+    const baseRecipe = false;
+    const params = this.paginateService.getRequestParams(this.page, this.rows)
+    params['baseRecipe'] = baseRecipe;
     console.log(params);
     this.productService.getActivePage(params, user.id).then(data =>{
       console.log(data)

@@ -363,13 +363,13 @@ export class RecipeComponent {
     this.recipe.name = this.name
     // this.recipe.poids=this.poids
     // this.recipe.quantite=this.quantite
-    this.recipe.ratio = this.ratio
+    // this.recipe.ratio = this.ratio
     
     // this.recipe.cout=this.cout
     // this.recipe.brut=this.brut
     // this.recipe.net=this.net
     this.recipe.detailCuisine = this.detailCuisine
-    this.recipe.lossPercentage = 15 / 100;
+    this.recipe.ratio = 15;
     // this.recipe.preparationInitial=this.preparationInitial
     // this.recipe.preparationIngredient=this.preparationIngredient
     // this.recipe.unit=this.unit

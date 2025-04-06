@@ -64,7 +64,7 @@ export class ProductService {
   }
   getActivePage(params: any, userId: number) {
     return this.http.get<any>(
-      `${this.env.apiUrl}/stock/getallpagebyuserandbaserecipe/${userId}`,
+      `${this.env.apiUrl}/stock/getallbyuserandbaserecipe/${userId}`,
       { params } 
     ).toPromise()
       .then(res => res.data as any)
