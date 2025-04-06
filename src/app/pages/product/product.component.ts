@@ -179,7 +179,7 @@ export class ProductComponent implements OnInit {
     const params = this.paginateService.getRequestParams(this.page, this.rows)
     params['baseRecipe'] = baseRecipe;
     console.log(params);
-    this.productService.getActivePage(params, user.id).then(data => {
+    this.productService.getActivePageStock(params, user.id).then(data => {
       console.log(data)
       //this.menus=data
       // console.log(data)
@@ -195,7 +195,8 @@ export class ProductComponent implements OnInit {
         console.log(this.products);
 
         this.totalRows = data.totalElements;
-        this.dataSource.data = data.content.filter((element:any)=> element.user.id === user.id); // Ajoutez cette ligne
+        this.dataSource.data = data.content
+        // this.dataSource.data = data.content.filter((element:any)=> element.user.id === user.id); 
         console.log("new call")
 
       } else if (
