@@ -494,7 +494,7 @@ openDialogProduct(event: any){
     const base = false;
     await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data =>{
       console.log(data)
-      this.products=data;
+      this.products=data.filter((element:any)=> element.user.id === user.id);
       this.products = this.products.filter((element:any) => element.user.id === user.id);
       //this.productes[0]=this.products[0]
       //this.unitys[0]=this.products[0].unit
