@@ -409,7 +409,7 @@ closeDialog() {
 
 
 deleteProduct(product: any): void {
-  this.productClicked = product;
+  this.productClicked = product.product;
 
   this.dialog.open(this.dialogTemplateDelete, {
     width: '400px',
@@ -419,8 +419,8 @@ deleteProduct(product: any): void {
 
 confirmDelete(): void {
 
-  this.stockSerevice.delete(this.productClicked.id).then(() => {
-    this.snackBar.open('Stock supprimé avec succès !', 'Fermer', {
+  this.productService.deleteProduct(this.productClicked.id).then(() => {
+    this.snackBar.open('Stock et le produit supprimé avec succès !', 'Fermer', {
       duration: 3000,
       panelClass: ['snackbar-success']
     });
