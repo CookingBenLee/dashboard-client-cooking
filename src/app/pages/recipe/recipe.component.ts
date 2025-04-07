@@ -657,10 +657,10 @@ export class RecipeComponent {
   }
   async getProducts() {
     const user = this.tokenService.getUser();
-    const base = false;
-    await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data => {
+    // const base = false;
+    await this.productService.getAll(user.id).then(data => {
       console.log(data)
-      this.products = data.filter((element:any)=> element.user.id === user.id);
+      this.products = data;
       // this.products = this.products.filter((element:any) => element.user.id === user.id);
       // this.products = this.products.sort((a, b) => (a.name < b.name ? -1 : 1));
 
