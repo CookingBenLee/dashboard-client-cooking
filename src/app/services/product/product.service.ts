@@ -63,6 +63,16 @@ export class ProductService {
         .then(res => res.data as Product[])
         .then(data => data);
   }
+
+
+  getActiveStock(userId: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/stock/getallbyuser/${userId}`)
+        .toPromise()
+        .then(res => res.data as Product[])
+        .then(data => data);
+  }
+
+
   getActivePage(param:any,userId: number ) {
     return this.http.get<any>(`${this.env.apiUrl}/stock/getallpagebyuser/${userId}?page=`+param['page']+'&size='+param['size'])
         .toPromise()
