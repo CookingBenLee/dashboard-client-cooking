@@ -212,7 +212,7 @@ openDialogProduct(event: any){
     // console.log("Product unit:", this.productData.unit);
     this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
     // console.log("Product category:", this.productData.category);
-    this.productData.lostpercentage = 0;
+    // this.productData.lostpercentage = 0;
     this.productDialog = true;
     this.recipe.principaleRecipe = true;
   }
