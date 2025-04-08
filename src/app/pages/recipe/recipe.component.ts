@@ -369,7 +369,7 @@ export class RecipeComponent {
     // this.recipe.brut=this.brut
     // this.recipe.net=this.net
     this.recipe.detailCuisine = this.detailCuisine
-    this.recipe.ratio = 15;
+    this.recipe.ratio = 1.1;
     // this.recipe.preparationInitial=this.preparationInitial
     // this.recipe.preparationIngredient=this.preparationIngredient
     // this.recipe.unit=this.unit
