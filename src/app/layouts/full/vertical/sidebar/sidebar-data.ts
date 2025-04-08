@@ -23,11 +23,11 @@ export const navItems: NavItem[] = [
     iconName: 'material-symbols:dining',
     route: 'home/plat',
   },
-  {
-    displayName: 'Planifier un repas',
-    iconName: 'tabler:point',
-    route: 'home/planifier',
-  },
+  // {
+  //   displayName: 'Planifier un repas',
+  //   iconName: 'tabler:point',
+  //   route: 'home/planifier',
+  // },
   {
     displayName: 'Liste des planifications',
     iconName: 'tabler:point',
