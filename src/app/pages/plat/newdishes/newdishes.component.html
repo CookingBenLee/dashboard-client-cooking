@@ -1,45 +1,51 @@
 <div class="content ">
-    <div class="formpart">
-      <form class="p-fluid colo " #f="ngForm" (ngSubmit)="save()">
-  
-        <div class="firstrow col-12 grid " >
-  
-          <div class="col-5 field namePlat" pTooltip="Nom du Plat">
-            <div class=" ">
-              <textarea  rows="1" cols="30" name="preparationIgredient" pInputTextarea  [autoResize]="true" [(ngModel)]="plat.name" placeholder="Nom du Plat" required="true" style="min-height: 40px; overflow:auto;"></textarea>
-            </div>
+  <div class="formpart">
+    <form class="p-fluid colo " #f="ngForm" (ngSubmit)="save()">
+
+      <div class="firstrow col-12 grid ">
+
+        <div class="col-5 field namePlat" pTooltip="Nom du Plat">
+          <div class=" ">
+            <textarea rows="1" cols="30" name="preparationIgredient" pInputTextarea [autoResize]="true"
+              [(ngModel)]="plat.name" placeholder="Nom du Plat" required="true"
+              style="min-height: 40px; overflow:auto;"></textarea>
           </div>
-  
-          <div class="field col-3 categorie"  pTooltip="Categorie du Plat">
-            <p-dropdown [options]="categoryDishes"  optionLabel="name"  name="category" [(ngModel)]="plat.categoryMenu" placeholder="Categorie du Plat" [required]="true">
-              <ng-template let-category pTemplate="item">
-                <div class="flex align-items-center operatingSystems-item">
-                  <div> {{category.name}}({{category?.code}})</div>
-                </div>
-              </ng-template>
-            </p-dropdown>
-          </div>
-  
-          <div class=" grid detailPlat col-4">
-            <div class="cout  divgray">
-              <label for="cout" >Coût Total({{ usercurrency }}): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-0'">{{plat.cout| number: '1.0-0' }}</span> </label>
-            </div>
-  
-            <div class="poid  divgray">
-              <label for="poit" >Poid Total : {{plat.poids| number: '1.0-3' }} G</label>
-            </div>
-  
-          </div>
-  
         </div>
-  
-        <div class="secaindrow grid mt-2">
-  
-          <div class="row row1 grid col-12">
-            <div class=" plat col-3"  pTooltip="Choisir une recette">
-              <label for="">Recette</label>
-              <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
-                <!-- <ng-template pTemplate="selectedItem">
+
+        <div class="field col-3 categorie" pTooltip="Categorie du Plat">
+          <p-dropdown [options]="categoryDishes" optionLabel="name" name="category" [(ngModel)]="plat.categoryMenu"
+            placeholder="Categorie du Plat" [required]="true">
+            <ng-template let-category pTemplate="item">
+              <div class="flex align-items-center operatingSystems-item">
+                <div> {{category.name}}({{category?.code}})</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class=" grid detailPlat col-4">
+          <div class="cout  divgray">
+            <label for="cout">Coût Total({{ usercurrency }}): <span appPriceFormater
+                [priceValue]="plat.cout | number: '1.2-2'">{{plat.cout| number: '1.2-2' }}</span> </label>
+          </div>
+
+          <div class="poid  divgray">
+            <label for="poit">Poid Total : {{plat.poids| number: '1.0-3' }} G</label>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="secaindrow grid mt-2">
+
+        <div class="row row1 grid col-12">
+          <div class=" plat col-3" pTooltip="Choisir une recette">
+            <label for="">Recette</label>
+            <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false"
+              [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name"
+              [showClear]="true" (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
+              <!-- <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
                         <div>{{ recetteSelectione.name }}</div>
                     </div>
@@ -49,51 +55,57 @@
                         <div>{{ plat.name }}</div>
                     </div>
                 </ng-template> -->
-              </p-dropdown>
-            </div>
-  
-            <div class="field col-3"  pTooltip="Saisissez la quantité">
-              <label for="">Quantité</label>
-                <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0" (ngModelChange)="changePoid()" ></p-inputNumber>
-            </div>
-  
-            <div class="field col-3"  pTooltip="Choisir l'unité">
-              <label for="">Unité</label>
-              <p-dropdown [options]="units"  name="unit" [(ngModel)]="unitSelectionne" (ngModelChange)="changeUnit()" >
-              </p-dropdown>
-            </div>
-            <div class="field col-3">
-              <button pButton label="Ajouter la recette" type="button" [loading]="loadingLine" class="p-button-primary mt-4" (click)="addNewComposition()" ></button>
-            </div>
-     
+            </p-dropdown>
           </div>
 
-          <div class="info-table">
-            <div class="info-header">
-              <div class="info-header-cell">Recette</div>
-              <div class="info-header-cell">Quantité %</div>
-              <div class="info-header-cell">Cout</div>
-              <div class="info-header-cell">Actions</div>
-            </div>
-
-            <!-- Loop to display details -->
-            <div *ngFor="let detail of compositionDishes,let i=index" class="info-row">
-              <div class="info-cell">{{detail?.recipe?.name}}</div>
-              <div class="info-cell">{{detail?.quantity| number: '1.0-3' }} G</div>
-              <div class="info-cell"><span appPriceFormater [priceValue]="detail.cout | number: '1.0-2'">{{detail?.cout| number: '1.0-3' }}</span>  {{ usercurrency }}</div>
-              <div class="info-cell">
-                <button pButton pRipple type="button"  icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeleteComposition(detail,i)"></button>
-              </div>
-              <div class="nodetail m-2 head-center" *ngIf="compositionDishes.length==0">
-                <label for="">
-                  Aucune recettes
-                </label>
-              </div>
-            </div>
-            
+          <div class="field col-3" pTooltip="Saisissez la quantité">
+            <label for="">Quantité</label>
+            <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite"
+              [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0"
+              (ngModelChange)="changePoid()"></p-inputNumber>
           </div>
-  
-          <!-- <div class="row2 ">
+
+          <div class="field col-3" pTooltip="Choisir l'unité">
+            <label for="">Unité</label>
+            <p-dropdown [options]="units" name="unit" [(ngModel)]="unitSelectionne" (ngModelChange)="changeUnit()">
+            </p-dropdown>
+          </div>
+          <div class="field col-3">
+            <button pButton label="Ajouter la recette" type="button" [loading]="loadingLine"
+              class="p-button-primary mt-4" (click)="addNewComposition()"></button>
+          </div>
+
+        </div>
+
+        <div class="info-table">
+          <div class="info-header">
+            <div class="info-header-cell">Recette</div>
+            <div class="info-header-cell">Quantité %</div>
+            <div class="info-header-cell">Cout</div>
+            <div class="info-header-cell">Actions</div>
+          </div>
+
+          <!-- Loop to display details -->
+          <div *ngFor="let detail of compositionDishes,let i=index" class="info-row">
+            <div class="info-cell">{{detail?.recipe?.name}}</div>
+            <div class="info-cell">{{detail?.quantity| number: '1.0-3' }} G</div>
+            <div class="info-cell"><span appPriceFormater [priceValue]="detail.cout | number: '1.0-2'">{{detail?.cout|
+                number: '1.0-3' }}</span> {{ usercurrency }}</div>
+            <div class="info-cell">
+              <button pButton pRipple type="button" icon="pi pi-trash" class="p-button p-button-text p-button-icon-only"
+                style="width: 20px; height: 20px; font-size: 12px;" (click)="confirmDeleteComposition(detail,i)">
+              </button>
+            </div>
+            <div class="nodetail m-2 head-center" *ngIf="compositionDishes.length==0">
+              <label for="">
+                Aucune recettes
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- <div class="row2 ">
             <div class="ingredients ">
               <div class="listIngredients  ">
                 <div class="entetelist divblue">
@@ -122,105 +134,118 @@
             </div>
   
           </div> -->
-        </div>
-  
-        <!--Image-->
-        <div class="thirdrow grid col-12">
-          <div class="list col-10">
-  
-            <div class="info-table">
-              <div class="info-header">
-                <div class="info-header-cell">Liste des images</div>
-                <div class="info-header-cell">Action</div>
-              </div>
-            
-              <!-- Loop pour afficher les images -->
-              <div *ngFor="let picture of picturesDishes, let i = index" class="info-row">
-                <div class="info-cell">{{ picture?.label }}</div>
-                <div class="info-cell">
-                  <button pButton pRipple type="button" icon="pi pi-trash" class="p-button p-component p-button-text p-button-icon-only" (click)="confirmDeletePicture(picture, i)"></button>
-                </div>
-              </div>
-            
-              <!-- Message si aucune image -->
-              <div class="nodetail m-2 head-center" *ngIf="picturesDishes.length == 0">
-                <label for="">Aucune image</label>
+      </div>
+
+      <!--Image-->
+      <div class="thirdrow grid col-12">
+        <div class="list col-10">
+
+          <div class="info-table">
+            <div class="info-header">
+              <div class="info-header-cell">Liste des images</div>
+              <div class="info-header-cell">Action</div>
+            </div>
+
+            <!-- Loop pour afficher les images -->
+            <div *ngFor="let picture of picturesDishes, let i = index" class="info-row">
+              <div class="info-cell">{{ picture?.label }}</div>
+              <div class="info-cell">
+                <button pButton pRipple type="button" icon="pi pi-trash"
+                  class="p-button p-component p-button-text p-button-icon-only"
+                  (click)="confirmDeletePicture(picture, i)"></button>
               </div>
             </div>
-            
+
+            <!-- Message si aucune image -->
+            <div class="nodetail m-2 head-center" *ngIf="picturesDishes.length == 0">
+              <label for="">Aucune image</label>
+            </div>
           </div>
-  
-          <div class="btn col-2">
-            <button pButton label="Ajouter une image" type="button" [loading]="loading" class="p-button-newline-red mt-2" (click)="clickFileSelector()" ></button>
-          </div>
+
         </div>
-  
-  
-        <button pButton label="Enregistrer" type="submit" [loading]="loadingSave" class="p-button-vert mt-3" [disabled]="!f.valid" ></button>
-      </form>
-  
+
+        <div class="btn col-2">
+          <button pButton label="Ajouter une image" type="button" [loading]="loading" class="p-button-newline-red mt-2"
+            (click)="clickFileSelector()"></button>
+        </div>
+      </div>
+
+
+      <button pButton label="Enregistrer" type="submit" [loading]="loadingSave" class="p-button-vert mt-3"
+        [disabled]="!f.valid"></button>
+    </form>
+
   </div>
-  
+
   <p-toast position="top-center"></p-toast>
-  <p-toast position="top-center" key="tc" ></p-toast>
-  
-  <p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm" rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
-  <input id="image" class="d-none" type="file" accept="image/png, image/gif, image/jpeg" (change)="fileSelecter($event)"/>
+  <p-toast position="top-center" key="tc"></p-toast>
+
+  <p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm"
+    rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+  <input id="image" class="d-none" type="file" accept="image/png, image/gif, image/jpeg"
+    (change)="fileSelecter($event)" />
   <p-overlayPanel #op [style]="{ maxWidth: '50%' ,width: '500px' }">
     <form class="newform p-fluid" #f="ngForm" (ngSubmit)="addNewImage()">
-  
+
       <div class="col-12 grid">
         <div class="field" pTooltip="image">
-          <img class="col-12" [src]="fileBase64" alt="" >
+          <img class="col-12" [src]="fileBase64" alt="">
         </div>
-  
+
         <div class="field col-12" pTooltip="Label de l'image">
-          <input pInputText id="label" [(ngModel)]="picture.label" name="label" type="text" placeholder="Label" required/>
+          <input pInputText id="label" [(ngModel)]="picture.label" name="label" type="text" placeholder="Label"
+            required />
         </div>
-  
+
         <div class="field col-12 " pTooltip="Description de l'image">
-          <textarea pInputTextarea style="min-height: 50px;" rows="3" cols="30" name="description"  [autoResize]="true" [(ngModel)]="picture.description" placeholder="Description"></textarea>
+          <textarea pInputTextarea style="min-height: 50px;" rows="3" cols="30" name="description" [autoResize]="true"
+            [(ngModel)]="picture.description" placeholder="Description"></textarea>
         </div>
-  
+
         <div class="col-12 grid">
-          <button pButton label="Annuler" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid" (click)="cancelAddImage()" ></button>
+          <button pButton label="Annuler" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid"
+            (click)="cancelAddImage()"></button>
           <div class="col"></div>
-          <button pButton label="Valider" type="submit" class="p-button-orange p-2 col-6" [disabled]="!f.valid" ></button>
-  
+          <button pButton label="Valider" type="submit" class="p-button-orange p-2 col-6"
+            [disabled]="!f.valid"></button>
+
         </div>
       </div>
-  
-  
-  
+
+
+
     </form>
   </p-overlayPanel>
-  
+
   <p-dialog header="Image" [(visible)]="visibleImdDialog" [style]="{ maxWidth: '50%' ,width: '500px' }">
     <form class="newform p-fluid" #f="ngForm" (ngSubmit)="addNewImage()">
-  
+
       <div class="col-12 grid">
         <div class="field" pTooltip="image">
-          <img class="col-12" [src]="fileBase64" alt="" >
+          <img class="col-12" [src]="fileBase64" alt="">
         </div>
-  
+
         <div class="field col-12" pTooltip="Label de l'image">
-          <input pInputText id="label" [(ngModel)]="picture.label" name="label" type="text" placeholder="Label" required/>
+          <input pInputText id="label" [(ngModel)]="picture.label" name="label" type="text" placeholder="Label"
+            required />
         </div>
-  
+
         <div class="field col-12 " pTooltip="Description de l'image">
-          <textarea pInputTextarea style="min-height: 50px;" rows="3" cols="30" name="description"  [autoResize]="true" [(ngModel)]="picture.description" placeholder="Description"></textarea>
+          <textarea pInputTextarea style="min-height: 50px;" rows="3" cols="30" name="description" [autoResize]="true"
+            [(ngModel)]="picture.description" placeholder="Description"></textarea>
         </div>
-  
+
         <div class="col-12 grid">
-          <button pButton label="Annuler" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid" (click)="cancelAddImage()" ></button>
+          <button pButton label="Annuler" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid"
+            (click)="cancelAddImage()"></button>
           <div class="col"></div>
-          <button pButton label="Valider" type="submit" class="p-button-orange p-2 col-6" [disabled]="!f.valid" ></button>
-  
+          <button pButton label="Valider" type="submit" class="p-button-orange p-2 col-6"
+            [disabled]="!f.valid"></button>
+
         </div>
       </div>
-  
-  
-  
+
+
+
     </form>
   </p-dialog>
-  

@@ -369,7 +369,7 @@ export class RecipeComponent {
     // this.recipe.brut=this.brut
     // this.recipe.net=this.net
     this.recipe.detailCuisine = this.detailCuisine
-    this.recipe.ratio = 15;
+    this.recipe.ratio = 1.10;
     // this.recipe.preparationInitial=this.preparationInitial
     // this.recipe.preparationIngredient=this.preparationIngredient
     // this.recipe.unit=this.unit
@@ -657,8 +657,8 @@ export class RecipeComponent {
   }
   async getProducts() {
     const user = this.tokenService.getUser();
-    const base = false;
-    await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data => {
+    // const base = false;
+    await this.productService.getAll(user.id).then(data => {
       console.log(data)
       this.products = data;
       // this.products = this.products.filter((element:any) => element.user.id === user.id);

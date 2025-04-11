@@ -122,7 +122,7 @@ export class CatalogueDePrixComponent implements OnInit {
         this.resClient = data;
         this.products = data.content;
         this.totalRows = data.totalElements;
-        this.dataSource.data = data.content; // Ajoutez cette ligne
+        this.dataSource.data = data.content.filter((element:any)=> element.product.secondaryRecipe == false); // Ajoutez cette ligne
         console.log("new call")
 
       } else if (

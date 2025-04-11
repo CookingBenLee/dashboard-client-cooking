@@ -212,7 +212,7 @@ openDialogProduct(event: any){
     // console.log("Product unit:", this.productData.unit);
     this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
     // console.log("Product category:", this.productData.category);
-    this.productData.lostpercentage = 0;
+    // this.productData.lostpercentage = 0;
     this.productDialog = true;
     this.recipe.principaleRecipe = true;
   }
@@ -491,11 +491,11 @@ openDialogProduct(event: any){
   }
   async getProducts(){
     const user = this.tokenService.getUser();
-    const base = false;
-    await this.productService.getUndeletedByUserAndBaseRecipe(base).then(data =>{
+    // const base = false;
+    await this.productService.getAll(user.id).then(data =>{
       console.log(data)
       this.products=data;
-      this.products = this.products.filter((element:any) => element.user.id === user.id);
+      // this.products = this.products.filter((element:any) => element.user.id === user.id);
       //this.productes[0]=this.products[0]
       //this.unitys[0]=this.products[0].unit
     })
