@@ -115,6 +115,7 @@ export class FournisseurComponent implements OnInit{
 
  openDialogAdd() {
   this.resetFields();
+  this.shopData.isActive = true;
   this.dialog.open(this.dialogTemplate, {
     width: '600px', height: '700px'
   });
@@ -263,6 +264,7 @@ resetFields() {
        this.activeIndex=0
        //this.addressesSelected=[]
        this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: this.sucess});
+       this.resetFields();
      },
      (error: any)=>{
        //this.isError=true

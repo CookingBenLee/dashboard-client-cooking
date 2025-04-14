@@ -48,6 +48,8 @@ import { CommonModule } from '@angular/common';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Purchase } from 'src/app/services/purchase/Purchase';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-preparationrecipe',
@@ -95,8 +97,8 @@ export class PreparationrecipeComponent {
     public tableShort: TableShortService,public ref: DynamicDialogRef ) { 
       this.data = this.config.data
       this.recetteSelectione = this.data;
+      this.recetteSelectione.net = 0.0;
       console.log(this.config.data);
-      
     }
 
     
@@ -114,7 +116,8 @@ export class PreparationrecipeComponent {
     // console.log(this.recetteSelectione);
     
     this.changePlat();
-    this.getAll()
+    this.getAll();
+    this.recetteSelectione.net = 0;
   }
 
   getAll() {
@@ -180,6 +183,7 @@ export class PreparationrecipeComponent {
   }
 
 
+  
 
   async changePlat() {
     console.log("changed---------------------------------");
@@ -195,7 +199,7 @@ export class PreparationrecipeComponent {
       //this.loadingPage=false
     } else {
       this.loadingPage = true
-      if (this.recetteSelectione.net == null) this.recetteSelectione.net = 1
+      if (this.recetteSelectione.net == null) this.recetteSelectione.net = 0
       //
       if (this.recetteSelectione.ratio == null) {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: "Le plat sélectionné n'a pas de ratio spécifié, impossible d'effectuer les calculs." });
@@ -311,7 +315,7 @@ export class PreparationrecipeComponent {
   // }
 
 
-  public async generate(): Promise<void> {
+  //public async generate(): Promise<void> {
 
 
     //   html2canvas(DATA).then((canvas) => {
@@ -365,8 +369,63 @@ export class PreparationrecipeComponent {
 
     // }
 
-  }
+ // }
 
+ public async generate(): Promise<void> {
+
+
+  //   html2canvas(DATA).then((canvas) => {
+  //     let fileWidth = 210;
+  //     let fileHeight = (canvas.height * fileWidth) / canvas.width;
+  //     const FILEURI = canvas.toDataURL('image/png');
+  //     let PDF = new jsPDF('portrait', 'mm', 'a4',true);
+  //     let position = 0;
+  //     PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+  //     PDF.save(nom);
+  //   });
+
+    try{
+      this.loadingPage=true
+      this.generating = true;
+      var div= await <HTMLDivElement>document.querySelector(".genarating")
+      await div.classList.remove("d-none")
+
+      var nom = this.recetteSelectione.name + '.pdf';
+
+
+      // Supposons que votre élément #invoice est le conteneur principal à convertir en PDF
+      let DATA: any = await document.getElementById('invoice');
+
+      html2canvas(DATA).then((canvas) => {
+        let fileWidth = 210;
+        //let pageHeight = 297; // A4 dimensions
+        let pageHeight = fileWidth * 1.414; // Aspect ratio of A4
+        //let pageHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('portrait', 'mm', 'a4',true);
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save(nom);
+
+        this.loadingPage=false
+        this.generating = false;
+        div.classList.add("d-none")
+
+      },(error:any)=>{
+        this.generating = false;
+        div.classList.add("d-none")
+        this.loadingPage=false
+        this.messageService.add({key:'tc', severity: 'error', summary: 'Info', detail: `Erreur lors de la géneration du fichier.` });
+      });
+    }catch(e){
+      this.loadingPage=false
+      this.messageService.add({key:'tc', severity: 'error', summary: 'Info', detail: `Erreur lors de la géneration du fichier.` });
+
+    }
+
+  }
 
 
   async changeGenaratingValue() {

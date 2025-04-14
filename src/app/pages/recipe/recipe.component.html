@@ -215,7 +215,7 @@
                   <div class="info-cell">{{ detail.proportion }}</div>
                   <div class="info-cell">{{ detail.preparationIngredient }}</div>
                   <div class="info-cell">
-                    <button pButton pRipple type="button" icon="pi pi-trash"
+                    <button pButton pRipple type="button" icon="pi pi-trash" style="width: 15px; height: 15px; font-size: 12px;"
                       class="p-button p-component p-button-text p-button-icon-only"
                       (click)="confirmDeleteDetail(detail, i)"></button>
                   </div>
@@ -311,14 +311,14 @@
                 [(ngModel)]="productData.conditioning"></p-dropdown>
             </div>
           </div>
-          <div class="col-6">
+          <!-- <div class="col-6">
             <div class="field">
               <label htmlFor="lostpercentage">Pourcentage de perte</label>
               <p-inputNumber mode="decimal" [minFractionDigits]="2" name="lostpercentage" id="lostpercentage"
                 [(ngModel)]="productData.lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
               </p-inputNumber>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- <p>Description</p>
