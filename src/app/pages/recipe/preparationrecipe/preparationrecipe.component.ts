@@ -95,8 +95,8 @@ export class PreparationrecipeComponent {
     public tableShort: TableShortService,public ref: DynamicDialogRef ) { 
       this.data = this.config.data
       this.recetteSelectione = this.data;
+      this.recetteSelectione.net = 0.0;
       console.log(this.config.data);
-      
     }
 
     
@@ -114,7 +114,8 @@ export class PreparationrecipeComponent {
     // console.log(this.recetteSelectione);
     
     this.changePlat();
-    this.getAll()
+    this.getAll();
+    this.recetteSelectione.net = 0;
   }
 
   getAll() {
@@ -180,6 +181,7 @@ export class PreparationrecipeComponent {
   }
 
 
+  
 
   async changePlat() {
     console.log("changed---------------------------------");
@@ -195,7 +197,7 @@ export class PreparationrecipeComponent {
       //this.loadingPage=false
     } else {
       this.loadingPage = true
-      if (this.recetteSelectione.net == null) this.recetteSelectione.net = 1
+      if (this.recetteSelectione.net == null) this.recetteSelectione.net = 0
       //
       if (this.recetteSelectione.ratio == null) {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: "Le plat sélectionné n'a pas de ratio spécifié, impossible d'effectuer les calculs." });
