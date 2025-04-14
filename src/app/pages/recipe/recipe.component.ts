@@ -442,7 +442,7 @@ export class RecipeComponent {
       // console.log("Product unit:", this.productData.unit);
       this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
       // console.log("Product category:", this.productData.category);
-      this.productData.lossPercentage = 15;
+      this.productData.lossPercentage = 0.15;
       this.productDialog = true;
       this.productData.secondaryRecipe = true;
       //this.recipe.baseRecipe = false;
