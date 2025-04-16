@@ -460,6 +460,7 @@ export class RecipeComponent {
       console.log(this.productData);
       this.productData.secondaryRecipe = true;
       this.productData.lossPercentage = 0.1;
+      // this.recipeService.getById()
       this.productService.create(this.productData).then((data) =>{
         this.loading=false
         //this.isSuccess=true
