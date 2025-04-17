@@ -1,5 +1,7 @@
 <div class="dialog-container">
-  <h2 class="dialog-title">Détails du Plat</h2>
+  <div class="dialog-containe">
+    <h3 class="dialog-title">Détails du Plat</h3>
+  </div>
 
   <div class="info-table">
     <div class="info-header">
@@ -30,7 +32,13 @@
 
   <p class="divider mt-4"></p>
 
-  <h3 class="dialog-title">Composition du Plat</h3>
+ 
+  <div class="dialog-containe">
+    <h3 class="dialog-title">Composition du Plat</h3>
+  </div>
+  
+    <!-- <h3 class="dialog-title" >Composition du Plat</h3> -->
+ 
   <div class="info-table">
     <div class="info-header">
       <div class="info-header-cell">Recette</div>
@@ -51,7 +59,10 @@
 
   <p class="divider mt-4"></p>
 
-  <h3 class="dialog-title">Images du Plat</h3>
+  <div class="dialog-containe">
+    <h3 class="dialog-title">Images du Plat</h3>
+  </div>
+
   <div class="info-table">
     <div class="info-row" *ngFor="let picture of picturesDishes" (click)="showImage(picture, $event)">
       <div class="info-cell label">{{ picture?.label }}</div>
