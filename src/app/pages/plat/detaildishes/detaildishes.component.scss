@@ -5,13 +5,20 @@
     border-radius: 8px;
   }
   
+  .dialog-containe {
+    text-align: center; /* Centrer les éléments inline ou inline-block à l'intérieur */
+  }
+  
   .dialog-title {
-    text-align: center;
+    display: inline-block;
     font-size: 22px;
     font-weight: bold;
     color: #4a4a4a;
-    margin-bottom: 16px;
+    border: 2px solid #000000;
+    padding: 4px 8px;
   }
+  
+  
   
   .info-table {
     width: 100%;
