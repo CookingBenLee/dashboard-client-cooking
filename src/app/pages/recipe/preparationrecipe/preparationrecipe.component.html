@@ -89,7 +89,7 @@
             <div class="info-cell">{{detail?.brut | number: '1.0-3' }}  {{detail?.ingredient?.unit?.code}}</div>
             <!-- <div class="info-cell">{{detail?.preparationIngredient }}</div> -->
             <div class="info-cell">{{detail?.cout| number: '1.0-2' }} {{ usercurrency }} </div>
-            <div class="info-cell">{{detail?.recipe?.stock }} </div>
+            <div class="info-cell">{{detail?.recipe?.stock }} {{detail?.ingredient?.unit?.code}}</div>
             <div class="nodetail m-2 head-center" *ngIf="!recetteSelectione.name">
               <label for="">
                 Aucun ingrédients
