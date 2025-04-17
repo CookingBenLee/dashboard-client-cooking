@@ -176,6 +176,7 @@ export class PreparationrecipeComponent {
     await this.detailRecipeService.byRecipe(recette.id).then(data => {
       console.log(data)
       this.detailsDishes = data
+      console.log(this.detailsDishes);
       this.detailsDishes = this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));
 
       this.changePoid()
