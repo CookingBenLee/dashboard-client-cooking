@@ -29,7 +29,7 @@ export const navItems: NavItem[] = [
   //   route: 'home/planifier',
   // },
   {
-    displayName: 'Liste des planifications',
+    displayName: 'Mes planifications',
     iconName: 'tabler:point',
     route: 'home/planification',
   },
