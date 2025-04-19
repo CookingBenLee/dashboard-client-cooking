@@ -72,27 +72,31 @@
           <label for="head">Détails des Ingrédients</label>
         </div>-->
 
-        <table class="info-table">
-          <thead>
-            <tr class="info-header">
-              <th class="info-header-cell">Nom Ingrédient</th>
-              <th class="info-header-cell">Poids Net (KG)</th>
-              <th class="info-header-cell">Poids Brut (KG)</th>
-              <th class="info-header-cell">Coût</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let detail of detailsDishes" class="info-row">
-              <td class="info-cell">{{ detail?.ingredient?.name }}</td>
-              <td class="info-cell">{{ detail?.net | number: '1.0-3' }} {{ detail?.ingredient?.unit?.code }}</td>
-              <td class="info-cell">{{ detail?.brut | number: '1.0-3' }} {{ detail?.ingredient?.unit?.code }}</td>
-              <td class="info-cell">{{ detail?.cout | number: '1.0-2' }} {{ usercurrency }}</td>
-            </tr>
-            <tr *ngIf="detailsDishes.length === 0">
-              <td class="nodetail" colspan="4">Aucun ingrédient</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="info-table">
+          <div class="info-header">
+            <div class="info-header-cell">Nom Ingrédient</div>
+            <div class="info-header-cell">Poid Net(KG)</div>
+            <div class="info-header-cell">Poid Brut(KG)</div>
+            <!-- <div class="info-header-cell">Préparation</div> -->
+            <div class="info-header-cell">Coût</div>
+            <div class="info-header-cell">Quantité Produit en Stock</div>
+          </div>
+
+          <!-- Loop to display details -->
+          <div *ngFor="let detail of detailsDishes,let i=index" class="info-row">
+            <div class="info-cell">{{detail?.ingredient?.name}}</div>
+            <div class="info-cell">{{detail?.net| number: '1.0-3' }} {{detail?.ingredient?.unit?.code}}</div>
+            <div class="info-cell">{{detail?.brut | number: '1.0-3' }}  {{detail?.ingredient?.unit?.code}}</div>
+            <!-- <div class="info-cell">{{detail?.preparationIngredient }}</div> -->
+            <div class="info-cell">{{detail?.cout| number: '1.0-2' }} {{ usercurrency }} </div>
+            <div class="info-cell">{{detail?.recipe?.stock }} {{detail?.ingredient?.unit?.code}}</div>
+            <div class="nodetail m-2 head-center" *ngIf="!recetteSelectione.name">
+              <label for="">
+                Aucun ingrédients
+              </label>
+            </div>
+          </div>
+        </div>
         
       </div>
       <!--Detail cuisine-->
