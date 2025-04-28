@@ -19,6 +19,7 @@ import { RecipeComponent } from './pages/recipe/recipe.component';
 import { LoginGuard } from './guards/login.guard';
 import { NewSimulationEconomiqueComponent } from './pages/planification/new-simulation-economique/new-simulation-economique.component';
 import { ListSimulationEconomiqueComponent } from './pages/planification/list-simulation-economique/list-simulation-economique.component';
+import { PlanningComponent } from './pages/planning/planning.component';
 
 export const routes: Routes = [
   {
@@ -87,6 +88,10 @@ export const routes: Routes = [
       {
         path:'planifier',
         component:NewSimulationEconomiqueComponent,
+      },
+      {
+        path:'planning',
+        component:PlanningComponent,
       },
       {
         path:'recette',

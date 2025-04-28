@@ -1,0 +1,240 @@
+<div class="planning-container">
+  <!-- Navigation Tabs -->
+  <div class="navigation-tabs">
+    <button class="nav-tab" [class.is-active]="currentView === 'list'" (click)="switchView('list')">
+      <span class="icon">
+        <fa-icon [icon]="faList"></fa-icon>
+      </span>
+      <span>Liste des Planifications</span>
+    </button>
+    <button class="nav-tab" [class.is-active]="currentView === 'new'" (click)="switchView('new')">
+      <span class="icon">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </span>
+      <span>Nouvelle Planification</span>
+    </button>
+    <button class="nav-tab" [class.is-active]="currentView === 'details'" (click)="switchView('details')">
+      <span class="icon">
+        <fa-icon [icon]="faInfoCircle"></fa-icon>
+      </span>
+      <span>Détails Planification</span>
+    </button>
+  </div>
+
+  <!-- Show calendar and daily schedule only in list view -->
+  <ng-container *ngIf="currentView === 'list'">
+    <div class="calendar-wrapper">
+      <div class="calendar-header">
+        <button class="button is-small" (click)="previousMonth()">&lt;</button>
+        <span class="month-year">{{ currentMonth | date:'MMMM yyyy':'':'fr-FR' }}</span>
+        <button class="button is-small" (click)="nextMonth()">&gt;</button>
+      </div>
+
+      <div class="calendar-grid">
+        <div class="weekdays">
+          <div class="weekday">Dim</div>
+          <div class="weekday">Lun</div>
+          <div class="weekday">Mar</div>
+          <div class="weekday">Mer</div>
+          <div class="weekday">Jeu</div>
+          <div class="weekday">Ven</div>
+          <div class="weekday">Sam</div>
+        </div>
+
+        <div class="days">
+          <div class="week" *ngFor="let week of weeks">
+            <div class="day" 
+                 *ngFor="let date of week"
+                 [class.other-month]="!isCurrentMonth(date)"
+                 [class.selected]="isSelectedDate(date)"
+                 [class.has-planning]="hasPlanning(date)"
+                 (click)="onDateSelect(date)">
+              <span class="day-number">{{ date.getDate() }}</span>
+              <span class="week-number" *ngIf="date.getDay() === 0">S{{ getWeekNumber(date) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="daily-schedule">
+      <h3 class="schedule-title">Programme du {{ selectedDate | date:'dd MMMM yyyy':'':'fr-FR' }}</h3>
+
+      <div class="schedule-grid">
+      
+        <div class="time-section">
+          <h4 class="period-title">Matin</h4>
+          <div class="meal-slots">
+            <div class="meal-slot" *ngFor="let slot of currentPlanning.matin">
+              <div class="meal-info">
+                <span class="meal-id">{{ slot.type }}</span>
+                <span class="meal-type">Quantité: {{ slot.number }}</span>
+                <span class="meal-time">{{ slot.timeSlot }}</span>
+              </div>
+            </div>
+            <div class="empty-slot" *ngIf="currentPlanning.matin.length === 0">
+              Aucun repas planifié
+            </div>
+          </div>
+        </div>
+
+        <div class="time-section">
+          <h4 class="period-title">Midi</h4>
+          <div class="meal-slots">
+            <div class="meal-slot" *ngFor="let slot of currentPlanning.midi">
+              <div class="meal-info">
+                <span class="meal-id">{{ slot.type }}</span>
+                <span class="meal-type">Quantité: {{ slot.number }}</span>
+                <span class="meal-time">{{ slot.timeSlot }}</span>
+              </div>
+            </div>
+            <div class="empty-slot" *ngIf="currentPlanning.midi.length === 0">
+              Aucun repas planifié
+            </div>
+          </div>
+        </div>
+
+   
+        <div class="time-section">
+          <h4 class="period-title">Soir</h4>
+          <div class="meal-slots">
+            <div class="meal-slot" *ngFor="let slot of currentPlanning.soir">
+              <div class="meal-info">
+                <span class="meal-id">{{ slot.type }}</span>
+                <span class="meal-type">Quantité: {{ slot.number }}</span>
+                <span class="meal-time">{{ slot.timeSlot }}</span>
+              </div>
+            </div>
+            <div class="empty-slot" *ngIf="currentPlanning.soir.length === 0">
+              Aucun repas planifié
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <ng-container *ngIf="currentView === 'new'">
+    <app-nouvelle-planification
+      [isOpen]="true"
+      [selectedDate]="selectedDate"
+      [displayMode]="'card'"
+      (close)="switchView('list')"
+      (save)="onSavePlanning($event)">
+    </app-nouvelle-planification>
+  </ng-container>
+
+
+  <ng-container *ngIf="currentView === 'details'">
+    <div class="details-container">
+      <h2>Détails Planification</h2>
+      
+   
+      <div class="filters-section">
+        <div class="date-filters">
+          <div class="filter-group">
+            <label for="startDate">Date début</label>
+            <input 
+              type="date" 
+              id="startDate" 
+              [(ngModel)]="filterStartDate" 
+              class="date-input">
+          </div>
+          <div class="filter-group">
+            <label for="endDate">Date fin</label>
+            <input 
+              type="date" 
+              id="endDate" 
+              [(ngModel)]="filterEndDate" 
+              class="date-input">
+          </div>
+          <button class="filter-button" (click)="applyDateFilter()">
+            <fa-icon [icon]="faSearch"></fa-icon> Afficher
+          </button>
+        </div>
+      </div>
+
+      
+      <div class="planning-list">
+        <div class="list-header">
+          <div class="header-cell">Date</div>
+          <div class="header-cell">Période</div>
+          <div class="header-cell">Plat</div>
+          <div class="header-cell">Quantité</div>
+          <div class="header-cell">Horaire</div>
+          <div class="header-cell">Actions</div>
+        </div>
+        
+        <div class="list-body">
+          <div class="list-row" *ngFor="let planning of filteredPlannings">
+            <div class="cell">{{ planning.date_planning | date:'dd/MM/yyyy':'':'fr-FR' }}</div>
+            <div class="cell">
+              <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
+                {{ planning.periode }}
+              </ng-container>
+              <ng-container *ngIf="editingPlanning && editingPlanning.id === planning.id">
+                <select [(ngModel)]="editingPlanning!.periode" class="edit-input">
+                  <option value="Matin">Matin</option>
+                  <option value="Midi">Midi</option>
+                  <option value="Soir">Soir</option>
+                </select>
+              </ng-container>
+            </div>
+            <div class="cell">
+              <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
+                {{ getDishName(planning.refdishes.toString()) }}
+              </ng-container>
+              <ng-container *ngIf="editingPlanning && editingPlanning.id === planning.id">
+                <select [(ngModel)]="editingPlanning!.refdishes" class="edit-input">
+                  <option *ngFor="let dish of dishes" [value]="dish.id">{{ dish.name }}</option>
+                </select>
+              </ng-container>
+            </div>
+            <div class="cell">
+              <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
+                {{ planning.quantite }}
+              </ng-container>
+              <ng-container *ngIf="editingPlanning && editingPlanning.id === planning.id">
+                <input type="number" [(ngModel)]="editingPlanning!.quantite" class="edit-input" min="1">
+              </ng-container>
+            </div>
+            <div class="cell">
+              <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
+                {{ planning.heuredebut }} - {{ planning.heurefin }}
+              </ng-container>
+              <ng-container *ngIf="editingPlanning && editingPlanning.id === planning.id">
+                <div class="time-inputs">
+                  <input type="time" [(ngModel)]="editingPlanning!.heuredebut" class="edit-input">
+                  <span>-</span>
+                  <input type="time" [(ngModel)]="editingPlanning!.heurefin" class="edit-input">
+                </div>
+              </ng-container>
+            </div>
+            <div class="cell">
+              <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
+                <button class="action-button edit" (click)="startEditing(planning)">
+                  <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+                <button class="action-button delete" (click)="deletePlanning(planning.id)">
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="editingPlanning && editingPlanning.id === planning.id">
+                <button class="action-button save" (click)="saveEditing()">
+                  <fa-icon [icon]="faCheck"></fa-icon>
+                </button>
+                <button class="action-button cancel" (click)="cancelEditing()">
+                  <fa-icon [icon]="faTimes"></fa-icon>
+                </button>
+              </ng-container>
+            </div>
+          </div>
+          
+          <div class="empty-message" *ngIf="filteredPlannings.length === 0">
+            Aucune planification trouvée pour cette période
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div> 
