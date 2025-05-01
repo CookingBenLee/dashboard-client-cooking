@@ -5,7 +5,13 @@
       <span class="icon">
         <fa-icon [icon]="faList"></fa-icon>
       </span>
-      <span>Liste des Planifications</span>
+      <span>Planification Globale</span>
+    </button>
+    <button class="nav-tab" [class.is-active]="currentView === 'details'" (click)="switchView('details')">
+      <span class="icon">
+        <fa-icon [icon]="faInfoCircle"></fa-icon>
+      </span>
+      <span>Details Planification</span>
     </button>
     <button class="nav-tab" [class.is-active]="currentView === 'new'" (click)="switchView('new')">
       <span class="icon">
@@ -13,17 +19,11 @@
       </span>
       <span>Nouvelle Planification</span>
     </button>
-    <button class="nav-tab" [class.is-active]="currentView === 'details'" (click)="switchView('details')">
-      <span class="icon">
-        <fa-icon [icon]="faInfoCircle"></fa-icon>
-      </span>
-      <span>Détails Planification</span>
-    </button>
   </div>
 
   <!-- Show calendar and daily schedule only in list view -->
   <ng-container *ngIf="currentView === 'list'">
-    <div class="calendar-wrapper">
+    <div class="calendar-wrapper" [style.height]="'300px'">
       <div class="calendar-header">
         <button class="button is-small" (click)="previousMonth()">&lt;</button>
         <span class="month-year">{{ currentMonth | date:'MMMM yyyy':'':'fr-FR' }}</span>
@@ -60,51 +60,19 @@
       <h3 class="schedule-title">Programme du {{ selectedDate | date:'dd MMMM yyyy':'':'fr-FR' }}</h3>
 
       <div class="schedule-grid">
-      
-        <div class="time-section">
-          <h4 class="period-title">Matin</h4>
+        <div class="time-section" *ngFor="let period of ['matin', 'midi', 'soir']">
+          <h4 class="period-title">{{ period | titlecase }}</h4>
           <div class="meal-slots">
-            <div class="meal-slot" *ngFor="let slot of currentPlanning.matin">
+            <div class="meal-slot" *ngFor="let slot of currentPlanning[period]" (click)="showDishDetails(slot.id)">
               <div class="meal-info">
-                <span class="meal-id">{{ slot.type }}</span>
-                <span class="meal-type">Quantité: {{ slot.number }}</span>
-                <span class="meal-time">{{ slot.timeSlot }}</span>
+                <span class="meal-name">{{ getDishName(slot.id) }}</span>
+                <span class="separator">|</span>
+                <span class="meal-quantity">Qte : {{ slot.number }}</span>
+                <span class="separator">|</span>
+                <span class="meal-category">{{ getDishCategory(slot.id) }}</span>
               </div>
             </div>
-            <div class="empty-slot" *ngIf="currentPlanning.matin.length === 0">
-              Aucun repas planifié
-            </div>
-          </div>
-        </div>
-
-        <div class="time-section">
-          <h4 class="period-title">Midi</h4>
-          <div class="meal-slots">
-            <div class="meal-slot" *ngFor="let slot of currentPlanning.midi">
-              <div class="meal-info">
-                <span class="meal-id">{{ slot.type }}</span>
-                <span class="meal-type">Quantité: {{ slot.number }}</span>
-                <span class="meal-time">{{ slot.timeSlot }}</span>
-              </div>
-            </div>
-            <div class="empty-slot" *ngIf="currentPlanning.midi.length === 0">
-              Aucun repas planifié
-            </div>
-          </div>
-        </div>
-
-   
-        <div class="time-section">
-          <h4 class="period-title">Soir</h4>
-          <div class="meal-slots">
-            <div class="meal-slot" *ngFor="let slot of currentPlanning.soir">
-              <div class="meal-info">
-                <span class="meal-id">{{ slot.type }}</span>
-                <span class="meal-type">Quantité: {{ slot.number }}</span>
-                <span class="meal-time">{{ slot.timeSlot }}</span>
-              </div>
-            </div>
-            <div class="empty-slot" *ngIf="currentPlanning.soir.length === 0">
+            <div class="empty-slot" *ngIf="currentPlanning[period].length === 0">
               Aucun repas planifié
             </div>
           </div>
@@ -113,6 +81,32 @@
     </div>
   </ng-container>
 
+  <div class="dish-details" *ngIf="currentView === 'details' && selectedDish">
+    <div class="details-header">
+      <h3>Détails du plat</h3>
+      <button class="close-button" (click)="switchView('list')">
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </div>
+    <div class="details-content">
+      <div class="detail-row">
+        <span class="detail-label">Nom du plat:</span>
+        <span class="detail-value">{{ selectedDish.dishName }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Quantité:</span>
+        <span class="detail-value">{{ selectedDish.quantity }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Catégorie:</span>
+        <span class="detail-value">{{ selectedDish.category }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Période:</span>
+        <span class="detail-value">{{ selectedDish.period | titlecase }}</span>
+      </div>
+    </div>
+  </div>
 
   <ng-container *ngIf="currentView === 'new'">
     <app-nouvelle-planification
@@ -161,7 +155,7 @@
           <div class="header-cell">Période</div>
           <div class="header-cell">Plat</div>
           <div class="header-cell">Quantité</div>
-          <div class="header-cell">Horaire</div>
+          <div class="header-cell">Catégorie</div>
           <div class="header-cell">Actions</div>
         </div>
         
@@ -180,15 +174,8 @@
                 </select>
               </ng-container>
             </div>
-            <div class="cell">
-              <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
-                {{ getDishName(planning.refdishes.toString()) }}
-              </ng-container>
-              <ng-container *ngIf="editingPlanning && editingPlanning.id === planning.id">
-                <select [(ngModel)]="editingPlanning!.refdishes" class="edit-input">
-                  <option *ngFor="let dish of dishes" [value]="dish.id">{{ dish.name }}</option>
-                </select>
-              </ng-container>
+            <div class="cell" (click)="showDishDetails(planning.refdishes.toString())">
+              {{ getDishName(planning.refdishes.toString()) }}
             </div>
             <div class="cell">
               <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
@@ -199,16 +186,7 @@
               </ng-container>
             </div>
             <div class="cell">
-              <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
-                {{ planning.heuredebut }} - {{ planning.heurefin }}
-              </ng-container>
-              <ng-container *ngIf="editingPlanning && editingPlanning.id === planning.id">
-                <div class="time-inputs">
-                  <input type="time" [(ngModel)]="editingPlanning!.heuredebut" class="edit-input">
-                  <span>-</span>
-                  <input type="time" [(ngModel)]="editingPlanning!.heurefin" class="edit-input">
-                </div>
-              </ng-container>
+              {{ getDishCategory(planning.refdishes.toString()) }}
             </div>
             <div class="cell">
               <ng-container *ngIf="!editingPlanning || editingPlanning.id !== planning.id">
@@ -237,4 +215,11 @@
       </div>
     </div>
   </ng-container>
+
+  <!-- Add the dish details popup component -->
+  <app-dish-details-popup
+    [dish]="selectedDish"
+    [isVisible]="showDishPopup"
+    (onClose)="closeDishPopup()">
+  </app-dish-details-popup>
 </div> 

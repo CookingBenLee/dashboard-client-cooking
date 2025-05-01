@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { Dishes } from '../dishes/Dishes';
 
 export interface PlanningPayload {
   refdishes: number;
@@ -21,6 +22,7 @@ export interface PlanningResponse {
   refcompteuser: number;
   created_at: string;
   updated_at: string;
+  category?: string;
 }
 
 export interface IPlanningService {
@@ -31,5 +33,6 @@ export interface IPlanningService {
   deletePlanning(id: number): Observable<void>;
   hasPlanning(date: Date): Observable<boolean>;
   getAllPlannings(): Observable<PlanningResponse[]>;
-  getDishes(): Observable<Array<{ id: string; name: string }>>;
+  getDishes(): Observable<Array<{ id: string; name: string; category: string }>>;
+  getDishDetails(dishId: string): Observable<Dishes>;
 } 

@@ -8,11 +8,13 @@
         <button class="delete" aria-label="close" (click)="closeModal()"></button>
       </header>
       <section class="modal-card-body">
-        <div class="notification is-success" *ngIf="successMessage">
-          {{ successMessage }}
-        </div>
-        <div class="notification is-danger" *ngIf="errorMessage">
-          {{ errorMessage }}
+        <div class="notification-container" *ngIf="errorMessage || successMessage">
+          <div class="notification is-danger" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+          <div class="notification is-success" *ngIf="successMessage">
+            {{ successMessage }}
+          </div>
         </div>
         <div class="form-container">
           <ng-container *ngTemplateOutlet="formFields"></ng-container>
@@ -36,11 +38,13 @@
 <ng-template #cardMode>
   <div class="planification-card">
     <h2 class="card-title">Nouvelle Planification</h2>
-    <div class="notification is-success" *ngIf="successMessage">
-      {{ successMessage }}
-    </div>
-    <div class="notification is-danger" *ngIf="errorMessage">
-      {{ errorMessage }}
+    <div class="notification-container" *ngIf="errorMessage || successMessage">
+      <div class="notification is-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="notification is-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
     </div>
     <div class="form-container">
       <ng-container *ngTemplateOutlet="formFields"></ng-container>

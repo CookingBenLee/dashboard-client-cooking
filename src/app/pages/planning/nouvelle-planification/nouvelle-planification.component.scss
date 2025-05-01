@@ -655,4 +655,52 @@
       }
     }
   }
+}
+
+/* Style pour le conteneur des notifications */
+.notification-container {
+  position: fixed;
+  top: 20px; /* Distance depuis le haut de l'écran */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-in-out;
+}
+
+.notification.is-danger {
+  background-color: #fff;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.notification.is-success {
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 } 

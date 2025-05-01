@@ -7,6 +7,7 @@ import { PlanningPayload, PlanningResponse } from '../../services/planning/plann
 import { NouvellePlanificationComponent } from './nouvelle-planification/nouvelle-planification.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faList, faPlus, faInfoCircle, faSearch, faEdit, faTrash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { DishDetailsPopupComponent } from '../plat/dish-details-popup/dish-details-popup.component';
 
 registerLocaleData(localeFr);
 
@@ -20,7 +21,8 @@ registerLocaleData(localeFr);
     FormsModule,
     NouvellePlanificationComponent,
     DatePipe,
-    FontAwesomeModule
+    FontAwesomeModule,
+    DishDetailsPopupComponent
   ]
 })
 export class PlanningComponent implements OnInit {
@@ -34,28 +36,29 @@ export class PlanningComponent implements OnInit {
   faCheck = faCheck;
   faTimes = faTimes;
 
+  currentView: 'list' | 'details' | 'new' = 'list';
   selectedDate: Date = new Date();
   currentMonth: Date = new Date();
-  currentView: 'list' | 'new' | 'details' = 'list';
-  isModalOpen = false;
   weeks: Date[][] = [];
-  selectedPeriod: 'matin' | 'midi' | 'soir' = 'matin';
-  isNewPlanningView = false;
-  currentPlanning: DailyPlanning = {
+  currentPlanning: any = {
     matin: [],
     midi: [],
     soir: []
   };
-  
+  selectedDish: any = null;
   
   filterStartDate: string = '';
   filterEndDate: string = '';
   allPlannings: PlanningResponse[] = [];
   filteredPlannings: PlanningResponse[] = [];
   editingPlanning: PlanningResponse | null = null;
-  dishes: Array<{ id: string; name: string }> = [];
+  dishes: Array<{ id: string; name: string; category: string }> = [];
 
   planningLines: { date: Date; dish: string; quantity: number; startTime: string; endTime: string; period: string }[] = [];
+
+  categories: string[] = ['Entrée', 'Plat Principal', 'Dessert', 'Collation'];
+
+  showDishPopup = false;
 
   constructor(private planningService: MockPlanningService) {
     this.generateCalendar();
@@ -64,7 +67,32 @@ export class PlanningComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadPlanningForDate(this.selectedDate);
+    this.loadTodayPlanning();
+  }
+
+  loadTodayPlanning() {
+    // Load today's planning by default
+    this.onDateSelect(new Date());
+  }
+
+  showDishDetails(dishId: string) {
+    // Get full dish details from the service
+    this.planningService.getDishDetails(dishId).subscribe({
+      next: (dish) => {
+        this.selectedDish = dish;
+        this.showDishPopup = true;
+      },
+      error: (error) => {
+        console.error('Error loading dish details:', error);
+      }
+    });
+  }
+
+  switchView(view: 'list' | 'details' | 'new') {
+    this.currentView = view;
+    if (view === 'list') {
+      this.selectedDish = null;
+    }
   }
 
   private loadPlanningForDate(date: Date): void {
@@ -87,22 +115,22 @@ export class PlanningComponent implements OnInit {
   private updateCurrentPlanning(plannings: PlanningResponse[]): void {
     this.currentPlanning = {
       matin: plannings.filter(p => p.periode === 'Matin').map(p => ({
-        id: p.id.toString(),
-        number: p.quantite.toString().padStart(2, '0'),
+        id: p.refdishes.toString(),
+        number: p.quantite.toString(),
         type: this.getDishName(p.refdishes.toString()),
         timeSlot: `${p.heuredebut}-${p.heurefin}`,
         date: new Date(p.date_planning)
       })),
       midi: plannings.filter(p => p.periode === 'Midi').map(p => ({
-        id: p.id.toString(),
-        number: p.quantite.toString().padStart(2, '0'),
+        id: p.refdishes.toString(),
+        number: p.quantite.toString(),
         type: this.getDishName(p.refdishes.toString()),
         timeSlot: `${p.heuredebut}-${p.heurefin}`,
         date: new Date(p.date_planning)
       })),
       soir: plannings.filter(p => p.periode === 'Soir').map(p => ({
-        id: p.id.toString(),
-        number: p.quantite.toString().padStart(2, '0'),
+        id: p.refdishes.toString(),
+        number: p.quantite.toString(),
         type: this.getDishName(p.refdishes.toString()),
         timeSlot: `${p.heuredebut}-${p.heurefin}`,
         date: new Date(p.date_planning)
@@ -201,11 +229,11 @@ export class PlanningComponent implements OnInit {
   }
 
   openNewPlanningModal(): void {
-    this.isModalOpen = true;
+    this.currentView = 'new';
   }
 
   closeModal(): void {
-    this.isModalOpen = false;
+    this.currentView = 'list';
   }
 
   onSavePlanning(event: any): void {
@@ -249,50 +277,7 @@ export class PlanningComponent implements OnInit {
   }
 
   selectPeriod(period: 'matin' | 'midi' | 'soir') {
-    this.selectedPeriod = period;
-  }
-
-  switchView(view: 'list' | 'new' | 'details'): void {
-    this.currentView = view;
-  }
-
-  private initializeFilters(): void {
-   
-    const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    
-    this.filterStartDate = this.formatDateForInput(firstDay);
-    this.filterEndDate = this.formatDateForInput(lastDay);
-    
-    this.loadAllPlannings();
-  }
-
-  private loadAllPlannings(): void {
-    this.planningService.getAllPlannings().subscribe(plannings => {
-      this.allPlannings = plannings;
-      this.applyDateFilter();
-    });
-  }
-
-  applyDateFilter(): void {
-    if (!this.filterStartDate || !this.filterEndDate) {
-      this.filteredPlannings = this.allPlannings;
-      return;
-    }
-
-    const start = new Date(this.filterStartDate);
-    const end = new Date(this.filterEndDate);
-    
-  
-    start.setHours(0, 0, 0, 0);
-    end.setHours(23, 59, 59, 999);
-
-    this.filteredPlannings = this.allPlannings.filter(planning => {
-      const planningDate = new Date(planning.date_planning);
-      planningDate.setHours(0, 0, 0, 0);
-      return planningDate >= start && planningDate <= end;
-    });
+    // Implementation needed
   }
 
   resetFilters(): void {
@@ -328,7 +313,6 @@ export class PlanningComponent implements OnInit {
   editPlanning(planning: PlanningResponse): void {
     this.selectedDate = new Date(planning.date_planning);
     this.currentView = 'new';
-    this.isModalOpen = true;
     
    
     this.planningLines = [{
@@ -401,5 +385,54 @@ export class PlanningComponent implements OnInit {
   getDishName(dishId: string): string {
     const dish = this.dishes.find(d => d.id === dishId);
     return dish ? dish.name : `Plat ${dishId}`;
+  }
+
+  getDishCategory(dishId: string): string {
+    const dish = this.dishes.find(d => d.id === dishId);
+    return dish?.category || 'Non spécifié';
+  }
+
+  private initializeFilters(): void {
+   
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    
+    this.filterStartDate = this.formatDateForInput(firstDay);
+    this.filterEndDate = this.formatDateForInput(lastDay);
+    
+    this.loadAllPlannings();
+  }
+
+  private loadAllPlannings(): void {
+    this.planningService.getAllPlannings().subscribe(plannings => {
+      this.allPlannings = plannings;
+      this.applyDateFilter();
+    });
+  }
+
+  applyDateFilter(): void {
+    if (!this.filterStartDate || !this.filterEndDate) {
+      this.filteredPlannings = this.allPlannings;
+      return;
+    }
+
+    const start = new Date(this.filterStartDate);
+    const end = new Date(this.filterEndDate);
+    
+  
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
+
+    this.filteredPlannings = this.allPlannings.filter(planning => {
+      const planningDate = new Date(planning.date_planning);
+      planningDate.setHours(0, 0, 0, 0);
+      return planningDate >= start && planningDate <= end;
+    });
+  }
+
+  closeDishPopup() {
+    this.showDishPopup = false;
+    this.selectedDish = null;
   }
 } 

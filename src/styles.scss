@@ -19,3 +19,50 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mdc-data-table__cell, .mdc-data-table__header-cell {
   padding: 4px 16px !important;
 }
+
+/* Style pour centrer les messages Toast */
+.p-toast {
+  &.p-toast-top-center {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .p-toast-message {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 400px;
+  }
+}
+
+/* Style pour les messages d'erreur/succès personnalisés */
+#erreur, #success {
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  display: block;
+}
+
+#erreur {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+#success {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+/* Style pour les messages d'erreur des formulaires */
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 5px 0;
+  width: 100%;
+}

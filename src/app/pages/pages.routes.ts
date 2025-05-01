@@ -18,10 +18,10 @@ export const PagesRoutes: Routes = [
     path: 'planning',
     component: PlanningComponent,
     data: {
-      title: 'Planning',
+      title: 'Mes Planifications',
       urls: [
         { title: 'Dashboard', url: '/planning' },
-        { title: 'Planning' },
+        { title: 'Mes Planifications' },
       ],
     },
   },
