@@ -8,11 +8,13 @@
         <button class="delete" aria-label="close" (click)="closeModal()"></button>
       </header>
       <section class="modal-card-body">
-        <div class="notification is-success" *ngIf="successMessage">
-          {{ successMessage }}
-        </div>
-        <div class="notification is-danger" *ngIf="errorMessage">
-          {{ errorMessage }}
+        <div class="notification-container" *ngIf="errorMessage || successMessage">
+          <div class="notification is-danger" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+          <div class="notification is-success" *ngIf="successMessage">
+            {{ successMessage }}
+          </div>
         </div>
         <div class="form-container">
           <ng-container *ngTemplateOutlet="formFields"></ng-container>
@@ -36,11 +38,13 @@
 <ng-template #cardMode>
   <div class="planification-card">
     <h2 class="card-title">Nouvelle Planification</h2>
-    <div class="notification is-success" *ngIf="successMessage">
-      {{ successMessage }}
-    </div>
-    <div class="notification is-danger" *ngIf="errorMessage">
-      {{ errorMessage }}
+    <div class="notification-container" *ngIf="errorMessage || successMessage">
+      <div class="notification is-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="notification is-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
     </div>
     <div class="form-container">
       <ng-container *ngTemplateOutlet="formFields"></ng-container>
@@ -130,7 +134,7 @@
         <tr>
           <th>Date | Nom du Plat</th>
           <th>Quantité</th>
-          <th>Heure début - Fin</th>
+          <!-- <th>Heure début - Fin</th> -->
           <th>Période</th>
           <th><span class="is-sr-only">Actions</span></th>
         </tr>
@@ -139,7 +143,7 @@
         <tr *ngFor="let line of planningLines; let i = index">
           <td>{{ formatDate(line.date) }} | {{ getDishName(line.dish) }}</td>
           <td>{{ line.quantity }}</td>
-          <td>{{ line.startTime }} - {{ line.endTime }}</td>
+          <!-- <td>{{ line.startTime }} - {{ line.endTime }}</td> -->
           <td>{{ line.period }}</td>
           <td>
             <button 

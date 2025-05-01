@@ -1,0 +1,52 @@
+<div class="popup-overlay" *ngIf="isVisible" (click)="closePopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <h2>Détails du Plat</h2>
+      <button class="close-button" (click)="closePopup()">×</button>
+    </div>
+
+    <div class="popup-body" *ngIf="dish">
+      <div class="info-section">
+        <div class="info-row">
+          <span class="label">Nom:</span>
+          <span class="value">{{ dish.name }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Catégorie:</span>
+          <span class="value">{{ dish.categoryMenu.name }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Coût Total:</span>
+          <span class="value">{{ dish.cout | number: '1.0-0' }} {{ usercurrency }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Poids Total:</span>
+          <span class="value">{{ dish.poids | number: '1.0-3' }} G</span>
+        </div>
+      </div>
+
+      <div class="composition-section">
+        <h3>Composition</h3>
+        <div class="composition-list">
+          <div class="composition-item" *ngFor="let comp of dish.compositionList">
+            <span class="recipe-name">{{ comp.recipe.name }}</span>
+            <span class="recipe-quantity">{{ comp.quantity | number: '1.0-3' }} G</span>
+            <span class="recipe-cost">{{ comp.cout | number: '1.0-3' }} {{ usercurrency }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="images-section" *ngIf="dish.picturesList && dish.picturesList.length > 0">
+        <h3>Images</h3>
+        <div class="images-grid">
+          <div class="image-item" *ngFor="let picture of dish.picturesList">
+            <img [src]="'data:image/jpeg;base64,' + picture.file" 
+                 [alt]="picture.label"
+                 class="dish-image">
+            <span class="image-label">{{ picture.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
