@@ -1,0 +1,162 @@
+<ng-container *ngIf="displayMode === 'modal'; else cardMode">
+
+  <div class="modal" [class.is-active]="isOpen">
+    <div class="modal-background" (click)="closeModal()"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Nouvelle Planification</p>
+        <button class="delete" aria-label="close" (click)="closeModal()"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="notification-container" *ngIf="errorMessage || successMessage">
+          <div class="notification is-danger" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+          <div class="notification is-success" *ngIf="successMessage">
+            {{ successMessage }}
+          </div>
+        </div>
+        <div class="form-container">
+          <ng-container *ngTemplateOutlet="formFields"></ng-container>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" (click)="closeModal()">Annuler</button>
+        <button class="button is-primary" 
+                (click)="onSubmit()" 
+                [disabled]="isSubmitting">
+          <span *ngIf="isSubmitting" class="icon">
+            <i class="fas fa-spinner fa-spin"></i>
+          </span>
+          <span>Enregistrer</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #cardMode>
+  <div class="planification-card">
+    <h2 class="card-title">Nouvelle Planification</h2>
+    <div class="notification-container" *ngIf="errorMessage || successMessage">
+      <div class="notification is-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="notification is-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+    </div>
+    <div class="form-container">
+      <ng-container *ngTemplateOutlet="formFields"></ng-container>
+    </div>
+    <div class="card-actions">
+      <button class="button" (click)="closeModal()">Annuler</button>
+      <button class="button is-primary" 
+              (click)="onSubmit()" 
+              [disabled]="isSubmitting">
+        <span *ngIf="isSubmitting" class="icon">
+          <i class="fas fa-spinner fa-spin"></i>
+        </span>
+        <span>Enregistrer</span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #formFields>
+  <div class="planning-line-inputs">
+    <div class="field">
+      <label for="dateStart">Sélectionnez une date</label>
+      <input 
+        type="date" 
+        id="dateStart" 
+        [(ngModel)]="dateStart" 
+        (ngModelChange)="onDateChange($event)"
+        class="input" 
+        name="dateStart" 
+        required>
+    </div>
+    <div class="field">
+      <label for="dish">Liste Des Plats</label>
+      <select 
+        id="dish"
+        [(ngModel)]="currentLine.dish" 
+        class="input" 
+        name="dish" 
+        required>
+        <option value="">Sélectionner un plat</option>
+        <option *ngFor="let dish of dishes" [value]="dish.id">{{ dish.name }}</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="quantity">Quantité</label>
+      <input 
+        type="number" 
+        id="quantity"
+        [(ngModel)]="currentLine.quantity" 
+        class="input" 
+        placeholder="Nombre de parts" 
+        name="quantity" 
+        required 
+        min="1">
+    </div>
+    <div class="field">
+      <label for="period">Période</label>
+      <select 
+        id="period"
+        [(ngModel)]="currentLine.period" 
+        class="input" 
+        name="period" 
+        required 
+        (ngModelChange)="onPeriodChange($event)">
+        <option value="">Sélectionner une période</option>
+        <option *ngFor="let period of periods" [value]="period">{{ period }}</option>
+      </select>
+    </div>
+    <div class="field button-field">
+      <label>&nbsp;</label>
+      <button 
+        class="button is-info" 
+        (click)="addLine()" 
+        [disabled]="!canAddLine()"
+        aria-label="Ajouter une ligne">
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="planning-lines-table">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th>Date | Nom du Plat</th>
+          <th>Quantité</th>
+          <!-- <th>Heure début - Fin</th> -->
+          <th>Période</th>
+          <th><span class="is-sr-only">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let line of planningLines; let i = index">
+          <td>{{ formatDate(line.date) }} | {{ getDishName(line.dish) }}</td>
+          <td>{{ line.quantity }}</td>
+          <!-- <td>{{ line.startTime }} - {{ line.endTime }}</td> -->
+          <td>{{ line.period }}</td>
+          <td>
+            <button 
+              class="button is-danger is-small" 
+              (click)="removeLine(i)"
+              aria-label="Supprimer la ligne">
+              <span class="icon">
+                <i class="fas fa-minus"></i>
+              </span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template> 

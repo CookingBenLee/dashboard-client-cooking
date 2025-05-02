@@ -29,9 +29,9 @@ export const navItems: NavItem[] = [
   //   route: 'home/planifier',
   // },
   {
-    displayName: 'Mes planifications',
-    iconName: 'tabler:point',
-    route: 'home/planification',
+    displayName: 'Planification de Repas',
+    iconName: 'solar:calendar-mark-outline',
+    route: 'home/planning',
   },
   // {
   //   displayName: 'Planification de Repas',
