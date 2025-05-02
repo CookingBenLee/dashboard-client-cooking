@@ -29,7 +29,7 @@ export const navItems: NavItem[] = [
   //   route: 'home/planifier',
   // },
   {
-    displayName: 'Planification de Repas',
+    displayName: 'Mes Planififcations',
     iconName: 'solar:calendar-mark-outline',
     route: 'home/planning',
   },
