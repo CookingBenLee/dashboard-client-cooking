@@ -248,7 +248,7 @@
 .daily-schedule {
   background: white;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 0.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .schedule-title {
@@ -290,14 +290,14 @@
   .schedule-grid {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 0rem;
     justify-content: space-between;
   }
 
   .time-section {
     background: white;
     border-radius: 8px;
-    padding: 0.75rem;
+    padding: 0 0.75rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex: 1;
     min-width: 0;
