@@ -44,12 +44,15 @@
       <div class="info-header-cell">Recette</div>
       <div class="info-header-cell">Quantité</div>
       <div class="info-header-cell">Coût</div>
+      <div class="info-header-cell">Stock</div>
     </div>
 
     <div *ngFor="let detail of compositionDishes" class="info-row">
       <div class="info-cell">{{ detail?.recipe?.name }}</div>
       <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
       <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} {{ usercurrency }}</div>
+      <div class="info-cell">{{ detail?.recipe?.stock }}</div>
+
     </div>
 
     <div class="info-row" *ngIf="compositionDishes.length == 0">
