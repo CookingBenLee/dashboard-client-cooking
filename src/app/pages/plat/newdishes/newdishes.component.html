@@ -61,7 +61,7 @@
           <div class="field col-3" pTooltip="Saisissez la quantité">
             <label for="">Quantité</label>
             <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite"
-              [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0"
+              [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0"  suffix="%"
               (ngModelChange)="changePoid()"></p-inputNumber>
           </div>
 
@@ -80,7 +80,7 @@
         <div class="info-table">
           <div class="info-header">
             <div class="info-header-cell">Recette</div>
-            <div class="info-header-cell">Quantité %</div>
+            <div class="info-header-cell">Quantité</div>
             <div class="info-header-cell">Cout</div>
             <div class="info-header-cell">Actions</div>
           </div>
