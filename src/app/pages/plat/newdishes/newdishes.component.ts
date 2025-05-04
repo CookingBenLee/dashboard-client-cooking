@@ -155,8 +155,9 @@ export class NewdishesComponent implements OnInit{
   ngOnInit(): void {
     this.utilisateurC = this.tokenService.getUser();
     this.usercurrency = this.utilisateurC.compteUser.address.country.currency.symbol
-    this.getRecipes()
-    this.getCategoriesDishes()
+    this.getRecipes();
+    this.getCategoriesDishes();
+    this.unitSelectionne = this.units[0];
   }
 
 
