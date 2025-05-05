@@ -3,7 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MockPlanningService } from '../../../services/planning/mock-planning.service';
 import { PlanningPayload, PlanningResponse } from '../../../services/planning/planning.interface';
+import { PlanningService } from 'src/app/services/planning/planning.service';
+import { DishesService } from 'src/app/services/dishes/dishes.service';
+import { Dishes } from 'src/app/services/dishes/Dishes';
+import { TokenService } from 'src/app/services/token/token.service';
 
+
+interface SimplifiedDish {
+  id: string;
+  name: string;
+  category: string;
+}
 interface PlanningLine {
   date: Date;
   dish: string;
@@ -62,7 +72,7 @@ export class NouvellePlanificationComponent implements OnInit {
     'Soir': { start: '19:00', end: '21:00' }
   };
 
-  constructor(private planningService: MockPlanningService) {}
+  constructor(private planningService: PlanningService,private dishService:DishesService,private tokenService:TokenService) {}
 
   ngOnInit(): void {
     this.loadDishes();
@@ -81,17 +91,26 @@ export class NouvellePlanificationComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  loadDishes(): void {
-    this.planningService.getDishes().subscribe({
-      next: (dishes) => {
-        this.dishes = dishes;
-      },
-      error: (error) => {
-        console.error('Error loading dishes:', error);
-        this.errorMessage = 'Erreur lors du chargement des plats';
-        setTimeout(() => this.errorMessage = '', 3000);
-      }
-    });
+ 
+  async loadDishes(): Promise<void> {
+    try {
+      // Assuming you have access to the current user's ID
+      const currentUser = this.tokenService.getUser();
+    const userId = currentUser.id; // The us/ You'll need to implement this or get it from your auth service
+      const dishes = await this.dishService.getAll(userId);
+      this.dishes =this.mapDishesToSimplifiedFormat( dishes);
+      console.log('================================got the following Dishes:', this.dishes);
+    } catch (error) {
+      console.error('Error loading dishes:', error);
+    }
+  }
+
+  private mapDishesToSimplifiedFormat(dishes: Dishes[]): SimplifiedDish[] {
+    return dishes.map(dish => ({
+      id: dish.id.toString(), // Convert number to string if needed
+      name: dish.name,
+      category: dish.categoryMenu?.name || '' // Assuming categoryMenu contains the category name
+    }));
   }
 
   onPeriodChange(period: 'Matin' | 'Midi' | 'Soir'): void {
@@ -163,34 +182,77 @@ export class NouvellePlanificationComponent implements OnInit {
     if (this.planningLines.length === 0) return;
     
     this.isSubmitting = true;
-    const payload: PlanningPayload[] = this.planningLines.map(line => ({
-      refdishes: Number(line.dish),
+    const currentUser = this.tokenService.getUser();
+
+    // Map to match backend PlanningDishes structure
+    const payload = this.planningLines.map(line => ({
       quantite: line.quantity,
-      date_planning: line.date,
-      heuredebut: line.startTime,
-      heurefin: line.endTime,
-      periode: line.period,
-      refcompteuser: 1
+      datePlanning: new Date(line.date).toISOString(), // Convert to ISO string
+      heureDebut: line.startTime,  // Already in correct format "HH:mm"
+      heureFin: line.endTime,      // Already in correct format "HH:mm"
+      periode: line.period,        // Matches EPlanningDishes enum
+      dishesId: {
+        id: Number(line.dish)      // Reference to Dishes entity
+      },
+      userId: {
+        id: currentUser.id         // Reference to Utilisateur entity
+      },
+      isDeleted: false
     }));
 
-    this.planningService.createPlanningBatch(payload).subscribe({
-      next: (response) => {
-        this.successMessage = 'Planification(s) créée(s) avec succès';
-        setTimeout(() => {
-          this.successMessage = '';
-          this.save.emit(response[0]);
-          this.closeModal();
-        }, 2000);
-      },
-      error: (error) => {
-        console.error('Error creating planning:', error);
-        this.errorMessage = 'Erreur lors de la création de la planification';
-        setTimeout(() => this.errorMessage = '', 3000);
-      },
-      complete: () => {
-        this.isSubmitting = false;
-      }
-    });
+    console.log('Planning Lines (raw):', this.planningLines);
+    console.log('Payload being sent to backend:', payload);
+    console.log('Current User:', currentUser);
+
+    // Single planning creation
+    for (const line of payload) {
+    
+      console.log('Sending single planning:', line);
+      this.planningService.create(line).subscribe({
+        next: (response) => {
+          console.log('Backend response:', response);
+          this.successMessage = 'Planification créée avec succès';
+          setTimeout(() => {
+            this.successMessage = '';
+            this.save.emit(response);
+            this.closeModal();
+          }, 2000);
+        },
+        error: (error) => {
+          console.error('Error creating planning:', error);
+          this.errorMessage = 'Erreur lors de la création de la planification';
+          setTimeout(() => this.errorMessage = '', 3000);
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        }
+      });
+    } 
+    // Implement a batch creation feature later
+    // else {
+    //   console.log('Sending batch plannings:', payload);
+    //   this.planningService.createBatch(payload).subscribe({
+    //     next: (response) => {
+    //       console.log('Backend response for batch:', response);
+    //       this.successMessage = 'Planifications créées avec succès';
+    //       setTimeout(() => {
+    //         this.successMessage = '';
+    //         if (response && response.length > 0) {
+    //           this.save.emit(response[0]);
+    //         }
+    //         this.closeModal();
+    //       }, 2000);
+    //     },
+    //     error: (error) => {
+    //       console.error('Error creating plannings:', error);
+    //       this.errorMessage = 'Erreur lors de la création des planifications';
+    //       setTimeout(() => this.errorMessage = '', 3000);
+    //     },
+    //     complete: () => {
+    //       this.isSubmitting = false;
+    //     }
+    //   });
+    // }
   }
 
   closeModal(): void {

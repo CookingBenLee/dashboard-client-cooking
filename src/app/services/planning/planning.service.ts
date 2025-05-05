@@ -1,35 +1,59 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { PlanningPayload, PlanningResponse } from './planning.interface';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { IPlanningService, PlanningPayload, PlanningResponse } from './planning.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlanningService implements IPlanningService {
-  private apiUrl = `${environment.apiUrl}/planning`;
+export class PlanningService {
+  private readonly baseUrl = `${environment.apiUrl}/planning-dishe`;
 
   constructor(private http: HttpClient) {}
 
-  createPlanning(payload: PlanningPayload): Observable<PlanningResponse> {
-    return this.http.post<PlanningResponse>(this.apiUrl, payload);
+  // Create
+  create(planning: any): Observable<PlanningResponse> {
+    return this.http.post<{ data: PlanningResponse }>(`${this.baseUrl}/new`, planning).pipe(
+      map(response => response.data)
+    );
   }
 
-  getPlanningForDate(date: Date): Observable<PlanningResponse[]> {
+  // Read by ID
+  getById(id: number): Observable<PlanningResponse> {
+    return this.http.get<{ data: PlanningResponse }>(`${this.baseUrl}/${id}`).pipe(
+      map(response => response.data)
+    );
+  }
+
+  // Get all (paginated)
+  getAll(page: number = 0, size: number = 100): Observable<PlanningResponse[]> {
+    return this.http.get<{ content: PlanningResponse[] }>(`${this.baseUrl}/all?page=${page}&size=${size}`).pipe(
+      map(response => response.content)
+    );
+  }
+
+  // Get by date
+  getByDate(date: Date): Observable<PlanningResponse[]> {
     const formattedDate = date.toISOString().split('T')[0];
-    return this.http.get<PlanningResponse[]>(`${this.apiUrl}/date/${formattedDate}`);
+    return this.http.get<PlanningResponse[]>(`${this.baseUrl}/by-date/${formattedDate}`);
   }
 
-  updatePlanning(id: number, payload: Partial<PlanningPayload>): Observable<PlanningResponse> {
-    return this.http.put<PlanningResponse>(`${this.apiUrl}/${id}`, payload);
+  // Get by date range
+  getByDateRange(startDate: string, endDate: string): Observable<PlanningResponse[]> {
+    return this.http.get<PlanningResponse[]>(`${this.baseUrl}/by-date-range?startDate=${startDate}&endDate=${endDate}`);
   }
 
-  deletePlanning(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  // Update
+  update(id: number, planning: any): Observable<PlanningResponse> {
+    return this.http.put<{ data: PlanningResponse }>(`${this.baseUrl}/update/${id}`, planning).pipe(
+      map(response => response.data)
+    );
   }
 
-  createPlanningBatch(payloads: PlanningPayload[]): Observable<PlanningResponse[]> {
-    return this.http.post<PlanningResponse[]>(`${this.apiUrl}/batch`, payloads);
+  // Delete
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
   }
-} 
+}
