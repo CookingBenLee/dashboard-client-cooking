@@ -13,8 +13,8 @@ export class UserService {
 
   private API_URL = environment.apiUrl;
   private env=environment;
-   readonly END_POINT_ADD = "/compteuser/new"
-   readonly END_POINT_LOGIN = "/compteuser/login"
+   readonly END_POINT_ADD = "/user/new"
+   readonly END_POINT_LOGIN = "/user/login"
    readonly END_POINT_LOGOUT = "/logout"
   constructor( private http: HttpClient, private tokenService:TokenService) { }
 
