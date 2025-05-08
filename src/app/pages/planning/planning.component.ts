@@ -44,7 +44,6 @@ interface SimplifiedDish {
     NouvellePlanificationComponent,
     DatePipe,
     FontAwesomeModule,
-    DishDetailsPopupComponent
   ],
   providers: [DialogService]
 })
@@ -605,6 +604,11 @@ export class PlanningComponent implements OnInit {
     const dish = this.dishes.find(d => d.id === dishId);
     console.log('getDishName - found dish:', dish);
     return dish ? dish.name : `Plat ${dishId}`;
+  }
+
+  getDish(e:any,planningg: any) {
+    const planning = this.allPlanningss.find((p:any) => p.id === planningg.id);
+    this.showDishDetails(e,planning);
   }
 
   getDishCategory(dishId: string): string | undefined {

@@ -174,7 +174,7 @@
                 </select>
               </ng-container>
             </div>
-            <div class="cell" >
+            <div class="cell" (click)="getDish($event,planning)" >
               {{ getDishName(planning.refdishes.toString()) }}
             </div>
             <div class="cell">
