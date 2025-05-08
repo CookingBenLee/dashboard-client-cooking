@@ -48,6 +48,7 @@
                  *ngFor="let date of week"
                  [class.other-month]="!isCurrentMonth(date)"
                  [class.selected]="isSelectedDate(date)"
+                 [class.has-planning]="hasPlanning(date)"
                  (click)="onDateSelect(date)">
               <span class="day-number">{{ date.getDate() }}</span>
               <!-- <span class="week-number" *ngIf="date.getDay() === 0">S{{ getWeekNumber(date) }}</span> -->
