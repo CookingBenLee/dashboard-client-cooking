@@ -12,6 +12,17 @@ import { PlanningService } from 'src/app/services/planning/planning.service';
 import { DishesService } from 'src/app/services/dishes/dishes.service';
 import { Dishes } from 'src/app/services/dishes/Dishes';
 import { TokenService } from 'src/app/services/token/token.service';
+import { CompositiondishesService } from 'src/app/services/compositiondishes/compositiondishes.service';
+import { PicturesDishes } from 'src/app/services/picturedishes/PicturesDishes';
+import { CompositionDishes } from 'src/app/services/compositiondishes/CompositionDishes';
+import { PictiuredishesService } from 'src/app/services/picturedishes/pictiuredishes.service';
+import { DetailsRecipe } from 'src/app/services/detailsrecipe/DetailsRecipe';
+import { Recipe } from 'src/app/services/recipe/Recipe';
+import { FileSaverService } from 'src/app/services/fileSaver/file-saver.service';
+import { DetailsrecipeService } from 'src/app/services/detailsrecipe/detailsrecipe.service';
+import { DetaildishesComponent } from '../plat/detaildishes/detaildishes.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ModaldishesComponent } from '../plat/modaldishes/modaldishes.component';
 
 registerLocaleData(localeFr);
 
@@ -34,7 +45,8 @@ interface SimplifiedDish {
     DatePipe,
     FontAwesomeModule,
     DishDetailsPopupComponent
-  ]
+  ],
+  providers: [DialogService]
 })
 export class PlanningComponent implements OnInit {
   // Font Awesome icons
@@ -61,6 +73,7 @@ export class PlanningComponent implements OnInit {
   filterStartDate: string = '';
   filterEndDate: string = '';
   allPlannings: PlanningResponse[] = [];
+  allPlanningss: any;
   filteredPlannings: PlanningResponse[] = [];
   editingPlanning: PlanningResponse | null = null;
   dishes: Array<{ id: string; name: string; category: string }> = [];
@@ -70,8 +83,14 @@ export class PlanningComponent implements OnInit {
   categories: string[] = ['Entrée', 'Plat Principal', 'Dessert', 'Collation'];
 
   showDishPopup = false;
-
-  constructor(private planningService: PlanningService,private dishService:DishesService,private tokenService:TokenService) {
+  picturesDishes: PicturesDishes[] = []
+  picture: PicturesDishes = new PicturesDishes()
+    compositionDishes: CompositionDishes[] = []
+    plat: Dishes = new Dishes()
+  constructor(private planningService: PlanningService,private dishService:DishesService,private tokenService:TokenService,private compositionDishesService: CompositiondishesService,
+     private pictureDishesService: PictiuredishesService, private fileSaverService: FileSaverService,private detailRecipeService: DetailsrecipeService,
+     private dialogService: DialogService,
+  ) {
     this.generateCalendar();
     this.initializeFilters();
     this.loadDishes();
@@ -80,6 +99,9 @@ export class PlanningComponent implements OnInit {
   ngOnInit(): void {
     this.planningService.getAll().subscribe({
       next: (plannings) => {
+        this.allPlanningss = plannings;
+        console.log("all planning", this.allPlanningss);
+        
         this.allPlannings = this.mapBackendResponseToPlanning(plannings);
         this.generateCalendar();
         this.loadTodayPlanning();
@@ -88,25 +110,68 @@ export class PlanningComponent implements OnInit {
         console.error('Error loading plannings:', error);
       }
     });
+
+    
   }
 
   loadTodayPlanning() {
     // Load today's planning by default
     this.onDateSelect(new Date());
   }
-
-  async showDishDetails(dishId: string) {
- 
-      try {
-        const dish = await this.dishService.getById(dishId);
-        console.log('================================got the following Dish:', dish);
-        this.selectedDish = dish;
-        this.showDishPopup = true;
-      } catch (error) {
-        console.error('Error loading dish details:', error);
-      }
+  ref: DynamicDialogRef | undefined;
+  async showDishDetails(e: any, dishe: Dishes) {
+    const dish = await this.dishService.getById(dishe.id);
+      // try {
+      //   const dish = await this.dishService.getById(dishId);
+      //   console.log('================================got the following Dish:', dish);
+      //   this.getAll(dish.id);
+      //   this.selectedDish = dish;
+      //   this.showDishPopup = true;
+      // } catch (error) {
+      //   console.error('Error loading dish details:', error);
+      // }
+    console.log("dishe",dishe);
+    
+       this.ref = this.dialogService.open(DetaildishesComponent, {
+            header: 'Plat ' + dishe?.reference,
+            width: '90%',
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            maximizable: true,
+            data: dishe,
+          });
+      
+      
+          this.ref.onClose.subscribe((retour: any) => {
+            if (retour == "edit") {
+              this.show(e, dishe);
+              // this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
+              // this.getProducts()
+            } else {
+              this.ref?.close
+              //this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+      
+            }
+          });
     
   }
+ 
+  show(e: any, dishe: Dishes) {
+      this.ref = this.dialogService.open(ModaldishesComponent, {
+        header: "Modification d'un plat",
+        width: '90%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data: dishe,
+      });
+  
+  
+      this.ref.onClose.subscribe((retour: any) => {
+        console.log("hhhhhhhhhhhh....///jkjhghf");
+  
+      });
+    }
 
   switchView(view: 'list' | 'details' | 'new') {
     this.currentView = view;
@@ -236,7 +301,7 @@ export class PlanningComponent implements OnInit {
   soir:any[]=[];
   getHasPlanning(selectedDate: Date): void {
     console.log('Date selected:', selectedDate);
-    console.log("All Planning", this.allPlannings);
+    console.log("All Planning", this.allPlanningss);
     
     const currentUser = this.tokenService.getUser();
     const userId = currentUser.id;
@@ -246,10 +311,10 @@ export class PlanningComponent implements OnInit {
     this.midi = [];
     this.soir = [];
   
-    this.planning = this.allPlannings.filter(e => {
-      const planningDate = new Date(e.date_planning);
+    this.planning = this.allPlanningss.filter((e:any) => {
+      const planningDate = new Date(e.datePlanning);
       return planningDate.toDateString() === selectedDate.toDateString() &&
-             e.refcompteuser === userId;
+             e.userId.id === userId;
     });
   
     console.log("His Planning", this.planning);
@@ -273,18 +338,9 @@ export class PlanningComponent implements OnInit {
     console.log("Soir:", this.soir);
 
     this.currentPlanning = {
-      matin: this.matin.map(p => ({
-        id: p.refdishes,
-        number: p.quantite
-      })),
-      midi: this.midi.map(p => ({
-        id: p.refdishes,
-        number: p.quantite
-      })),
-      soir: this.soir.map(p => ({
-        id: p.refdishes,
-        number: p.quantite
-      }))
+      matin: this.matin,
+      midi: this.midi,
+      soir: this.soir
     };
         
   }
@@ -316,7 +372,7 @@ export class PlanningComponent implements OnInit {
 
   public hasPlanning(date: Date): boolean {
     // Check if there are any plannings for this date
-    console.log("All planning", this.allPlannings);
+    // console.log("All planning", this.allPlannings);
     
     return this.allPlannings.some(planning => {
       // console.log('Initial Planning:',planning)
@@ -644,4 +700,115 @@ export class PlanningComponent implements OnInit {
         category: item.dishesId.categoryMenu?.name || null
       }));
   }
+
+    //recuperation de valeurs
+    async getAll(id: any) {
+      await this.compositionDishesService.byDishes(id).then(data => {
+        console.log(data)
+        this.compositionDishes = data
+  
+      }).finally(async () => {
+        await this.updateCompoPrice()
+        this.calculPlat()
+      })
+      console.log("composition Dish",this.compositionDishes);
+      
+      await this.pictureDishesService.byDishes(id).then(async data => {
+        console.log(data)
+        this.picturesDishes = data
+  
+  
+      }).finally(async () => {
+        //this.updateCompoPrice()
+        //this.calculPlat()
+        console.log((this.picturesDishes));
+      })
+      // for(const p inn PicturesDishes){
+  
+      // }
+  
+      await this.picturesDishes.forEach(p => {
+        console.log(p.link);
+        this.fileSaverService.getFile(p.link).then(data => {
+          console.log(data)
+          p.file = data.data
+        }).finally(() => {
+  
+        })
+      })
+      console.log((this.picturesDishes));
+      //this.detailRecipe2=this.detailRecipeProvisoire2
+    }
+  
+    //calcul total infos pour le plat
+    calculPlat() {
+      this.plat.poids = 0
+      this.plat.cout = 0
+      this.compositionDishes.forEach(cp => {
+        this.plat.poids += cp.quantity
+        this.plat.cout += cp.cout
+  
+        console.log(cp.cout);
+  
+      })
+    }
+
+      async getCompoPrice(composition: CompositionDishes): Promise<number> {
+    
+        var recipe: Recipe = composition.recipe
+        recipe.cout = 0
+        var detailRecipes: DetailsRecipe[] = recipe.detailList;
+        var brut = (composition.quantity / 1000) * recipe.ratio
+        console.log("----------------------------------------------------------------{}", composition);
+        console.log("----------------------------------------------------------------{}", brut);
+    
+    
+    
+        await this.detailRecipeService.byRecipe(recipe.id).then(data => {
+          console.log(data);
+          detailRecipes = data
+        }).finally(async () => {
+          for (const detail of detailRecipes) {
+            console.log(detail);
+    
+            console.log(detail.net);
+            console.log(detail.proportion);
+    
+            detail.net = (brut * (detail.proportion)) / 100
+            ////
+            var perte = detail.ingredient.lossPercentage
+    
+            if (perte != null) {
+              console.log(perte);
+              detail.brut = detail.net / (1 - (perte))
+            }
+            ///
+            var price = detail.ingredient.price
+            if (price != null) {
+              //detail.floatingCout=detail.floatingBrut*price
+              detail.cout = detail.brut * price
+              console.log(detail.brut);
+              console.log(price);
+            } else detail.cout = 0
+            ///
+            console.log(detail.cout);
+            recipe.cout = (recipe.cout + detail.cout)
+          }
+    
+    
+        })
+        console.log(recipe.cout);
+        console.log(detailRecipes);
+        return recipe.cout;
+    
+      }
+
+    async updateCompoPrice() {
+      for (const cp of this.compositionDishes) {
+        //console.log(await this.getCompoPrice(cp));
+        cp.cout = await this.getCompoPrice(cp);
+        console.log(cp);
+      }
+  
+    }
 } 
