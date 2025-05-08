@@ -99,7 +99,7 @@ export class PlanningComponent implements OnInit {
     this.planningService.getAll().subscribe({
       next: (plannings) => {
         this.allPlanningss = plannings;
-        console.log("all planning", this.allPlanningss);
+        // console.log("all planning", this.allPlanningss);
         
         this.allPlannings = this.mapBackendResponseToPlanning(plannings);
         this.generateCalendar();
@@ -372,6 +372,16 @@ export class PlanningComponent implements OnInit {
   public hasPlanning(date: Date): boolean {
     // Check if there are any plannings for this date
     // console.log("All planning", this.allPlannings);
+    const currentUser = this.tokenService.getUser();
+    const userId = currentUser.id;
+    console.log("USER ID",userId);
+    
+    // console.log("ALL Planning",this.allPlannings);
+
+    this.allPlannings = this.allPlannings.filter(p => p.refcompteuser === userId);
+
+
+    console.log("My ALL Planning",this.allPlannings);
     
     return this.allPlannings.some(planning => {
       // console.log('Initial Planning:',planning)
