@@ -63,7 +63,7 @@
         <div class="time-section" *ngFor="let period of ['matin', 'midi', 'soir']">
           <h4 class="period-title">{{ period | titlecase }}</h4>
           <div class="meal-slots">
-            <div class="meal-slot" *ngFor="let slot of currentPlanning[period]" (click)="showDishDetails($event,slot.dishesId)">
+            <div class="meal-slot" *ngFor="let slot of currentPlanning[period]" (click)="showDishDetails($event,slot)">
               <div class="meal-info">
                 <span class="meal-name">{{ slot.dishesId.name }}</span>
                 <span class="separator">|</span>
@@ -217,9 +217,9 @@
   </ng-container>
 
   <!-- Add the dish details popup component -->
-  <app-dish-details-popup
+  <!-- <app-dish-details-popup
     [dish]="selectedDish"
     [isVisible]="showDishPopup"
     (onClose)="closeDishPopup()">
-  </app-dish-details-popup>
+  </app-dish-details-popup> -->
 </div> 

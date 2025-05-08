@@ -119,7 +119,7 @@ export class PlanningComponent implements OnInit {
     this.onDateSelect(new Date());
   }
   ref: DynamicDialogRef | undefined;
-  async showDishDetails(e: any, dishe: Dishes) {
+  async showDishDetails(e: any, dishe: any) {
     const dish = await this.dishService.getById(dishe.id);
       // try {
       //   const dish = await this.dishService.getById(dishId);
@@ -132,7 +132,7 @@ export class PlanningComponent implements OnInit {
       // }
     console.log("dishe",dishe);
     
-       this.ref = this.dialogService.open(DetaildishesComponent, {
+       this.ref = this.dialogService.open(DishDetailsPopupComponent, {
             header: 'Plat ' + dishe?.reference,
             width: '90%',
             contentStyle: { overflow: 'auto' },
