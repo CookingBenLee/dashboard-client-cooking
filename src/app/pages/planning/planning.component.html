@@ -32,14 +32,15 @@
 
       <div class="calendar-grid">
         <div class="weekdays">
-          <div class="weekday">Dim</div>
           <div class="weekday">Lun</div>
           <div class="weekday">Mar</div>
           <div class="weekday">Mer</div>
           <div class="weekday">Jeu</div>
           <div class="weekday">Ven</div>
           <div class="weekday">Sam</div>
+          <div class="weekday">Dim</div>
         </div>
+        
 
         <div class="days">
           <div class="week" *ngFor="let week of weeks">
@@ -47,7 +48,6 @@
                  *ngFor="let date of week"
                  [class.other-month]="!isCurrentMonth(date)"
                  [class.selected]="isSelectedDate(date)"
-                 [class.has-planning]="hasPlanning(date)"
                  (click)="onDateSelect(date)">
               <span class="day-number">{{ date.getDate() }}</span>
               <!-- <span class="week-number" *ngIf="date.getDay() === 0">S{{ getWeekNumber(date) }}</span> -->

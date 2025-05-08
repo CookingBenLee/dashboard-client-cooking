@@ -118,7 +118,8 @@ export class PlanningComponent implements OnInit {
   onDateSelect(date: Date): void {
     console.log('Date selected:', date);
     this.selectedDate = date;
-    this.loadPlanningForDate(date);
+    this.getHasPlanning(date);
+    // this.loadPlanningForDate(date);
   }
 
   private loadPlanningForDate(date: Date): void {
@@ -185,39 +186,42 @@ export class PlanningComponent implements OnInit {
   generateCalendar(): void {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
-    
+  
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
-    
-    const startingDay = firstDay.getDay();
+  
+    // getDay(): 0 (dimanche) à 6 (samedi)
+    // Pour commencer par lundi, on transforme dimanche (0) en 7
+    const startOffset = (firstDay.getDay() + 6) % 7;
+  
     const startDate = new Date(firstDay);
-    startDate.setDate(startDate.getDate() - startingDay);
-    
+    startDate.setDate(startDate.getDate() - startOffset);
+  
     this.weeks = [];
     let currentWeek: Date[] = [];
-    
+  
     for (let i = 0; i < 42; i++) {
       const currentDate = new Date(startDate);
       currentDate.setDate(startDate.getDate() + i);
-      
+  
       if (i % 7 === 0 && i > 0) {
         this.weeks.push(currentWeek);
         currentWeek = [];
       }
-      
+  
       currentWeek.push(currentDate);
     }
-    
+  
     if (currentWeek.length > 0) {
       this.weeks.push(currentWeek);
     }
-
-    // Update planning status for all dates in the calendar
+  
     this.weeks.flat().forEach(date => {
       const hasPlanning = this.hasPlanning(date);
       this.updatePlanningStatus(date, hasPlanning);
     });
   }
+  
 
   private planningStatus = new Map<string, boolean>();
 
@@ -226,8 +230,94 @@ export class PlanningComponent implements OnInit {
     this.planningStatus.set(dateKey, hasPlanning);
   }
 
+  planning: any;
+  matin:any[]=[];
+  midi:any[]=[];
+  soir:any[]=[];
+  getHasPlanning(selectedDate: Date): void {
+    console.log('Date selected:', selectedDate);
+    console.log("All Planning", this.allPlannings);
+    
+    const currentUser = this.tokenService.getUser();
+    const userId = currentUser.id;
+    console.log("userId", userId);
+  
+    this.matin = [];
+    this.midi = [];
+    this.soir = [];
+  
+    this.planning = this.allPlannings.filter(e => {
+      const planningDate = new Date(e.date_planning);
+      return planningDate.toDateString() === selectedDate.toDateString() &&
+             e.refcompteuser === userId;
+    });
+  
+    console.log("His Planning", this.planning);
+  
+    this.planning.forEach((item:any) => {
+      switch (item.periode) {
+        case 'Matin':
+          this.matin.push(item);
+          break;
+        case 'Midi':
+          this.midi.push(item);
+          break;
+        case 'Soir':
+          this.soir.push(item);
+          break;
+      }
+    });
+  
+    console.log("Matin:", this.matin);
+    console.log("Midi:", this.midi);
+    console.log("Soir:", this.soir);
+
+    this.currentPlanning = {
+      matin: this.matin.map(p => ({
+        id: p.refdishes,
+        number: p.quantite
+      })),
+      midi: this.midi.map(p => ({
+        id: p.refdishes,
+        number: p.quantite
+      })),
+      soir: this.soir.map(p => ({
+        id: p.refdishes,
+        number: p.quantite
+      }))
+    };
+        
+  }
+  
+  
+
+  // getHasPlanning(date: Date): void {
+  //   console.log('Date selected:', date);
+  //   console.log("All Planing", this.allPlannings);
+
+  //   const currentUser = this.tokenService.getUser();
+  //   const userId = currentUser.id;
+
+  //   console.log("userId", userId);
+    
+
+  //   this.planning = this.allPlannings.filter(e => {
+  //     const planningDate = new Date(e.date_planning);
+  //     return (
+  //       planningDate.toDateString() === date.toDateString() &&
+  //       e.refcompteuser === userId
+  //     );
+  //   });
+
+  //   console.log("His Planing", this.planning);
+    
+  // }
+
+
   public hasPlanning(date: Date): boolean {
     // Check if there are any plannings for this date
+    console.log("All planning", this.allPlannings);
+    
     return this.allPlannings.some(planning => {
       // console.log('Initial Planning:',planning)
       // console.log('Initial planning date is :', planning.date_planning);
