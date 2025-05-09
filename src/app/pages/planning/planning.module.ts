@@ -9,8 +9,8 @@ registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
-    PlanningComponent,
-    NouvellePlanificationComponent
+    // PlanningComponent,
+    // NouvellePlanificationComponent
   ],
   imports: [
     CommonModule,
@@ -21,8 +21,8 @@ registerLocaleData(localeFr);
     DatePipe
   ],
   exports: [
-    PlanningComponent,
-    NouvellePlanificationComponent
+    // PlanningComponent,
+    // NouvellePlanificationComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

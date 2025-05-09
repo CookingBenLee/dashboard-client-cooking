@@ -23,6 +23,7 @@ export interface PlanningResponse {
   created_at: string;
   updated_at: string;
   category?: string;
+  name?: string;
 }
 
 export interface IPlanningService {

@@ -1,52 +1,87 @@
-<div class="popup-overlay" *ngIf="isVisible" (click)="closePopup()">
-  <div class="popup-content" (click)="$event.stopPropagation()">
-    <div class="popup-header">
-      <h2>Détails du Plat</h2>
-      <button class="close-button" (click)="closePopup()">×</button>
+<div class="dialog-container">
+  <div class="dialog-containe">
+    <h3 class="dialog-title">Détails du Plat</h3>
+  </div>
+
+  <div class="info-table">
+    <div class="info-header">
+      <div class="info-header-cell">Attribut</div>
+      <div class="info-header-cell">Valeur</div>
     </div>
 
-    <div class="popup-body" *ngIf="dish">
-      <div class="info-section">
-        <div class="info-row">
-          <span class="label">Nom:</span>
-          <span class="value">{{ dish.name }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Catégorie:</span>
-          <span class="value">{{ dish.categoryMenu.name }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Coût Total:</span>
-          <span class="value">{{ dish.cout | number: '1.0-0' }} {{ usercurrency }}</span>
-        </div>
-        <div class="info-row">
-          <span class="label">Poids Total:</span>
-          <span class="value">{{ dish.poids | number: '1.0-3' }} G</span>
-        </div>
-      </div>
+    <div class="info-row">
+      <div class="info-cell label">Nom</div>
+      <div class="info-cell value">{{ plat.dishesId.name }}</div>
+    </div>
 
-      <div class="composition-section">
-        <h3>Composition</h3>
-        <div class="composition-list">
-          <div class="composition-item" *ngFor="let comp of dish.compositionList">
-            <span class="recipe-name">{{ comp.recipe.name }}</span>
-            <span class="recipe-quantity">{{ comp.quantity | number: '1.0-3' }} G</span>
-            <span class="recipe-cost">{{ comp.cout | number: '1.0-3' }} {{ usercurrency }}</span>
-          </div>
-        </div>
-      </div>
+    <div class="info-row">
+      <div class="info-cell label">Catégorie</div>
+      <div class="info-cell value">{{ plat.dishesId.categoryMenu.name }} ({{ plat.dishesId.categoryMenu.code }})</div>
+    </div>
 
-      <div class="images-section" *ngIf="dish.picturesList && dish.picturesList.length > 0">
-        <h3>Images</h3>
-        <div class="images-grid">
-          <div class="image-item" *ngFor="let picture of dish.picturesList">
-            <img [src]="'data:image/jpeg;base64,' + picture.file" 
-                 [alt]="picture.label"
-                 class="dish-image">
-            <span class="image-label">{{ picture.label }}</span>
-          </div>
-        </div>
-      </div>
+    <div class="info-row">
+      <div class="info-cell label">Coût Total</div>
+      <div class="info-cell value">{{ plat.dishesId.cout | number: '1.0-0' }} {{ usercurrency }}</div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-cell label">Poids Total</div>
+      <div class="info-cell value">{{ plat.dishesId.poids | number: '1.0-3' }} G</div>
     </div>
   </div>
-</div> 
+
+  <p class="divider mt-4"></p>
+
+ 
+  <div class="dialog-containe">
+    <h3 class="dialog-title">Composition du Plat</h3>
+  </div>
+  
+    <!-- <h3 class="dialog-title" >Composition du Plat</h3> -->
+ 
+  <div class="info-table">
+    <div class="info-header">
+      <div class="info-header-cell">Recette</div>
+      <div class="info-header-cell">Quantité</div>
+      <div class="info-header-cell">Coût</div>
+      <div class="info-header-cell">Stock Initial</div>
+      <div class="info-header-cell">Quantité planifiée</div>
+    </div>
+
+    <div *ngFor="let detail of compositionDishes" class="info-row">
+      <div class="info-cell">{{ detail?.recipe?.name }}</div>
+      <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
+      <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} {{ usercurrency }}</div>
+      <div class="info-cell">{{ (detail?.recipe?.stock ?? 0) * 1000  }} G</div>
+      <div class="info-cell">{{ (detail?.quantity ?? 0) * (plat?.quantite ?? 0) }}</div>
+
+    </div>
+
+    <div class="info-row" *ngIf="compositionDishes.length == 0">
+      <div class="info-cell label" colspan="3">Aucune recette</div>
+    </div>
+  </div>
+
+  <p class="divider mt-4"></p>
+
+  <div class="dialog-containe">
+    <h3 class="dialog-title">Images du Plat</h3>
+  </div>
+
+  <div class="info-table">
+    <div class="info-row" *ngFor="let picture of picturesDishes" (click)="showImage(picture, $event)">
+      <div class="info-cell label">{{ picture?.label }}</div>
+      <div class="info-cell">
+        <img style="height: 50px; width: 50px; object-fit:cover; cursor:pointer" 
+             [src]="'data:image/jpeg;base64,' + picture.file" 
+             alt="{{ picture?.label }}">
+      </div>
+    </div>
+
+    <div class="info-row" *ngIf="picturesDishes.length == 0">
+      <div class="info-cell label">Aucune image</div>
+    </div>
+  </div>
+
+  <!-- <button pButton label="Modifier le plat" type="submit" class="p-button-vert mt-3" (click)="show($event, plat)"></button> -->
+</div>

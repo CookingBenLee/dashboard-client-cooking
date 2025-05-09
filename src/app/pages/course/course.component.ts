@@ -187,6 +187,8 @@ export class CourseComponent implements OnInit {
     });
 
     this.utilisateurC = this.tokenService.getUser();
+    console.log(this.utilisateurC);
+    
     this.usercurrency = this.utilisateurC.compteUser.address.country.currency
     this.currencys.push(this.usercurrency)
     console.log("currency", this.usercurrency);

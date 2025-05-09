@@ -17,6 +17,7 @@ export class CompositionDishes{
   ///
   cout:number;
   quantityKg:number
+  qt?:number
 
 
 }

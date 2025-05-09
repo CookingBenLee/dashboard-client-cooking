@@ -32,14 +32,15 @@
 
       <div class="calendar-grid">
         <div class="weekdays">
-          <div class="weekday">Dim</div>
           <div class="weekday">Lun</div>
           <div class="weekday">Mar</div>
           <div class="weekday">Mer</div>
           <div class="weekday">Jeu</div>
           <div class="weekday">Ven</div>
           <div class="weekday">Sam</div>
+          <div class="weekday">Dim</div>
         </div>
+        
 
         <div class="days">
           <div class="week" *ngFor="let week of weeks">
@@ -63,13 +64,13 @@
         <div class="time-section" *ngFor="let period of ['matin', 'midi', 'soir']">
           <h4 class="period-title">{{ period | titlecase }}</h4>
           <div class="meal-slots">
-            <div class="meal-slot" *ngFor="let slot of currentPlanning[period]" (click)="showDishDetails(slot.id)">
+            <div class="meal-slot" *ngFor="let slot of currentPlanning[period]" (click)="showDishDetails($event,slot)">
               <div class="meal-info">
-                <span class="meal-name">{{ getDishName(slot.id) }}</span>
+                <span class="meal-name">{{ slot.dishesId.name }}</span>
                 <span class="separator">|</span>
-                <span class="meal-quantity">Qte : {{ slot.number }}</span>
+                <span class="meal-quantity">Qte : {{ slot.quantite }}</span>
                 <span class="separator">|</span>
-                <span class="meal-category">{{ getDishCategory(slot.id) }}</span>
+                <span class="meal-category">{{ slot.dishesId.categoryMenu.name }}</span>
               </div>
             </div>
             <div class="empty-slot" *ngIf="currentPlanning[period].length === 0">
@@ -174,7 +175,7 @@
                 </select>
               </ng-container>
             </div>
-            <div class="cell" (click)="showDishDetails(planning.refdishes.toString())">
+            <div class="cell" (click)="getDish($event,planning)" >
               {{ getDishName(planning.refdishes.toString()) }}
             </div>
             <div class="cell">
@@ -217,9 +218,9 @@
   </ng-container>
 
   <!-- Add the dish details popup component -->
-  <app-dish-details-popup
+  <!-- <app-dish-details-popup
     [dish]="selectedDish"
     [isVisible]="showDishPopup"
     (onClose)="closeDishPopup()">
-  </app-dish-details-popup>
+  </app-dish-details-popup> -->
 </div> 
