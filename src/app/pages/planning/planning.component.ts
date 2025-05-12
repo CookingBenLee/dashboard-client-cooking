@@ -496,11 +496,12 @@ export class PlanningComponent implements OnInit {
   }
 
   deletePlanning(id: number): void {
+     
     if (confirm('Êtes-vous sûr de vouloir supprimer cette planification ?')) {
       this.planningService.delete(id).subscribe({
         next: () => {
         
-          this.allPlannings = this.allPlannings.filter(p => p.id !== id);
+          this.allPlannings = this.allPlannings.filter(p => p.id !== id  );
        
           this.filteredPlannings = this.filteredPlannings.filter(p => p.id !== id);
           
@@ -660,8 +661,10 @@ export class PlanningComponent implements OnInit {
   }
 
   applyDateFilter(): void {
+     const currentUser = this.tokenService.getUser();
+    const userId = currentUser.id;
     if (!this.filterStartDate || !this.filterEndDate) {
-      this.filteredPlannings = this.allPlannings;
+      this.filteredPlannings = this.allPlannings.filter(p=> p.refcompteuser === userId);
       return;
     }
 
@@ -686,7 +689,8 @@ export class PlanningComponent implements OnInit {
 
   private mapBackendResponseToPlanning(backendResponse: any[]): PlanningResponse[] {
     console.log('================================got the following backendResponse:', backendResponse);
-    
+    const currentUser = this.tokenService.getUser();
+    const userId = currentUser.id;
     // Filter out any planning entries that have null values in required fields
     return backendResponse
       .filter(item => 
@@ -698,7 +702,7 @@ export class PlanningComponent implements OnInit {
         item.heureDebut != null &&
         item.heureFin != null &&
         item.periode != null &&
-        item.userId?.id != null
+        item.userId?.id == userId
       )
       .map(item => ({
         id: item.id,

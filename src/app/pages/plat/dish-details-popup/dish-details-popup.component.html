@@ -20,23 +20,23 @@
     </div>
 
     <div class="info-row">
-      <div class="info-cell label">Coût Initial | Poids Initial</div>
-      <div class="info-cell value">{{ plat.dishesId.cout | number: '1.0-0' }} {{ usercurrency }}</div> | <div class="info-cell value">{{ plat.dishesId.poids | number: '1.0-3' }} G</div>
+      <div class="info-cell label">Coût Initial</div>
+      <div class="info-cell value">{{ plat.dishesId.cout | number: '1.0-2' }} {{ usercurrency }}</div>
     </div>
 
-    <!-- <div class="info-row">
+    <div class="info-row">
       <div class="info-cell label">Poids Initial</div>
-      <div class="info-cell value">{{ plat.dishesId.poids | number: '1.0-3' }} G</div>
-    </div> -->
+      <div class="info-cell value">{{ plat.dishesId.poids | number: '1.0-2' }} G</div>
+    </div>
 
      <div class="info-row">
-      <div class="info-cell label">Poids planifiée</div>
+      <div class="info-cell label">Poids planifié</div>
       <div class="info-cell value">{{ plat.dishesId.poids *  (plat?.quantite ?? 0) | number: '1.0-3' }} G</div>
     </div>
 
      <div class="info-row">
       <div class="info-cell label">Coût Total</div>
-      <div class="info-cell value">{{ plat.dishesId.cout *  (plat?.quantite ?? 0) | number: '1.0-0' }} {{ usercurrency }}</div> 
+      <div class="info-cell value">{{ plat.dishesId.cout *  (plat?.quantite ?? 0) | number: '1.0-2' }} {{ usercurrency }}</div> 
     </div>
   </div>
 
