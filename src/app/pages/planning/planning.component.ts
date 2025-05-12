@@ -132,7 +132,7 @@ export class PlanningComponent implements OnInit {
     console.log("dishe",dishe);
     
        this.ref = this.dialogService.open(DishDetailsPopupComponent, {
-            header: 'Plat ' + dishe?.reference,
+            header: 'Plat ' + dishe?.dishesId.name,
             width: '90%',
             contentStyle: { overflow: 'auto' },
             baseZIndex: 10000,
