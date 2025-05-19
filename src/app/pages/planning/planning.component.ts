@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import localeFr from '@angular/common/locales/fr';
-import { MockPlanningService, DailyPlanning } from '../../services/planning/mock-planning.service';
 import { PlanningPayload, PlanningResponse } from '../../services/planning/planning.interface';
 import { NouvellePlanificationComponent } from './nouvelle-planification/nouvelle-planification.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faList, faPlus, faInfoCircle, faSearch, faEdit, faTrash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faList, faPlus, faInfoCircle, faSearch, faEdit, faTrash, faCheck, faTimes, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons';
 import { DishDetailsPopupComponent } from '../plat/dish-details-popup/dish-details-popup.component';
 import { PlanningService } from 'src/app/services/planning/planning.service';
 import { DishesService } from 'src/app/services/dishes/dishes.service';
@@ -23,6 +22,7 @@ import { DetailsrecipeService } from 'src/app/services/detailsrecipe/detailsreci
 import { DetaildishesComponent } from '../plat/detaildishes/detaildishes.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModaldishesComponent } from '../plat/modaldishes/modaldishes.component';
+import { DetailEstimationComponent } from '../planification/detail-estimation/detail-estimation.component';
 
 registerLocaleData(localeFr);
 
@@ -57,6 +57,7 @@ export class PlanningComponent implements OnInit {
   faTrash = faTrash;
   faCheck = faCheck;
   faTimes = faTimes;
+  faUtensilSpoon = faUtensilSpoon;
 
   currentView: 'list' | 'details' | 'new' = 'list';
   selectedDate: Date = new Date();
@@ -68,7 +69,7 @@ export class PlanningComponent implements OnInit {
     soir: []
   };
   selectedDish: any = null;
-  
+
   filterStartDate: string = '';
   filterEndDate: string = '';
   allPlannings: PlanningResponse[] = [];
@@ -84,11 +85,11 @@ export class PlanningComponent implements OnInit {
   showDishPopup = false;
   picturesDishes: PicturesDishes[] = []
   picture: PicturesDishes = new PicturesDishes()
-    compositionDishes: CompositionDishes[] = []
-    plat: Dishes = new Dishes()
-  constructor(private planningService: PlanningService,private dishService:DishesService,private tokenService:TokenService,private compositionDishesService: CompositiondishesService,
-     private pictureDishesService: PictiuredishesService, private fileSaverService: FileSaverService,private detailRecipeService: DetailsrecipeService,
-     private dialogService: DialogService,
+  compositionDishes: CompositionDishes[] = []
+  plat: Dishes = new Dishes()
+  constructor(private planningService: PlanningService, private dishService: DishesService, private tokenService: TokenService, private compositionDishesService: CompositiondishesService,
+    private pictureDishesService: PictiuredishesService, private fileSaverService: FileSaverService, private detailRecipeService: DetailsrecipeService,
+    private dialogService: DialogService,
   ) {
     this.generateCalendar();
     this.initializeFilters();
@@ -100,7 +101,7 @@ export class PlanningComponent implements OnInit {
       next: (plannings) => {
         this.allPlanningss = plannings;
         // console.log("all planning", this.allPlanningss);
-        
+
         this.allPlannings = this.mapBackendResponseToPlanning(plannings);
         this.generateCalendar();
         this.loadTodayPlanning();
@@ -110,7 +111,7 @@ export class PlanningComponent implements OnInit {
       }
     });
 
-    
+
   }
 
   loadTodayPlanning() {
@@ -120,57 +121,57 @@ export class PlanningComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   async showDishDetails(e: any, dishe: any) {
     const dish = await this.dishService.getById(dishe.id);
-      // try {
-      //   const dish = await this.dishService.getById(dishId);
-      //   console.log('================================got the following Dish:', dish);
-      //   this.getAll(dish.id);
-      //   this.selectedDish = dish;
-      //   this.showDishPopup = true;
-      // } catch (error) {
-      //   console.error('Error loading dish details:', error);
-      // }
-    console.log("dishe",dishe);
-    
-       this.ref = this.dialogService.open(DishDetailsPopupComponent, {
-            header: 'Plat ' + dishe?.dishesId.name,
-            width: '90%',
-            contentStyle: { overflow: 'auto' },
-            baseZIndex: 10000,
-            maximizable: true,
-            data: dishe,
-          });
-      
-      
-          this.ref.onClose.subscribe((retour: any) => {
-            if (retour == "edit") {
-              this.show(e, dishe);
-              // this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
-              // this.getProducts()
-            } else {
-              this.ref?.close
-              //this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
-      
-            }
-          });
-    
+    // try {
+    //   const dish = await this.dishService.getById(dishId);
+    //   console.log('================================got the following Dish:', dish);
+    //   this.getAll(dish.id);
+    //   this.selectedDish = dish;
+    //   this.showDishPopup = true;
+    // } catch (error) {
+    //   console.error('Error loading dish details:', error);
+    // }
+    // console.log("dishe",dishe);
+
+    this.ref = this.dialogService.open(DishDetailsPopupComponent, {
+      header: 'Plat ' + dishe?.dishesId.name,
+      width: '90%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+      data: dishe,
+    });
+
+
+    this.ref.onClose.subscribe((retour: any) => {
+      if (retour == "edit") {
+        this.show(e, dishe);
+        // this.messageService.add({ severity: 'success',key:'product', summary: 'Produit Crée ', detail: "Produit ajouté avec success" });
+        // this.getProducts()
+      } else {
+        this.ref?.close
+        //this.messageService.add({ severity: 'info',key:'product', summary: 'Produit non ajouté ', detail: "Ajout de Produit non effectué" });
+
+      }
+    });
+
   }
- 
+
   show(e: any, dishe: Dishes) {
-      this.ref = this.dialogService.open(ModaldishesComponent, {
-        header: "Modification d'un plat",
-        width: '90%',
-        contentStyle: { overflow: 'auto' },
-        baseZIndex: 10000,
-        maximizable: true,
-        data: dishe,
-      });
-  
-  
-      this.ref.onClose.subscribe((retour: any) => {
-        console.log("hhhhhhhhhhhh....///jkjhghf");
-  
-      });
-    }
+    this.ref = this.dialogService.open(ModaldishesComponent, {
+      header: "Modification d'un plat",
+      width: '90%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true,
+      data: dishe,
+    });
+
+
+    this.ref.onClose.subscribe((retour: any) => {
+      // console.log("hhhhhhhhhhhh....///jkjhghf");
+
+    });
+  }
 
   switchView(view: 'list' | 'details' | 'new') {
     this.currentView = view;
@@ -180,28 +181,28 @@ export class PlanningComponent implements OnInit {
   }
 
   onDateSelect(date: Date): void {
-    console.log('Date selected:', date);
+    // console.log('Date selected:', date);
     this.selectedDate = date;
     this.getHasPlanning(date);
     // this.loadPlanningForDate(date);
   }
 
   private loadPlanningForDate(date: Date): void {
-    console.log('Loading planning for date:', date);
-    
+    // console.log('Loading planning for date:', date);
+
     const planningsForDate = this.allPlannings.filter(p => {
       const planningDate = new Date(p.date_planning);
       return planningDate.toDateString() === date.toDateString();
     });
 
-    console.log('Found plannings:', planningsForDate);
+    // console.log('Found plannings:', planningsForDate);
 
     if (planningsForDate.length > 0) {
       this.updateCurrentPlanning(planningsForDate);
     } else {
       this.planningService.getByDate(date).subscribe({
         next: (plannings) => {
-          console.log('Fetched plannings from service:', plannings);
+          // console.log('Fetched plannings from service:', plannings);
           this.updateCurrentPlanning(plannings);
         },
         error: (error) => {
@@ -212,7 +213,7 @@ export class PlanningComponent implements OnInit {
   }
 
   private updateCurrentPlanning(plannings: any[]): void {
-    console.log('Starting updateCurrentPlanning with:', plannings);
+    // console.log('Starting updateCurrentPlanning with:', plannings);
 
     this.currentPlanning = {
       matin: plannings
@@ -244,48 +245,48 @@ export class PlanningComponent implements OnInit {
         }))
     };
 
-    console.log('Updated currentPlanning:', this.currentPlanning);
+    // console.log('Updated currentPlanning:', this.currentPlanning);
   }
 
   generateCalendar(): void {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
-  
+
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
-  
+
     // getDay(): 0 (dimanche) à 6 (samedi)
     // Pour commencer par lundi, on transforme dimanche (0) en 7
     const startOffset = (firstDay.getDay() + 6) % 7;
-  
+
     const startDate = new Date(firstDay);
     startDate.setDate(startDate.getDate() - startOffset);
-  
+
     this.weeks = [];
     let currentWeek: Date[] = [];
-  
+
     for (let i = 0; i < 42; i++) {
       const currentDate = new Date(startDate);
       currentDate.setDate(startDate.getDate() + i);
-  
+
       if (i % 7 === 0 && i > 0) {
         this.weeks.push(currentWeek);
         currentWeek = [];
       }
-  
+
       currentWeek.push(currentDate);
     }
-  
+
     if (currentWeek.length > 0) {
       this.weeks.push(currentWeek);
     }
-  
+
     this.weeks.flat().forEach(date => {
       const hasPlanning = this.hasPlanning(date);
       this.updatePlanningStatus(date, hasPlanning);
     });
   }
-  
+
 
   private planningStatus = new Map<string, boolean>();
 
@@ -295,30 +296,30 @@ export class PlanningComponent implements OnInit {
   }
 
   planning: any;
-  matin:any[]=[];
-  midi:any[]=[];
-  soir:any[]=[];
+  matin: any[] = [];
+  midi: any[] = [];
+  soir: any[] = [];
   getHasPlanning(selectedDate: Date): void {
-    console.log('Date selected:', selectedDate);
-    console.log("All Planning", this.allPlanningss);
-    
+    // console.log('Date selected:', selectedDate);
+    // console.log("All Planning", this.allPlanningss);
+
     const currentUser = this.tokenService.getUser();
     const userId = currentUser.id;
-    console.log("userId", userId);
-  
+    // console.log("userId", userId);
+
     this.matin = [];
     this.midi = [];
     this.soir = [];
-  
-    this.planning = this.allPlanningss.filter((e:any) => {
+
+    this.planning = this.allPlanningss.filter((e: any) => {
       const planningDate = new Date(e.datePlanning);
       return planningDate.toDateString() === selectedDate.toDateString() &&
-             e.userId.id === userId;
+        e.userId.id === userId;
     });
-  
-    console.log("His Planning", this.planning);
-  
-    this.planning.forEach((item:any) => {
+
+    // console.log("His Planning", this.planning);
+
+    this.planning.forEach((item: any) => {
       switch (item.periode) {
         case 'Matin':
           this.matin.push(item);
@@ -331,20 +332,20 @@ export class PlanningComponent implements OnInit {
           break;
       }
     });
-  
-    console.log("Matin:", this.matin);
-    console.log("Midi:", this.midi);
-    console.log("Soir:", this.soir);
+
+    // console.log("Matin:", this.matin);
+    // console.log("Midi:", this.midi);
+    // console.log("Soir:", this.soir);
 
     this.currentPlanning = {
       matin: this.matin,
       midi: this.midi,
       soir: this.soir
     };
-        
+
   }
-  
-  
+
+
 
   // getHasPlanning(date: Date): void {
   //   console.log('Date selected:', date);
@@ -354,7 +355,7 @@ export class PlanningComponent implements OnInit {
   //   const userId = currentUser.id;
 
   //   console.log("userId", userId);
-    
+
 
   //   this.planning = this.allPlannings.filter(e => {
   //     const planningDate = new Date(e.date_planning);
@@ -365,7 +366,7 @@ export class PlanningComponent implements OnInit {
   //   });
 
   //   console.log("His Planing", this.planning);
-    
+
   // }
 
 
@@ -374,15 +375,15 @@ export class PlanningComponent implements OnInit {
     // console.log("All planning", this.allPlannings);
     const currentUser = this.tokenService.getUser();
     const userId = currentUser.id;
-    console.log("USER ID",userId);
-    
+    // console.log("USER ID",userId);
+
     // console.log("ALL Planning",this.allPlannings);
 
     this.allPlannings = this.allPlannings.filter(p => p.refcompteuser === userId);
 
 
-    console.log("My ALL Planning",this.allPlannings);
-    
+    // console.log("My ALL Planning",this.allPlannings);
+
     return this.allPlannings.some(planning => {
       // console.log('Initial Planning:',planning)
       // console.log('Initial planning date is :', planning.date_planning);
@@ -445,39 +446,39 @@ export class PlanningComponent implements OnInit {
 
     this.planningService.create(payload).subscribe({
       next: (response) => {
-     
+
         this.allPlannings.push(response);
-       
+
         if (this.isDateInRange(new Date(response.date_planning))) {
           this.filteredPlannings.push(response);
         }
-      
+
         this.loadPlanningForDate(this.selectedDate);
-    
+
         this.generateCalendar();
       },
       error: (error) => {
         console.error('Error creating planning:', error);
       }
     });
-   
-  
-  // Reload all plannings
-  this.planningService.getAll().subscribe({
-    next: (plannings) => {
-      this.allPlannings = this.mapBackendResponseToPlanning(plannings);
-      // Refresh the calendar
-      this.generateCalendar();
-      // Reload today's planning or the selected date's planning
-      this.loadPlanningForDate(this.selectedDate);
-    },
-    error: (error) => {
-      console.error('Error reloading plannings:', error);
-    }
-  });
-  this.closeModal();
-  this.switchView('list');
-   
+
+
+    // Reload all plannings
+    this.planningService.getAll().subscribe({
+      next: (plannings) => {
+        this.allPlannings = this.mapBackendResponseToPlanning(plannings);
+        // Refresh the calendar
+        this.generateCalendar();
+        // Reload today's planning or the selected date's planning
+        this.loadPlanningForDate(this.selectedDate);
+      },
+      error: (error) => {
+        console.error('Error reloading plannings:', error);
+      }
+    });
+    this.closeModal();
+    this.switchView('list');
+
   }
 
   private isDateInRange(date: Date): boolean {
@@ -496,19 +497,19 @@ export class PlanningComponent implements OnInit {
   }
 
   deletePlanning(id: number): void {
-     
+
     if (confirm('Êtes-vous sûr de vouloir supprimer cette planification ?')) {
       this.planningService.delete(id).subscribe({
         next: () => {
-        
-          this.allPlannings = this.allPlannings.filter(p => p.id !== id  );
-       
+
+          this.allPlannings = this.allPlannings.filter(p => p.id !== id);
+
           this.filteredPlannings = this.filteredPlannings.filter(p => p.id !== id);
-          
-        
+
+
           this.loadPlanningForDate(this.selectedDate);
-          
-        
+
+
           this.generateCalendar();
         },
         error: (error) => {
@@ -525,8 +526,8 @@ export class PlanningComponent implements OnInit {
   editPlanning(planning: PlanningResponse): void {
     this.selectedDate = new Date(planning.date_planning);
     this.currentView = 'new';
-    
-   
+
+
     this.planningLines = [{
       date: new Date(planning.date_planning),
       dish: planning.refdishes.toString(),
@@ -541,10 +542,10 @@ export class PlanningComponent implements OnInit {
     try {
       // Assuming you have access to the current user's ID
       const currentUser = this.tokenService.getUser();
-    const userId = currentUser.id; // The us/ You'll need to implement this or get it from your auth service
+      const userId = currentUser.id; // The us/ You'll need to implement this or get it from your auth service
       const dishes = await this.dishService.getAll(userId);
-      this.dishes =this.mapDishesToSimplifiedFormat( dishes);
-      console.log('================================got the following Dishes:', this.dishes);
+      this.dishes = this.mapDishesToSimplifiedFormat(dishes);
+      // console.log('================================got the following Dishes:', this.dishes);
     } catch (error) {
       console.error('Error loading dishes:', error);
     }
@@ -557,7 +558,7 @@ export class PlanningComponent implements OnInit {
       category: dish.categoryMenu?.name || '' // Assuming categoryMenu contains the category name
     }));
   }
-  
+
   startEditing(planning: PlanningResponse): void {
     this.editingPlanning = { ...planning };
   }
@@ -570,7 +571,7 @@ export class PlanningComponent implements OnInit {
     if (!this.editingPlanning) return;
 
     const currentUser = this.tokenService.getUser();
-    
+
     // Map to match backend PlanningDishes structure
     const payload = {
       quantite: this.editingPlanning.quantite,
@@ -587,11 +588,11 @@ export class PlanningComponent implements OnInit {
       isDeleted: false
     };
 
-    console.log('Sending update payload:', payload);
+    // console.log('Sending update payload:', payload);
 
     this.planningService.update(this.editingPlanning.id, payload).subscribe({
       next: (response) => {
-        console.log('Update response:', response);
+        // console.log('Update response:', response);
         // Update the planning in the list
         const index = this.allPlannings.findIndex(p => p.id === this.editingPlanning!.id);
         if (index !== -1) {
@@ -599,7 +600,7 @@ export class PlanningComponent implements OnInit {
           this.allPlannings[index] = this.mapBackendResponseToPlanning([response])[0];
         }
         this.editingPlanning = null;
-        this.applyDateFilter(); // Refresh the filtered list
+        this.applyDateFilter('filter'); // Refresh the filtered list
       },
       error: (error) => {
         console.error('Error updating planning:', error);
@@ -608,18 +609,18 @@ export class PlanningComponent implements OnInit {
   }
 
   getDishName(dishId: string): string | undefined {
-    console.log('getDishName - dishId:', dishId);
-    console.log('getDishName - allPlannings:', this.allPlannings);
+    // console.log('getDishName - dishId:', dishId);
+    // console.log('getDishName - allPlannings:', this.allPlannings);
     const planning = this.allPlannings.find(p => p.refdishes.toString() === dishId);
-    console.log('getDishName - found planning:', planning);
+    // console.log('getDishName - found planning:', planning);
     const dish = this.dishes.find(d => d.id === dishId);
-    console.log('getDishName - found dish:', dish);
+    // console.log('getDishName - found dish:', dish);
     return dish ? dish.name : `Plat ${dishId}`;
   }
 
-  getDish(e:any,planningg: any) {
-    const planning = this.allPlanningss.find((p:any) => p.id === planningg.id);
-    this.showDishDetails(e,planning);
+  getDish(e: any, planningg: any) {
+    const planning = this.allPlanningss.find((p: any) => p.id === planningg.id);
+    this.showDishDetails(e, planning);
   }
 
   getDishCategory(dishId: string): string | undefined {
@@ -628,14 +629,14 @@ export class PlanningComponent implements OnInit {
   }
 
   private initializeFilters(): void {
-   
+
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    
+
     this.filterStartDate = this.formatDateForInput(firstDay);
     this.filterEndDate = this.formatDateForInput(lastDay);
-    
+
     this.loadAllPlannings();
   }
 
@@ -643,8 +644,8 @@ export class PlanningComponent implements OnInit {
     this.planningService.getAll().subscribe({
       next: (backendResponse) => {
         this.allPlannings = this.mapBackendResponseToPlanning(backendResponse);
-        console.log('Mapped plannings:', this.allPlannings);
-        
+        // console.log('Mapped plannings:', this.allPlannings);
+
         // Update the planning status for the calendar
         this.allPlannings.forEach(planning => {
           const date = new Date(planning.date_planning);
@@ -652,7 +653,7 @@ export class PlanningComponent implements OnInit {
         });
 
         // Apply any existing date filters
-        this.applyDateFilter();
+        this.applyDateFilter('filter');
       },
       error: (error) => {
         console.error('Error loading plannings:', error);
@@ -660,18 +661,19 @@ export class PlanningComponent implements OnInit {
     });
   }
 
-  applyDateFilter(): void {
-     const currentUser = this.tokenService.getUser();
+  lesPlats: Dishes[] = [];
+  applyDateFilter(parametre: string): void {
+    const currentUser = this.tokenService.getUser();
     const userId = currentUser.id;
     if (!this.filterStartDate || !this.filterEndDate) {
-      this.filteredPlannings = this.allPlannings.filter(p=> p.refcompteuser === userId);
+      this.filteredPlannings = this.allPlannings.filter(p => p.refcompteuser === userId);
       return;
     }
 
     const start = new Date(this.filterStartDate);
     const end = new Date(this.filterEndDate);
-    
-  
+
+
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);
 
@@ -680,6 +682,56 @@ export class PlanningComponent implements OnInit {
       planningDate.setHours(0, 0, 0, 0);
       return planningDate >= start && planningDate <= end;
     });
+
+    if (parametre === "preparation") {
+      const uniqueRefDishes = Array.from(
+        new Set(this.filteredPlannings.map(p => p.refdishes))
+      );
+
+      console.log("RefDishes uniques :", uniqueRefDishes);
+
+      uniqueRefDishes.forEach(element=>{
+        console.log("element", element);
+        
+        this.dishService.getById(element).then(data=>{
+          console.log("les data response", data);
+          
+          this.lesPlats.push(data);
+        })
+      })
+       console.log("les plats",this.lesPlats);
+
+        console.log("-------------------detail estimation ------plat-------------------");
+        
+        this.ref = this.dialogService.open(DetailEstimationComponent, {
+          header: 'Estimation Details',
+          width: '100%',
+          height: '100%',
+    
+          contentStyle: { overflow: 'auto' },
+          baseZIndex: 10000,
+          maximizable: true,
+    
+          data:{
+            lesPlast:this.lesPlats,
+            planning:this.filteredPlannings
+          },
+        });
+      
+      
+        this.ref.onClose.subscribe((retour: any) => {
+          console.log("hhhhhhhhhhhh....///jkjhghf");
+    
+        });
+    }
+   
+
+    //  showDetailAllEstimation(){
+       
+      
+    //   }
+    
+
   }
 
   closeDishPopup() {
@@ -688,13 +740,13 @@ export class PlanningComponent implements OnInit {
   }
 
   private mapBackendResponseToPlanning(backendResponse: any[]): PlanningResponse[] {
-    console.log('================================got the following backendResponse:', backendResponse);
+    // console.log('================================got the following backendResponse:', backendResponse);
     const currentUser = this.tokenService.getUser();
     const userId = currentUser.id;
     // Filter out any planning entries that have null values in required fields
     return backendResponse
-      .filter(item => 
-        item && 
+      .filter(item =>
+        item &&
         item.id != null &&
         item.dishesId?.id != null &&
         item.quantite != null &&
@@ -719,114 +771,114 @@ export class PlanningComponent implements OnInit {
       }));
   }
 
-    //recuperation de valeurs
-    async getAll(id: any) {
-      await this.compositionDishesService.byDishes(id).then(data => {
-        console.log(data)
-        this.compositionDishes = data
-  
-      }).finally(async () => {
-        await this.updateCompoPrice()
-        this.calculPlat()
-      })
-      console.log("composition Dish",this.compositionDishes);
-      
-      await this.pictureDishesService.byDishes(id).then(async data => {
-        console.log(data)
-        this.picturesDishes = data
-  
-  
-      }).finally(async () => {
-        //this.updateCompoPrice()
-        //this.calculPlat()
-        console.log((this.picturesDishes));
-      })
-      // for(const p inn PicturesDishes){
-  
-      // }
-  
-      await this.picturesDishes.forEach(p => {
-        console.log(p.link);
-        this.fileSaverService.getFile(p.link).then(data => {
-          console.log(data)
-          p.file = data.data
-        }).finally(() => {
-  
-        })
-      })
-      console.log((this.picturesDishes));
-      //this.detailRecipe2=this.detailRecipeProvisoire2
-    }
-  
-    //calcul total infos pour le plat
-    calculPlat() {
-      this.plat.poids = 0
-      this.plat.cout = 0
-      this.compositionDishes.forEach(cp => {
-        this.plat.poids += cp.quantity
-        this.plat.cout += cp.cout
-  
-        console.log(cp.cout);
-  
-      })
-    }
+  //recuperation de valeurs
+  async getAll(id: any) {
+    await this.compositionDishesService.byDishes(id).then(data => {
+      // console.log(data)
+      this.compositionDishes = data
 
-      async getCompoPrice(composition: CompositionDishes): Promise<number> {
-    
-        var recipe: Recipe = composition.recipe
-        recipe.cout = 0
-        var detailRecipes: DetailsRecipe[] = recipe.detailList;
-        var brut = (composition.quantity / 1000) * recipe.ratio
-        console.log("----------------------------------------------------------------{}", composition);
-        console.log("----------------------------------------------------------------{}", brut);
-    
-    
-    
-        await this.detailRecipeService.byRecipe(recipe.id).then(data => {
-          console.log(data);
-          detailRecipes = data
-        }).finally(async () => {
-          for (const detail of detailRecipes) {
-            console.log(detail);
-    
-            console.log(detail.net);
-            console.log(detail.proportion);
-    
-            detail.net = (brut * (detail.proportion)) / 100
-            ////
-            var perte = detail.ingredient.lossPercentage
-    
-            if (perte != null) {
-              console.log(perte);
-              detail.brut = detail.net / (1 - (perte))
-            }
-            ///
-            var price = detail.ingredient.price
-            if (price != null) {
-              //detail.floatingCout=detail.floatingBrut*price
-              detail.cout = detail.brut * price
-              console.log(detail.brut);
-              console.log(price);
-            } else detail.cout = 0
-            ///
-            console.log(detail.cout);
-            recipe.cout = (recipe.cout + detail.cout)
-          }
-    
-    
-        })
-        console.log(recipe.cout);
-        console.log(detailRecipes);
-        return recipe.cout;
-    
+    }).finally(async () => {
+      await this.updateCompoPrice()
+      this.calculPlat()
+    })
+    // console.log("composition Dish",this.compositionDishes);
+
+    await this.pictureDishesService.byDishes(id).then(async data => {
+      // console.log(data)
+      this.picturesDishes = data
+
+
+    }).finally(async () => {
+      //this.updateCompoPrice()
+      //this.calculPlat()
+      // console.log((this.picturesDishes));
+    })
+    // for(const p inn PicturesDishes){
+
+    // }
+
+    await this.picturesDishes.forEach(p => {
+      // console.log(p.link);
+      this.fileSaverService.getFile(p.link).then(data => {
+        // console.log(data)
+        p.file = data.data
+      }).finally(() => {
+
+      })
+    })
+    // console.log((this.picturesDishes));
+    //this.detailRecipe2=this.detailRecipeProvisoire2
+  }
+
+  //calcul total infos pour le plat
+  calculPlat() {
+    this.plat.poids = 0
+    this.plat.cout = 0
+    this.compositionDishes.forEach(cp => {
+      this.plat.poids += cp.quantity
+      this.plat.cout += cp.cout
+
+      // console.log(cp.cout);
+
+    })
+  }
+
+  async getCompoPrice(composition: CompositionDishes): Promise<number> {
+
+    var recipe: Recipe = composition.recipe
+    recipe.cout = 0
+    var detailRecipes: DetailsRecipe[] = recipe.detailList;
+    var brut = (composition.quantity / 1000) * recipe.ratio
+    // console.log("----------------------------------------------------------------{}", composition);
+    // console.log("----------------------------------------------------------------{}", brut);
+
+
+
+    await this.detailRecipeService.byRecipe(recipe.id).then(data => {
+      // console.log(data);
+      detailRecipes = data
+    }).finally(async () => {
+      for (const detail of detailRecipes) {
+        // console.log(detail);
+
+        // console.log(detail.net);
+        // console.log(detail.proportion);
+
+        detail.net = (brut * (detail.proportion)) / 100
+        ////
+        var perte = detail.ingredient.lossPercentage
+
+        if (perte != null) {
+          // console.log(perte);
+          detail.brut = detail.net / (1 - (perte))
+        }
+        ///
+        var price = detail.ingredient.price
+        if (price != null) {
+          //detail.floatingCout=detail.floatingBrut*price
+          detail.cout = detail.brut * price
+          // console.log(detail.brut);
+          // console.log(price);
+        } else detail.cout = 0
+        ///
+        // console.log(detail.cout);
+        recipe.cout = (recipe.cout + detail.cout)
       }
 
-    async updateCompoPrice() {
-      for (const cp of this.compositionDishes) {
-        //console.log(await this.getCompoPrice(cp));
-        cp.cout = await this.getCompoPrice(cp);
-        console.log(cp);
-      }
-  
+
+    })
+    // console.log(recipe.cout);
+    // console.log(detailRecipes);
+    return recipe.cout;
+
+  }
+
+  async updateCompoPrice() {
+    for (const cp of this.compositionDishes) {
+      //console.log(await this.getCompoPrice(cp));
+      cp.cout = await this.getCompoPrice(cp);
+      // console.log(cp);
     }
+
+  }
 } 

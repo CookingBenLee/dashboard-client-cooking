@@ -90,7 +90,9 @@ export class DetailEstimationComponent {
   constructor(public config: DynamicDialogConfig, private dishesPriceService:DishesPriceService,private messageService: MessageService,
     private dialogService:DialogService
     ) {
-      this.data=this.config.data
+      console.log("config",this.config.data);
+      
+      this.data=this.config.data.lesPlast
       console.log(this.data);
 
   }

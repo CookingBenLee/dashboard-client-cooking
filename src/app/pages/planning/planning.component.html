@@ -5,7 +5,7 @@
       <span class="icon">
         <fa-icon [icon]="faList"></fa-icon>
       </span>
-      <span>Calendier</span>
+      <span>Calendrier</span>
     </button>
     <button class="nav-tab" [class.is-active]="currentView === 'details'" (click)="switchView('details')">
       <span class="icon">
@@ -143,8 +143,12 @@
               [(ngModel)]="filterEndDate" 
               class="date-input">
           </div>
-          <button class="filter-button" (click)="applyDateFilter()">
+          <button class="filter-button" (click)="applyDateFilter('filter')">
             <fa-icon [icon]="faSearch"></fa-icon> Afficher
+          </button>
+
+          <button class="filter-button" (click)="applyDateFilter('preparation')">
+            <fa-icon [icon]="faUtensilSpoon"></fa-icon> Preparation
           </button>
         </div>
       </div>
