@@ -23,33 +23,33 @@ export const navItems: NavItem[] = [
     iconName: 'material-symbols:dining',
     route: 'home/plat',
   },
-  {
-    displayName: 'Planifier un repas',
-    iconName: 'tabler:point',
-    route: 'home/planifier',
-  },
+  // {
+  //   displayName: 'Planifier un repas',
+  //   iconName: 'tabler:point',
+  //   route: 'home/planifier',
+  // },
   {
     displayName: 'Mes Planififcations',
     iconName: 'solar:calendar-mark-outline',
     route: 'home/planning',
   },
-  {
-    displayName: 'Planification de Repas',
-    iconName: 'solar:calendar-mark-outline',
-    route: '',
-    children: [
-      {
-        displayName: 'Planifier un repas',
-        iconName: 'tabler:point',
-        route: 'home/repas',
-      },
-      {
-        displayName: 'Liste des planifications',
-        iconName: 'tabler:point',
-        route: 'home/planification',
-      }
-    ],
-  },
+  // {
+  //   displayName: 'Planification de Repas',
+  //   iconName: 'solar:calendar-mark-outline',
+  //   route: '',
+  //   children: [
+  //     {
+  //       displayName: 'Planifier un repas',
+  //       iconName: 'tabler:point',
+  //       route: 'home/repas',
+  //     },
+  //     {
+  //       displayName: 'Liste des planifications',
+  //       iconName: 'tabler:point',
+  //       route: 'home/planification',
+  //     }
+  //   ],
+  // },
   
  
   {
