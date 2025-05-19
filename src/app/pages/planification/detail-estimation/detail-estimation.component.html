@@ -16,7 +16,7 @@
                 <th>Liste des Plats</th>
             </tr>
             <tr>
-                <th colspan="12" style="text-align: center;">{{plat?.name}} (Nombre de plats estimés : <b><i>{{plat?.nbre}}</i></b>) </th>
+                <th colspan="12" style="text-align: center;">{{plat?.name}} (Nombre de plats planifiés : <b><i>{{ getQuantite(plat.id) }}</i></b>) </th>
             </tr>
         </thead>
         <tbody>

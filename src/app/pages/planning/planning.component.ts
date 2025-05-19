@@ -175,9 +175,11 @@ export class PlanningComponent implements OnInit {
 
   switchView(view: 'list' | 'details' | 'new') {
     this.currentView = view;
+    this.ngOnInit();
     if (view === 'list') {
       this.selectedDish = null;
     }
+     this.ngOnInit();
   }
 
   onDateSelect(date: Date): void {
@@ -704,7 +706,7 @@ export class PlanningComponent implements OnInit {
         console.log("-------------------detail estimation ------plat-------------------");
         
         this.ref = this.dialogService.open(DetailEstimationComponent, {
-          header: 'Estimation Details',
+          header: "Programme du " + this.filterStartDate + " au " + this.filterEndDate,
           width: '100%',
           height: '100%',
     
