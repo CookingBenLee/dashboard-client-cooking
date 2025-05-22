@@ -649,10 +649,18 @@ export class PlanningComponent implements OnInit {
         // console.log('Mapped plannings:', this.allPlannings);
 
         // Update the planning status for the calendar
-        this.allPlannings.forEach(planning => {
+       this.allPlannings
+        .sort((a, b) => {
+          const dateA = new Date(a.date_planning).getTime();
+          const dateB = new Date(b.date_planning).getTime();
+          return dateB - dateA; // Descending order
+        })
+        .forEach(planning => {
           const date = new Date(planning.date_planning);
           this.updatePlanningStatus(date, true);
         });
+
+
 
         // Apply any existing date filters
         this.applyDateFilter('filter');
@@ -665,6 +673,7 @@ export class PlanningComponent implements OnInit {
 
   lesPlats: Dishes[] = [];
   applyDateFilter(parametre: string): void {
+    this.lesPlats = [];
     const currentUser = this.tokenService.getUser();
     const userId = currentUser.id;
     if (!this.filterStartDate || !this.filterEndDate) {
@@ -679,11 +688,24 @@ export class PlanningComponent implements OnInit {
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);
 
-    this.filteredPlannings = this.allPlannings.filter(planning => {
-      const planningDate = new Date(planning.date_planning);
-      planningDate.setHours(0, 0, 0, 0);
-      return planningDate >= start && planningDate <= end;
-    });
+    this.filteredPlannings = this.allPlannings
+  .filter(planning => {
+    const planningDate = new Date(planning.date_planning);
+    planningDate.setHours(0, 0, 0, 0);
+
+    const planningTime = planningDate.getTime();
+    const startTime = start.getTime();
+    const endTime = end.getTime();
+
+    return planningTime >= startTime && planningTime <= endTime;
+  })
+  .sort((a, b) => {
+    const dateA = new Date(a.date_planning).getTime();
+    const dateB = new Date(b.date_planning).getTime();
+    return dateB - dateA;
+  });
+
+
 
     if (parametre === "preparation") {
       const uniqueRefDishes = Array.from(
@@ -706,7 +728,7 @@ export class PlanningComponent implements OnInit {
         console.log("-------------------detail estimation ------plat-------------------");
         
         this.ref = this.dialogService.open(DetailEstimationComponent, {
-          header: "Programme du " + this.filterStartDate + " au " + this.filterEndDate,
+          // header: "Programme du " + this.filterStartDate + " au " + this.filterEndDate,
           width: '100%',
           height: '100%',
     
@@ -716,7 +738,9 @@ export class PlanningComponent implements OnInit {
     
           data:{
             lesPlast:this.lesPlats,
-            planning:this.filteredPlannings
+            planning:this.filteredPlannings,
+            startDate:this.filterStartDate,
+            endDate:this.filterEndDate,
           },
         });
       
