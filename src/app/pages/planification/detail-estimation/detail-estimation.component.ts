@@ -78,10 +78,10 @@ import { FeuilleCourseComponent } from './feuille-course/feuille-course.componen
   styleUrl: './detail-estimation.component.scss'
 })
 export class DetailEstimationComponent {
-  data:Dishes[]
+  data:any[]
 
 
-  data2:Dishes[]=[]
+  data2:any[]=[]
 
   filteredList: CompositionDishes[] = [];
   listFeuille:DetailsRecipe[]=[]
@@ -90,7 +90,9 @@ export class DetailEstimationComponent {
   constructor(public config: DynamicDialogConfig, private dishesPriceService:DishesPriceService,private messageService: MessageService,
     private dialogService:DialogService
     ) {
-      this.data=this.config.data
+      console.log("config",this.config.data);
+      
+      this.data=this.config.data.lesPlast
       console.log(this.data);
 
   }
@@ -98,7 +100,7 @@ export class DetailEstimationComponent {
   async ngOnInit(): Promise<void> {
     this.data.forEach(async (plat, index)=>{
 
-      plat.compositionList.map(async (composition) => {
+      plat.compositionList.map(async (composition:any) => {
         composition.quantityKg=composition.quantity/1000
 
         composition.recipe.qteEstimee=composition.quantityKg*plat.nbre
@@ -106,7 +108,7 @@ export class DetailEstimationComponent {
         
 
         if (composition.recipe.stockApres < 0) console.log("inf a 0"+composition.recipe.stockApres);
-          composition.recipe.detailList.forEach(detail=>{
+          composition.recipe.detailList.forEach((detail:any)=>{
           // detail.stockApres=detail.ingredient.stock.quantity-detail.brut
         })
       })
@@ -188,6 +190,19 @@ export class DetailEstimationComponent {
     })
     if(!finded) this.listFeuille.push(detail)
   }
+
+
+getQuantite(id: number) {
+  const data = this.config.data.planning.filter((p: any) => p.refdishes === id);
+  
+  let quantity = 0;
+  data.forEach((element: any) => {
+    quantity += element.quantite || 0; 
+  });
+
+  return quantity;
+}
+
 
 
 }

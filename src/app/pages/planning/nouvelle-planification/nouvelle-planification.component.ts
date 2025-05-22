@@ -39,7 +39,7 @@ export class NouvellePlanificationComponent implements OnInit {
   @Input() selectedDate: Date = new Date();
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<PlanningResponse>();
-
+  mydate: Date = new Date();
   dateStart: string = '';
   dateEnd: string = '';
 
@@ -76,8 +76,8 @@ export class NouvellePlanificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDishes();
-    if (this.selectedDate) {
-      const formattedDate = this.formatDateForInput(this.selectedDate);
+    if (this.mydate) {
+      const formattedDate = this.formatDateForInput(this.mydate);
       this.dateStart = formattedDate;
       this.dateEnd = formattedDate;
     }

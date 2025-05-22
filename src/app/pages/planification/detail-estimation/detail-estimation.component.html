@@ -1,11 +1,10 @@
 
+<div style="text-align: center;"> <h2>Programme des plats du {{ config.data.startDate }} au {{ config.data.endDate }}</h3> </div>
 
 <div style="display: flex; justify-content: space-between; align-items: center; margin: 5px;">
+
     <div>
-        <h2>Liste des Plats</h2>
-    </div>
-    <div>
-        <p-button (onClick)="showDialog()" label="la feuille de course" icon="pi pi-eye" />
+        <p-button (onClick)="showDialog()" label="Générer feuille de course" icon="pi pi-eye" />
     </div>
 </div>
 <!-- Première Table : Preparation -->
@@ -13,10 +12,7 @@
     <table>
         <thead>
             <tr>
-                <th>Liste des Plats</th>
-            </tr>
-            <tr>
-                <th colspan="12" style="text-align: center;">{{plat?.name}} (Nombre de plats estimés : <b><i>{{plat?.nbre}}</i></b>) </th>
+                <th colspan="12" style="text-align: left;">{{plat?.name}} : <b><i>{{ getQuantite(plat.id) }}</i></b> plat(s) planifié(s) </th>
             </tr>
         </thead>
         <tbody>
@@ -24,8 +20,8 @@
                 <th>Preparation: Liste des recettes</th>
                 <td>Qté initiale convertie en KG</td>
                 <td>Stock avant en KG récupéré dans la recette</td>
-                <td>Qté estimée = Qté initial * Qté totale estimée</td>
-                <td class="highlight">Stock après = stock av - qte estimée</td>
+                <td>Qté planifié = Qté initial * Qté totale planifié</td>
+                <td class="highlight">Stock après = stock av - qte planifié</td>
             </tr>
             <tr  *ngFor="let composition of plat.compositionList" >
                 <td>{{composition?.recipe?.name}}</td>
@@ -61,8 +57,8 @@
                 <th>Liste des Ingrédients</th>
                 <th>Ingrédients: Générer une Preparation (Algo de Preparation)</th>
                 <!-- <th>Stock av récupéré dans la liste des produits</th> -->
-                <th>Qté estimée correspond au poids brut en KG</th>
-                <th>Stock après = stock av - qte estimée</th>
+                <th>Qté planifié correspond au poids brut en KG</th>
+                <th>Stock après = stock av - qte planifié</th>
                 <th>Observation</th>
             </tr>
         </thead>
