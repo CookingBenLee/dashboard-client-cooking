@@ -133,7 +133,7 @@
               type="date" 
               id="startDate" 
               [(ngModel)]="filterStartDate" 
-              class="date-input">
+              class="date-input" (change)="applyDateFilter('filter')>
           </div>
           <div class="filter-group">
             <label for="endDate">Date fin</label>
@@ -143,9 +143,9 @@
               [(ngModel)]="filterEndDate" 
               class="date-input" (change)="applyDateFilter('filter')">
           </div>
-          <button class="filter-button" (click)="applyDateFilter('filter')">
+          <!-- <button class="filter-button" (click)="applyDateFilter('filter')">
             <fa-icon [icon]="faSearch"></fa-icon> Afficher
-          </button>
+          </button>-->
 
           <button class="filter-button" (click)="applyDateFilter('preparation')">
             <fa-icon [icon]="faUtensilSpoon"></fa-icon> Preparation
