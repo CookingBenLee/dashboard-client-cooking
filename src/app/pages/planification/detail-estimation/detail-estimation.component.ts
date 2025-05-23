@@ -78,10 +78,10 @@ import { FeuilleCourseComponent } from './feuille-course/feuille-course.componen
   styleUrl: './detail-estimation.component.scss'
 })
 export class DetailEstimationComponent {
-  data:any[]
+  data:Dishes[]
 
 
-  data2:any[]=[]
+  data2:Dishes[]=[]
 
   filteredList: CompositionDishes[] = [];
   listFeuille:DetailsRecipe[]=[]
