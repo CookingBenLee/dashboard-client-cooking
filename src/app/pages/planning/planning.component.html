@@ -133,7 +133,7 @@
               type="date" 
               id="startDate" 
               [(ngModel)]="filterStartDate" 
-              class="date-input">
+              class="date-input" (change)="applyDateFilter('filter')">
           </div>
           <div class="filter-group">
             <label for="endDate">Date fin</label>
