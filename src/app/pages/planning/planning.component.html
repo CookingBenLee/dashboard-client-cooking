@@ -141,7 +141,7 @@
               type="date" 
               id="endDate" 
               [(ngModel)]="filterEndDate" 
-              class="date-input" (optionSelected)="applyDateFilter('filter')">
+              class="date-input" (change)="applyDateFilter('filter')">
           </div>
           <button class="filter-button" (click)="applyDateFilter('filter')">
             <fa-icon [icon]="faSearch"></fa-icon> Afficher
