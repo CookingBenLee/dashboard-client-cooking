@@ -28,7 +28,8 @@
                   <td>{{ rec.quantity }}  KG</td>
                   <td>{{ rec.recipe.stock }} KG</td>
                   <td>{{ rec.quantity * getQuantite(plat.id) }} KG</td>
-                  <td class="highlight">{{ rec.quantity - getQuantite(plat.id) }} KG</td>
+                  <td class="highlight">{{ rec.recipe.stock - rec.quantity * getQuantite(plat.id) }} KG</td>
+                  <!--<td class="highlight">{{ rec.quantity - getQuantite(plat.id) }} KG</td>-->
               </tr>
             
             <tr  *ngFor="let composition of plat.compositionList" >
