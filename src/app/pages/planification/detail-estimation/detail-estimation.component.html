@@ -1,5 +1,5 @@
 
-<div style="text-align: center;"> <h2>Programme des plats du {{ config.data.startDate }} au {{ config.data.endDate }}</h2> </div>
+<div style="text-align: center;"> <h1>Programme des plats du {{ config.data.startDate }} au {{ config.data.endDate }}</h1> </div>
 
 <div style="display: flex; justify-content: space-between; align-items: center; margin: 5px;">
     <div>
@@ -13,15 +13,18 @@
     <table>
         <thead>
             <tr>
-                <th colspan="12" style="text-align: left;">{{plat.name}} (Nombre de plats planifiés : <b><i>{{ getQuantite(plat.id) }}</i></b>) </th>
+                <th colspan="12" style="text-align: left;">{{plat.name}} : {{ getQuantite(plat.id) }} Planifié(s)</i></b>) </th>
             </tr>
         <tbody>
+          <tr >
+                <th colspan="12" style="text-align: left;>Liste des Recettes</th>
+            </tr>
             <tr *ngFor="let rec of plat.recipes ">
-                <th>Recettes: {{ rec.recipe.name }}</th>
-                <td>Qté initiale: {{ rec.quantity }}  KG</td>
-                <td>Stock avant: {{ rec.recipe.stock }} </td>
-                <td>Qté planifié : {{ rec.quantity * getQuantite(plat.id) }} </td>
-                <td class="highlight">Stock après : {{ rec.quantity - getQuantite(plat.id) }}</td>
+                <th>{{ rec.recipe.name }}</th>
+                <td>Qté initiale KG</td>
+                <td>Stock avant en KG </td>
+                <td>Qté planifié KG</td>
+                <td class="highlight">Stock après KG</td>
             </tr>
             <!-- <tr>
                 <th>Preparation: Liste des recettes</th>
