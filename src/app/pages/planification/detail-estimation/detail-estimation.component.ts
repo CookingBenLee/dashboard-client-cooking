@@ -81,7 +81,7 @@ export class DetailEstimationComponent {
   data:any[]=[];
 
 
-  data2:any[]=[]
+  data2:Dishes[]=[]
 
   filteredList: CompositionDishes[] = [];
   listFeuille:DetailsRecipe[]=[]

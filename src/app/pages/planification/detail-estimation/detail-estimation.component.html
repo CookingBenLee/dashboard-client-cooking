@@ -1,25 +1,20 @@
 
-<div style="text-align: center;"> <h3>Programme des plats du {{ config.data.startDate }} au {{ config.data.endDate }}</h3> </div>
+<div style="text-align: center;"> <h2>Programme des plats du {{ config.data.startDate }} au {{ config.data.endDate }}</h2> </div>
 
 <div style="display: flex; justify-content: space-between; align-items: center; margin: 5px;">
     <div>
-        <!-- <h2>Liste des Plats</h2> -->
     </div>
     <div>
-        <p-button (onClick)="showDialog()" label="la feuille de course" icon="pi pi-eye" />
+        <p-button (onClick)="showDialog()" label="Générer feuille de course" icon="pi pi-eye" />
     </div>
 </div>
 <!-- Première Table : Preparation -->
  <div class="listdiv"  *ngFor="let plat of data,let k=index">
     <table>
         <thead>
-            <!-- <tr>
-                <th>Liste des Plats</th>
-            </tr> -->
             <tr>
                 <th colspan="12" style="text-align: left;">{{plat.name}} (Nombre de plats planifiés : <b><i>{{ getQuantite(plat.id) }}</i></b>) </th>
             </tr>
-        </thead>
         <tbody>
             <tr *ngFor="let rec of plat.recipes ">
                 <th>Recettes: {{ rec.recipe.name }}</th>
