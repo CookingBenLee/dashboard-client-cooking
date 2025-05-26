@@ -50,17 +50,19 @@
     <table>
         <thead>
             <tr>
-                <th><i>LISTE DES INGREDIENTS</i></th>
-                <th>Ingrédients: Générer une Preparation (Algo de Preparation)</th>
-                <th>Qté planifié correspond au poids brut en KG</th>
-                <th>Stock après = stock av - qte planifié</th>
-                <th>Observation</th>
+                <th><i>DETAILS DES RECETTES</i></th>
+                <th>INGREDIENT</th>
+                <th>STOCK AV KG</th>
+                <th>QTE PLANIFIEE KG</th>
+                <th>STOCK APRES KG</th>
+                <th>OBSERVATION</th>
             </tr>
         </thead>
         <tbody *ngFor="let composition of  data2[k]?.compositionList">
             <tr *ngFor="let detail of composition.recipe.detailList, let j=index">
                 <td *ngIf="j==0" [rowSpan]="composition.recipe.detailList">{{composition?.recipe?.name}}</td>
                 <td>{{detail?.ingredient?.name}}</td>
+                <td>{{detail?.ingredient?.stock?.quantity  |  number : '.1-3'}}</td>
                 <td>{{detail?.brut  |  number : '.1-3'}}</td>
                 <td>{{detail?.stockApres  |  number : '.1-3'}}</td>
                 <td [ngClass]="{'insufficient': detail.stockApres<0}" ><span *ngIf="detail.stockApres<0" >Insuffisant</span></td>
