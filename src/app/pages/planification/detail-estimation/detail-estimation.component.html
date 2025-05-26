@@ -28,7 +28,7 @@
                   <td>{{ rec.quantity/1000 }}  KG</td>
                   <td>{{ rec.recipe.stock }} KG</td>
                   <td>{{ rec.quantity * getQuantite(plat.id) }} KG</td>
-                  <td class="highlight">{{ rec.recipe.stock -  rec.quantity/1000 * getQuantite(plat.id) }} KG</td>
+                  <td class="highlight">{{ rec.recipe.stock -  (rec.quantity * getQuantite(plat.id))/1000 }} KG</td>
                   <!--<td class="highlight">{{ rec.quantity/1000 - getQuantite(plat.id) }} KG</td>-->
               </tr>
             
