@@ -78,7 +78,7 @@ import { FeuilleCourseComponent } from './feuille-course/feuille-course.componen
   styleUrl: './detail-estimation.component.scss'
 })
 export class DetailEstimationComponent {
-  data:any[]
+  data:any[]=[];
 
 
   data2:any[]=[]
@@ -95,11 +95,18 @@ export class DetailEstimationComponent {
       this.data=this.config.data.lesPlast
       console.log(this.data);
 
+      this.data.forEach(element=>{
+        console.log("boucle");
+        
+      })
   }
+
+
 
   async ngOnInit(): Promise<void> {
     this.data.forEach(async (plat, index)=>{
-
+      console.log("boucle");
+      
       plat.compositionList.map(async (composition:any) => {
         composition.quantityKg=composition.quantity/1000
 
@@ -122,6 +129,7 @@ export class DetailEstimationComponent {
      
       
     })
+    
  
   }
   async filterItemsOfType(compositionList: CompositionDishes[]): Promise<CompositionDishes[]> {

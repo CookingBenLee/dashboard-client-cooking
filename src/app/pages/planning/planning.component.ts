@@ -89,7 +89,7 @@ export class PlanningComponent implements OnInit {
   plat: Dishes = new Dishes()
   constructor(private planningService: PlanningService, private dishService: DishesService, private tokenService: TokenService, private compositionDishesService: CompositiondishesService,
     private pictureDishesService: PictiuredishesService, private fileSaverService: FileSaverService, private detailRecipeService: DetailsrecipeService,
-    private dialogService: DialogService,
+    private dialogService: DialogService
   ) {
     this.generateCalendar();
     this.initializeFilters();
@@ -671,7 +671,7 @@ export class PlanningComponent implements OnInit {
     });
   }
 
-  lesPlats: Dishes[] = [];
+  lesPlats: any[] = [];
   applyDateFilter(parametre: string): void {
     this.lesPlats = [];
     const currentUser = this.tokenService.getUser();
@@ -721,12 +721,25 @@ export class PlanningComponent implements OnInit {
           console.log("les data response", data);
           
           this.lesPlats.push(data);
+
+            this.lesPlats.forEach(element=>{
+          console.log("Boucle");
+          
+          this.compositionDishesService.byDishes(element.id).then(comp=>{
+            // console.log("comp", comp);
+            element.recipes=comp;
+          });
+        });
+         console.log("les plats",this.lesPlats);
         })
       })
-       console.log("les plats",this.lesPlats);
+      
 
         console.log("-------------------detail estimation ------plat-------------------");
-        
+      
+
+        // console.log("plat with ", this.lesPlats);
+
         this.ref = this.dialogService.open(DetailEstimationComponent, {
           // header: "Programme du " + this.filterStartDate + " au " + this.filterEndDate,
           width: '100%',
@@ -735,6 +748,8 @@ export class PlanningComponent implements OnInit {
           contentStyle: { overflow: 'auto' },
           baseZIndex: 10000,
           maximizable: true,
+
+         
     
           data:{
             lesPlast:this.lesPlats,
