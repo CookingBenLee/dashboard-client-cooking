@@ -13,15 +13,15 @@
     <table>
         <thead>
             <tr>
-                <th colspan="12" style="text-align: center;">{{plat.name}} : {{ getQuantite(plat.id) }} Planifié(s) </th>
+                <th colspan="12" style="text-align: left;"><b>{{plat.name}} : {{ getQuantite(plat.id) }} Planifié(s)</b></th>
             </tr>
         <tbody>
           <tr >
-                <th colspan="12" style="text-align: left;">*-----LISTE DES RECETTES-----*</th>
-                <td>Qté initiale KG</td>
-                <td>Stock avant en KG </td>
-                <td>Qté planifié KG</td>
-                <td class="highlight">Stock après KG</td>
+                <th colspan="12" style="text-align: center;"><i>LISTE DES RECETTES</i></th>
+                <td>Qté initiale</td>
+                <td>Stock avant</td>
+                <td>Qté planifié</td>
+                <td class="highlight">Stock après</td>
             </tr>
             <tr *ngFor="let rec of plat.recipes ">
                   <th colspan="12" style="text-align: left;">{{ rec.recipe.name }}</th>
@@ -30,13 +30,7 @@
                   <td>{{ rec.quantity * getQuantite(plat.id) }} KG</td>
                   <td class="highlight">{{ rec.quantity - getQuantite(plat.id) }} KG</td>
               </tr>
-            <!-- <tr>
-                <th>Preparation: Liste des recettes</th>
-                <td>Qté initiale convertie en KG</td>
-                <td>Stock avant en KG récupéré dans la recette</td>
-                <td>Qté planifié = Qté initial * Qté totale planifié</td>
-                <td class="highlight">Stock après = stock av - qte planifié</td>
-            </tr> -->
+            
             <tr  *ngFor="let composition of plat.compositionList" >
                 <td>{{composition?.recipe?.name}}</td>
                 <td>{{composition?.quantityKg  |  number : '.1-5'}}</td>
