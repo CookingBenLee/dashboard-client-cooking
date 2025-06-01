@@ -1,34 +1,33 @@
-<div class="dialog-container">
-  <div class="dialog-containe">
-    <h3 class="dialog-title">Détails du Plat</h3>
+<div class="dialog-containe">
+ <!---- <h3 class="dialog-title">Plat - {{ plat.dishesId.categoryMenu.name }} </h3> --->
+</div>
+
+<div class="info-table">
+  <div class="info-header">
+    <div class="info-header-cell">Poids Initial</div>
+    <div class="info-header-cell">Coût Initial</div>
+    <div class="info-header-cell">Poids Planifié</div>
+    <div class="info-header-cell">Coût Total</div>
   </div>
 
-  <div class="info-table">
-    <div class="info-header">
-      <div class="info-header-cell">Attribut</div>
-      <div class="info-header-cell">Valeur</div>
+  <div class="info-row">
+    <div class="info-cell">
+      {{ plat.dishesId.poids | number: '1.0-2' }} G
     </div>
-
-    <div class="info-row">
-      <div class="info-cell label">Nom</div>
-      <div class="info-cell value">{{ plat.dishesId.name }}</div>
+     <div class="info-cell">
+      {{ plat.dishesId.cout | number: '1.0-2' }} {{ usercurrency }}
     </div>
-
-    <div class="info-row">
-      <div class="info-cell label">Catégorie</div>
-      <div class="info-cell value">{{ plat.dishesId.categoryMenu.name }} ({{ plat.dishesId.categoryMenu.code }})</div>
+   
+    
+    <div class="info-cell">
+      {{ plat.dishesId.poids * (plat?.quantite ?? 0) | number: '1.0-3' }} G
     </div>
-
-    <div class="info-row">
-      <div class="info-cell label">Coût Total</div>
-      <div class="info-cell value">{{ plat.dishesId.cout | number: '1.0-0' }} {{ usercurrency }}</div>
-    </div>
-
-    <div class="info-row">
-      <div class="info-cell label">Poids Total</div>
-      <div class="info-cell value">{{ plat.dishesId.poids | number: '1.0-3' }} G</div>
+    <div class="info-cell">
+      {{ plat.dishesId.cout * (plat?.quantite ?? 0) | number: '1.0-2' }} {{ usercurrency }}
     </div>
   </div>
+
+
 
   <p class="divider mt-4"></p>
 
@@ -53,7 +52,7 @@
       <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
       <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} {{ usercurrency }}</div>
       <div class="info-cell">{{ (detail?.recipe?.stock ?? 0) * 1000  }} G</div>
-      <div class="info-cell">{{ (detail?.quantity ?? 0) * (plat?.quantite ?? 0) }}</div>
+      <div class="info-cell">{{ (detail?.quantity ?? 0) * (plat?.quantite ?? 0) }} G</div>
 
     </div>
 

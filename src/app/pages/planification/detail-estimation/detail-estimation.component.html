@@ -1,121 +1,130 @@
 
 
+<div style="text-align: center;"> <h1>PROGRAMME DES PLATS DU {{ config.data.startDate | date:'dd/MM/yyyy'}} AU {{ config.data.endDate | date:'dd/MM/yyyy'}}</h1> </div>
+
 <div style="display: flex; justify-content: space-between; align-items: center; margin: 5px;">
     <div>
-        <h2>Liste des Plats</h2>
     </div>
     <div>
-        <p-button (onClick)="showDialog()" label="la feuille de course" icon="pi pi-eye" />
+        <p-button (onClick)="showDialog()" label="GENERER FEUILLE DE COURSE" icon="pi pi-eye" />
     </div>
 </div>
 <!-- Première Table : Preparation -->
- <div class="listdiv"  *ngFor="let plat of data,let k=index">
+ <!---div class="listdiv"  *ngFor="let plat of data,let k=index">
     <table>
         <thead>
             <tr>
-                <th>Liste des Plats</th>
-            </tr>
-            <tr>
-                <th colspan="12" style="text-align: center;">{{plat?.name}} (Nombre de plats estimés : <b><i>{{plat?.nbre}}</i></b>) </th>
+                <th colspan="12" style="text-align: left;"><b>{{plat.name}} : {{ getQuantite(plat.id) }} Planifié(s)</b></th>
             </tr>
         </thead>
         <tbody>
+          <tr >
+
+                <th colspan="12" style="text-align: center;"><i>LISTE DES RECETTES</i></th>
+                <td>QTE INITIALE</td>
+                <td>STOCK AVANT</td>
+                <td>QTE PLANIFIEE</td>
+                <td class="highlight">STOCK APRES</td>
+         </tr>
+        <tr *ngFor="let rec of plat.recipes ">
+                  <th colspan="12" style="text-align: left;">{{ rec.recipe.name }}</th>
+                  <td>{{ rec.quantity |   number : '.1-5'}}  KG</td>
+                  <td>{{ rec.recipe.stock |  number : '.1-5'}} KG</td>
+                  <td>{{ rec.quantity * getQuantite(plat.id) |  number : '.1-5'}} KG</td>
+                  <td class="highlight" [style.color]="rec.recipe.stock -  (rec.quantity * getQuantite(plat.id)) < 0 ? 'red' : 'black'">{{ rec.recipe.stock -  (rec.quantity * getQuantite(plat.id)) |  number : '.1-5'}} KG</td>
+
+        </tr>
             <tr>
-                <th>Preparation: Liste des recettes</th>
-                <td>Qté initiale convertie en KG</td>
-                <td>Stock avant en KG récupéré dans la recette</td>
-                <td>Qté estimée = Qté initial * Qté totale estimée</td>
-                <td class="highlight">Stock après = stock av - qte estimée</td>
+
+                <th colspan="12" style="text-align: center;"><i>DETAILS DES INGREDIENTS PAR RECETTE</i></th>
+                <td>INGREDIENT</td>
+                <td>STOCK AV KG</td>
+                <td>QTE PLANIFIEE KG</td>
+                <td>STOCK APRES KG</td>
+                <td>OBSERVATION</td>
             </tr>
-            <tr  *ngFor="let composition of plat.compositionList" >
-                <td>{{composition?.recipe?.name}}</td>
-                <td>{{composition?.quantityKg  |  number : '.1-5'}}</td>
-                <td>{{composition?.recipe?.stock  |  number : '.1-5'}}</td>
-                <td>{{composition?.recipe?.qteEstimee  |  number : '.1-5'}}</td>
-                <td class="highlight">{{composition?.recipe?.stockApres  |  number : '.1-5'}}</td>
-            </tr>
-            <!--<tr>
-                <td>Ratatouille</td>
-                <td>0,2</td>
-                <td>70</td>
-                <td>40</td>
-                <td class="highlight">30</td>
-            </tr>
-            <tr>
-                <td>Bœuf aux oignons</td>
-                <td>0,3</td>
-                <td>29</td>
-                <td>60</td>
-                <td class="highlight">-31</td>
-            </tr>-->
+            <div *ngFor="let plt of data,let k=index">
+                <div *ngFor="let rec of plt.recipes,let k=index">
+                <tr *ngFor="let pr of rec.detailList,let k=index">
+                    <th colspan="12" style="text-align: center;">{{pr.ingredient?.name}}</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </div>
+            </div>
+
         </tbody>
-    </table>
-    
-    <!-- Barre jaune de séparation -->
-    <div class="separator1"></div>
-    
-    <!-- Deuxième Table : Liste des Ingrédients -->
-    <table>
-        <thead>
-            <tr>
-                <th>Liste des Ingrédients</th>
-                <th>Ingrédients: Générer une Preparation (Algo de Preparation)</th>
-                <!-- <th>Stock av récupéré dans la liste des produits</th> -->
-                <th>Qté estimée correspond au poids brut en KG</th>
-                <th>Stock après = stock av - qte estimée</th>
-                <th>Observation</th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let composition of  data2[k]?.compositionList">
+        <tbody *ngFor="let composition of  data2[k]?.compositionList,let k=index">
             <tr *ngFor="let detail of composition.recipe.detailList, let j=index">
                 <td *ngIf="j==0" [rowSpan]="composition.recipe.detailList">{{composition?.recipe?.name}}</td>
                 <td>{{detail?.ingredient?.name}}</td>
-                <!-- <td>{{detail?.ingredient?.stock?.quantity  |  number : '.1-3'}}</td> -->
+                <td></td>
                 <td>{{detail?.brut  |  number : '.1-3'}}</td>
                 <td>{{detail?.stockApres  |  number : '.1-3'}}</td>
                 <td [ngClass]="{'insufficient': detail.stockApres<0}" ><span *ngIf="detail.stockApres<0" >Insuffisant</span></td>
             </tr>
-            
-            <!--<tr>
-                <td>BEURRE</td>
-                <td>5</td>
-                <td>1,37</td>
-                <td>3,63</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>BROCOLI</td>
-                <td>1,515</td>
-                <td>1,515</td>
-                <td>1,515</td>
-                <td class="insufficient">Insuffisant</td>
-            </tr>
-            <tr>
-                <td>CORNICHPON</td>
-                <td>0</td>
-                <td>0,439</td>
-                <td>-0,439</td>
-                <td class="insufficient">Insuffisant</td>
-            </tr>-->
+
         </tbody>
-    
     </table>
-    <div class="separator"></div>
+</div>--->
+<!--pre>{{ data | json }}</pre--->
+<div class="listdiv">
+    <table>
+        <thead>
+            <tr>
+                <th colspan="12" style="text-align: center;"><b><i>LISTE DES PLATS</i></b></th>
+                <td><b><i>NBRE TOTAL PLANIFIE</i></b></td>
+            </tr>
+            <tr *ngFor="let plat of data['dishes']">
+                <th colspan="12" style="text-align: left;">{{plat.dishes.name}}</th>
+                <td>{{ plat.quantity}}</td>
+            </tr>
+        </thead>
+    </table>
+</div>
+  <table>
+          <tbody>
+              <tr >
 
- </div>
+                    <th colspan="12" style="text-align: center;"><i>LISTE DES RECETTES</i></th>
+                    <td>STOCK AVANT</td>
+                    <td>QTE PLANIFIEE</td>
+                    <td class="highlight">STOCK APRES</td>
+
+             </tr>
+             <tr *ngFor="let rec of data['recipes']">
+              <th colspan="12" style="text-align: left;">{{ rec.recipe.name }}</th>
+              <td>{{ rec?.recipe.stock ?? 0 | number:'1.0-2' }}</td>
+              <td>{{ rec?.quantity | number:'1.0-2' }}</td>
+              <td class="{{ rec?.currentStock < 0 ? 'insufficient' : '' }}">
+                  {{ rec?.currentStock | number:'1.0-2' }}
+              </td>
+            </tr>
+          </tbody>
+  </table>
+
+  <table>
+          <tbody>
+              <tr >
+
+                    <th colspan="12" style="text-align: center;"><i>LISTE DES INGREDIENTS</i></th>
+                    <td>STOCK AVANT</td>
+                    <td>QTE PLANIFIEE</td>
+                    <td class="highlight">STOCK APRES</td>
+
+             </tr>
+             <tr *ngFor="let rec of data['products']">
+              <th colspan="12" style="text-align: left;">{{ rec.product.name }}</th>
+              <td>{{ rec?.initialStock ?? 0 | number:'1.0-2' }}</td>
+              <td>{{ rec?.qtePlanifie | number:'1.0-2' }}</td>
+              <td class="{{ rec?.currentStock < 0 ? 'insufficient' : '' }}">
+                  {{ rec?.currentStock | number:'1.0-2' }}
+              </td>
+            </tr>
+          </tbody>
+  </table>
 
 
-
- <!--<div class="card flex justify-content-center" >
-    <p-dialog 
-        header="Détail de la feuille de course" 
-        [modal]="true" 
-        [(visible)]="visible" 
-        [style]="{ width: '100vw', height: '100vh' }" 
-        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
-        [maximizable]="true">
-
-        <app-feuille-course [detailRecipeList]="listFeuille"></app-feuille-course>
-        
-    </p-dialog>
-</div>-->

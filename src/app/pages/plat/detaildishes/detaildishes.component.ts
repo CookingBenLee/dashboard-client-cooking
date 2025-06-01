@@ -215,7 +215,8 @@ export class DetaildishesComponent {
     var recipe: Recipe = composition.recipe
     recipe.cout = 0
     var detailRecipes: DetailsRecipe[] = recipe.detailList;
-    var brut = (composition.quantity / 1000) * recipe.ratio
+    // var brut = (composition.quantity / 1000) * recipe.ratio
+    var brut = (composition.quantity) * recipe.ratio
     console.log("----------------------------------------------------------------{}", composition);
     console.log("----------------------------------------------------------------{}", brut);
 

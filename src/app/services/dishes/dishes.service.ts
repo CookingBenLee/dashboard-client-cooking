@@ -83,4 +83,11 @@ export class DishesService {
         .then()
         .then();
   }
+
+  filterByPlanningBetweenTwoDate(data: any){
+    return this.http.post<any>(`${this.env.apiUrl}/dishes/filter-planning`,data)
+    .toPromise()
+    .then()
+    .then();
+  }
 }

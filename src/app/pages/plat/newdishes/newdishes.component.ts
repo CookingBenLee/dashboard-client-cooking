@@ -130,7 +130,7 @@ export class NewdishesComponent implements OnInit{
   recetteSelectione:Recipe=new Recipe()
   detailsRecepeSelectione:any[]=[]
   quantite:number=0
-  units=["Gramme"]
+  units=["KG"]
   unitSelectionne:any
   ///
   picture:PicturesDishes=new PicturesDishes()
@@ -255,9 +255,10 @@ export class NewdishesComponent implements OnInit{
     var cp:CompositionDishes=new CompositionDishes()
     this.loadingLine=true
     cp.quantity=this.recetteSelectione.net
-    if(this.unitSelectionne==this.units[1]){//KilogrammeGramme
+    if(this.unitSelectionne==this.units[2]){//Gramme
       console.log(this.recetteSelectione);
-      this.recetteSelectione.net=this.recetteSelectione.net*1000
+      this.recetteSelectione.net=this.recetteSelectione.net/1000
+      //this.recetteSelectione.net=this.recetteSelectione.net*1000
     }
 
     // await this.changePoid()

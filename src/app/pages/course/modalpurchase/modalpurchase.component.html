@@ -11,14 +11,14 @@
         </div>-->
 
         <div class="field col-2">
-          <label htmlFor="datePurchase">Date </label>
+          <label htmlFor="datePurchase">DATE </label>
           <p-calendar [(ngModel)]="data.datePurchase" dateFormat="dd-mm-yy" [showOnFocus]="false" showIcon="true"
             name="datePurchase" id="datePurchase"></p-calendar>
           <!--(onFocus)="$event.preventDefault()"-->
         </div>
 
         <div class="field col-5">
-          <label htmlFor="shop">Fournisseur</label>
+          <label htmlFor="shop">FOURNISSEUR</label>
           <p-dropdown [options]="shops" optionLabel="name" name="shop" [(ngModel)]="data.shop">
             <ng-template let-shop pTemplate="item">
               <div class="flex align-items-center operatingSystems-item">
@@ -48,7 +48,7 @@
         <!--<div class="grid col">-->
         <div class="col-3">
           <div class="field">
-            <label htmlFor="montant">Montant</label>
+            <label htmlFor="montant">MONTANT</label>
             <p-inputNumber name="montant" id="montant" [(ngModel)]="data.montant" [showButtons]="true"
               [min]="0"></p-inputNumber>
           </div>
@@ -56,7 +56,7 @@
 
         <div class="col-2">
           <div class="field ">
-            <label htmlFor="currency">Devise</label>
+            <label htmlFor="currency">DEVISE</label>
             <p-dropdown [options]="currencys" optionLabel="name" name="currency"
               [(ngModel)]="data.currency"></p-dropdown>
           </div>
@@ -75,7 +75,7 @@
 
             <div class="col-3">
               <div style="margin-top: -12px;"   class="field flex align-items-center gap-2">
-                <label htmlFor="product{{detailPurchasesForms.length-1}}" class="w-6rem">Produit</label>
+                <label htmlFor="product{{detailPurchasesForms.length-1}}" class="w-6rem">PRODUIT</label>
                 <button style="margin-top: -15px;" pButton pRipple type="button" icon="pi pi-plus"
                 pTooltip="Ajouter un produit non existant"  tooltipPosition="top" appendTo="body"
                   class="p-button-rounded p-button-success small-button p-mr-2 h-full"
@@ -109,7 +109,7 @@
        </div>-->
             <div class="col">
               <div class="field">
-                <label htmlFor="quantity{{detailPurchasesForms.length-1}}">Quantité</label>
+                <label htmlFor="quantity{{detailPurchasesForms.length-1}}">QUANTITE</label>
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantity{{detailPurchasesForms.length-1}}"
                   id="quantity{i}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].quantity"
                   (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].quantity,detailPurchasesForms.length-1)"
@@ -118,7 +118,7 @@
             </div>
             <div class="col">
               <div class="field ">
-                <label htmlFor="unit{{detailPurchasesForms.length-1}}">Unité</label>
+                <label htmlFor="unit{{detailPurchasesForms.length-1}}">UNITE</label>
                 <p-dropdown [options]="units" optionLabel="name" name="unit{{detailPurchasesForms.length-1}}"
                   [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].unit"
                   (ngModelChange)="changeUnit(detailPurchasesForms.length-1)"></p-dropdown>
@@ -129,7 +129,7 @@
 
             <div class="col-2">
               <div class="field">
-                <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">Prix total</label>
+                <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">PRIX TOTAL</label>
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="totalPrice{{detailPurchasesForms.length-1}}"
                   id="totalPrice{{detailPurchasesForms.length-1}}"
                   [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice" [showButtons]="true"
@@ -141,7 +141,7 @@
 
             <div class="col">
               <div class="field">
-                <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
+                <label htmlFor="price{{detailPurchasesForms.length-1}}">PRIX A L'UNITE</label>
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"
                   id="value{i}" [disabled]="true"
                   [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true"
@@ -152,7 +152,7 @@
             <div class="col mt-5">
               <div class="field">
                 <label htmlFor="price{{detailPurchasesForms.length-1}}">           </label>
-                <button pButton pRipple label="Ajouter"
+                <button pButton pRipple label="AJOUTER"
                   [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0" type="button"
                   class="col p-button p-button-success p-component"
                   (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])">
@@ -162,7 +162,7 @@
           </div>
 
           <div *ngIf="detailPurchasesForms[detailPurchasesForms.length-1].distinctUnit" class="field">
-            <label htmlFor="price{{detailPurchasesForms.length-1}}">Quantité réelle : </label>
+            <label htmlFor="price{{detailPurchasesForms.length-1}}">QUANTITE REELLE : </label>
             <label> {{detailPurchasesForms[detailPurchasesForms.length-1].realQuantity}}</label>
           </div>
 
@@ -211,13 +211,13 @@
           <div class="divtableau">
             <table *ngIf="detailPurchasesForms2.length!=0">
               <thead>
-                <th>Produit</th>
-                <th>Catégory</th>
-                <th>Conditionnement</th>
-                <th>Quantité(unité)</th>
+                <th>PRODUIT</th>
+                <th>CATEGORIE</th>
+                <th>CONDITIONNEMENT</th>
+                <th>QUANTITE(UNITE)</th>
 
                 <!-- <th>Prix/unité</th> -->
-                <th>Prix Total </th>
+                <th>PRIX TOTAL </th>
                 <th></th>
 
               </thead>

@@ -5,12 +5,12 @@ export const navItems: NavItem[] = [
   //   navCap: 'Dashboards',
   // },
   {
-    displayName: "Ma page d'accueil",
+    displayName: "ACCUEIL",
     iconName: 'solar:widget-add-line-duotone',
     route: 'home/acceuil',
   },
   {
-    navCap: 'Planification de Repas',
+    navCap: 'PLANIFICATION DE REPAS',
   },
   {
     displayName: 'Mes Recettes',
@@ -53,7 +53,7 @@ export const navItems: NavItem[] = [
   
  
   {
-    navCap: 'Mes Ingrédients',
+    navCap: 'MES INGREDIENTS',
   },
   {
     displayName: 'Mes Produits',

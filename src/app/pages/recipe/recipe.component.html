@@ -1,13 +1,13 @@
 <mat-card class="cardWithShadow theme-card">
   <mat-card-header>
-    <mat-card-title class="m-b-0">Gestion des recettes</mat-card-title>
+    <mat-card-title class="m-b-0">GESTION DES RECETTES</mat-card-title>
   </mat-card-header>
   <mat-card-content class="b-t-1">
     <p-tabView [(activeIndex)]="activeIndex">
 
 
       <!--Panel liste des purchases-->
-      <p-tabPanel header="Liste des Recettes">
+      <p-tabPanel header="LISTE DES RECETTES">
         <div class="">
           <div class="card">
             <!--<h5>Purchase List</h5>-->
@@ -31,16 +31,16 @@
               <ng-template pTemplate="header">
                 <tr>
                   <!-- <th pSortableColumn="code" pColumnFilter="code">Code<p-sortIcon field="code"></p-sortIcon></th> -->
-                  <th pSortableColumn="name" pColumnFilter="name">Nom<p-sortIcon field="name"></p-sortIcon></th>
+                  <th pSortableColumn="name" pColumnFilter="name">NOM<p-sortIcon field="name"></p-sortIcon></th>
                   <!--<th pSortableColumn="categorie" pColumnFilter="categorie">Categorie<p-sortIcon field="categorie"></p-sortIcon></th>-->
 
-                  <th pSortableColumn="stock" pColumnFilter="stock">Stock<p-sortIcon field="stock"></p-sortIcon></th>
-                  <th pSortableColumn="stock" pColumnFilter="stock">Recette principale<p-sortIcon
+                  <th pSortableColumn="stock" pColumnFilter="stock">STOCK<p-sortIcon field="stock"></p-sortIcon></th>
+                  <th pSortableColumn="stock" pColumnFilter="stock">RECETTE PRINCIPALE<p-sortIcon
                       field="stock"></p-sortIcon></th>
 
                   <!--<th pSortableColumn="cout" pColumnFilter="cout">Cout<p-sortIcon field="cout"></p-sortIcon></th>-->
 
-                  <th style="justify-content: center; text-align: center;">Actions</th>
+                  <th style="justify-content: center; text-align: center;">ACTIONS</th>
                   <!-- <th></th> -->
 
                   <!--<th></th>-->
@@ -56,10 +56,10 @@
           
                               <td (click)="showDishesDetail($event,dishes)"  style="width: 35%; min-width: 8rem;">{{dishes?.categoryRecipe?.name }}</td>-->
 
-                  <td (click)="show($event,dishes)" style="width: 20%; min-width: 8rem;">{{dishes?.stock}} <span
+                  <td (click)="showDishesDetail($event,dishes)" style="width: 20%; min-width: 8rem;">{{dishes?.stock}} <span
                       *ngIf="dishes.stock"> Kg</span></td>
 
-                  <td (click)="show($event,dishes)" style="width: 5%; min-width: 8rem;">
+                  <td (click)="showDishesDetail($event,dishes)" style="width: 5%; min-width: 8rem;">
                     <span [class]="dishes.principaleRecipe ? 'text-green-500' : 'text-red-500'">
                       {{ dishes.principaleRecipe ? 'OUI' : 'NON' }}
                     </span>
@@ -115,13 +115,13 @@
       </p-tabPanel>
 
 
-      <p-tabPanel (onFocus)="reset()" header="Nouvelle Recette">
+      <p-tabPanel (onFocus)="reset()" header="NOUVELLE RECETTE">
         <div class="dialog-container">
           <form class="grid newform" #f="ngForm" (ngSubmit)="save()">
             <div class="col-12 card p-fluid">
               <div class="grid entete">
                 <div class="field col-6">
-                  <label for="name">Nom de la recette</label>
+                  <label for="name">NOM DE LA RECETTE</label>
                   <input pInputText id="name" [(ngModel)]="name" name="name" type="text" placeholder="Nom de la recette"
                     required />
                 </div>
@@ -131,15 +131,15 @@
                     [(ngModel)]="ratio" [showButtons]="true" [min]="0"></p-inputNumber>
                 </div> -->
                 <div class="field col-6">
-                  <label for="principaleRecipe">Recette principale</label>
+                  <label for="principaleRecipe">EST-CE UNE RECETTE PRINCIPALE ?</label>
                   <p-dropdown [(ngModel)]="base" name="principaleRecipe" [options]="reciss" optionLabel="name"
                     placeholder="OUI ou NON"></p-dropdown>
                 </div>
               </div>
 
-              <h5 class="dialog-title">Liste des Détails de la Recette</h5>
+              <h5 class="dialog-title">COMPOSITION DES INGREDIENTS LA RECETTE</h5>
              
-                <button pButton label="Ajouter un ingrédient" type="button" [loading]="loading"
+                <button pButton label="AJOUTER UN INGREDIENT" type="button" [loading]="loading"
                   class="p-button-primary mt-2" (click)="showAddDetailDishesForm()"></button>
        
 
@@ -148,7 +148,7 @@
                   <div class="grid single-line">
                     <!-- Produit dropdown -->
                     <div class="field col">
-                      <label htmlFor="product{{detailRecipesProvisoire.length-1}}">Produit</label>
+                      <label htmlFor="product{{detailRecipesProvisoire.length-1}}">INGREDIENT</label>
                       <p-dropdown [options]="products" optionLabel="name" [filter]="true" filterBy="name"
                         name="product{{detailRecipesProvisoire.length-1}}"
                         [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient"
@@ -163,7 +163,7 @@
 
                     <!-- Proportion input -->
                     <div class="field col">
-                      <label htmlFor="quantity{{detailRecipesProvisoire.length-1}}">Proportion %</label>
+                      <label htmlFor="quantity{{detailRecipesProvisoire.length-1}}">PROPORTION %</label>
                       <p-inputNumber mode="decimal" [minFractionDigits]="2"
                         name="quantity{{detailRecipesProvisoire.length-1}}" id="quantity{i}"
                         [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion"
@@ -173,7 +173,7 @@
 
                     <!-- Preparation textarea -->
                     <div class="field col">
-                      <label htmlFor="preparationIngredient">Préparation ingredient</label>
+                      <label htmlFor="preparationIngredient">COMMENT PREPARER CET INGREDIENT ?</label>
                       <textarea rows="1" cols="30" name="preparationIngredient" pInputTextarea
                         [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].preparationIngredient"></textarea>
                     </div>
@@ -203,10 +203,10 @@
 
               <div class="info-table">
                 <div class="info-header">
-                  <div class="info-header-cell">Produit</div>
-                  <div class="info-header-cell">Proportion %</div>
-                  <div class="info-header-cell">Préparation</div>
-                  <div class="info-header-cell">Actions</div>
+                  <div class="info-header-cell">INGREDIENT</div>
+                  <div class="info-header-cell">PROPORTION %</div>
+                  <div class="info-header-cell">PREPARATION</div>
+                  <div class="info-header-cell">ACTIONS</div>
                 </div>
 
                 <!-- Loop to display details -->
@@ -223,7 +223,7 @@
 
                 <!-- Total Row -->
                 <div class="info-row total-row">
-                  <div class="info-cell">Total</div>
+                  <div class="info-cell">TOTAL</div>
                   <div class="info-cell">{{ totalProportion }}</div>
                   <div class="info-cell"></div> <!-- Empty cell for "Préparation" -->
                   <div class="info-cell"></div> <!-- Empty cell for "Actions" -->
@@ -234,12 +234,12 @@
               <p class="divider"></p>
               <div class="field  col-12">
                 <div class="field">
-                  <label htmlFor="detailCuisine">Detail cuisine</label>
+                  <label htmlFor="detailCuisine">COMMENT PREPARER CETTE RECETTE ?</label>
                   <textarea rows="1" cols="30" name="detailCuisine" pInputTextarea
                     [(ngModel)]="detailCuisine"></textarea>
                 </div>
               </div>
-              <button pButton label="Enregistrer la recette" type="submit" [loading]="loading" class="p-button-vert"
+              <button pButton label="ENREGISTRER LA RECETTE" type="submit" [loading]="loading" class="p-button-vert"
                 [disabled]="!f.valid"></button>
             </div>
           </form>

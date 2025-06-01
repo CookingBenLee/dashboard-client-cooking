@@ -4,7 +4,7 @@
     <div class="modal-background" (click)="closeModal()"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Nouvelle Planification</p>
+        <p class="modal-card-title">NOUVELLE PLANIFICATION</p>
         <button class="delete" aria-label="close" (click)="closeModal()"></button>
       </header>
       <section class="modal-card-body">
@@ -21,14 +21,14 @@
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" (click)="closeModal()">Annuler</button>
+        <button class="button" (click)="closeModal()">ANNULER</button>
         <button class="button is-primary" 
                 (click)="onSubmit()" 
                 [disabled]="isSubmitting">
           <span *ngIf="isSubmitting" class="icon">
             <i class="fas fa-spinner fa-spin"></i>
           </span>
-          <span>Enregistrer</span>
+          <span>ENREGISTRER</span>
         </button>
       </footer>
     </div>
@@ -37,7 +37,7 @@
 
 <ng-template #cardMode>
   <div class="planification-card">
-    <h2 class="card-title">Nouvelle Planification</h2>
+    <!---h2 class="card-title"><i>AJOUTER UNE PLANIFICATION</i></h2--->
     <div class="notification-container" *ngIf="errorMessage || successMessage">
       <div class="notification is-danger" *ngIf="errorMessage">
         {{ errorMessage }}
@@ -50,14 +50,14 @@
       <ng-container *ngTemplateOutlet="formFields"></ng-container>
     </div>
     <div class="card-actions">
-      <button class="button" (click)="closeModal()">Annuler</button>
+      <button class="button" (click)="closeModal()">ANNULER</button>
       <button class="button is-primary" 
               (click)="onSubmit()" 
               [disabled]="isSubmitting">
         <span *ngIf="isSubmitting" class="icon">
           <i class="fas fa-spinner fa-spin"></i>
         </span>
-        <span>Enregistrer</span>
+        <span>ENREGISTRER</span>
       </button>
     </div>
   </div>
@@ -66,7 +66,7 @@
 <ng-template #formFields>
   <div class="planning-line-inputs">
     <div class="field">
-      <label for="dateStart">Sélectionnez une date</label>
+      <label for="dateStart">CHOISIR UNE DATE </label>
       <input 
         type="date" 
         id="dateStart" 
@@ -77,19 +77,19 @@
         required>
     </div>
     <div class="field">
-      <label for="dish">Liste Des Plats</label>
+      <label for="dish">LISTE DES PLATS</label>
       <select 
         id="dish"
         [(ngModel)]="currentLine.dish" 
         class="input" 
         name="dish" 
         required>
-        <option value="">Sélectionner un plat</option>
+        <option value="">CHOISIR UN PLAT</option>
         <option *ngFor="let dish of dishes" [value]="dish.id">{{ dish.name }}</option>
       </select>
     </div>
     <div class="field">
-      <label for="quantity">Quantité</label>
+      <label for="quantity">QUANTITE</label>
       <input 
         type="number" 
         id="quantity"
@@ -101,7 +101,7 @@
         min="1">
     </div>
     <div class="field">
-      <label for="period">Période</label>
+      <label for="period">PERIODE</label>
       <select 
         id="period"
         [(ngModel)]="currentLine.period" 
@@ -109,7 +109,7 @@
         name="period" 
         required 
         (ngModelChange)="onPeriodChange($event)">
-        <option value="">Sélectionner une période</option>
+        <option value="">CHOISIR UNE PERIODE</option>
         <option *ngFor="let period of periods" [value]="period">{{ period }}</option>
       </select>
     </div>
@@ -119,7 +119,7 @@
         class="button is-info" 
         (click)="addLine()" 
         [disabled]="!canAddLine()"
-        aria-label="Ajouter une ligne">
+        aria-label="AJOUTER UNE LIGNE">
         <span class="icon">
           <i class="fas fa-plus"></i>
         </span>
@@ -132,16 +132,18 @@
     <table class="table is-fullwidth">
       <thead>
         <tr>
-          <th>Date | Nom du Plat</th>
-          <th>Quantité</th>
+          <th>DATE</th>
+          <th>PLAT</th>
+          <th>QUANTITE</th>
           <!-- <th>Heure début - Fin</th> -->
-          <th>Période</th>
-          <th><span class="is-sr-only">Actions</span></th>
+          <th>PERIODE</th>
+          <th><span class="is-sr-only">ACTIONS</span></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let line of planningLines; let i = index">
-          <td>{{ formatDate(line.date) }} | {{ getDishName(line.dish) }}</td>
+          <td>{{ formatDate(line.date) }}</td>
+          <td>{{ getDishName(line.dish) }}</td>
           <td>{{ line.quantity }}</td>
           <!-- <td>{{ line.startTime }} - {{ line.endTime }}</td> -->
           <td>{{ line.period }}</td>

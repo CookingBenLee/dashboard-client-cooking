@@ -25,6 +25,7 @@ th, td {
 
 th {
     background-color: #f4f4f4;
+    
 }
 
 /* Barre jaune de séparation */
@@ -35,7 +36,7 @@ th {
 }
 .separator {
     height: 10px;
-    background-color: yellow;
+    // background-color: yellow;
     margin: 20px 0;
 }
 
@@ -81,4 +82,9 @@ th {
         padding-right: 10px;
         font-weight: bold;
     }
+    .negative {
+        color: red;
+        font-weight: bold;
+      }
+      
 }
