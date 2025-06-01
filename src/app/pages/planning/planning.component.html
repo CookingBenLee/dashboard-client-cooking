@@ -40,11 +40,11 @@
           <div class="weekday">Sam</div>
           <div class="weekday">Dim</div>
         </div>
-        
+
 
         <div class="days">
           <div class="week" *ngFor="let week of weeks">
-            <div class="day" 
+            <div class="day"
                  *ngFor="let date of week"
                  [class.other-month]="!isCurrentMonth(date)"
                  [class.selected]="isSelectedDate(date)"
@@ -123,38 +123,38 @@
   <ng-container *ngIf="currentView === 'details'">
     <div class="details-container">
       <!---h2>DETAILS PLANIFICATION</h2--->
-      
-   
+
+
       <div class="filters-section">
         <div class="date-filters">
           <div class="filter-group">
             <label for="startDate">DATE DE DEBUT</label>
-            <input 
-              type="date" 
-              id="startDate" 
-              [(ngModel)]="filterStartDate" 
+            <input
+              type="date"
+              id="startDate"
+              [(ngModel)]="filterStartDate"
               class="date-input" (change)="applyDateFilter('filter')">
           </div>
           <div class="filter-group">
             <label for="endDate">DATE DE FIN</label>
-            <input 
-              type="date" 
-              id="endDate" 
-              [(ngModel)]="filterEndDate" 
+            <input
+              type="date"
+              id="endDate"
+              [(ngModel)]="filterEndDate"
               class="date-input" (change)="applyDateFilter('filter')">
           </div>
           <!----<button class="filter-button" (click)="applyDateFilter('filter')">
             <fa-icon [icon]="faSearch"></fa-icon> Afficher
           </button>---->
 
-          <button class="filter-button" (click)="applyDateFilter('preparation')">
+          <button class="filter-button" (click)="getPreparation()">
             <fa-icon [icon]="faUtensilSpoon"></fa-icon> PREPARATION
           </button>
-          
+
         </div>
       </div>
 
-      
+
       <div class="planning-list">
         <div class="list-header">
           <div class="header-cell">DATE</div>
@@ -164,7 +164,7 @@
           <div class="header-cell">CATEGORIE</div>
           <div class="header-cell">ACTIONS</div>
         </div>
-        
+
         <div class="list-body">
           <div class="list-row" *ngFor="let planning of filteredPlannings">
             <div class="cell">{{ planning.date_planning | date:'dd/MM/yyyy':'':'fr-FR' }}</div>
@@ -213,7 +213,7 @@
               </ng-container>
             </div>
           </div>
-          
+
           <div class="empty-message" *ngIf="filteredPlannings.length === 0">
             Aucune planification trouvée pour cette période
           </div>
@@ -228,4 +228,4 @@
     [isVisible]="showDishPopup"
     (onClose)="closeDishPopup()">
   </app-dish-details-popup> -->
-</div> 
+</div>

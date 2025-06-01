@@ -51,22 +51,9 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TokenService } from 'src/app/services/token/token.service';
 import { Dishes } from 'src/app/services/dishes/Dishes';
 import { DishesPriceService } from 'src/app/services/dishes/dishes-price.service';
-import { DishesService } from 'src/app/services/dishes/dishes.service';
-import { CategoryOperation } from 'src/app/services/categoryOperation/category-operation';
-import { CategoryOperationService } from 'src/app/services/categoryOperation/category-operation.service';
-import { ECategoryOperation } from 'src/app/services/categoryOperation/ECategoryOperation';
-import { PriceFormaterDirective } from 'src/app/directives/priceFormater/price-formater.directive';
-import { SimulationEmploye } from 'src/app/services/simulationEmploye/simulation-employe';
-import { EstimationVente } from 'src/app/services/estimationVente/estimation-vente';
-import { SimulationOperation } from 'src/app/services/simulationOperation/simulation-operation';
-import { SimulationOperationService } from 'src/app/services/simulationOperation/simulation-operation.service';
-import { EstimationVenteService } from 'src/app/services/estimationVente/estimation-vente.service';
-import { SimulationEmployeService } from 'src/app/services/simulationEmploye/simulation-employe.service';
-import { MapService } from 'src/app/services/map/map.service';
 import { DetailsRecipe } from 'src/app/services/detailsrecipe/DetailsRecipe';
 import { CompositionDishes } from 'src/app/services/compositiondishes/CompositionDishes';
 import { FeuilleCourseComponent } from './feuille-course/feuille-course.component';
-import { RecipeAggregator } from './recipe-aggregator';
 interface AggregatedRecipe {
   id: number;
   name: string;
@@ -103,7 +90,7 @@ interface AggregatedRecipe {
 })
 
 export class DetailEstimationComponent implements OnInit {
-  data:any[]=[];
+  data: any = [];
   recipesList: any[] = [];
   data2:Dishes[]=[]
 
@@ -116,47 +103,12 @@ export class DetailEstimationComponent implements OnInit {
     private dialogService:DialogService
     ) {
       console.log("config",this.config.data);
-      
-      this.data=this.config.data.lesPlast;
-      console.log("Les Plats---- :",this.data);
-      
-
-      this.data.forEach(element=>{
-        console.log("boucle");
-        
-      })
+      this.data = this.config.data;
   }
 
   ngOnInit(): void {
     console.log("Test NGon");
-    console.log("Les Plats NGon :",this.data)
-  }
-  
-  generateRecipes() {
-    this.recipesList = [];
-
-  this.data.forEach(plat => {
-    const nbPlatsPlanifies = this.getQuantite(plat.id);
-
-    plat.recipes.forEach((rec: { recipe: { name: any; stock: number; }; quantity: number; }) => {
-      const existing = this.recipesList.find(r => r.name === rec.recipe.name);
-
-      const quantitePlanifiee = rec.quantity * nbPlatsPlanifies;
-
-      if (existing) {
-        existing.totalPlannedQuantity += quantitePlanifiee;
-        existing.stockApres = existing.stockAvant - existing.totalPlannedQuantity;
-      } else {
-        this.recipesList.push({
-          name: rec.recipe.name,
-          stockInitial: rec.recipe.stock,
-          stockAvant: rec.recipe.stock,
-          totalPlannedQuantity: quantitePlanifiee,
-          stockApres: rec.recipe.stock - quantitePlanifiee
-        });
-      }
-    });
-  });
+    console.log("Les Plats NGon :", this.data)
   }
 
   async filterItemsOfType(compositionList: CompositionDishes[]): Promise<CompositionDishes[]> {
@@ -185,9 +137,9 @@ export class DetailEstimationComponent implements OnInit {
 
     console.log("_______________________________ingredient list___________________________________");
     console.log(this.listFeuille);
-    
-    
-  
+
+
+
     return updatedList.filter((item) => item !== null) as CompositionDishes[];
   }
 
@@ -206,11 +158,11 @@ export class DetailEstimationComponent implements OnInit {
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
-      data:this.listFeuille,
+      data: this.data['negativeProducts'],
     });
 
     this.ref.onClose.subscribe(() => {
-    
+
     });
   }
   async updateOrAddToIngredientList(detail: DetailsRecipe) {
@@ -229,10 +181,10 @@ export class DetailEstimationComponent implements OnInit {
 
 getQuantite(id: number) {
   const data = this.config.data.planning.filter((p: any) => p.refdishes === id);
-  
+
   let quantity = 0;
   data.forEach((element: any) => {
-    quantity += element.quantite || 0; 
+    quantity += element.quantite || 0;
   });
 
   return quantity;
