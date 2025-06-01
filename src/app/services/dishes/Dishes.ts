@@ -2,6 +2,7 @@ import { CategoryDishes } from "../categorydishes/CategoryDishes";
 import { CategoryMenu } from "../categotyMenu/CategoryMenu";
 import { CompositionDishes } from "../compositiondishes/CompositionDishes";
 import { DetailDishes } from "../detaildishes/DetailDishes";
+import { DetailsRecipe } from "../detailsrecipe/DetailsRecipe";
 import { PicturesDishes } from "../picturedishes/PicturesDishes";
 import { Unit } from "../unit/Unit";
 

@@ -630,14 +630,16 @@ export class PlanningComponent implements OnInit {
     const planning = this.allPlannings.find(p => p.refdishes.toString() === dishId);
     return planning ? planning.category : 'Non spécifié';
   }
-
+  startDate: string = '';  // Format: yyyy-MM-dd
+  endDate: string = '';    // Calculé automatiquement
   private initializeFilters(): void {
-
+    
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    this.filterStartDate = this.formatDateForInput(firstDay);
+    const lastDay =new Date(today) ;
+   // const lastDay = new Date(today.getFullYear(), today.getMonth()+1, today.getDay());
+    lastDay.setDate(today.getDate() + 6);
+    this.filterStartDate = this.formatDateForInput(today);
     this.filterEndDate = this.formatDateForInput(lastDay);
 
     this.loadAllPlannings();
@@ -650,11 +652,12 @@ export class PlanningComponent implements OnInit {
         // console.log('Mapped plannings:', this.allPlannings);
 
         // Update the planning status for the calendar
-       this.allPlannings
+      this.allPlannings
         .sort((a, b) => {
           const dateA = new Date(a.date_planning).getTime();
           const dateB = new Date(b.date_planning).getTime();
           return dateB - dateA; // Descending order
+          //return dateA - dateB; // Ascending order
         })
         .forEach(planning => {
           const date = new Date(planning.date_planning);
@@ -674,37 +677,44 @@ export class PlanningComponent implements OnInit {
 
   lesPlats: any[] = [];
   applyDateFilter(parametre: string): void {
-    this.lesPlats = [];
-    const currentUser = this.tokenService.getUser();
-    const userId = currentUser.id;
-    if (!this.filterStartDate || !this.filterEndDate) {
-      this.filteredPlannings = this.allPlannings.filter(p => p.refcompteuser === userId);
-      return;
-    }
 
-    const start = new Date(this.filterStartDate);
-    const end = new Date(this.filterEndDate);
+    /* The code provided seems to be a comment block in TypeScript. It mentions a function or method
+    called `dishefilterByPlanningBetweenTwoDate`, but the actual implementation of this function is
+    not provided in the code snippet. It appears to be incomplete or missing. */
+    this.dishService.filterByPlanningBetweenTwoDate({'date1': new Date(this.filterStartDate), 'date2': new Date(this.filterEndDate)});
+
+  //   this.lesPlats = [];
+  //   const currentUser = this.tokenService.getUser();
+  //   const userId = currentUser.id;
+  //   if (!this.filterStartDate || !this.filterEndDate) {
+  //     this.filteredPlannings = this.allPlannings.filter(p => p.refcompteuser === userId);
+  //     return;
+  //   }
+
+  //   const start = new Date(this.filterStartDate);
+  //   const end = new Date(this.filterEndDate);
 
 
-    start.setHours(0, 0, 0, 0);
-    end.setHours(23, 59, 59, 999);
+  //   start.setHours(0, 0, 0, 0);
+  //   end.setHours(23, 59, 59, 999);
 
-    this.filteredPlannings = this.allPlannings
-  .filter(planning => {
-    const planningDate = new Date(planning.date_planning);
-    planningDate.setHours(0, 0, 0, 0);
+  //   this.filteredPlannings = this.allPlannings
+  // .filter(planning => {
+  //   const planningDate = new Date(planning.date_planning);
+  //   planningDate.setHours(0, 0, 0, 0);
 
-    const planningTime = planningDate.getTime();
-    const startTime = start.getTime();
-    const endTime = end.getTime();
+  //   const planningTime = planningDate.getTime();
+  //   const startTime = start.getTime();
+  //   const endTime = end.getTime();
 
-    return planningTime >= startTime && planningTime <= endTime;
-  })
-  .sort((a, b) => {
-    const dateA = new Date(a.date_planning).getTime();
-    const dateB = new Date(b.date_planning).getTime();
-    return dateB - dateA;
-  });
+  //   return planningTime >= startTime && planningTime <= endTime;
+  // })
+  // .sort((a, b) => {
+  //   const dateA = new Date(a.date_planning).getTime();
+  //   const dateB = new Date(b.date_planning).getTime();
+  //   //return dateB - dateA;
+  //   return dateA - dateB;
+  // });
 
 
 
@@ -870,7 +880,8 @@ export class PlanningComponent implements OnInit {
     var recipe: Recipe = composition.recipe
     recipe.cout = 0
     var detailRecipes: DetailsRecipe[] = recipe.detailList;
-    var brut = (composition.quantity / 1000) * recipe.ratio
+    var brut = (composition.quantity) * recipe.ratio
+    // var brut = (composition.quantity / 1000) * recipe.ratio
     // console.log("----------------------------------------------------------------{}", composition);
     // console.log("----------------------------------------------------------------{}", brut);
 

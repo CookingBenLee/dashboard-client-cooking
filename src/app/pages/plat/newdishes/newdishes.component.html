@@ -17,7 +17,8 @@
             placeholder="Categorie du Plat" [required]="true">
             <ng-template let-category pTemplate="item">
               <div class="flex align-items-center operatingSystems-item">
-                <div> {{category.name}}({{category?.code}})</div>
+                <!--- <div> {{category.name}}({{category?.code}})</div>-->
+                <div> {{category.name}}</div>
               </div>
             </ng-template>
           </p-dropdown>
@@ -25,12 +26,12 @@
 
         <div class=" grid detailPlat col-4">
           <div class="cout  divgray">
-            <label for="cout">Coût Total({{ usercurrency }}): <span appPriceFormater
-                [priceValue]="plat.cout | number: '1.2-2'">{{plat.cout| number: '1.2-2' }}</span> </label>
+            <label for="cout">COUT TOTAL : <span appPriceFormater
+                [priceValue]="plat.cout | number: '1.2-2'">{{plat.cout| number: '1.2-2' }}</span>{{usercurrency}}</label>
           </div>
 
           <div class="poid  divgray">
-            <label for="poit">Poid Total : {{plat.poids| number: '1.0-3' }} G</label>
+            <label for="poit">POIDS TOTAL : {{plat.poids| number: '1.0-3' }} KG</label>
           </div>
 
         </div>
@@ -41,7 +42,7 @@
 
         <div class="row row1 grid col-12">
           <div class=" plat col-3" pTooltip="Choisir une recette">
-            <label for="">Recette</label>
+            <label for="">RECETTE</label>
             <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false"
               [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name"
               [showClear]="true" (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
@@ -59,19 +60,19 @@
           </div>
 
           <div class="field col-3" pTooltip="Saisissez la quantité">
-            <label for="">Quantité</label>
+            <label for="">QUANTITE</label>
             <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite"
-              [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0"  suffix="%"
+              [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0"
               (ngModelChange)="changePoid()"></p-inputNumber>
           </div>
 
           <div class="field col-3" pTooltip="Choisir l'unité">
-            <label for="">Unité</label>
+            <label for="">UNITE</label>
             <p-dropdown [options]="units" name="unit" [(ngModel)]="unitSelectionne" (ngModelChange)="changeUnit()">
             </p-dropdown>
           </div>
           <div class="field col-3">
-            <button pButton label="Ajouter la recette" type="button" [loading]="loadingLine"
+            <button pButton label="AJOUTER LA RECETTE" type="button" [loading]="loadingLine"
               class="p-button-primary mt-4" (click)="addNewComposition()"></button>
           </div>
 
@@ -79,16 +80,16 @@
 
         <div class="info-table">
           <div class="info-header">
-            <div class="info-header-cell">Recette</div>
-            <div class="info-header-cell">Quantité</div>
-            <div class="info-header-cell">Cout</div>
-            <div class="info-header-cell">Actions</div>
+            <div class="info-header-cell">RECETTE</div>
+            <div class="info-header-cell">QUANTITE</div>
+            <div class="info-header-cell">COUT</div>
+            <div class="info-header-cell">ACTIONS</div>
           </div>
 
           <!-- Loop to display details -->
           <div *ngFor="let detail of compositionDishes,let i=index" class="info-row">
             <div class="info-cell">{{detail?.recipe?.name}}</div>
-            <div class="info-cell">{{detail?.quantity| number: '1.0-3' }} G</div>
+            <div class="info-cell">{{detail?.quantity| number: '1.0-3' }} KG</div>
             <div class="info-cell"><span appPriceFormater [priceValue]="detail.cout | number: '1.0-2'">{{detail?.cout|
                 number: '1.0-3' }}</span> {{ usercurrency }}</div>
             <div class="info-cell">
@@ -98,7 +99,7 @@
             </div>
             <div class="nodetail m-2 head-center" *ngIf="compositionDishes.length==0">
               <label for="">
-                Aucune recettes
+                Aucune recette
               </label>
             </div>
           </div>
@@ -142,8 +143,8 @@
 
           <div class="info-table">
             <div class="info-header">
-              <div class="info-header-cell">Liste des images</div>
-              <div class="info-header-cell">Action</div>
+              <div class="info-header-cell">LISTE DES IMAGES</div>
+              <div class="info-header-cell">ACTIONS</div>
             </div>
 
             <!-- Loop pour afficher les images -->
@@ -165,13 +166,13 @@
         </div>
 
         <div class="btn col-2">
-          <button pButton label="Ajouter une image" type="button" [loading]="loading" class="p-button-newline-red mt-2"
+          <button pButton label="AJOUTER UNE PHOTO" type="button" [loading]="loading" class="p-button-newline-red mt-2"
             (click)="clickFileSelector()"></button>
         </div>
       </div>
 
 
-      <button pButton label="Enregistrer" type="submit" [loading]="loadingSave" class="p-button-vert mt-3"
+      <button pButton label="ENREGISTRER" type="submit" [loading]="loadingSave" class="p-button-vert mt-3"
         [disabled]="!f.valid"></button>
     </form>
 
@@ -203,10 +204,10 @@
         </div>
 
         <div class="col-12 grid">
-          <button pButton label="Annuler" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid"
+          <button pButton label="ANNULER" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid"
             (click)="cancelAddImage()"></button>
           <div class="col"></div>
-          <button pButton label="Valider" type="submit" class="p-button-orange p-2 col-6"
+          <button pButton label="VALIDER" type="submit" class="p-button-orange p-2 col-6"
             [disabled]="!f.valid"></button>
 
         </div>

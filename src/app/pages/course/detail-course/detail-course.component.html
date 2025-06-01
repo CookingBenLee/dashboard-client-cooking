@@ -1,5 +1,5 @@
 <div class="dialog-container">
-  <h2 class="dialog-title">Détails de l'Approvisionnement</h2>
+  <!---h2 class="dialog-title">Détails de l'Approvisionnement</h2--->
 
   <div class="info-table">
     <div class="info-header">
@@ -8,18 +8,18 @@
     </div>
 
     <div class="info-row">
-      <div class="info-cell label">Date</div>
+      <div class="info-cell label">DATE</div>
       <div class="info-cell value">{{ data.datePurchase }}</div>
     </div>
 
     <div class="info-row">
-      <div class="info-cell label">Fournisseur</div>
+      <div class="info-cell label">FOURNISSEUR</div>
       <div class="info-cell value">{{ shop.displayLabel }}</div>
     </div>
 
     <div class="info-row">
-      <div class="info-cell label">Montant</div>
-      <div class="info-cell value">{{ data.montant }}</div>
+      <div class="info-cell label">MONTANT</div>
+      <div class="info-cell value">{{ data.montant }} {{ data.currency.name }}</div>
     </div>
 
     <div class="info-row">

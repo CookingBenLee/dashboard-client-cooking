@@ -11,7 +11,7 @@
       </div>
       <div class="col-4 d-flex align-items-center justify-content-end">
         <button mat-flat-button (click)="openDialogAdd()" color="primary">
-          Ajouter un produit
+          AJOUTER UN PRODUIT
         </button>
       </div>
     </div>
@@ -22,14 +22,14 @@
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" class="w-100">
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">NOM</th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product">
             {{ product?.product?.name }}
           </td>
         </ng-container>
         <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Categorie
+            CATEGORIE
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
             {{ product?.product?.category?.name }}
@@ -38,7 +38,7 @@
 
         <ng-container matColumnDef="conditioning">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Conditionnement
+            CONDITIONNEMENT
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
             {{ product?.product?.conditioning?.name }}
@@ -47,7 +47,7 @@
 
         <ng-container matColumnDef="stock">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Stock
+            STOCK
           </th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product" class="f-s-14">
             {{ product?.quantity }} {{ product?.product?.unit?.code }}
@@ -56,7 +56,7 @@
         
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Action
+            ACTIONS
           </th>
           <td mat-cell *matCellDef="let product" class="action-link">
             <a (click)="productUpdate(product)" class="m-r-10 cursor-pointer"><i-tabler name="edit"
@@ -84,13 +84,13 @@
   <mat-dialog-content style="max-width: 1200px; max-height: 450px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
-        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>Ajout d'un produit
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>NOUVEAU PRODUIT
       </h5>
     </div>
     <form #productForm="ngForm">
       <div class="row">
         <div class="col-lg-6">
-          <label for="name">Nom du Produit</label>
+          <label for="name">NOM DU PRODUIT</label>
           <mat-form-field appearance="outline" class="w-100">
             <input matInput id="name" placeholder="Entrez le nom du produit" required name="name"
               [(ngModel)]="productData.name" />
@@ -98,7 +98,7 @@
         </div>
 
         <div class="col-lg-6">
-          <label for="unit">Unité</label>
+          <label for="unit">UNITE</label>
           <mat-form-field appearance="outline" class="w-100">
             <mat-select id="unit" [(ngModel)]="productData.unit" name="unit" required>
               <mat-option *ngFor="let unit of units" [value]="unit">
@@ -108,7 +108,7 @@
           </mat-form-field>
         </div>
         <div class="col-lg-6">
-          <label for="category">Catégorie</label>
+          <label for="category">CATEGORIE</label>
           <mat-form-field appearance="outline" class="w-100">
             <mat-select id="category" [(ngModel)]="productData.category" name="category" required>
               <mat-option *ngFor="let category of categorys" [value]="category">
@@ -119,7 +119,7 @@
         </div>
 
         <div class="col-lg-6">
-          <label for="conditioning">Conditionnement</label>
+          <label for="conditioning">CONDITIONNEMENT</label>
           <mat-form-field appearance="outline" class="w-100">
             <mat-select id="conditioning" [(ngModel)]="productData.conditioning" name="conditioning" required>
               <mat-option *ngFor="let conditioning of conditionings" [value]="conditioning">
@@ -129,7 +129,7 @@
           </mat-form-field>
         </div>
         <div class="col-lg-12">
-          <label for="description">Description</label>
+          <label for="description">DESCRIPTION</label>
           <mat-form-field appearance="outline" class="w-100">
             <textarea matInput id="description" placeholder="Entrez une description du produit" name="description"
               [(ngModel)]="productData.description"></textarea>
@@ -140,10 +140,10 @@
 
         <div class="col-lg-6">
           <button mat-flat-button color="primary" class="large-button" (click)="addProduct()"
-            [disabled]="!productForm.valid"> Ajouter </button>
+            [disabled]="!productForm.valid"> AJOUTER </button>
         </div>
         <div class="col-lg-6">
-          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> ANNULER </button>
         </div>
       </div>
     </form>
@@ -157,14 +157,14 @@
   <mat-dialog-content style="max-width: 1200px; max-height: 600px;">
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
-        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>Modification d'un produit
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>MODIFICATION DU PRODUIT
       </h5>
     </div>
     <form #productForm="ngForm">
       <div class="row">
         <!-- Nom du produit -->
         <div class="col-lg-6">
-          <label for="name">Nom du Produit</label>
+          <label for="name">NOM DU PRODUIT</label>
           <mat-form-field appearance="outline" class="w-100">
             <input [disabled]="true" matInput id="name" placeholder="Entrez le nom du produit" required name="name"
               [(ngModel)]="productData.name" />
@@ -173,7 +173,7 @@
 
         <!-- Unité -->
         <div class="col-lg-6">
-          <label for="unit">Unité</label>
+          <label for="unit">UNITE</label>
           <mat-form-field appearance="outline" class="w-100">
             <mat-select [disabled]="true" id="unit" [(ngModel)]="productData.unit" name="unit" required>
               <mat-option *ngFor="let unit of units" [value]="unit">
@@ -185,7 +185,7 @@
 
         <!-- Catégorie -->
         <div class="col-lg-6">
-          <label for="category">Catégorie</label>
+          <label for="category">CATEGORIE</label>
           <mat-form-field appearance="outline" class="w-100">
             <mat-select [disabled]="true" id="category" [(ngModel)]="productData.category" name="category" required>
               <mat-option *ngFor="let category of categorys" [value]="category">
@@ -197,7 +197,7 @@
 
         <!-- Conditionnement -->
         <div class="col-lg-6">
-          <label for="conditioning">Conditionnement</label>
+          <label for="conditioning">CONDITIONNEMENT</label>
           <mat-form-field appearance="outline" class="w-100">
             <mat-select [disabled]="true" id="conditioning" [(ngModel)]="productData.conditioning" name="conditioning"
               required>
@@ -210,7 +210,7 @@
 
         <!-- Pourcentage de perte -->
         <div class="col-lg-6">
-          <label for="conditioning">Pourcentage de perte</label>
+          <label for="conditioning">POURCENTAGE DE PERTE</label>
           <mat-form-field appearance="outline" class="w-100 hide-hint">
             <input type="number" placeholder="Entrez un pourcentage de perte" name="lostpercentage"
               [(ngModel)]="productData.lossPercentage" matInput class="form-control" min="1" step="0.01"/>
@@ -218,7 +218,7 @@
         </div>
 
         <div class="col-lg-6">
-          <label for="conditioning">Stock</label>
+          <label for="conditioning">STOCK</label>
           <mat-form-field appearance="outline" class="w-100 hide-hint">
             <input type="number" placeholder="Entrez le stock" name="quantity" [(ngModel)]="productData.quantity"
               matInput class="form-control" min="1" />
@@ -228,7 +228,7 @@
 
         <!-- Description -->
         <div class="col-lg-12">
-          <label for="description">Description</label>
+          <label for="description">DESCRIPTION</label>
           <mat-form-field appearance="outline" class="w-100">
             <textarea [disabled]="true" matInput id="description" placeholder="Entrez une description du produit"
               name="description" [(ngModel)]="productData.description"></textarea>
@@ -238,17 +238,17 @@
 
       <div class="row">
         <div class="col-lg-6">
-          <button mat-flat-button color="primary" class="large-button" (click)="editProduct()"> Modifier </button>
+          <button mat-flat-button color="primary" class="large-button" (click)="editProduct()"> MODIFIER </button>
         </div>
         <div class="col-lg-6">
-          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> ANNULER </button>
         </div>
       </div>
     </form>
   </mat-dialog-content>
 </ng-template>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '850px'}" header="Modification d'un produit" styleClass="custom-dialog" [modal]="true" class="p-fluid">
+<p-dialog [(visible)]="productDialog" [style]="{width: '850px'}" header="MODIFICATION D'UN PRODUIT" styleClass="custom-dialog" [modal]="true" class="p-fluid">
   
 </p-dialog>  
 
@@ -278,25 +278,25 @@
                   <div class="grid">
                     <div class="col-6">
                       <div class="field">
-                        <label htmlFor="name">Nom</label>
+                        <label htmlFor="name">NOM</label>
                         <input pInputText id="name" [(ngModel)]="productData.name" name="name" type="text" placeholder="Nom produit" required />
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="field ">
-                        <label htmlFor="unit">Unité</label>
+                        <label htmlFor="unit">UNITE</label>
                         <p-dropdown [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.unit"></p-dropdown>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="field ">
-                        <label htmlFor="category">Categorie</label>
+                        <label htmlFor="category">CATEGORIE</label>
                         <p-dropdown [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.category"></p-dropdown>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="field ">
-                        <label htmlFor="conditioning">Condition</label>
+                        <label htmlFor="conditioning">CONDITIONNEMENT</label>
                         <p-dropdown [options]="conditionings" optionLabel="name" name="conditioning"
                           [(ngModel)]="productData.conditioning"></p-dropdown>
                       </div>
@@ -320,7 +320,7 @@
                   <label id="success" *ngIf="isSuccess">{{sucess}}</label>
             
             
-                  <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4"
+                  <button pButton label="ENREGISTRER" type="submit" [loading]="loading" class="p-button-orange mt-4"
                     [disabled]="!f.valid"></button>
             
                 </div>

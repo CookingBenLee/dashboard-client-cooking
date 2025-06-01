@@ -604,7 +604,7 @@ export class RecipeComponent {
 
   show(e: any, recipe: Recipe) {
     this.ref = this.dialogService.open(ModalrecipeComponent, {
-      header: 'Recette ' + recipe?.code,
+      header: 'MODIFICATION DE LA RECETTE ',
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -720,7 +720,7 @@ export class RecipeComponent {
 
   showDishesDetail(e: any, recipe: Recipe) {
     this.ref = this.dialogService.open(DetailrecipeComponent, {
-      header: 'Recette ' + recipe?.code,
+      header: 'DETAILS DE LA RECETTE ',
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,

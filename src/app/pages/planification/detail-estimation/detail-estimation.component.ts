@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PaginateService } from 'src/app/services/paginate/paginate.service';
@@ -13,6 +13,7 @@ import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { ConditioningService } from 'src/app/services/conditioning/conditioning.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Unit } from 'src/app/services/unit/Unit';
+import { Stock } from 'src/app/services/stock/Stock';
 import { UnitService } from 'src/app/services/unit/unit.service';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { Product } from 'src/app/entity/Product';
@@ -65,22 +66,45 @@ import { MapService } from 'src/app/services/map/map.service';
 import { DetailsRecipe } from 'src/app/services/detailsrecipe/DetailsRecipe';
 import { CompositionDishes } from 'src/app/services/compositiondishes/CompositionDishes';
 import { FeuilleCourseComponent } from './feuille-course/feuille-course.component';
+import { RecipeAggregator } from './recipe-aggregator';
+interface AggregatedRecipe {
+  id: number;
+  name: string;
+  totalPlannedQuantity: number;
+  stockInitial: number;
+  stockAvant: number;
+  stockApres: number;
+}
 
 @Component({
   selector: 'app-detail-estimation',
   standalone: true,
-  imports: [FormsModule,RouterModule,CalendarModule,
-    InputTextModule,InputTextareaModule,
-    ConfirmDialogModule,DialogModule,ToastModule,SliderModule,
-      CommonModule,TableModule,PaginatorModule,DividerModule,TabViewModule,OverlayPanelModule],
-  providers: [ConfirmationService, MessageService,DialogService],
+  imports: [
+    FormsModule,
+    RouterModule,
+    CalendarModule,
+    InputTextModule,
+    InputTextareaModule,
+    ConfirmDialogModule,
+    DialogModule,
+    ToastModule,
+    SliderModule,
+    CommonModule,
+    TableModule,
+    PaginatorModule,
+    DividerModule,
+    TabViewModule,
+    OverlayPanelModule,
+    PanelModule // <== AJOUTE CETTE LIGNE
+  ],
+  providers: [ConfirmationService, MessageService, DialogService],
   templateUrl: './detail-estimation.component.html',
   styleUrl: './detail-estimation.component.scss'
 })
-export class DetailEstimationComponent {
+
+export class DetailEstimationComponent implements OnInit {
   data:any[]=[];
-
-
+  recipesList: any[] = [];
   data2:Dishes[]=[]
 
   filteredList: CompositionDishes[] = [];
@@ -88,12 +112,14 @@ export class DetailEstimationComponent {
 
 
   constructor(public config: DynamicDialogConfig, private dishesPriceService:DishesPriceService,private messageService: MessageService,
+
     private dialogService:DialogService
     ) {
       console.log("config",this.config.data);
       
-      this.data=this.config.data.lesPlast
-      console.log(this.data);
+      this.data=this.config.data.lesPlast;
+      console.log("Les Plats---- :",this.data);
+      
 
       this.data.forEach(element=>{
         console.log("boucle");
@@ -101,37 +127,38 @@ export class DetailEstimationComponent {
       })
   }
 
-
-
-  async ngOnInit(): Promise<void> {
-    this.data.forEach(async (plat, index)=>{
-      console.log("boucle");
-      
-      plat.compositionList.map(async (composition:any) => {
-        composition.quantityKg=composition.quantity/1000
-
-        composition.recipe.qteEstimee=composition.quantityKg*plat.nbre
-        composition.recipe.stockApres=composition.recipe.stock-composition.recipe.qteEstimee
-        
-
-        if (composition.recipe.stockApres < 0) console.log("inf a 0"+composition.recipe.stockApres);
-          composition.recipe.detailList.forEach((detail:any)=>{
-          // detail.stockApres=detail.ingredient.stock.quantity-detail.brut
-        })
-      })
-
-      var d: Dishes =new Dishes()
-      d.compositionList=await this.filterItemsOfType(plat.compositionList);
-      this.data2[index]=d
-
-      console.log(this.data2);
-
-     
-      
-    })
-    
- 
+  ngOnInit(): void {
+    console.log("Test NGon");
+    console.log("Les Plats NGon :",this.data)
   }
+  
+  generateRecipes() {
+    this.recipesList = [];
+
+  this.data.forEach(plat => {
+    const nbPlatsPlanifies = this.getQuantite(plat.id);
+
+    plat.recipes.forEach((rec: { recipe: { name: any; stock: number; }; quantity: number; }) => {
+      const existing = this.recipesList.find(r => r.name === rec.recipe.name);
+
+      const quantitePlanifiee = rec.quantity * nbPlatsPlanifies;
+
+      if (existing) {
+        existing.totalPlannedQuantity += quantitePlanifiee;
+        existing.stockApres = existing.stockAvant - existing.totalPlannedQuantity;
+      } else {
+        this.recipesList.push({
+          name: rec.recipe.name,
+          stockInitial: rec.recipe.stock,
+          stockAvant: rec.recipe.stock,
+          totalPlannedQuantity: quantitePlanifiee,
+          stockApres: rec.recipe.stock - quantitePlanifiee
+        });
+      }
+    });
+  });
+  }
+
   async filterItemsOfType(compositionList: CompositionDishes[]): Promise<CompositionDishes[]> {
 
     const updatedList = await Promise.all(
@@ -139,15 +166,16 @@ export class DetailEstimationComponent {
         x.recipe.net=x.recipe.stockApres*-1
         const recipeDetail = await this.dishesPriceService.getDetailRecipeWithRecipeInfos(x.recipe);
         x.recipe = recipeDetail;
+        console.log('DetailList for recipe:', x.recipe.detailList);
         x.recipe.detailList.forEach(detail=>{
-          detail.brut=detail.brut*1000
-          // detail.stockApres=detail.ingredient.stock.quantity-detail.brut
+          detail.brut*=1000
+          const totalQuantity = detail.ingredient.stock.reduce((acc, s) => acc + (s.quantity || 0), 0);
+          detail.stockApres = totalQuantity - detail.brut;
 
           if(detail.stockApres<0 && x.recipe.stockApres < 0){
-
-            var detailRecipe:DetailsRecipe=new DetailsRecipe()
-            detailRecipe.ingredient=detail.ingredient
-            detailRecipe.stockApres=detail.stockApres
+            const detailRecipe: DetailsRecipe = new DetailsRecipe();
+            detailRecipe.ingredient = detail.ingredient;
+            detailRecipe.stockApres = detail.stockApres;
             this.updateOrAddToIngredientList(detailRecipe)
           }
         })
@@ -182,23 +210,22 @@ export class DetailEstimationComponent {
     });
 
     this.ref.onClose.subscribe(() => {
-       
+    
     });
   }
-
-  async updateOrAddToIngredientList(detail:DetailsRecipe){
-    var finded=false
-    this.listFeuille.map(async (x) => {
-      if(x.ingredient.name==detail.ingredient.name){
-
-        x.stockApres+=detail.stockApres
-        finded=true
-
+  async updateOrAddToIngredientList(detail: DetailsRecipe) {
+    let found = false;
+    for (let x of this.listFeuille) {
+      if (x.ingredient.name === detail.ingredient.name) {
+        x.stockApres += detail.stockApres;
+        found = true;
+        break;
       }
-    })
-    if(!finded) this.listFeuille.push(detail)
+    }
+    if (!found) {
+      this.listFeuille.push(detail);
+    }
   }
-
 
 getQuantite(id: number) {
   const data = this.config.data.planning.filter((p: any) => p.refdishes === id);
@@ -210,7 +237,5 @@ getQuantite(id: number) {
 
   return quantity;
 }
-
-
 
 }
