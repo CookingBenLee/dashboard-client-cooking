@@ -1,29 +1,48 @@
 <div class="dialog-container">
-  <h2 class="dialog-title">Détails de la Recette</h2>
+<!--h2 class="dialog-title">DETAILS DE LA RECETTE</h2--->
 
-  <div class="info-table">
-    <div class="info-header">
-      <div class="info-header-cell">Attribut</div>
-      <div class="info-header-cell">Valeur</div>
-    </div>
+  
+    <table>
+      <tbody>
+          <tr >
+                
+                <th colspan="12" style="text-align: LEFT;"><i>RECETTE</i></th>
+                <td>POURCENTAGE DE PERTE</td>
+                <td>STOCK</td>
+                <td>RECETTE PRINCIPALE</td>
+        </tr>
+        
+        <tr>
+                  <th colspan="12" style="text-align: center;">{{ recipe.name }}</th>
+                  <td>{{ recipe.ratio | number:'1.2-2' }}%</td>
+                  <td>{{ recipe.stock |  number : '.1-5'}} KG</td>
+                  <td [class]="recipe.principaleRecipe ? 'text-green-500' : 'text-red-500'">{{ recipe.principaleRecipe ? 'OUI' : 'NON' }}</td>
+                
+                  <!--<td class="highlight">{{ rec.quantity/1000 - getQuantite(plat.id) }} KG</td>-->
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <!--LISTE DES INGREDIENTS--->
+         <th colspan="12" style="text-align: left;color: crimson;"><i>DETAILS DES INGREDIENTS</i></th>
+         <td>PROPORTION</td>
+         <td>DETAILS PREPARATION</td>
+     </tr>
+    
+         <tr *ngFor="let detail of detailRecipe2">
+             <th colspan="12" style="text-align: center;">{{ detail?.ingredient?.name }}</th>
+             <td>{{ detail?.proportion }} %</td>
+             <td>{{ detail?.preparationIngredient }}</td>    
+         </tr>
+         <tr>
+          <th th colspan="12" style="text-align: left;"><i>PROPORTION TOTALE</i></th>
+          <td style="color:blue;">{{ totalProportion | number: '1.0-3' }} %</td>
+          <td>                  </td>
+         </tr>
+     </tbody>
+    </table>
 
-    <div class="info-row">
-      <div class="info-cell label">Nom</div>
-      <div class="info-cell value">{{ recipe.name }}</div>
-    </div>
-
-    <div class="info-row">
-      <div class="info-cell label">Pourcentage de perte</div>
-      <div class="info-cell value">{{ recipe.ratio | number:'1.2-2' }}%</div>
-    </div>
-
-    <!-- Ajout du Stock -->
-    <div class="info-row">
-      <div class="info-cell label">Stock</div>
-      <div class="info-cell value">{{ recipe.stock }} Kg</div>
-    </div>
-
-    <!-- Ajout de Base Recipe -->
+    <!-- Ajout de Base Recipe 
     <div class="info-row">
       <div class="info-cell label">Recette Secondaire</div>
       <div class="info-cell value">
@@ -36,12 +55,12 @@
 
   <p class="divider mt-4"></p>
 
-  <h3 class="dialog-title">Liste des Détails de la Recette</h3>
+  <h3 class="dialog-title">LISTE DES INGREDIENTS DE LA RECETTE</h3>
   <div class="info-table">
     <div style="text-align: center;" class="info-header">
-      <div class="info-header-cell">Produit</div>
-      <div class="info-header-cell">Proportion %</div>
-      <div class="info-header-cell">Préparation Ingrédient</div>
+      <div class="info-header-cell">PRODUIT</div>
+      <div class="info-header-cell">PROPORTION</div>
+      <div class="info-header-cell">DETAILS PREPARATION</div>
     </div>
 
     <div style="text-align: center;" *ngFor="let detail of detailRecipe2" class="info-row">
@@ -55,11 +74,11 @@
       <div class="info-cell value text-center">{{ totalProportion | number: '1.0-3' }} %</div>
       <div class="info-cell label text-center">                  </div>
     </div>
-  </div>
+  </div>-->
 
   <p class="divider mt-4"></p>
 
-  <h3 class="dialog-title">Détail Cuisine</h3>
+  <h3 class="dialog-title">DETAILS DE LA CUISINE</h3>
   <div class="info-table">
     <div class="info-row">
       <div class="info-cell value">{{ recipe.detailCuisine }}</div>

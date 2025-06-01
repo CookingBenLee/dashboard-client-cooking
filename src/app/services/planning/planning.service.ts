@@ -56,4 +56,9 @@ export class PlanningService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
   }
+
+  //
+  getAllBetweenDates(data: any): Observable<Map<string, any>> {
+    return this.http.post<Map<string, any>>(`${this.baseUrl}/filter-planning`, data);
+  }
 }

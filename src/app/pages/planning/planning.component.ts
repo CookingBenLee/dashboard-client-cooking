@@ -630,14 +630,16 @@ export class PlanningComponent implements OnInit {
     const planning = this.allPlannings.find(p => p.refdishes.toString() === dishId);
     return planning ? planning.category : 'Non spécifié';
   }
-
+  startDate: string = '';  // Format: yyyy-MM-dd
+  endDate: string = '';    // Calculé automatiquement
   private initializeFilters(): void {
 
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    this.filterStartDate = this.formatDateForInput(firstDay);
+    const lastDay =new Date(today) ;
+   // const lastDay = new Date(today.getFullYear(), today.getMonth()+1, today.getDay());
+    lastDay.setDate(today.getDate() + 6);
+    this.filterStartDate = this.formatDateForInput(today);
     this.filterEndDate = this.formatDateForInput(lastDay);
 
     this.loadAllPlannings();
@@ -650,11 +652,12 @@ export class PlanningComponent implements OnInit {
         // console.log('Mapped plannings:', this.allPlannings);
 
         // Update the planning status for the calendar
-       this.allPlannings
+      this.allPlannings
         .sort((a, b) => {
           const dateA = new Date(a.date_planning).getTime();
           const dateB = new Date(b.date_planning).getTime();
           return dateB - dateA; // Descending order
+          //return dateA - dateB; // Ascending order
         })
         .forEach(planning => {
           const date = new Date(planning.date_planning);
@@ -664,7 +667,7 @@ export class PlanningComponent implements OnInit {
 
 
         // Apply any existing date filters
-        this.applyDateFilter('filter');
+       // this.applyDateFilter('filter');
       },
       error: (error) => {
         console.error('Error loading plannings:', error);
@@ -674,6 +677,9 @@ export class PlanningComponent implements OnInit {
 
   lesPlats: any[] = [];
   applyDateFilter(parametre: string): void {
+    /* The code provided seems to be a comment block in TypeScript. It mentions a function or method
+    called `dishefilterByPlanningBetweenTwoDate`, but the actual implementation of this function is
+    not provided in the code snippet. It appears to be incomplete or missing. */
     this.lesPlats = [];
     const currentUser = this.tokenService.getUser();
     const userId = currentUser.id;
@@ -703,13 +709,48 @@ export class PlanningComponent implements OnInit {
   .sort((a, b) => {
     const dateA = new Date(a.date_planning).getTime();
     const dateB = new Date(b.date_planning).getTime();
-    return dateB - dateA;
+    //return dateB - dateA;
+    return dateA - dateB;
   });
 
 
 
-    if (parametre === "preparation") {
-      const uniqueRefDishes = Array.from(
+    //  showDetailAllEstimation(){
+
+
+    //   }
+
+
+  }
+
+
+  getPreparation(): void {
+
+    this.planningService.getAllBetweenDates({
+      'date1': new Date(this.filterStartDate),
+      'date2': new Date(this.filterEndDate )
+    }).subscribe((data: any) => {
+
+      console.log("hjBKDBHKB::::::");
+      console.log(data);
+
+      data['startDate'] = new Date(this.filterStartDate);
+      data['endDate'] = new Date(this.filterEndDate);
+
+      this.ref = this.dialogService.open(DetailEstimationComponent, {
+        // header: "Programme du " + this.filterStartDate + " au " + this.filterEndDate,
+        width: '100%',
+        height: '100%',
+
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data: data,
+      });
+    });
+/*
+
+    const uniqueRefDishes = Array.from(
         new Set(this.filteredPlannings.map(p => p.refdishes))
       );
 
@@ -717,62 +758,55 @@ export class PlanningComponent implements OnInit {
 
       uniqueRefDishes.forEach(element=>{
         console.log("element", element);
-        
+
         this.dishService.getById(element).then(data=>{
           console.log("les data response", data);
-          
+
           this.lesPlats.push(data);
 
-            this.lesPlats.forEach(element=>{
-          console.log("Boucle");
-          
-          this.compositionDishesService.byDishes(element.id).then(comp=>{
-            // console.log("comp", comp);
-            element.recipes=comp;
+          this.lesPlats.forEach(element=>{
+            console.log("Boucle");
+
+            this.compositionDishesService.byDishes(element.id).then(comp=>{
+              // console.log("comp", comp);
+              element.recipes=comp;
+            });
           });
-        });
-         console.log("les plats",this.lesPlats);
+          console.log("les plats",this.lesPlats);
         })
       })
-      
 
-        console.log("-------------------detail estimation ------plat-------------------");
-      
 
-        // console.log("plat with ", this.lesPlats);
+      console.log("-------------------detail estimation ------plat-------------------");
 
-        this.ref = this.dialogService.open(DetailEstimationComponent, {
-          // header: "Programme du " + this.filterStartDate + " au " + this.filterEndDate,
-          width: '100%',
-          height: '100%',
-    
-          contentStyle: { overflow: 'auto' },
-          baseZIndex: 10000,
-          maximizable: true,
 
-         
-    
-          data:{
-            lesPlast:this.lesPlats,
-            planning:this.filteredPlannings,
-            startDate:this.filterStartDate,
-            endDate:this.filterEndDate,
-          },
-        });
-      
-      
-        this.ref.onClose.subscribe((retour: any) => {
-          console.log("hhhhhhhhhhhh....///jkjhghf");
-    
-        });
-    }
-   
+      // console.log("plat with ", this.lesPlats);
 
-    //  showDetailAllEstimation(){
-       
-      
-    //   }
-    
+      this.ref = this.dialogService.open(DetailEstimationComponent, {
+        // header: "Programme du " + this.filterStartDate + " au " + this.filterEndDate,
+        width: '100%',
+        height: '100%',
+
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+
+
+
+        data:{
+          lesPlast:this.lesPlats,
+          planning:this.filteredPlannings,
+          startDate:this.filterStartDate,
+          endDate:this.filterEndDate,
+        },
+      });
+
+
+      this.ref.onClose.subscribe((retour: any) => {
+        console.log("hhhhhhhhhhhh....///jkjhghf");
+
+      });
+*/
 
   }
 
@@ -870,7 +904,8 @@ export class PlanningComponent implements OnInit {
     var recipe: Recipe = composition.recipe
     recipe.cout = 0
     var detailRecipes: DetailsRecipe[] = recipe.detailList;
-    var brut = (composition.quantity / 1000) * recipe.ratio
+    var brut = (composition.quantity) * recipe.ratio
+    // var brut = (composition.quantity / 1000) * recipe.ratio
     // console.log("----------------------------------------------------------------{}", composition);
     // console.log("----------------------------------------------------------------{}", brut);
 
@@ -923,4 +958,4 @@ export class PlanningComponent implements OnInit {
     }
 
   }
-} 
+}

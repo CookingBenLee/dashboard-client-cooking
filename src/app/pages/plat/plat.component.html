@@ -2,7 +2,7 @@
 
 
     <!--Panel liste des purchases-->
-    <p-tabPanel header="Liste des Plats">
+    <p-tabPanel header="LISTE DES PLATS">
       <div class="">
         <div class="card">
             <!--<h5>Purchase List</h5>-->
@@ -25,8 +25,8 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <!-- <th pSortableColumn="reference" pColumnFilter="reference">Reference<p-sortIcon field="reference"></p-sortIcon></th> -->
-                        <th pSortableColumn="name" pColumnFilter="name">Nom<p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="categorie" pColumnFilter="categorie">Categorie<p-sortIcon field="categorie"></p-sortIcon></th>
+                        <th pSortableColumn="name" pColumnFilter="name">NOM<p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="categorie" pColumnFilter="categorie">CATEGORIE<p-sortIcon field="categorie"></p-sortIcon></th>
   
                         <!-- <th pSortableColumn="estimationPlatAVendre" pColumnFilter="estimationPlatAVendre">Estimation Plat A Vendre<p-sortIcon field="estimationPlatAVendre"></p-sortIcon></th>
                         <th pSortableColumn="platVendu" pColumnFilter="platVendu">Plat Vendu<p-sortIcon field="platVendu"></p-sortIcon></th> -->
@@ -78,7 +78,7 @@
       </div>
     </p-tabPanel>
   
-    <p-tabPanel header="Nouveau Plat">
+    <p-tabPanel header="NOUVEAU PLAT">
       <app-newdishes (parentFun)="changeTabs()"></app-newdishes>
     </p-tabPanel>
   

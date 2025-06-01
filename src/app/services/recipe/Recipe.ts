@@ -1,3 +1,4 @@
+import { Product } from "src/app/entity/Product";
 import { CategoryRecipe } from "../categoryrecipe/CategoryRecipe";
 import { CompositionDishes } from "../compositiondishes/CompositionDishes";
 import { DetailsRecipe } from "../detailsrecipe/DetailsRecipe";

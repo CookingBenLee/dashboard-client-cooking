@@ -45,11 +45,18 @@ export class DishesPriceService {
     return plat;
   }
 
-
+  async getDetailRecipeWithRecipeInfos2(recipe: any): Promise<any> {
+    recipe.detailList = [
+      { ingredient: { name: 'Farine' }, brut: 200, stockApres: 1000 },
+      { ingredient: { name: 'Sucre' }, brut: 100, stockApres: 500 },
+    ];
+    return recipe;
+  }
+  
   async getDetailRecipeWithRecipeInfos(recette:Recipe):Promise<Recipe>{
     //calcul du brut
     if(recette.net==null || recette.net==0 || !recette.net) recette.net=1
-    recette.brut=(recette.net/1000)*recette.ratio
+    recette.brut=(recette.net)*recette.ratio
 
     //
     var detailsRecepe:DetailsRecipe[]=[]
