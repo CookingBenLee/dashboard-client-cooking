@@ -1,48 +1,38 @@
-<div class="loader " *ngIf="loadingPage">
-    <div class="card flex  justify-content-center">
-      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+<div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 0px;">
+        <div>
+            <h1>FEUILLE DE COURSE </h1>
+            <p><i>Liste des ingredients à  achéter</i></p>
+        </div>
+        <div>
+            <p-button (onClick)="generate()" label="IMPRIMER" icon="pi pi-print" />
+        </div>
     </div>
-  </div>
-  <p-toast position="top-center" key="tc"></p-toast>
-
-
-  <div style="padding-top: 100px; padding-left: 50px; padding-right: 50px;" id="invoice">
-    <div style="text-align: center; align-items:center; justify-content: center;">
-        <h2 >
-            Feuille de course
-        </h2>
-    </div>
-
-    <div class="currency" style="text-align: center; margin-top: 5px;">
-        Devise : FCFA
-    </div>
-
+        
     <table style="margin-bottom: 35px;">
         <thead>
             <tr>
-                <th>Ingrédient</th>
-                <th>Qté à acheter (correspond à la somme des stocks après) Kg</th>
-                <th>Prix Unitaire du produit</th>
-                <th>Total</th>
+                <th style="text-align: center;"><b><i>LISTE DES INGREDIENTS</i></b></th>
+                <th>QUANTITE</th>
+                <th>PRIX UNITAIRE</th>
+                <th>TOTAL</th>
+                <th>DEVISE</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let detail of detailRecipeList" >
-                <td>{{detail?.product?.name}}</td>
-                <td>{{ (-1) * detail.currentStock }}</td>
-                <td>{{ detail?.product?.price }}</td>
-                <td appPriceFormater [priceValue]=" ( (-1) * detail.currentStock * detail?.product?.price )| number: '.0-0'"></td>
+                <!---th style="text-align: left;"> {{detail?.product?.name}} / ({{detail?.product?.category?.name}} / {{detail?.product?.conditoning?.name}})</th--->
+                <th style="text-align: left;"> {{detail?.product?.name}} <p style="text-align: left;font-size: x-small;"><i>{{detail?.product?.category?.name}} / {{detail?.product?.conditioning?.name}}</i></p></th>
+                <td>{{ (-1) * detail.currentStock | number:'1.0-2'  }} {{detail?.product?.unit?.code}}</td>
+                <td>{{ detail?.product?.price }} </td>
+                <td appPriceFormater [priceValue]=" ( (-1) * detail.currentStock * detail?.product?.price ) | number: '.0-0' " > </td>
+                <td>{{detail?.product?.user?.compteUser?.address?.country?.currency?.name}}</td>
             </tr>
 
             <tr class="total-row">
-                <th colspan="3" style="text-align: left;">Total</th>
-                <th appPriceFormater [priceValue]="((-1) * total) | number: '.0-0'">/th>
+                <th colspan="4" style="text-align: left;">TOTAL</th>
+                <th appPriceFormater [priceValue]="((-1) * total) | number: '.0-0'"> </th>
             </tr>
         </tbody>
     </table>
-
-
-    <div style="text-align: center;" class="bouttonn">
-        <p-button (onClick)="generate()" label="Imprimer" icon="pi pi-print" />
-    </div>
 </div>

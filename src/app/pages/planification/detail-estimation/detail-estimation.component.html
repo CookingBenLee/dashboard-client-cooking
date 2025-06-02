@@ -1,9 +1,7 @@
 
-
-<div style="text-align: center;"> <h1>PROGRAMME DES PLATS DU {{ config.data.startDate | date:'dd/MM/yyyy'}} AU {{ config.data.endDate | date:'dd/MM/yyyy'}}</h1> </div>
-
-<div style="display: flex; justify-content: space-between; align-items: center; margin: 5px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin: 0px;">
     <div>
+        <h1>PROGRAMME DES PLATS DU {{ config.data.startDate | date:'dd/MM/yyyy'}} AU {{ config.data.endDate | date:'dd/MM/yyyy'}}</h1>
     </div>
     <div>
         <p-button (onClick)="showDialog()" label="GENERER FEUILLE DE COURSE" icon="pi pi-eye" />
@@ -97,10 +95,10 @@
              </tr>
              <tr *ngFor="let rec of data['recipes']">
               <th colspan="12" style="text-align: left;">{{ rec.recipe.name }}</th>
-              <td>{{ rec?.recipe.stock ?? 0 | number:'1.0-2' }}</td>
-              <td>{{ rec?.quantity | number:'1.0-2' }}</td>
+              <td>{{ rec?.recipe.stock ?? 0 | number:'1.0-2' }} KG</td>
+              <td>{{ rec?.quantity | number:'1.0-2' }} KG</td>
               <td class="{{ rec?.currentStock < 0 ? 'insufficient' : '' }}">
-                  {{ rec?.currentStock | number:'1.0-2' }}
+                  {{ rec?.currentStock | number:'1.0-2' }} KG
               </td>
             </tr>
           </tbody>
@@ -118,10 +116,10 @@
              </tr>
              <tr *ngFor="let rec of data['products']">
               <th colspan="12" style="text-align: left;">{{ rec.product.name }}</th>
-              <td>{{ rec?.initialStock ?? 0 | number:'1.0-2' }}</td>
-              <td>{{ rec?.qtePlanifie | number:'1.0-2' }}</td>
+              <td>{{ rec?.initialStock ?? 0 | number:'1.0-2' }} KG</td>
+              <td>{{ rec?.qtePlanifie | number:'1.0-2' }} KG</td>
               <td class="{{ rec?.currentStock < 0 ? 'insufficient' : '' }}">
-                  {{ rec?.currentStock | number:'1.0-2' }}
+                  {{ rec?.currentStock | number:'1.0-2' }} KG
               </td>
             </tr>
           </tbody>

@@ -152,7 +152,7 @@ export class DetailEstimationComponent implements OnInit {
 
     //this.visible = true;
     this.ref = this.dialogService.open(FeuilleCourseComponent, {
-      header: 'Feuille de Course ',
+      header: '',
       width: '100%',
       height:'100%',
       contentStyle: { overflow: 'auto' },
