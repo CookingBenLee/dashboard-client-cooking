@@ -210,7 +210,34 @@ export class DishDetailsPopupComponent {
 
     })
   }
-
+  getCoutFormatePlat(detail: any): number {
+    const cout = detail?.dishesId?.cout ?? 0;
+    // Formater à 3 décimales (arrondi, pas texte)
+    return +cout.toFixed(3);
+  }
+  getCoutFormate(detail: any): number {
+    const cout = detail?.cout ?? 0;
+    // Formater à 3 décimales (arrondi, pas texte)
+    return +cout.toFixed(3);
+  }
+  getCoutTotalPlat(plat: any): number {
+    const cout = this.getCoutFormatePlat(plat);
+    const quantitePlat = plat?.quantite ?? 0;
+    const coutTotal = cout * quantitePlat;
+    return +coutTotal.toFixed(3) ;
+  }
+  getQtePlanifieeRecette(detail: any, plat: any): number {
+    const quantite = detail?.quantity ?? 0;
+    const quantitePlat = plat?.quantite ?? 0;
+    return quantite * quantitePlat;
+  }
+  getMontantTotalRecette(detail: any, plat: any): number {
+    const cout = this.getCoutFormate(detail);
+    const quantite = detail?.quantity ?? 0;
+    const quantitePlat = plat?.quantite ?? 0;
+    const coutTotal = cout * quantitePlat;
+    return +coutTotal.toFixed(3) ;
+  }
   async getCompoPrice(composition: CompositionDishes): Promise<number> {
 
     var recipe: Recipe = composition.recipe
