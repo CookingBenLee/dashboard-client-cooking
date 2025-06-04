@@ -13,7 +13,7 @@
       </div>
       <div class="col-4 d-flex align-items-center justify-content-end">
         <button mat-flat-button (click)="openDialogAdd()" color="primary">
-          Ajouter un fournisseur
+          AJOUTER UN FOURNISSEUR
         </button>
       </div>
     </div>
@@ -24,7 +24,7 @@
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" class="w-100">
         <ng-container matColumnDef="nom">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">NOM</th>
           <td mat-cell *matCellDef="let shop">
             {{ shop.name }}
           </td>
@@ -41,7 +41,7 @@
 
         <ng-container matColumnDef="adresse">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Adresse
+            ADRESSE
           </th>
           <td mat-cell *matCellDef="let shop" class="f-s-14">
             {{ shop.addressPrincipale?.streetName }}, {{ shop.addressPrincipale?.streetNumber }}, {{
@@ -53,16 +53,16 @@
 
         <ng-container matColumnDef="isActive">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Statut
+            STATUT
           </th>
           <td mat-cell *matCellDef="let shop" class="f-s-14">
 
             <span *ngIf="shop.isActive" class="text-success rounded f-w-600  f-s-12">
-              Actif
+              ACTIF
             </span>
 
             <span *ngIf="!shop.isActive" class="text-error rounded f-w-600  f-s-12">
-              Inactif
+              INACTIF
             </span>
 
           </td>
@@ -71,7 +71,7 @@
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Action
+            ACTIONS
           </th>
           <td mat-cell *matCellDef="let shop" class="action-link">
             <a (click)="openDialogEdit(shop,addresse)" class="m-r-10 cursor-pointer"><i-tabler name="edit"
@@ -99,7 +99,7 @@
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>
-        Ajout d'un fournisseur
+       NOUVEAU FOURNISSEUR
       </h5>
     </div>
 
@@ -107,7 +107,7 @@
       <!-- Nom du Fournisseur -->
       <div class="row mb-3 d-flex align-items-center">
         <div class="col-lg-8">
-          <label for="name" class="form-label">Nom du Fournisseur</label>
+          <label for="name" class="form-label">NOM DU FOURNISSEUR</label>
           <mat-form-field appearance="outline" class="w-100">
             <input matInput id="name" name="name" required [(ngModel)]="shopData.name" />
           </mat-form-field>
@@ -115,7 +115,7 @@
         <div class="col-lg-4 d-flex align-items-center">
           <mat-checkbox id="is_active" color="primary" [(ngModel)]="shopData.isActive"
             (change)="shopData.isActive = $event.checked" [checked]="true">
-            Actif / Inactif
+            ACTIF / INACTIF
           </mat-checkbox>
         </div>
       </div>
@@ -125,18 +125,18 @@
       </div> -->
       <!-- Adresse du Fournisseur -->
       <fieldset>
-        <legend>Adresse du Fournisseur</legend>
+        <legend>ADRESSE</legend>
 
         <div class="row">
           <div class="col-lg-8">
-            <label for="streetName">Nom de la Rue</label>
+            <label for="streetName">NOM DE LA RUE</label>
             <mat-form-field appearance="outline" class="w-100">
               <input matInput id="streetName" required name="streetName" [(ngModel)]="address.streetName" />
             </mat-form-field>
           </div>
 
           <div class="col-lg-4">
-            <label for="streetNumber">Numéro de la Rue</label>
+            <label for="streetNumber">N° DE LA RUE</label>
             <mat-form-field appearance="outline" class="w-100">
               <input matInput id="streetNumber" required name="streetNumber" [(ngModel)]="address.streetNumber" />
             </mat-form-field>
@@ -145,14 +145,14 @@
 
         <div class="row">
           <div class="col-lg-4">
-            <label for="address">Code Postal</label>
+            <label for="address">CODE POSTAL</label>
             <mat-form-field appearance="outline" class="w-100">
               <input matInput id="address" required name="address" [(ngModel)]="address.label" />
             </mat-form-field>
           </div>
 
           <div class="col-lg-8">
-            <label for="city">Ville</label>
+            <label for="city">VILLE</label>
             <mat-form-field appearance="outline" class="w-100">
               <input matInput id="city" required name="city" [(ngModel)]="address.city" />
             </mat-form-field>
@@ -161,7 +161,7 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <label for="country">Pays</label>
+            <label for="country">PAYS</label>
             <mat-form-field appearance="outline" class="w-100">
               <mat-select id="country" [(ngModel)]="address.country" name="country" required>
                 <mat-option *ngFor="let country of countrys" [value]="country">
@@ -174,7 +174,7 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <label for="geolocation">Géolocalisation</label>
+            <label for="geolocation">GEOLOCALISATION</label>
             <mat-form-field appearance="outline" class="w-100">
               <input matInput id="geolocation" name="geolocation" [(ngModel)]="address.geolocation" />
             </mat-form-field>
@@ -186,12 +186,12 @@
       <div class="row">
 
         <div class="col-lg-6">
-          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()">Annuler</button>
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()">ANNULER</button>
         </div>
 
         <div class="col-lg-6">
           <button mat-flat-button color="primary" class="large-button" (click)="save()"
-            [disabled]="!shopForm.valid">Ajouter</button>
+            [disabled]="!shopForm.valid">AJOUTER</button>
         </div>
       </div>
     </form>
@@ -206,38 +206,38 @@
     <div class="p-16 bg-light-primary rounded" style="margin-bottom: 20px;">
       <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
         <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler>
-        Modification d'un fournisseur
+        MODIFICATION DU FOURNISSEUR
       </h5>
     </div>
     <form #shopForm="ngForm">
       <div class="row mb-3 d-flex align-items-center">
         <div class="col-lg-8">
-          <label for="name" class="form-label">Nom du Fournisseur</label>
+          <label for="name" class="form-label">NOM</label>
           <mat-form-field appearance="outline" class="w-100">
             <input matInput id="name" name="name" required [(ngModel)]="shopData.name" />
           </mat-form-field>
         </div>
         <div class="col-lg-4 d-flex align-items-center">
           <mat-checkbox id="isActive" color="primary" [(ngModel)]="shopData.isActive" [checked]="shopData.isActive">
-            Actif / Inactif
+            ACTIF / INACTIF
           </mat-checkbox>
         </div>
       </div>
 
       <div class="row">
         <fieldset>
-          <legend>Adresse du Fournisseur</legend>
+          <legend>ADRESSE</legend>
 
           <div class="row">
             <div class="col-lg-8">
-              <label for="streetName">Nom de la Rue</label>
+              <label for="streetName">NOM DE LA RUE</label>
               <mat-form-field appearance="outline" class="w-100">
                 <input matInput id="streetName" required name="streetName" [(ngModel)]="address.streetName" />
               </mat-form-field>
             </div>
 
             <div class="col-lg-4">
-              <label for="streetNumber">Numéro de la Rue</label>
+              <label for="streetNumber">N° DE LA RUE</label>
               <mat-form-field appearance="outline" class="w-100">
                 <input matInput id="streetNumber" required name="streetNumber" [(ngModel)]="address.streetNumber" />
               </mat-form-field>
@@ -246,14 +246,14 @@
 
           <div class="row">
             <div class="col-lg-4">
-              <label for="address">Code Postal</label>
+              <label for="address">CODE POSTAL</label>
               <mat-form-field appearance="outline" class="w-100">
                 <input matInput id="address" required name="address" [(ngModel)]="address.label" />
               </mat-form-field>
             </div>
 
             <div class="col-lg-8">
-              <label for="city">Ville</label>
+              <label for="city">VILLE</label>
               <mat-form-field appearance="outline" class="w-100">
                 <input matInput id="city" required name="city" [(ngModel)]="address.city" />
               </mat-form-field>
@@ -262,7 +262,7 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <label for="countryEdit">Pays</label>
+              <label for="countryEdit">PAYS</label>
               <mat-form-field appearance="outline" class="w-100">
                 <mat-select [(value)]="address.country.id" name="country" required>
                   <mat-option *ngFor="let country of countrys" [value]="country.id">
@@ -275,7 +275,7 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <label for="geolocation">Géolocalisation</label>
+              <label for="geolocation">GEOLOCALISATION</label>
               <mat-form-field appearance="outline" class="w-100">
                 <input matInput id="geolocation" name="geolocation" [(ngModel)]="address.geolocation" />
               </mat-form-field>
@@ -286,10 +286,10 @@
       <div class="row">
         <div class="col-lg-6">
           <button mat-flat-button color="primary" class="large-button" (click)="update()" [disabled]="!shopForm.valid">
-            Modifier </button>
+            MODIFIER </button>
         </div>
         <div class="col-lg-6">
-          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> Annuler </button>
+          <button mat-stroked-button color="warn" class="large-button m-l-8" (click)="closeDialog()"> ANNULER </button>
         </div>
       </div>
     </form>
