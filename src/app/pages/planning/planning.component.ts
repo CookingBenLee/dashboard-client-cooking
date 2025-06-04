@@ -93,6 +93,7 @@ export class PlanningComponent implements OnInit {
   ) {
     this.generateCalendar();
     this.initializeFilters();
+    this.applyDateFilter('filter');
     this.loadDishes();
   }
 
@@ -105,6 +106,7 @@ export class PlanningComponent implements OnInit {
         this.allPlannings = this.mapBackendResponseToPlanning(plannings);
         this.generateCalendar();
         this.loadTodayPlanning();
+        this.applyDateFilter('filter');
       },
       error: (error) => {
         console.error('Error loading plannings:', error);
@@ -134,7 +136,7 @@ export class PlanningComponent implements OnInit {
 
     this.ref = this.dialogService.open(DishDetailsPopupComponent, {
       // header: 'Plat ' + dishe?.dishesId.name,
-      header: dishe?.dishesId.name,
+      header: dishe?.dishesId.name+" : "+dishe?.quantite+" PLANIFIE(S)",
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -159,7 +161,7 @@ export class PlanningComponent implements OnInit {
 
   show(e: any, dishe: Dishes) {
     this.ref = this.dialogService.open(ModaldishesComponent, {
-      header: "Modification d'un plat",
+      header: "MODIFICATION DU PLAT",
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,

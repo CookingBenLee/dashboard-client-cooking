@@ -1,86 +1,76 @@
-<div class="dialog-containe">
- <!---- <h3 class="dialog-title">Plat - {{ plat.dishesId.categoryMenu.name }} </h3> --->
-</div>
 
-<div class="info-table">
-  <div class="info-header">
-    <div class="info-header-cell">Poids Initial</div>
-    <div class="info-header-cell">Coût Initial</div>
-    <div class="info-header-cell">Poids Planifié</div>
-    <div class="info-header-cell">Coût Total</div>
-  </div>
+        <div class="info-table">
+        <div class="info-header">
+          <div class="info-header-cell">POIDS UNITAIRE</div>
+          <div class="info-header-cell">COUT UNITAIRE</div>
+          <div class="info-header-cell">POIDS PLANIFIE</div>
+          <div class="info-header-cell">COUT PLANIFIE</div>
+        </div>
 
-  <div class="info-row">
-    <div class="info-cell">
-      {{ plat.dishesId.poids | number: '1.0-2' }} G
-    </div>
-     <div class="info-cell">
-      {{ plat.dishesId.cout | number: '1.0-2' }} {{ usercurrency }}
-    </div>
-   
-    
-    <div class="info-cell">
-      {{ plat.dishesId.poids * (plat?.quantite ?? 0) | number: '1.0-3' }} G
-    </div>
-    <div class="info-cell">
-      {{ plat.dishesId.cout * (plat?.quantite ?? 0) | number: '1.0-2' }} {{ usercurrency }}
-    </div>
-  </div>
+        <div class="info-row">
+          <div class="info-cell">
+            {{ plat.dishesId.poids | number: '1.0-3' }} KG
+          </div>
+          <div class="info-cell">
+            {{ plat.dishesId.cout | number: '1.0-3' }} {{ usercurrency }}
+          </div>
+          <div class="info-cell">
+            {{ plat.dishesId.poids * (plat?.quantite ?? 0) | number: '1.0-3' }} KG
+          </div>
+          <div class="info-cell">
+            {{ getCoutTotalPlat(plat) }} {{ usercurrency }}
+          </div>
+        </div> 
+        <div class="dialog-containe">
+          <h3 class="dialog-title">COMPOSITION DU PLAT</h3>
+        </div>
+        
+          <!-- <h3 class="dialog-title" >Composition du Plat</h3> -->
+      
+        <div class="info-table">
+          <div class="info-header">
+            <div class="info-header-cell">RECETTE</div>
+            <div class="info-header-cell">QUANTITE UNITAIRE</div>
+            <div class="info-header-cell">COUT UNITAIRE</div>
+            <div class="info-header-cell">STOCK INITIAL</div>
+            <div class="info-header-cell">QUANTITE PLANIFIEE</div>
+            <div class="info-header-cell">COUT PLANIFIE</div>
+          </div>
 
+          <div *ngFor="let detail of compositionDishes" class="info-row">
+            <div class="info-cell">{{ detail?.recipe?.name }}</div>
+            <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} KG</div>
+            <div class="info-cell" >{{ getCoutFormate(detail) }} {{ usercurrency }}</div>
+            <div class="info-cell">{{ (detail?.recipe?.stock ?? 0) * 1000  }} KG</div>
+            <div class="info-cell">{{ getQtePlanifieeRecette(detail, plat) }} KG</div>
+            <div class="info-cell">{{ getMontantTotalRecette(detail, plat) }} {{ usercurrency }}</div>
 
+          </div>
 
-  <p class="divider mt-4"></p>
-
- 
-  <div class="dialog-containe">
-    <h3 class="dialog-title">Composition du Plat</h3>
-  </div>
-  
-    <!-- <h3 class="dialog-title" >Composition du Plat</h3> -->
- 
-  <div class="info-table">
-    <div class="info-header">
-      <div class="info-header-cell">Recette</div>
-      <div class="info-header-cell">Quantité</div>
-      <div class="info-header-cell">Coût</div>
-      <div class="info-header-cell">Stock Initial</div>
-      <div class="info-header-cell">Quantité planifiée</div>
-    </div>
-
-    <div *ngFor="let detail of compositionDishes" class="info-row">
-      <div class="info-cell">{{ detail?.recipe?.name }}</div>
-      <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
-      <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} {{ usercurrency }}</div>
-      <div class="info-cell">{{ (detail?.recipe?.stock ?? 0) * 1000  }} G</div>
-      <div class="info-cell">{{ (detail?.quantity ?? 0) * (plat?.quantite ?? 0) }} G</div>
-
-    </div>
-
-    <div class="info-row" *ngIf="compositionDishes.length == 0">
-      <div class="info-cell label" colspan="3">Aucune recette</div>
-    </div>
-  </div>
-
-  <p class="divider mt-4"></p>
-
-  <div class="dialog-containe">
-    <h3 class="dialog-title">Images du Plat</h3>
-  </div>
-
-  <div class="info-table">
-    <div class="info-row" *ngFor="let picture of picturesDishes" (click)="showImage(picture, $event)">
-      <div class="info-cell label">{{ picture?.label }}</div>
-      <div class="info-cell">
-        <img style="height: 50px; width: 50px; object-fit:cover; cursor:pointer" 
-             [src]="'data:image/jpeg;base64,' + picture.file" 
-             alt="{{ picture?.label }}">
+          <div class="info-row" *ngIf="compositionDishes.length == 0">
+            <div class="info-cell label" colspan="3">Aucune recette</div>
+          </div>
+        </div>
+        <!-- <button pButton label="Modifier le plat" type="submit" class="p-button-vert mt-3" (click)="show($event, plat)"></button> -->
       </div>
-    </div>
+    <!--div class="right-column"-->
+      <div class="dialog-containe">
+        <h3 class="dialog-title">IMAGES DU PLAT</h3>
+      </div>
+      
+      <div class="info-table">
+        <div class="info-row" *ngFor="let picture of picturesDishes" (click)="showImage(picture, $event)">
+          <!--div class="info-cell label">{{ picture?.label }}</div--->
+          <div class="info-cell">
+            <img style="height: 50%; width: 100%; object-fit:cover; cursor:pointer" 
+                 [src]="'data:image/jpeg;base64,' + picture.file" 
+                 alt="{{ picture?.label }}">
+          </div>
+        </div>
+      
+        <div class="info-row" *ngIf="picturesDishes.length == 0">
+          <div class="info-cell label">Aucune image</div>
+        </div>
+      </div>
+  <!--/div-->
 
-    <div class="info-row" *ngIf="picturesDishes.length == 0">
-      <div class="info-cell label">Aucune image</div>
-    </div>
-  </div>
-
-  <!-- <button pButton label="Modifier le plat" type="submit" class="p-button-vert mt-3" (click)="show($event, plat)"></button> -->
-</div>

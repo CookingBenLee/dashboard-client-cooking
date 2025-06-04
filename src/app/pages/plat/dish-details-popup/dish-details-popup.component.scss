@@ -77,3 +77,33 @@
   color: #333;
   text-align: left;
 }
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.left-column {
+  width: 80%;
+  overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.right-column {
+  width: 20%;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Pour que la colonne gauche ne passe pas sous la droite */
+.left-column {
+  margin-right: 20%;
+}
