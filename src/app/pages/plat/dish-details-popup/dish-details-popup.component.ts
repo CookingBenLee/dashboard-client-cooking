@@ -213,18 +213,18 @@ export class DishDetailsPopupComponent {
   getCoutFormatePlat(detail: any): number {
     const cout = detail?.dishesId?.cout ?? 0;
     // Formater à 3 décimales (arrondi, pas texte)
-    return +cout.toFixed(3);
+    return +cout.toFixed(5);
   }
   getCoutFormate(detail: any): number {
     const cout = detail?.cout ?? 0;
     // Formater à 3 décimales (arrondi, pas texte)
-    return +cout.toFixed(3);
+    return +cout.toFixed(5);
   }
   getCoutTotalPlat(plat: any): number {
     const cout = this.getCoutFormatePlat(plat);
     const quantitePlat = plat?.quantite ?? 0;
     const coutTotal = cout * quantitePlat;
-    return +coutTotal.toFixed(3) ;
+    return +coutTotal.toFixed(5) ;
   }
   getQtePlanifieeRecette(detail: any, plat: any): number {
     const quantite = detail?.quantity ?? 0;
@@ -236,7 +236,7 @@ export class DishDetailsPopupComponent {
     const quantite = detail?.quantity ?? 0;
     const quantitePlat = plat?.quantite ?? 0;
     const coutTotal = cout * quantitePlat;
-    return +coutTotal.toFixed(3) ;
+    return +coutTotal.toFixed(5) ;
   }
   async getCompoPrice(composition: CompositionDishes): Promise<number> {
 

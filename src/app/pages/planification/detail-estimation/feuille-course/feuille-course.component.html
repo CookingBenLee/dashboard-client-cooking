@@ -20,15 +20,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let detail of detailRecipeList" >
-                <!---th style="text-align: left;"> {{detail?.product?.name}} / ({{detail?.product?.category?.name}} / {{detail?.product?.conditoning?.name}})</th--->
-                <th style="text-align: left;"> {{detail?.product?.name}} <p style="text-align: left;font-size: x-small;"><i>{{detail?.product?.category?.name}} / {{detail?.product?.conditioning?.name}}</i></p></th>
-                <td>{{ (-1) * detail.currentStock | number:'1.0-2'  }} {{detail?.product?.unit?.code}}</td>
-                <td>{{ detail?.product?.price }} </td>
-                <td appPriceFormater [priceValue]=" ( (-1) * detail.currentStock * detail?.product?.price ) | number: '.0-0' " > </td>
-                <td>{{detail?.product?.user?.compteUser?.address?.country?.currency?.name}}</td>
-            </tr>
-
+            <ng-container *ngFor="let detail of detailRecipeList">
+                <tr *ngIf="detail.product?.secondaryRecipe === 0" >
+                        <!---th style="text-align: left;"> {{detail?.product?.name}} / ({{detail?.product?.category?.name}} / {{detail?.product?.conditoning?.name}})</th--->
+                        <th style="text-align: left;"> {{detail?.product?.name}} <p style="text-align: left;font-size: x-small;"><i>{{detail?.product?.category?.name}} / {{detail?.product?.conditioning?.name}}</i></p></th>
+                        <td>{{ (-1) * detail.currentStock | number:'1.0-2'  }} {{detail?.product?.unit?.code}}</td>
+                        <td>{{ detail?.product?.price }} </td>
+                        <td appPriceFormater [priceValue]=" ( (-1) * detail.currentStock * detail?.product?.price ) | number: '.0-0' " > </td>
+                        <td>{{detail?.product?.user?.compteUser?.address?.country?.currency?.name}}</td>
+        
+                </tr>
+            </ng-container>
             <tr class="total-row">
                 <th colspan="4" style="text-align: left;">TOTAL</th>
                 <th appPriceFormater [priceValue]="((-1) * total) | number: '.0-0'"> </th>
