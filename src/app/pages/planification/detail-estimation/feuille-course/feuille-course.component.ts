@@ -82,6 +82,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class FeuilleCourseComponent {
   detailRecipeList: any = [];
   total:number=0
+detail: any;
 
   constructor(private messageService: MessageService,public config: DynamicDialogConfig,
     private dialogService:DialogService){
@@ -94,7 +95,9 @@ export class FeuilleCourseComponent {
     console.log("*************************************************");
     console.log(this.detailRecipeList);
     this.detailRecipeList.forEach((item: any) => {
-      this.total += item?.product?.price * item?.currentStock;
+      if (item.product?.secondaryRecipe === 0){
+        this.total += item?.product?.price * item?.currentStock;
+      }
     })
 /*
     this.detailRecipeList.sort((a, b) => a.ingredient.name.localeCompare(b.ingredient.name));
