@@ -1,32 +1,39 @@
-#!groovy
 pipeline {
-	agent any
+  agent any
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+    DOCKERHUB_CREDENTIALS = credentials('c894b9cc-d9e6-491e-b00c-648867047d17')
   }
   stages {
-    //Build Docker Image
-    stage('Docker Build') {
-    	agent any
+
+    stage('Checkout Code') {
       steps {
-      	sh 'docker build -t balloibrahima/client-dashboard-cooking-ben:test1 .'
+        checkout scm
       }
     }
 
-    stage('Login') {
+    stage('Docker Build') {
+      steps {
+        sh 'docker build -t cookingbenlee/client-dashboard-cooking-ben:test1 .'
+      }
+    }
+
+    stage('Docker Login') {
       steps {
         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
       }
     }
-    stage('Push') {
+
+    stage('Docker Push') {
       steps {
-        sh 'docker push balloibrahima/client-dashboard-cooking-ben:test1'
+        sh 'docker push cookingbenlee/client-dashboard-cooking-ben:test1'
       }
     }
   }
+
   post {
     always {
       sh 'docker logout'
+      sh 'docker image rm cookingbenlee/client-dashboard-cooking-ben:test1 || true'
     }
   }
 }
