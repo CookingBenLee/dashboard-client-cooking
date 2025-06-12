@@ -242,7 +242,7 @@ export class PreparationrecipeComponent {
       if (detail.proportion == null) {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: `L'ingrédient '${detail.ingredient.name}' n'a pas de proportion spécifié.` });
       }
-      detail.net = (this.recetteSelectione.brut * (detail.proportion)) / 100
+      detail.net = (this.recetteSelectione.brut * (detail.proportion))
     })
   }
 
