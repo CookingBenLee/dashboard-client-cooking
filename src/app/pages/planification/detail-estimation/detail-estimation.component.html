@@ -89,16 +89,18 @@
 
                     <th colspan="12" style="text-align: center;"><i>LISTE DES RECETTES</i></th>
                     <td>STOCK AVANT</td>
-                    <td>QTE PLANIFIEE</td>
+                    <td>QTE NET PLANIFIEE</td>
+                    <td>QTE BRUT PLANIFIEE</td>
                     <td class="highlight">STOCK APRES</td>
 
              </tr>
              <tr *ngFor="let rec of data['recipes']">
               <th colspan="12" style="text-align: left;">{{ rec.recipe.name }}</th>
-              <td>{{ rec?.recipe.stock ?? 0 | number:'1.0-2' }} KG</td>
-              <td>{{ rec?.quantity | number:'1.0-2' }} KG</td>
+              <td>{{ rec?.recipe.stock ?? 0 | number:'1.0-3' }} KG</td>
+              <td>{{ rec?.quantity | number:'1.0-3' }} KG</td>
+              <td>{{ (rec?.quantity * rec?.recipe?.ratio) | number:'1.0-3' }} KG</td>
               <td class="{{ rec?.currentStock < 0 ? 'insufficient' : '' }}">
-                  {{ rec?.currentStock | number:'1.0-2' }} KG
+                  {{ rec?.currentStock | number:'1.0-3' }} KG
               </td>
             </tr>
           </tbody>

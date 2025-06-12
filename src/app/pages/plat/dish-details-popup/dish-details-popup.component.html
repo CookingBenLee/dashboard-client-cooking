@@ -12,7 +12,7 @@
             {{ plat.dishesId.poids | number: '1.0-3' }} KG
           </div>
           <div class="info-cell">
-            {{ plat.dishesId.cout | number: '1.0-5' }} {{ usercurrency }}
+            {{ plat.dishesId.cout | number: '1.0-3' }} {{ usercurrency }}
           </div>
           <div class="info-cell">
             {{ plat.dishesId.poids * (plat?.quantite ?? 0) | number: '1.0-3' }} KG

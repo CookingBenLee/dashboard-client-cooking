@@ -199,12 +199,12 @@
               </div>
 
 
-
+              
 
               <div class="info-table">
                 <div class="info-header">
                   <div class="info-header-cell">INGREDIENT</div>
-                  <div class="info-header-cell">PROPORTION %</div>
+                  <div class="info-header-cell">PROPORTION</div>
                   <div class="info-header-cell">PREPARATION</div>
                   <div class="info-header-cell">ACTIONS</div>
                 </div>
@@ -212,7 +212,7 @@
                 <!-- Loop to display details -->
                 <div *ngFor="let detail of detailRecipes; let i = index" class="info-row">
                   <div class="info-cell">{{ detail?.ingredient?.name }}</div>
-                  <div class="info-cell">{{ detail.proportion }}</div>
+                  <div class="info-cell">{{ detail.proportion }}%</div>
                   <div class="info-cell">{{ detail.preparationIngredient }}</div>
                   <div class="info-cell">
                     <button pButton pRipple type="button" icon="pi pi-trash" style="width: 15px; height: 15px; font-size: 12px;"
@@ -224,10 +224,11 @@
                 <!-- Total Row -->
                 <div class="info-row total-row">
                   <div class="info-cell">TOTAL</div>
-                  <div class="info-cell">{{ totalProportion }}</div>
+                  <div class="info-cell">{{ totalProportion }}%</div>
                   <div class="info-cell"></div> <!-- Empty cell for "Préparation" -->
                   <div class="info-cell"></div> <!-- Empty cell for "Actions" -->
                 </div>
+                
               </div>
 
 

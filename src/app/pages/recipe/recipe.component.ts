@@ -238,7 +238,7 @@ export class RecipeComponent {
 
   showPrepa(dishes: Dishes) {
     this.ref = this.dialogService.open(PreparationrecipeComponent, {
-      header: 'Preparation',
+      header: 'PREPARATION DE LA RECETTE',
       width: '80%',
       height: '100%',
       contentStyle: { overflow: 'auto' },
@@ -291,18 +291,29 @@ export class RecipeComponent {
 
     //this.maxRatio=1000000000000;
 
+    
+    // let somme = 0
+    // await this.detailRecipesProvisoire.forEach(detail => {
+      
+    //   somme += Number(detail.proportion)
+    // })
+    let somme : number = 0;
+      for (let d of this.detailRecipesProvisoire) {
+        console.log("Proportion avant : "+d.proportion/100+" Somme avant"+somme); // devrait afficher 'number'
+        somme += Number(d.proportion); // Forçage sûr
+        console.log(d.proportion/100+" "+somme); // devrait afficher 'number'
 
-    var somme = 0
-    await this.detailRecipesProvisoire.forEach(detail => {
-      somme += detail.proportion
-    })
-
+      }
     if (somme > 100.10) {
+      // if (somme > 1.10) {
       this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Impossible d\'ajouter ce détail, la proportion totale est dépassée.' });
     } else {
+      
       this.detailRecipes.push(detail)
       this.detailRecipesProvisoire.push(new DetailsRecipe())
       this.totalProportion = somme
+      console.log("tOTAL pROP "+this.totalProportion); // devrait afficher 'number'
+
     }
 
 
@@ -348,6 +359,7 @@ export class RecipeComponent {
     //console.log(this.reference)
 
     if(this.totalProportion > 100.10 || this.totalProportion < 99.90){
+      // if(this.totalProportion > 1.10 || this.totalProportion < 0.99){
       this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Impossible d\'ajouter cette recette, la proportion doit être comprise entre 99.90 et 100.10.' });
       return;
     }
@@ -383,7 +395,11 @@ export class RecipeComponent {
       return;
     }*/
     else if(this.base.name === "NON") this.recipe.principaleRecipe = false;
-      
+    // ✅ 🔁 Conversion des proportions en décimal
+      this.detailRecipes.forEach(detail => {
+        detail.proportion = Number(detail.proportion) / 100;
+      });  
+
       this.recipeService.create(this.recipe).then(async (data) => {
         //this.getAll();
         this.loading = false
@@ -410,6 +426,7 @@ export class RecipeComponent {
         this.activeIndex = 0
         this.resetFields();
         this.recipe = new Recipe()
+        
         this.detailRecipesProvisoire.push(new DetailsRecipe())
         // this.detailDishes=[]
         // this.detailDishesProvisoire=[]
