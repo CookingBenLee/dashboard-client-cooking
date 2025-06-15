@@ -243,7 +243,8 @@ export class DishDetailsPopupComponent {
     var recipe: Recipe = composition.recipe
     recipe.cout = 0
     var detailRecipes: DetailsRecipe[] = recipe.detailList;
-    var brut = (composition.quantity / 1000) * recipe.ratio
+    // var brut = (composition.quantity / 1000) * recipe.ratio
+    var brut = composition.quantity * recipe.ratio
     console.log("----------------------------------------------------------------{}", composition);
     console.log("----------------------------------------------------------------{}", brut);
 
@@ -259,7 +260,8 @@ export class DishDetailsPopupComponent {
         console.log(detail.net);
         console.log(detail.proportion);
 
-        detail.net = (brut * (detail.proportion)) / 100
+        detail.net = (brut * (detail.proportion))
+        // detail.net = (brut * (detail.proportion)) / 100
         ////
         var perte = detail.ingredient.lossPercentage
 

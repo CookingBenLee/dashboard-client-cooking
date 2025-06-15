@@ -95,7 +95,7 @@ detail: any;
     console.log("*************************************************");
     console.log(this.detailRecipeList);
     this.detailRecipeList.forEach((item: any) => {
-      if (item.product?.secondaryRecipe === 0){
+      if (item.product?.secondaryRecipe == false){
         this.total += item?.product?.price * item?.currentStock;
       }
     })

@@ -27,7 +27,7 @@
         <div class=" grid detailPlat col-4">
           <div class="cout  divgray">
             <label for="cout">COUT TOTAL : <span appPriceFormater
-                [priceValue]="plat.cout | number: '1.2-2'">{{plat.cout| number: '1.2-2' }}</span>{{usercurrency}}</label>
+                [priceValue]="plat.cout | number: '1.3-3'">{{plat.cout| number: '1.3-3' }} </span>   {{ usercurrency}}</label>
           </div>
 
           <div class="poid  divgray">
@@ -90,7 +90,7 @@
           <div *ngFor="let detail of compositionDishes,let i=index" class="info-row">
             <div class="info-cell">{{detail?.recipe?.name}}</div>
             <div class="info-cell">{{detail?.quantity| number: '1.0-3' }} KG</div>
-            <div class="info-cell"><span appPriceFormater [priceValue]="detail.cout | number: '1.0-2'">{{detail?.cout|
+            <div class="info-cell"><span appPriceFormater [priceValue]="detail.cout | number: '1.0-3'">{{detail?.cout|
                 number: '1.0-3' }}</span> {{ usercurrency }}</div>
             <div class="info-cell">
               <button pButton pRipple type="button" icon="pi pi-trash" class="p-button p-button-text p-button-icon-only"
