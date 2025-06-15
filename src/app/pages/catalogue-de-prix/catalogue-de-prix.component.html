@@ -26,7 +26,7 @@
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" class="w-100">
         <ng-container  matColumnDef="nom produit">
-          <th  mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom du produit</th>
+          <th  mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">PRODUIT</th>
           <td style="cursor: pointer;" (click)="openDialog(product.product)" mat-cell *matCellDef="let product">
             {{ product.product.name }}
           </td>
@@ -34,7 +34,7 @@
 
         <ng-container  matColumnDef="categorie">
           <th   mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Catégorie
+            CATEGORIE
           </th>
           <td style="cursor: pointer;" (click)="openDialog(product.product)" mat-cell *matCellDef="let product" class="f-s-14">
             {{ product.product.category?.name }}
@@ -43,7 +43,7 @@
 
         <ng-container  matColumnDef="conditioning">
           <th   mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Conditionnement
+            CONDITIONNEMENT
           </th>
           <td style="cursor: pointer;" (click)="openDialog(product.product)" mat-cell *matCellDef="let product" class="f-s-14">
             {{ product.product.conditioning?.name }}
@@ -87,15 +87,19 @@
     <div *ngIf="priceData; else noPriceData">
       <div class="dialog-container">
         <!-- Titre de la boîte de dialogue -->
-        <h2 class="dialog-title">Détails du Prix: {{ prouit.name }}, {{ prouit.category?.name }}, {{ prouit.conditioning?.name }}</h2>
-
+        <h2 class="dialog-title"> DETAILS DES PRIX PAR FOURNISSEUR </h2>
+        <h4 style="text-align: center;">{{ prouit.name }} 
+        </h4>
+        <span style="text-align: center;">
+          <i>Categorie : {{ prouit.category?.name }} Conditionnement : {{ prouit.conditioning?.name }}</i>
+        </span>
         <!-- Tableau élégant -->
         <div class="info-table">
           <!-- En-tête des colonnes -->
           <div class="info-header">
-            <div class="info-header-cell">Fournisseur</div>
-            <div class="info-header-cell">Prix</div>
-            <div class="info-header-cell">Adresse</div>
+            <div class="info-header-cell">FOURNISSEUR</div>
+            <div class="info-header-cell">PRIX</div>
+            <div class="info-header-cell">ADRESSE</div>
           </div>
 
           <!-- Ligne Fournisseur -->
