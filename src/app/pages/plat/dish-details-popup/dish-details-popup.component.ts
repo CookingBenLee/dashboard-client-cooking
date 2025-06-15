@@ -213,18 +213,18 @@ export class DishDetailsPopupComponent {
   getCoutFormatePlat(detail: any): number {
     const cout = detail?.dishesId?.cout ?? 0;
     // Formater à 3 décimales (arrondi, pas texte)
-    return +cout.toFixed(5);
+    return +cout.toFixed(3);
   }
   getCoutFormate(detail: any): number {
     const cout = detail?.cout ?? 0;
     // Formater à 3 décimales (arrondi, pas texte)
-    return +cout.toFixed(5);
+    return +cout.toFixed(3);
   }
   getCoutTotalPlat(plat: any): number {
     const cout = this.getCoutFormatePlat(plat);
     const quantitePlat = plat?.quantite ?? 0;
     const coutTotal = cout * quantitePlat;
-    return +coutTotal.toFixed(5) ;
+    return +coutTotal.toFixed(3) ;
   }
   getQtePlanifieeRecette(detail: any, plat: any): number {
     const quantite = detail?.quantity ?? 0;
@@ -236,14 +236,15 @@ export class DishDetailsPopupComponent {
     const quantite = detail?.quantity ?? 0;
     const quantitePlat = plat?.quantite ?? 0;
     const coutTotal = cout * quantitePlat;
-    return +coutTotal.toFixed(5) ;
+    return +coutTotal.toFixed(3) ;
   }
   async getCompoPrice(composition: CompositionDishes): Promise<number> {
 
     var recipe: Recipe = composition.recipe
     recipe.cout = 0
     var detailRecipes: DetailsRecipe[] = recipe.detailList;
-    var brut = (composition.quantity / 1000) * recipe.ratio
+    // var brut = (composition.quantity / 1000) * recipe.ratio
+    var brut = composition.quantity * recipe.ratio
     console.log("----------------------------------------------------------------{}", composition);
     console.log("----------------------------------------------------------------{}", brut);
 
@@ -259,7 +260,8 @@ export class DishDetailsPopupComponent {
         console.log(detail.net);
         console.log(detail.proportion);
 
-        detail.net = (brut * (detail.proportion)) / 100
+        detail.net = (brut * (detail.proportion))
+        // detail.net = (brut * (detail.proportion)) / 100
         ////
         var perte = detail.ingredient.lossPercentage
 

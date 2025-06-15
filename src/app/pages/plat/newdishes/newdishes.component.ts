@@ -267,7 +267,7 @@ export class NewdishesComponent implements OnInit{
     this.recetteSelectione=await this.priceDishesService.getDetailRecipeWithRecipeInfos(this.recetteSelectione)
     this.loadingLine=false
     cp.recipe=this.recetteSelectione
-    cp.cout=this.recetteSelectione.cout
+    cp.cout=this.recetteSelectione.cout*100
     console.log("--------------------------------{}",cp);
 
 

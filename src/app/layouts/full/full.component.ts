@@ -193,7 +193,7 @@ export class FullComponent implements OnInit {
       link: '/apps/todo',
     },
   ];
-  fixedDateTime: string = 'N° de version : 2025/06/08_22:15'; 
+  fixedDateTime: string = 'N° de version : 2025/06/15_18:11'; 
 
   //YYYYMMDD_HH:MM "2025/01/16_18:47"
 
