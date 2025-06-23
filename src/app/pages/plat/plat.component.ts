@@ -248,7 +248,7 @@ export class PlatComponent {
 
   show(e: any, dishe: Dishes) {
     this.ref = this.dialogService.open(ModaldishesComponent, {
-      header: "Modification d'un plat",
+      header: "MODIFICATION DU PLAT : "+dishe.name,
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -295,7 +295,7 @@ export class PlatComponent {
 
   showDishesDetail(e: any, dishe: Dishes) {
     this.ref = this.dialogService.open(DetaildishesComponent, {
-      header: 'Plat ' + dishe?.reference,
+      header: 'DETAILS DU PLAT : ' + dishe?.name,
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
