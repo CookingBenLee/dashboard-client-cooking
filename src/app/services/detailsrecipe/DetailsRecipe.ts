@@ -6,6 +6,7 @@ export class DetailsRecipe{
 
   ingredient: Product;
 
+
   proportion: number=0;
 
   preparationIngredient: string;

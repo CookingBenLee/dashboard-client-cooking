@@ -23,7 +23,7 @@ export class Product{
   stock: Stock[];
   productList?:Product[];
   priceList:PristineChangeEvent[]
-  // stockList:Stock[]
+  stockList:Stock;
   isActive?:boolean;
   currency?: Currency[]
 }
