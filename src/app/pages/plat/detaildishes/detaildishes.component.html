@@ -1,32 +1,32 @@
 <div class="dialog-container">
-  <div class="dialog-containe">
-    <h3 class="dialog-title">Détails du Plat</h3>
-  </div>
+  <!--div class="dialog-containe">
+    <h3 class="dialog-title">DETAILS DU PLAT</h3>
+  </div-->
 
   <div class="info-table">
     <div class="info-header">
-      <div class="info-header-cell">Attribut</div>
-      <div class="info-header-cell">Valeur</div>
+      <!--div class="info-header-cell">Attribut</div>
+      <div class="info-header-cell">Valeur</div-->
     </div>
 
-    <div class="info-row">
-      <div class="info-cell label">Nom</div>
+    <!---div class="info-row">
+      <div class="info-cell label">NOM</div>
       <div class="info-cell value">{{ plat.name }}</div>
-    </div>
+    </div--->
 
     <div class="info-row">
-      <div class="info-cell label">Catégorie</div>
+      <div class="info-cell label">CATEGORIE</div>
       <div class="info-cell value">{{ plat.categoryMenu.name }} ({{ plat.categoryMenu.code }})</div>
     </div>
 
     <div class="info-row">
-      <div class="info-cell label">Coût Total</div>
-      <div class="info-cell value">{{ plat.cout | number: '1.0-0' }} {{ usercurrency }}</div>
+      <div class="info-cell label">COUT TOTAL</div>
+      <div class="info-cell value">{{ plat.cout | number: '1.0-3' }} {{ usercurrency }}</div>
     </div>
 
     <div class="info-row">
-      <div class="info-cell label">Poids Total</div>
-      <div class="info-cell value">{{ plat.poids | number: '1.0-3' }} G</div>
+      <div class="info-cell label">POIDS TOTAL</div>
+      <div class="info-cell value">{{ plat.poids | number: '1.0-3' }} KG</div>
     </div>
   </div>
 
@@ -34,24 +34,24 @@
 
  
   <div class="dialog-containe">
-    <h3 class="dialog-title">Composition du Plat</h3>
+    <h3 class="dialog-title">COMPOSITION DU PLAT</h3>
   </div>
   
     <!-- <h3 class="dialog-title" >Composition du Plat</h3> -->
  
   <div class="info-table">
     <div class="info-header">
-      <div class="info-header-cell">Recette</div>
-      <div class="info-header-cell">Quantité</div>
-      <div class="info-header-cell">Coût</div>
-      <div class="info-header-cell">Stock</div>
+      <div class="info-header-cell">RECETTE</div>
+      <div class="info-header-cell">QUANTITE</div>
+      <div class="info-header-cell">COUT</div>
+      <div class="info-header-cell">STOCK</div>
     </div>
 
     <div *ngFor="let detail of compositionDishes" class="info-row">
       <div class="info-cell">{{ detail?.recipe?.name }}</div>
-      <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
+      <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} KG</div>
       <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} {{ usercurrency }}</div>
-      <div class="info-cell">{{ detail?.recipe?.stock }}</div>
+      <div class="info-cell">{{ detail?.recipe?.stock | number: '1.0-3'}} KG</div>
 
     </div>
 
@@ -63,7 +63,7 @@
   <p class="divider mt-4"></p>
 
   <div class="dialog-containe">
-    <h3 class="dialog-title">Images du Plat</h3>
+    <h3 class="dialog-title">IMAGES DU PLAT</h3>
   </div>
 
   <div class="info-table">

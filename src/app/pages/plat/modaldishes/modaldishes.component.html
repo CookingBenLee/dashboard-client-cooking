@@ -22,11 +22,11 @@
   
           <div class=" grid detailPlat col-4">
             <div class="cout  divgray">
-              <label for="cout" >Coût Total({{ usercurrency }}): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-0'">{{plat.cout| number: '1.0-0' }}</span></label>
+              <label for="cout" >COUT TOTAL ( {{ usercurrency }} ): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-3'">{{plat.cout| number: '1.0-3' }}</span></label>
             </div>
   
             <div class="poid  divgray">
-              <label for="poit" >Poid Total : {{plat.poids| number: '1.0-3' }} G</label>
+              <label for="poit" >POIDS TOTAL : {{plat.poids| number: '1.0-3' }} KG</label>
             </div>
   
           </div>
@@ -37,7 +37,7 @@
   
           <div class="row row1 grid col-12">
             <div class=" plat col-3"  pTooltip="Choisir une recette">
-              <label for="">Recette</label>
+              <label for="">RECETTE</label>
               <p-dropdown [options]="recettes" pTooltip="Liste des recettes" tooltipPosition="top" autoWidth="false" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true"  (ngModelChange)="changeRecette()" placeholder="Selectionnez une recette">
                 <!-- <ng-template pTemplate="selectedItem">
                     <div class="flex align-items-center gap-2" *ngIf="recetteSelectione">
@@ -53,7 +53,7 @@
             </div>
   
             <div class="field col-3"  pTooltip="Saisissez la quantité">
-              <label for="">Quantité</label>
+              <label for="">QUANTITE</label>
                 <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0" (ngModelChange)="changePoid()" ></p-inputNumber>
             </div>
   
@@ -63,25 +63,25 @@
               </p-dropdown>
             </div>
             <div class="field col-3">
-              <button pButton label="Ajouter la recette" type="button" [loading]="loading" class="p-button-primary mt-4" (click)="addNewComposition()" ></button>
+              <button pButton label="AJOUTER UNE RECETTE" type="button" [loading]="loading" class="p-button-primary mt-4" (click)="addNewComposition()" ></button>
             </div>
 
           </div>
   
           <div class="info-table">
             <div class="info-header">
-              <div class="info-header-cell">Recette</div>
-              <div class="info-header-cell">Quantité</div>
-              <div class="info-header-cell">Coût</div>
-              <div class="info-header-cell">Action</div>
+              <div class="info-header-cell">RECETTE</div>
+              <div class="info-header-cell">QUANTITE</div>
+              <div class="info-header-cell">COUT</div>
+              <div class="info-header-cell">ACTIONS</div>
             </div>
           
             <!-- Boucle pour afficher les recettes -->
             <div *ngFor="let detail of compositionDishes; let i = index" class="info-row">
               <div class="info-cell">{{ detail?.recipe?.name }}</div>
-              <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} G</div>
+              <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} KG</div>
               <div class="info-cell">
-                <span appPriceFormater [priceValue]="detail?.cout | number: '1.0-2'">
+                <span appPriceFormater [priceValue]="detail?.cout | number: '1.0-3'">
                   {{ detail?.cout | number: '1.0-3' }}
                 </span> {{ usercurrency }}
               </div>
@@ -108,8 +108,8 @@
   
             <div class="info-table">
               <div class="info-header">
-                <div class="info-header-cell">Liste des images</div>
-                <div class="info-header-cell">Action</div>
+                <div class="info-header-cell">IMAGES</div>
+                <div class="info-header-cell">ACTIONS</div>
               </div>
             
               <p-overlayPanel #op3>
@@ -138,12 +138,12 @@
           </div>
   
           <div class="btn col-2">
-            <button pButton label="Ajouter une image" type="button" [loading]="loading" class="p-button-primary mt-2" (click)="clickFileSelector()" ></button>
+            <button pButton label="AJOUTER UNE IMAGE" type="button" [loading]="loading" class="p-button-primary mt-2" (click)="clickFileSelector()" ></button>
           </div>
         </div>
   
   
-        <button  pButton label="Modifier le plat" type="submit" [loading]="loadingSave" class="p-button-primary mt-3" [disabled]="!f.valid" ></button>
+        <button  pButton label="MODIFIER LE PLAT" type="submit" [loading]="loadingSave" class="p-button-primary mt-3" [disabled]="!f.valid" ></button>
       </form>
   
   </div>
@@ -200,9 +200,9 @@
         </div>
   
         <div class="col-12 grid">
-          <button pButton label="Annuler" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid" (click)="cancelAddImage()" ></button>
+          <button pButton label="ANNULER" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid" (click)="cancelAddImage()" ></button>
           <div class="col"></div>
-          <button pButton label="Valider" type="submit" class="p-button-orange p-2 col-6" [disabled]="!f.valid" ></button>
+          <button pButton label="VALIDER" type="submit" class="p-button-orange p-2 col-6" [disabled]="!f.valid" ></button>
   
         </div>
       </div>

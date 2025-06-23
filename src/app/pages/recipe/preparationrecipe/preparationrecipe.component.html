@@ -13,16 +13,19 @@
         <div class="formpart">
           <form class="p-fluid colo">
             <div class="grid">
-              <div  class="row ml-2">
-                <label for="" class="font-bold mb-1" >LISTE DES RECETTES</label>
-              </div>
+                            
               <div class="row grid">
                 <div class=" plat col-4">
+                  <div  class="row ml-2">
+                    <label for="" class="font-bold mb-1" >LISTE DES RECETTES</label>
+                  </div>
                   <p-dropdown [options]="recettes" [(ngModel)]="recetteSelectione" name="plat" optionLabel="name" [filter]="true" filterBy="name" (ngModelChange)="changePlat()" placeholder="Selectionnez une recette">
                   </p-dropdown>
                 </div>
                 <div class=" poid col-2 gap-1 ml-2 mr-2">
-                                    
+                  <div  class="row ml-2">
+                    <label for="" class="font-bold mb-1" >QTE NET A PREPARER</label>
+                  </div> 
                   <!-- <span class="ml-2 m-auto font-bold"> Kg</span> -->
                   <p-inputNumber pTooltip="Quantité à préparer" tooltipPosition="top"class="number" mode="decimal" [minFractionDigits]="2" name="poidnet" id="poidnet" [(ngModel)]="recetteSelectione.net" (ngModelChange)="changePlat()" [showButtons]="true" [min]="0.0"  ></p-inputNumber>
                   <!-- [inputStyle]="{background: '#3b81f6',color:'#fff'}" -->
@@ -39,6 +42,7 @@
                 <!--<p-divider class=" col barhorizon p-divider-solid w-5" layout="vertical"></p-divider>-->
   
                 <div class=" grid detailPlat  ml-2 col-5">
+                  
                   <div class="poid  divgray">
                     <label for="poit" >POIDS BRUT : {{recetteSelectione.brut| number: '1.0-3' }} KG</label>
                   </div>
@@ -61,7 +65,7 @@
           <label for="head">Détails des Ingrédients Pour la recette: {{recetteSelectione.name}}</label>
         </div>
   
-        <p >Pour la preparation de {{recetteSelectione.net| number: '1.0-3' }}Kg de poid net qui equivaut à {{recetteSelectione.brut| number: '1.0-3' }}KG poids brut.</p>
+        <p >Pour la preparation de {{recetteSelectione.net| number: '1.0-3' }}Kg de poids net qui equivaut à {{recetteSelectione.brut| number: '1.0-3' }}KG poids brut.</p>
         <p  >Cout: {{recetteSelectione.cout| number: '1.0-3' }} {{ usercurrency }}.</p>
   
       </div>
@@ -79,7 +83,7 @@
             <div class="info-header-cell">POIDS BRUT (KG)</div>
             <!-- <div class="info-header-cell">Préparation</div> -->
             <div class="info-header-cell">COUT</div>
-            <div class="info-header-cell">STOCK (KG)</div>
+            <!--div class="info-header-cell">STOCK ACTUEL (KG)</div--->
           </div>
 
           <!-- Loop to display details -->
@@ -89,7 +93,8 @@
             <div class="info-cell">{{detail?.brut | number: '1.0-3' }}  {{detail?.ingredient?.unit?.code}}</div>
             <!-- <div class="info-cell">{{detail?.preparationIngredient }}</div> -->
             <div class="info-cell">{{detail?.cout| number: '1.0-3' }} {{ usercurrency }} </div>
-            <div class="info-cell">{{detail?.recipe?.stock }} {{detail?.ingredient?.unit?.code}}</div>
+          
+            <!--div class="info-cell">{{detail?.ingredient?.stock[0]?.quantity }} {{detail?.ingredient?.unit?.code}}</div--->
             <div class="nodetail m-2 head-center" *ngIf="!recetteSelectione.name">
               <label for="">
                 Aucun ingrédient

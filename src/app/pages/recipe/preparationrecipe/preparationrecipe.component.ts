@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DetailsRecipe } from 'src/app/services/detailsrecipe/DetailsRecipe';
+import { ProductService } from 'src/app/services/product/product.service';
 import { DetailsrecipeService } from 'src/app/services/detailsrecipe/detailsrecipe.service';
 import { PaginateService } from 'src/app/services/paginate/paginate.service';
 import { PreparationRecipeService } from 'src/app/services/preparationRecipe/preparation-recipe.service';
@@ -90,11 +91,13 @@ export class PreparationrecipeComponent {
   preparationRecipe: PreparationRecipe = new PreparationRecipe()
   loadingPreparation = false
   data: any;
+  ProductService: any;
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService,
     private dialogService: DialogService, private preparationRecipeService: PreparationRecipeService,
     private paginateService: PaginateService, private tokenService: TokenService, public config: DynamicDialogConfig,
     private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,
     public tableShort: TableShortService,public ref: DynamicDialogRef ) { 
+      productService: ProductService
       this.data = this.config.data
       this.recetteSelectione = this.data;
       this.recetteSelectione.net = 0.0;
@@ -104,12 +107,16 @@ export class PreparationrecipeComponent {
     
   utilisateurC: any;
   usercurrency: any;
+  stockingredient: any;
   selectedCountry: any;
   async ngOnInit(): Promise<void> {
     console.log("data",this.data);
     
     this.utilisateurC = this.tokenService.getUser();
     this.usercurrency = this.utilisateurC.compteUser.address.country.currency.name
+    
+  
+
     // this.currencys.push(this.usercurrency)
     // console.log("currency", this.usercurrency);
     this.recetteSelectione = this.config.data;
@@ -125,6 +132,7 @@ export class PreparationrecipeComponent {
     this.recipeService.getAllUser(user.id).then(data => {
       this.recettes = data
       this.recetteSelectione = this.recettes.find(e => e.id === this.data.id)!;
+      
       console.log(this.recetteSelectione);
       console.log(this.recettes);
       
@@ -174,11 +182,13 @@ export class PreparationrecipeComponent {
 
   async getDetailDishes(recette: Recipe) {
     await this.detailRecipeService.byRecipe(recette.id).then(data => {
-      console.log(data)
+      console.log("Recette avec Ingredients :"+data)
+      
       this.detailsDishes = data
       console.log(this.detailsDishes);
-      this.detailsDishes = this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));
 
+      this.detailsDishes = this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));
+      
       this.changePoid()
     })
   }
@@ -189,7 +199,7 @@ export class PreparationrecipeComponent {
   async changePlat() {
     console.log("changed---------------------------------");
 
-    console.log(this.recetteSelectione);
+    console.log("Recette Selectionnée : "+this.recetteSelectione);
 
     if (this.recetteSelectione == null || this.recetteSelectione.id == null) {
       this.detailsDishes = []
