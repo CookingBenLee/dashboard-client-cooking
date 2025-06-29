@@ -9,7 +9,7 @@ pipeline {
     stage('Docker Build') {
     	agent any
       steps {
-      	sh 'docker build -t balloibrahima/client-dashboard-cooking-ben:test1 .'
+      	sh 'docker build -t cookingbenlee/client-dashboard-cooking-ben:test1 .'
       }
     }
 
@@ -20,7 +20,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push balloibrahima/client-dashboard-cooking-ben:test1'
+        sh 'docker push cookingbenlee/client-dashboard-cooking-ben:test1'
       }
     }
   }
