@@ -593,6 +593,7 @@ export class ModaldishesComponent {
     var detailRecipes: DetailsRecipe[] = recipe.detailList;
 
     var brut = (composition.quantity / 1000) * recipe.ratio
+    // var brut = (composition.quantity) * recipe.ratio
 
 
     await this.detailRecipeService.byRecipe(recipe.id).then(data => {

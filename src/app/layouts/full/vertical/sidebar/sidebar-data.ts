@@ -10,6 +10,15 @@ export const navItems: NavItem[] = [
     route: 'home/acceuil',
   },
   {
+    navCap: 'SIMULATEUR ECONOMIQUE',
+  },
+  {
+    displayName: 'Nouvelle Simulation',
+    iconName: 'tabler:point',
+    route: 'home/simulateur',
+
+  },
+  {
     navCap: 'PLANIFICATION DE REPAS',
   },
   {
