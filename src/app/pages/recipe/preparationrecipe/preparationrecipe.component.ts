@@ -182,7 +182,7 @@ export class PreparationrecipeComponent {
 
   async getDetailDishes(recette: Recipe) {
     await this.detailRecipeService.byRecipe(recette.id).then(data => {
-      console.log("Recette avec Ingredients :"+data)
+      // console.log("Recette avec Ingredients :"+data)
       
       this.detailsDishes = data
       console.log(this.detailsDishes);
@@ -448,18 +448,46 @@ export class PreparationrecipeComponent {
 
     this.loadingPreparation = true
     this.loadingPage = true
+    
+    // Vérification des stocks
 
+    // Vérification des stocks
+    const ingredientsEnRupture = this.detailsDishes.filter(detail => {
+      const stocks = detail.ingredient.stock;
+      const poidsBrut = detail.brut;
+      console.log("Stock --- ",stocks,poidsBrut)
+      // Si stock n’est pas défini ou vide, ou que quantité insuffisante
+      if (!stocks || stocks.length === 0 || stocks[0].quantity === undefined) {
+        return false; // considéré comme rupture
+      }
+
+      return (stocks[0].quantity - poidsBrut) < 0;
+    });
+    if (ingredientsEnRupture.length > 0) {
+      const noms = ingredientsEnRupture.map(d => d.ingredient.name).join(', ');
+      this.messageService.add({
+        key: 'tc',
+        severity: 'error',
+        summary: 'Stock insuffisant',
+        detail: `Stock insuffisant pour : ${noms}`
+      });
+      console.log("Echec !");
+      this.loadingPreparation = false;
+      this.loadingPage = false;
+      return; // Annuler la sauvegarde
+    }
+      
     //
     this.preparationRecipe.recipe = this.recetteSelectione;
     this.preparationRecipe.poidsNet = this.recetteSelectione.net
 
     this.preparationRecipeService.create(this.preparationRecipe).then(data => {
-      console.log(data);
+      
       this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: "Preparation enregistrée !" });
 
       this.recetteSelectione = new Recipe()
       this.detailsDishes = []
-
+    
       this.loadingPreparation = false
       this.loadingPage = false
       this.ref.close(this.recetteSelectione);
@@ -470,4 +498,6 @@ export class PreparationrecipeComponent {
     })
 
   }
+  
+  
 }

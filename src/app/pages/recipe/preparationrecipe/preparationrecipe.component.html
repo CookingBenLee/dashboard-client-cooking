@@ -83,7 +83,8 @@
             <div class="info-header-cell">POIDS BRUT (KG)</div>
             <!-- <div class="info-header-cell">Préparation</div> -->
             <div class="info-header-cell">COUT</div>
-            <!--div class="info-header-cell">STOCK ACTUEL (KG)</div--->
+            <!---div class="info-header-cell">STOCK ACTUEL (KG)</div--->
+            <!--div class="info-header-cell">STOCK RESTANT (KG)</div--->
           </div>
 
           <!-- Loop to display details -->
@@ -94,7 +95,8 @@
             <!-- <div class="info-cell">{{detail?.preparationIngredient }}</div> -->
             <div class="info-cell">{{detail?.cout| number: '1.0-3' }} {{ usercurrency }} </div>
           
-            <!--div class="info-cell">{{detail?.ingredient?.stock[0]?.quantity }} {{detail?.ingredient?.unit?.code}}</div--->
+            <!---div class="info-cell">{{detail?.ingredient?.stockList}} {{detail?.ingredient?.unit?.code}}</div--->
+            <!--div class="info-cell">{{detail?.ingredient?.stock[0]?.quantity - detail?.brut }} {{detail?.ingredient?.unit?.code}}</div-->
             <div class="nodetail m-2 head-center" *ngIf="!recetteSelectione.name">
               <label for="">
                 Aucun ingrédient

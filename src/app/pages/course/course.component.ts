@@ -580,7 +580,7 @@ export class CourseComponent implements OnInit {
     var p = { ...purchase }
 
     this.ref = this.dialogService.open(ModalpurchaseComponent, {
-      header: 'Produit ' + purchase.reference,
+      header: 'MODIFICATION DE LA COURSE N°: ' + purchase.reference,
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,

@@ -250,7 +250,7 @@ export class DetaildishesComponent {
         } else detail.cout = 0
         ///
         console.log(detail.cout);
-        recipe.cout = (recipe.cout + detail.cout)
+        recipe.cout = (recipe.cout + detail.cout)*100
       }
 
 
