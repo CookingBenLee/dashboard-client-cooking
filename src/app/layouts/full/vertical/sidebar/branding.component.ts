@@ -19,7 +19,7 @@ import { CoreService } from 'src/app/services/core.service';
         />
       </a>
       <br>
-      <h3 style="margin-left: 6px;">Cooking BenLee</h3>
+      <h2 style="margin-left: 6px;">You Cook</h2>
 
       <!--<small>Numero de version: {{ fixedDateTime }}</small>-->
       } @if(options.theme === 'dark') {

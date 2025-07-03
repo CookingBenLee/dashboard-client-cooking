@@ -493,37 +493,60 @@ cuuren: any
 
 
    ///save
-   save(){
-    this.isError=false
-    this.isSuccess=false
-    this.loading=true
+  //  save(){
+  //   this.isError=false
+  //   this.isSuccess=false
+  //   this.loading=true
 
-    //recup des valeurs et attribution
+  //   //recup des valeurs et attribution
 
 
-    //this.data.datePurchase=new Date(this.datePurchase);
-    this.purchaseService.update(this.data.id,this.data).then(async (data) =>{
-      //this.getAll();
+  //   //this.data.datePurchase=new Date(this.datePurchase);
+  //   this.purchaseService.update(this.data.id,this.data).then(async (data) =>{
+  //     //this.getAll();
 
-      this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée"});
+  //     this.messageService.add({key:'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée"});
 
-      await this.saveAllDetail(data.data)
-      this.ref?.close();
+  //     await this.saveAllDetail(data.data)
+  //     this.ref?.close();
 
-    },
-    (error: any)=>{
-      //this.isError=true
-      if(error.error.message=='ko'){
-        this.erreur=error.error.data
-        }else{
-        this.erreur="Erreur lié au serveur"
+  //   },
+  //   (error: any)=>{
+  //     //this.isError=true
+  //     if(error.error.message=='ko'){
+  //       this.erreur=error.error.data
+  //       }else{
+  //       this.erreur="Erreur lié au serveur"
+  //     }
+  //     this.loading=false
+  //     this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
+
+  //   });
+  // }
+  save(){
+    this.isError=false;
+    this.isSuccess=false;
+    this.loading=true;
+  
+    this.purchaseService.update(this.data.id,this.data).then(async (data) => {
+      try {
+        await this.detailpurchaseService.delete(this.data.id); // Étape cruciale
+        await this.saveAllDetail(data.data);
+  
+        this.messageService.add({ key:'tc', severity: 'success', summary: 'Success', detail: "Modification effectuée" });
+        this.ref?.close();
+      } catch (err) {
+        this.messageService.add({ key:'tc', severity: 'error', summary: 'Erreur', detail: "Erreur lors de la mise à jour des détails" });
+      } finally {
+        this.loading = false;
       }
-      this.loading=false
+    }, (error: any) => {
+      this.loading = false;
+      this.erreur = error.error?.data || "Erreur liée au serveur";
       this.messageService.add({key:'tc', severity: 'error', summary: 'Error', detail: this.erreur });
-
     });
   }
-
+  
 
 
   //save all  detailUnit

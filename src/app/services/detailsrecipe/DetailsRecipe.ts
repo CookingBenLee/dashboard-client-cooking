@@ -26,6 +26,7 @@ export class DetailsRecipe{
   ///
   stockApres:number
   totalPrice:number
+  stock: any;
 
 }
 
