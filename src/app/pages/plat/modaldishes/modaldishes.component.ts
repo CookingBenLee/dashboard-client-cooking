@@ -311,13 +311,15 @@ export class ModaldishesComponent {
     if (this.unitSelectionne == this.units[1]) {//KiloGramme
       console.log(this.recetteSelectione);
 
-      this.recetteSelectione.net = this.recetteSelectione.net * 1000
+      // this.recetteSelectione.net = this.recetteSelectione.net * 1000
+      this.recetteSelectione.net = this.recetteSelectione.net
       await this.changePoid()
       cp.quantity = this.recetteSelectione.net
 
       // await this.calculPlat()
     } else {
-      this.recetteSelectione.net = this.recetteSelectione.net / 1000
+      // this.recetteSelectione.net = this.recetteSelectione.net / 1000
+      this.recetteSelectione.net = this.recetteSelectione.net
     }
 
     await this.changePoid()
@@ -462,7 +464,8 @@ export class ModaldishesComponent {
       if (detail.proportion == null) {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: `L'ingrédient '${detail.ingredient.name}' n'a pas de proportion spécifié.` });
       }
-      detail.net = (this.recetteSelectione.brut * (detail.proportion)) / 100
+      // detail.net = (this.recetteSelectione.brut * (detail.proportion)) / 100
+      detail.net = (this.recetteSelectione.brut * (detail.proportion))
     })
   }
 
@@ -592,8 +595,8 @@ export class ModaldishesComponent {
     recipe.cout = 0
     var detailRecipes: DetailsRecipe[] = recipe.detailList;
 
-    var brut = (composition.quantity / 1000) * recipe.ratio
-    // var brut = (composition.quantity) * recipe.ratio
+    // var brut = (composition.quantity / 1000) * recipe.ratio
+    var brut = (composition.quantity) * recipe.ratio
 
 
     await this.detailRecipeService.byRecipe(recipe.id).then(data => {
@@ -606,7 +609,8 @@ export class ModaldishesComponent {
         console.log(detail.net);
         console.log(detail.proportion);
 
-        detail.net = await (brut * (detail.proportion)) / 100
+        // detail.net = await (brut * (detail.proportion)) / 100
+        detail.net = await (brut * (detail.proportion))
         ////
         var perte = await detail.ingredient.lossPercentage
 

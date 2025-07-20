@@ -223,7 +223,7 @@ export class ProductComponent implements OnInit {
   show(e: any, product: Product) {
     console.log(product)
     this.ref = this.dialogService.open(ModalproductComponent, {
-      header: 'Détail produit ',
+      header: 'DETAILS',
       //width: '70%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -367,7 +367,7 @@ export class ProductComponent implements OnInit {
 
   productUpdate(product: Stock) {
     this.ref = this.dialogService.open(UpdateProductComponent, {
-      header: "Modification d'un produit",
+      header: "MODIFICATION DE PRODUIT ",
       width: '50vw',
       modal: true,
       baseZIndex: 10000,

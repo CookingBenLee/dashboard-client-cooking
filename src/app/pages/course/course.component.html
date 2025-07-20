@@ -2,217 +2,125 @@
   <mat-card-header>
     <mat-card-title class="m-b-0">GESTION DES FEUILLES DE COURSE</mat-card-title>
   </mat-card-header>
+
   <mat-card-content class="b-t-1">
-    <div class="">
-      <div class="card">
-        <!--<h5>Purchase List</h5>-->
+    <div class="card">
+      <p-table #dt2 [value]="purchases" responsiveLayout="scroll"
+               [globalFilterFields]="['quantity','reference','datePurchase','montant','entryDate']">
 
-        <p-table #dt2 [value]="purchases" responsiveLayout="scroll"
-          [globalFilterFields]="['quantity','reference','datePurchase','montant','entryDate']">
-
-
-          <ng-template pTemplate="caption">
-            <!-- <div class="flex">
-            <button pButton label="Tout afficher" class="p-button-outlined" icon="pi pi-filter-slash" (click)="tableShort.clear(dt2)"></button>
-            <span class="p-input-icon-left mr-auto">
-                <i class="pi pi-search"></i>
-                <input pInputText type="text" [(ngModel)]="motRecherche" (input)="dt2.filterGlobal(motRecherche, 'contains')" placeholder="Rechercher" />
-                <input pInputText type="text" [(ngModel)]="motRecherche" (input)="recherche()" placeholder="Rechercher" />
-
-
-              </span>
-        </div> -->
-          <div class="grid">
+        <ng-template pTemplate="caption">
+          <div class="grid align-items-center mb-3">
             <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100 hide-hint">
-                  <input [(ngModel)]="motRecherche" matInput placeholder="Rechercher une course"
-                    (keyup)="recherche()" />
-                  <mat-icon matSuffix>
-                    <i-tabler name="search" class="icon-20"></i-tabler>
-                  </mat-icon>
-                </mat-form-field>
-              </div>
-              <div style="text-align: right;" class="col-6">
-                <button (click)="dialogAdd()" mat-flat-button  color="primary">
-                  NOUVELLE COURSE
-                </button>
-              </div>
-          </div> 
-          </ng-template>
+              <mat-form-field appearance="outline" class="w-100 hide-hint">
+                <input [(ngModel)]="motRecherche" matInput placeholder="RECHERCHER UNE COURSE"
+                       (keyup)="recherche()" />
+                <mat-icon matSuffix><i-tabler name="search" class="icon-20"></i-tabler></mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="col-6 text-right">
+              <button (click)="dialogAdd()" mat-flat-button color="primary">
+                NOUVELLE COURSE
+              </button>
+            </div>
+          </div>
+        </ng-template>
 
-          <ng-template pTemplate="header">
-            <tr>
-              <!-- <th pSortableColumn="reference" pColumnFilter="reference">Reference<p-sortIcon
-                  field="reference"></p-sortIcon></th> -->
+        <ng-template pTemplate="header">
+          <tr class="table-header">
+            <th pSortableColumn="entryDate" pColumnFilter="entryDate">
+              DATE DE SAISIE <p-sortIcon field="entryDate"></p-sortIcon>
+            </th>
+            <th pSortableColumn="shop" pColumnFilter="shop">
+              FOURNISSEUR <p-sortIcon field="shop"></p-sortIcon>
+            </th>
+            <th pSortableColumn="montant" pColumnFilter="montant">
+              MONTANT <p-sortIcon field="montant"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
 
-                  <th pSortableColumn="entryDate" pColumnFilter="entryDate">DATE DE SAISIE<p-sortIcon
-                    field="entryDate"></p-sortIcon></th>
+        <ng-template pTemplate="body" let-purchase>
+          <tr class="table-body cursor-pointer">
+            <td (click)="details($event, purchase)">
+              {{ purchase.entryDate | date:'dd-MM-yyyy' }}
+            </td>
+            <td (click)="details($event, purchase)">
+              {{ purchase?.shop?.name }} ({{ purchase?.shop.addressPrincipale?.streetName }},
+              {{ purchase?.shop.addressPrincipale?.streetNumber }},
+              {{ purchase?.shop.addressPrincipale?.label }},
+              {{ purchase?.shop.addressPrincipale?.city }},
+              {{ purchase?.shop.addressPrincipale?.country.name }})
+            </td>
+            <td (click)="details($event, purchase)">
+              {{ purchase.montant | number:'1.0-3':'fr-FR'  }} {{ purchase?.currency?.symbol }}
+            </td>
+            <td>
+              <button pButton pRipple type="button" (click)="show($event, purchase)" icon="pi pi-pencil"
+                      class="p-button p-button-text p-button-icon-only"></button>
+              <button pButton pRipple type="button" (click)="delete('top-right', purchase)" icon="pi pi-trash"
+                      class="p-button p-button-text p-button-icon-only"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
 
+      <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [totalRecords]="totalRows"
+                   [rowsPerPageOptions]="[10, 25, 50]"></p-paginator>
+    </div>
 
-              <th pSortableColumn="shop" pColumnFilter="shop">FOURNISSEUR<p-sortIcon field="shop"></p-sortIcon></th>
-
-              <!-- <th pSortableColumn="datePurchase" pColumnFilter="datePurchase">Date Approvisionnement<p-sortIcon
-                  field="datePurchase"></p-sortIcon></th> -->
-
-              <th pSortableColumn="montant" pColumnFilter="montant">MONTANT<p-sortIcon field="montant"></p-sortIcon>
-              </th>
-
-              
-
-              <th></th>
-              <!--<th></th>-->
-
-              <!--<th></th>-->
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-purchase>
-            <tr class="cursor-pointer">
-              <!-- <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.reference}}</td> -->
-              <td (click)="details($event,purchase)" style="width: 15%; min-width: 8rem;">{{purchase.entryDate |
-                date:'dd-MM-yyyy'}}</td>
-
-
-              <td (click)="details($event,purchase)" style="width: 85%; min-width: 8rem;">{{purchase?.shop?.name}} ({{ purchase?.shop.addressPrincipale?.streetName }}, {{ purchase?.shop.addressPrincipale?.streetNumber }}, {{ purchase?.shop.addressPrincipale?.label }}, {{ purchase?.shop.addressPrincipale?.city }}, {{ purchase?.shop.addressPrincipale?.country.name }}.)</td>
-              <!--<td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase?.address?.address?.label}}</td>-->
-
-              <!-- <td (click)="details($event,purchase)" style="width: 35%; min-width: 8rem;">{{purchase.datePurchase |
-                date:'dd-MM-yyyy'}}</td> -->
-
-              <td (click)="details($event,purchase)" style="width: 15%; min-width: 8rem;">{{purchase.montant}}
-                {{purchase?.currency?.name}}</td>
-              
-
-              <!--<td style="width: 15%;" (click)="show($event,purchase)">
-                  <button pButton pRipple type="button"  icon="pi pi-eye" class="p-button p-component p-button-text p-button-icon-only"></button>
-                </td>-->
-
-              <!--<td  style="width: 15%;">
-                  <button pButton pRipple type="button" (click)="openModifier('top-right',purchase)" icon="pi pi-pencil" class="p-button p-component p-button-text p-button-icon-only"></button>
-                </td>-->
-
-              <td style="width: 45%; min-width: 8rem;" >
-                <button pButton pRipple type="button" (click)="show($event,purchase)" icon="pi pi-pencil"
-                  class="p-button p-component p-button-text p-button-icon-only"></button> 
-                <button pButton pRipple type="button" (click)="delete('top-right',purchase)" icon="pi pi-trash"
-                  class="p-button p-component p-button-text p-button-icon-only"></button>
-
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-        <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [totalRecords]="totalRows"
-          [rowsPerPageOptions]="[10, 25, 50]"></p-paginator>
-
-      </div>
-
-    </div>  
-
-    <!-- <p-dialog [(visible)]="dialogAddCourse" [baseZIndex]="1000000" 
-    [style]="{width: '850px'}" header="Modification du Camion" [modal]="true" class="p-fluid">
-      
-    </p-dialog> -->
-
+    <!-- Toasts & Dialogs -->
     <p-toast position="top-center" key="tc"></p-toast>
     <p-toast key="product"></p-toast>
-
     <p-toast></p-toast>
+
     <p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="positionModalConfirm"
-      rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
-    <!--pour la modification d'une purchase-->
+                     rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+
     <p-dialog *ngIf="isEditpurchaseDialogVisible"
-      header="Mise à jour de la Approvisionnement reference {{purchaseClicked.reference}}"
-      [(visible)]="isEditpurchaseDialogVisible" [style]="{ width: '50vw' }">
+              header="MISE À JOUR DE L’APPROVISIONNEMENT REFERENCE {{purchaseClicked.reference}}"
+              [(visible)]="isEditpurchaseDialogVisible" [style]="{ width: '50vw' }">
       <form #fUpdate="ngForm" (ngSubmit)="update()">
         <div class="card p-fluid">
-          <h5>Mettre à jour</h5>
-          <!--<div class="field">
-      <label htmlFor="reference">Reference</label>
-      <input pInputText id="reference" [(ngModel)]="purchaseClicked.reference" name="reference" type="text" placeholder="Reference Approvisionnement" required/>
-    </div>-->
+          <h5>METTRE À JOUR</h5>
 
           <div class="field">
-            <label htmlFor="datePurchase">Date Approvisionnement</label>
-            <p-calendar class="max-w-full" [(ngModel)]="purchaseClicked.datePurchase" name="datePurchase"
-              id="datePurchase" [showTime]="true" [showSeconds]="true" [inline]="true" [showWeek]="true"></p-calendar>
-
+            <label htmlFor="datePurchase">DATE APPROVISIONNEMENT</label>
+            <p-calendar [(ngModel)]="purchaseClicked.datePurchase" name="datePurchase"
+                        id="datePurchase" [showTime]="true" [showSeconds]="true"
+                        [inline]="true" [showWeek]="true" class="max-w-full"></p-calendar>
           </div>
 
-          <!--<div class="field ">
-      <label htmlFor="shop">Fournisseur</label>
-      <p-dropdown [options]="shops"  optionLabel="name" name="shop" [(ngModel)]="purchaseClicked.address.shop" ></p-dropdown>
-    </div>-->
-
-          <div class="field ">
-            <label htmlFor="addresse">Adresse</label>
+          <div class="field">
+            <label htmlFor="addresse">ADRESSE</label>
             <p-dropdown [options]="addresss" name="addresse" [(ngModel)]="purchaseClicked.address">
               <ng-template let-addresss pTemplate="item">
                 <div class="flex align-items-center operatingSystems-item">
-                  <div>{{addresss.shop.name}} {{addresss.label}}</div>
+                  <div>{{ addresss.shop.name }} {{ addresss.label }}</div>
                 </div>
               </ng-template>
             </p-dropdown>
-            <!--<p-dropdown [options]="addresss"  optionLabel="shop.name" name="addresse" [(ngModel)]="purchaseClicked.address" ></p-dropdown>-->
           </div>
 
           <div class="field">
-            <label htmlFor="montant">Montant</label>
-            <p-inputNumber name="montant" id="montant" [(ngModel)]="purchaseClicked.montant" [showButtons]="true"
-              [min]="0"></p-inputNumber>
+            <label htmlFor="montant">MONTANT</label>
+            <p-inputNumber name="montant" id="montant" [(ngModel)]="purchaseClicked.montant"
+                           [showButtons]="true" [min]="0"></p-inputNumber>
           </div>
 
-          <div class="field ">
-            <label htmlFor="currency">Devise</label>
+          <div class="field">
+            <label htmlFor="currency">DEVISE</label>
             <p-dropdown [options]="currencys" optionLabel="name" name="currency"
-              [(ngModel)]="purchaseClicked.currency"></p-dropdown>
+                        [(ngModel)]="purchaseClicked.currency"></p-dropdown>
           </div>
-
-
-
 
           <label id="erreur" *ngIf="isErrorEdit">{{erreurEdit}}</label>
           <label id="success" *ngIf="isSuccessEdit">{{sucessEdit}}</label>
 
-
-          <button pButton type="submit" label="Modifier" class="p-button-orange" [loading]="loading"
-            [disabled]="!fUpdate.valid"></button>
-
+          <button pButton type="submit" label="MODIFIER" class="p-button-orange"
+                  [loading]="loading" [disabled]="!fUpdate.valid"></button>
         </div>
-
       </form>
-
     </p-dialog>
-    <!---->
-
-
-    <!--<p-overlayPanel #op [showCloseIcon]="true">
-      <ng-template pTemplate="content" class="panel">
-        <h3 id="matricule">{{purchaseSelected.reference}}</h3>
-        <p id="emailDetail">Le {{purchaseSelected.datePurchase | date:'yyyy-MM-dd HH:mm'}} chez
-          <strong>{{purchaseSelected?.address?.shop?.name}}</strong> </p>
-        <p id="telDetail">{{purchaseSelected?.address?.city}}</p>
-        <!-<p id="fixeDetail">{{purchaseSelected?.address?.contact}}</p>- >
-        <p-divider></p-divider>
-
-        <p id="directionDetail">Montant : {{purchaseSelected.montant}} {{purchaseSelected?.currency?.symbol}}</p>
-        <p id="divisionDetail">Date d'enregistrement : {{purchaseSelected.entryDate | date:'yyyy-MM-dd HH:mm'}}</p>
-        <p-button [routerLink]="['detailpurchase',purchaseSelected.id]">Voir plus</p-button>
-
-        <!-<button pButton class=" mt-2 btnEdit">Modifier</button>->
-      </ng-template>
-
-
-      <p-dialog header="Header" [modal]="true" [(visible)]="visibleSelect" [style]="{ width: '50rem' }"
-        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
-
-        <p>
-          test
-        </p>
-
-      </p-dialog>
-
-    </p-overlayPanel>-->
   </mat-card-content>
 </mat-card>
-
-
-

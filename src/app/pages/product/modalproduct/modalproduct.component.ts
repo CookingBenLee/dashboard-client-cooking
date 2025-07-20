@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Product } from 'src/app/entity/Product';
+import { CommonModule } from '@angular/common'; // ✅ Important
+
 
 @Component({
   selector: 'app-modalproduct',
   standalone: true,
-  imports: [],
+  // imports: [],
   templateUrl: './modalproduct.component.html',
-  styleUrl: './modalproduct.component.scss'
+  styleUrl: './modalproduct.component.scss',
+  imports: [
+    CommonModule // ✅ Ajoute ceci
+  ]
 })
 export class ModalproductComponent {
   data:Product;

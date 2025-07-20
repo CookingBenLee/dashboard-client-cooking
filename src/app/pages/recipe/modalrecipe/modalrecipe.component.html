@@ -3,7 +3,7 @@
     <div class="col-12 card p-fluid">
       <div class="grid entete">
         <div class="field col-6">
-          <label for="name">Nom de la recette</label>
+          <label for="name">RECETTE</label>
           <input pInputText id="name" [(ngModel)]="recipe.name" name="name" type="text" placeholder="Nom de la recette"
             required />
         </div>
@@ -13,7 +13,7 @@
             [(ngModel)]="recipe.ratio" [showButtons]="true" [min]="0"></p-inputNumber>
         </div> -->
         <div class="field col-6">
-          <label for="baseRecipe">Recette principale</label>
+          <label for="baseRecipe">EST CE UNE RECETTE PRINCIPALE ?</label>
                 <p-dropdown [disabled]="recipe.name==null" [(ngModel)]="base" name="baseRecipe"
                     [options]="reciss" optionLabel="name" (onChange)="openDialogProduct($event)"
                     placeholder="OUI ou NON">
@@ -21,16 +21,16 @@
         </div>
       </div>
 
-      <h5 class="dialog-title">Liste des Détails de la Recette</h5>
+      <h5 class="dialog-title">DETAILS DE LA RECETTE</h5>
       <button pButton label="Ajouter un ingrédient" type="button" [loading]="loading"
         class="p-button-primary mt-2" (click)="showAddDetailDishesForm()"></button>
-        <h3 *ngIf="showAddDetailsRecipe">Saisie nouvel detail de la recette </h3>
+        <!-- <h3 *ngIf="showAddDetailsRecipe">SAISIE D'UN DETAIL </h3> -->
         <div  *ngIf="showAddDetailsRecipe" class="cardnew mt-5">
         <form class="p-fluid">
           <div class="grid single-line">
             <!-- Produit dropdown -->
             <div class="field col">
-              <label htmlFor="product{{detailRecipeProvisoire2.length-1}}">Produit</label>
+              <label htmlFor="product{{detailRecipeProvisoire2.length-1}}">PRODUIT</label>
                   <!--<p-dropdown [options]="categorys" optionLabel="name" [(ngModel)]="category" name="categoty"  (ngModelChange)="getProductCategory(category)"></p-dropdown>-->
                   <p-dropdown [options]="products"  optionLabel="name" name="product{{detailRecipeProvisoire2.length-1}}" 
                   [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].ingredient" >
@@ -45,8 +45,8 @@
             <!-- Proportion input -->
             <div class="field col">
 
-              <label htmlFor="quantity{{detailRecipeProvisoire2.length-1}}">Proportion %</label>
-              <p-inputNumber mode="decimal" [minFractionDigits]="2" suffix="'%"
+              <label htmlFor="quantity{{detailRecipeProvisoire2.length-1}}">PROPORTION %</label>
+              <p-inputNumber mode="decimal" [minFractionDigits]="3" suffix="'%"
               name="quantity{{detailRecipeProvisoire2.length-1}}" id="quantity{i}"
                [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].proportion"  
                (ngModelChange)="changeDetailQuantite(detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].proportion,detailRecipeProvisoire2.length-1,true)" 
@@ -55,7 +55,7 @@
 
             <!-- Preparation textarea -->
             <div class="field col">
-              <label htmlFor="preparationIngredient">Preparation ingredient</label>
+              <label htmlFor="preparationIngredient">PREPARATION</label>
                   <textarea rows="1" cols="30"  [autoResize]="true" name="preparationIgredient" 
                   pInputTextarea [(ngModel)]="detailRecipeProvisoire2[detailRecipeProvisoire2.length-1].preparationIngredient">
                 </textarea>
@@ -89,16 +89,16 @@
 
       <div class="info-table">
         <div class="info-header">
-          <div class="info-header-cell">Produit</div>
-          <div class="info-header-cell">Proportion %</div>
-          <div class="info-header-cell">Préparation</div>
-          <div class="info-header-cell">Actions</div>
+          <div class="info-header-cell">PRODUIT</div>
+          <div class="info-header-cell">PROPORTION</div>
+          <div class="info-header-cell">PREPARATION</div>
+          <div class="info-header-cell">ACTIONS</div>
         </div>
       
         <!-- Loop to display details -->
         <div *ngFor="let detail of detailRecipe2; let i = index" class="info-row">
           <div class="info-cell">{{ detail?.ingredient?.name }}</div>
-          <div class="info-cell">{{ detail.proportion }}</div>
+          <div class="info-cell">{{ detail.proportion * 100 }}%</div>
           <div class="info-cell">{{ detail.preparationIngredient }}</div>
           <div class="info-cell">
             <button pButton pRipple type="button" icon="pi pi-trash" style="width: 15px; height: 15px; font-size: 12px;"
@@ -109,8 +109,8 @@
       
         <!-- Total Row -->
         <div class="info-row total-row">
-          <div class="info-cell">Total</div>
-          <div class="info-cell">{{ totalProportion }}</div>
+          <div class="info-cell">TOTAL</div>
+          <div class="info-cell">{{ totalProportion * 100 }}%</div>
           <div class="info-cell"></div> <!-- Empty cell for "Préparation" -->
           <div class="info-cell"></div> <!-- Empty cell for "Actions" -->
         </div>
@@ -120,12 +120,12 @@
       <p class="divider"></p>
       <div class="field  col-12">
         <div class="field">
-          <label htmlFor="detailCuisine">Detail cuisine</label>
+          <label htmlFor="detailCuisine">DETAILS CUISSON</label>
           <textarea rows="1" cols="30" name="detailCuisine" pInputTextarea
             [(ngModel)]="recipe.detailCuisine"></textarea>
         </div>
       </div>
-      <button pButton label="Enregistrer la recette" type="submit" [loading]="loading" class="p-button-vert"
+      <button pButton label="ENREGISTRER" type="submit" [loading]="loading" class="p-button-vert"
         [disabled]="!f.valid"></button>
     </div>
   </form>
@@ -148,7 +148,7 @@
     <label id="success" *ngIf="isSuccessEdit">{{sucessEdit}}</label>
   
   
-    <button pButton type="submit" label="Modifier" class="p-button-orange" [loading]="loading" [disabled]="!fUpdate.valid" ></button>
+    <button pButton type="submit" label="MODIFIER" class="p-button-orange" [loading]="loading" [disabled]="!fUpdate.valid" ></button>
   
   </div>
   
@@ -165,19 +165,19 @@
                   <div class="grid">
                     <div class="col-6">
                       <div class="field">
-                        <label htmlFor="name">Nom</label>
+                        <label htmlFor="name">NOM</label>
                         <input pInputText id="name" [(ngModel)]="productData.name" name="name" type="text" placeholder="Nom produit" required />
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="field ">
-                        <label htmlFor="unit">Unité</label>
+                        <label htmlFor="unit">UNITE</label>
                         <p-dropdown [options]="units" optionLabel="name" name="unit" [(ngModel)]="productData.unit"></p-dropdown>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="field ">
-                        <label htmlFor="category">Categorie</label>
+                        <label htmlFor="category">CATEGORIE</label>
                         <p-dropdown [options]="categorys" optionLabel="name" name="category" [(ngModel)]="productData.category"></p-dropdown>
                       </div>
                     </div>
@@ -190,7 +190,7 @@
                     </div> -->
                     <div class="col-6">
                       <div class="field">
-                        <label htmlFor="lostpercentage">Pourcentage de perte</label>
+                        <label htmlFor="lostpercentage">POURCENTAGE DE PERTE</label>
                         <p-inputNumber mode="decimal" [minFractionDigits]="2" name="lostpercentage" id="lostpercentage"
                           [(ngModel)]="productData.lostpercentage" [showButtons]="true" [min]="0" [suffix]="'%'">
                         </p-inputNumber>
@@ -207,7 +207,7 @@
                   <label id="success" *ngIf="isSuccess">{{sucess}}</label>
             
             
-                  <button pButton label="Enregistrer" type="submit" [loading]="loading" class="p-button-orange mt-4"
+                  <button pButton label="ENREGISTRER" type="submit" [loading]="loading" class="p-button-orange mt-4"
                     [disabled]="!f.valid"></button>
             
                 </div>

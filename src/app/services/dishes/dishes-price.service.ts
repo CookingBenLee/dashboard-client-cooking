@@ -70,7 +70,8 @@ export class DishesPriceService {
     }).finally(async ()=>{
       //update detail net
       await detailsRecepe.forEach(detail=>{
-        if(detail.proportion!=null) detail.net=(recette.brut*(detail.proportion))/100
+        // if(detail.proportion!=null) detail.net=(recette.brut*(detail.proportion))/100
+        if(detail.proportion!=null) detail.net=(recette.brut*(detail.proportion))
       })
 
       //update detail brut

@@ -100,14 +100,14 @@ export class NewSimulationEconomiqueComponent {
   coutPlat=0
   loadingSave=false
   loadingPage=false
-
+  userCurrency = 'FCFA';
   simulation:Simulation=new Simulation()
   frequenceList=['JOURNALIER','HEBDOMADAIRE', 'MENSUEL','ANNUEL']
 
   estimationVente:EstimationVente=new EstimationVente()
   simulationEmployeList:SimulationEmploye[]=[]
   simulationOperationList:SimulationOperation[]=[]
-
+  
   profilList:Profil[]=[]
 
 
@@ -125,6 +125,8 @@ export class NewSimulationEconomiqueComponent {
     public tableShort:TableShortService) {}
 
   ngOnInit() {
+    const user = this.tokenService.getUser();
+    this.userCurrency = user.compteUser.address.country.currency.symbol || 'FCFA'
 
     this.frequence=this.frequenceList[0]
     this.getPassifTypeOperation()
@@ -132,7 +134,8 @@ export class NewSimulationEconomiqueComponent {
     // this.getNotEmployeTypeOperation()
     this.updatetotalSalaire()
     this.getDishes()
-   this.getProfils()
+    this.getProfils()
+    
 
     // wait 1 seconde after execute this
     this.estimationVente.dateDebut=new Date()
@@ -141,13 +144,7 @@ export class NewSimulationEconomiqueComponent {
 
   }
 
-  // getNotEmployeTypeOperation(){
-  //   this.categoryOperationService.byOperation(true).then(result=>{
-  //     console.log(result);
-  //     this.notOperationTypeOperations=result
-
-  //   }).catch(error=>{});
-  // }
+  
 
   getPassifTypeOperation(){
     this.categoryOperationService.bySensNotOperation(ECategoryOperation.PASSIF).then(result=>{

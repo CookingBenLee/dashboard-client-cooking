@@ -22,7 +22,7 @@
   
           <div class=" grid detailPlat col-4">
             <div class="cout  divgray">
-              <label for="cout" >COUT TOTAL ( {{ usercurrency }} ): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-3'">{{plat.cout| number: '1.0-3' }}</span></label>
+              <label for="cout" >COUT TOTAL ( {{ usercurrency }} ): <span appPriceFormater [priceValue]="plat.cout | number: '1.0-3'">{{plat.cout| number: '1.0-3':'fr-FR' }}</span></label>
             </div>
   
             <div class="poid  divgray">
@@ -54,11 +54,11 @@
   
             <div class="field col-3"  pTooltip="Saisissez la quantité">
               <label for="">QUANTITE</label>
-                <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantite" id="quantite" [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0" (ngModelChange)="changePoid()" ></p-inputNumber>
+                <p-inputNumber mode="decimal" [minFractionDigits]="3" name="quantite" id="quantite" [(ngModel)]="recetteSelectione.net" [showButtons]="true" [min]="0" (ngModelChange)="changePoid()" ></p-inputNumber>
             </div>
   
             <div class="field col-3"  pTooltip="Choisir l'unité">
-              <label for="">Unité</label>
+              <label for="">UNITE</label>
               <p-dropdown [options]="units"  name="unit" [(ngModel)]="unitSelectionne" (ngModelChange)="changeUnit()" >
               </p-dropdown>
             </div>
@@ -82,7 +82,7 @@
               <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} KG</div>
               <div class="info-cell">
                 <span appPriceFormater [priceValue]="detail?.cout | number: '1.0-3'">
-                  {{ detail?.cout | number: '1.0-3' }}
+                  {{ detail?.cout | number: '1.0-3':'fr-FR' }}
                 </span> {{ usercurrency }}
               </div>
               <div class="info-cell">
@@ -171,9 +171,9 @@
         </div>
   
         <div class="col-12 grid">
-          <button pButton label="Annuler" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid" (click)="cancelAddImage()" ></button>
+          <button pButton label="ANNULER" type="button" class="p-button-annuler p-2 col-4" [disabled]="!f.valid" (click)="cancelAddImage()" ></button>
           <div class="col"></div>
-          <button pButton label="Valider" type="submit" class="p-button-orange p-2 col-6" [disabled]="!f.valid" ></button>
+          <button pButton label="VALIDER" type="submit" class="p-button-orange p-2 col-6" [disabled]="!f.valid" ></button>
   
         </div>
       </div>

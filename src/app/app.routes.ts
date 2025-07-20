@@ -86,7 +86,7 @@ export const routes: Routes = [
         component:ListSimulationEconomiqueComponent,
       },
       {
-        path:'planifier',
+        path:'simulateur',
         component:NewSimulationEconomiqueComponent,
       },
       {

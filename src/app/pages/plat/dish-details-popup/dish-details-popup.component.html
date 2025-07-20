@@ -12,13 +12,13 @@
             {{ plat.dishesId.poids | number: '1.0-3' }} KG
           </div>
           <div class="info-cell">
-            {{ plat.dishesId.cout | number: '1.0-3' }} {{ usercurrency }}
+            {{ plat.dishesId.cout | number: '1.0-3':'fr-FR' }} {{ usercurrency }}
           </div>
           <div class="info-cell">
             {{ plat.dishesId.poids * (plat?.quantite ?? 0) | number: '1.0-3' }} KG
           </div>
           <div class="info-cell">
-            {{ getCoutTotalPlat(plat) }} {{ usercurrency }}
+            {{ getCoutTotalPlat(plat)| number:'1.0-3':'fr-FR'}} {{ usercurrency }}
           </div>
         </div> 
         <div class="dialog-containe">
@@ -40,10 +40,10 @@
           <div *ngFor="let detail of compositionDishes" class="info-row">
             <div class="info-cell">{{ detail?.recipe?.name }}</div>
             <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} KG</div>
-            <div class="info-cell" >{{ getCoutFormate(detail) }} {{ usercurrency }}</div>
+            <div class="info-cell" >{{ getCoutFormate(detail) | number:'1.0-3':'fr-FR' }} {{ usercurrency }}</div>
             <div class="info-cell">{{ (detail?.recipe?.stock ?? 0)  }} KG</div>
             <div class="info-cell">{{ getQtePlanifieeRecette(detail, plat) }} KG</div>
-            <div class="info-cell">{{ getMontantTotalRecette(detail, plat) }} {{ usercurrency }}</div>
+            <div class="info-cell">{{ getMontantTotalRecette(detail, plat) | number:'1.0-3':'fr-FR' }} {{ usercurrency }}</div>
 
           </div>
 

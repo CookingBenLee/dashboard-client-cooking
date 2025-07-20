@@ -1,91 +1,65 @@
-<div class="dialog-container">
-<!--h2 class="dialog-title">DETAILS DE LA RECETTE</h2--->
+<div class="dialog-container p-4 bg-white rounded-2xl shadow-md max-w-6xl mx-auto">
+  <!-- TITRE DE LA RECETTE -->
+  <div class="flex items-center mb-4">
+    <i class="pi pi-cog text-orange-500 mr-2 text-xl"></i>
+    <h2 class="text-2xl font-bold text-gray-800">RECETTE : <span class="text-indigo-600">{{ recipe.name }}</span></h2>
+  </div>
 
-  
-    <table>
-      <tbody>
-          <tr >
-                
-                <th colspan="12" style="text-align: LEFT;"><i>RECETTE</i></th>
-                <td>POURCENTAGE DE PERTE</td>
-                <td>STOCK</td>
-                <td>RECETTE PRINCIPALE</td>
-        </tr>
-        
-        <tr>
-                  <th colspan="12" style="text-align: center;">{{ recipe.name }}</th>
-                  <td>{{ (recipe.ratio-1)*100 | number:'1.0-0' }}%</td>
-                  <td>{{ recipe.stock |  number : '.1-3'}} KG</td>
-                  <td [class]="recipe.principaleRecipe ? 'text-green-500' : 'text-red-500'">{{ recipe.principaleRecipe ? 'OUI' : 'NON' }}</td>
-                
-                  <!--<td class="highlight">{{ rec.quantity/1000 - getQuantite(plat.id) }} KG</td>-->
-        </tr>
-      </tbody>
-      <tbody>
-        <tr>
-          <!--LISTE DES INGREDIENTS--->
-         <th colspan="12" style="text-align: left;color: crimson;"><i>DETAILS DES INGREDIENTS</i></th>
-         <td>PROPORTION</td>
-         <td>DETAILS PREPARATION</td>
-     </tr>
-    
-         <tr *ngFor="let detail of detailRecipe2">
-             <th colspan="12" style="text-align: center;">{{ detail?.ingredient?.name }}</th>
-             <td>
-                <span *ngIf="detail?.proportion != null">
-                  {{ detail.proportion * 100 | number: '1.0-2' }} %
-                </span>
-             </td>
-             <td>{{ detail?.preparationIngredient }}</td>    
-         </tr>
-         <tr>
-          <th th colspan="12" style="text-align: left;"><i>PROPORTION TOTALE</i></th>
-          <td style="color:blue;">{{ totalProportion * 100 | number: '1.0-3' }} %</td>
-          <td>                  </td>
-         </tr>
-     </tbody>
-    </table>
-
-    <!-- Ajout de Base Recipe 
-    <div class="info-row">
-      <div class="info-cell label">Recette Secondaire</div>
-      <div class="info-cell value">
-        <span [class]="recipe.principaleRecipe ? 'text-green-500' : 'text-red-500'">
-          {{ recipe.principaleRecipe ? 'OUI' : 'NON' }}
-        </span>
+  <!-- INFOS PRINCIPALES DE LA RECETTE -->
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div>
+      <div class="text-sm text-gray-500">POURCENTAGE DE PERTE</div>
+      <div class="text-lg font-semibold text-gray-800">{{ (recipe.ratio-1)*100 | number:'1.0-0' }}%</div>
+    </div>
+    <div>
+      <div class="text-sm text-gray-500">STOCK</div>
+      <div class="text-lg font-semibold text-gray-800">{{ recipe.stock | number: '1.1-3' }} KG</div>
+    </div>
+    <div>
+      <div class="text-sm text-gray-500">RECETTE PRINCIPALE</div>
+      <div class="text-lg font-semibold" [ngClass]="recipe.principaleRecipe ? 'text-green-600' : 'text-red-600'">
+        {{ recipe.principaleRecipe ? 'OUI' : 'NON' }}
       </div>
     </div>
   </div>
 
-  <p class="divider mt-4"></p>
-
-  <h3 class="dialog-title">LISTE DES INGREDIENTS DE LA RECETTE</h3>
-  <div class="info-table">
-    <div style="text-align: center;" class="info-header">
-      <div class="info-header-cell">PRODUIT</div>
-      <div class="info-header-cell">PROPORTION</div>
-      <div class="info-header-cell">DETAILS PREPARATION</div>
+  <!-- DETAILS DES INGREDIENTS -->
+  <div class="mb-6">
+    <h3 class="text-lg font-bold text-crimson-700 mb-2">DETAILS DES INGREDIENTS</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left border border-gray-200 rounded-lg overflow-hidden">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-2 text-center">INGRÉDIENT</th>
+            <th class="px-4 py-2 text-center">PROPORTION</th>
+            <th class="px-4 py-2 text-center">DETAILS PREPARATION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of detailRecipe2" class="border-t border-gray-200 hover:bg-gray-50">
+            <td class="px-4 py-2 text-center font-medium">{{ detail?.ingredient?.name }}</td>
+            <td class="px-4 py-2 text-center">
+              <span *ngIf="detail?.proportion != null">
+                {{ detail.proportion * 100 | number: '1.0-2' }} %
+              </span>
+            </td>
+            <td class="px-4 py-2 text-center">{{ detail?.preparationIngredient }}</td>
+          </tr>
+          <tr class="border-t-2 border-indigo-400">
+            <td class="px-4 py-2 font-bold text-blue-700">PROPORTION TOTALE</td>
+            <td class="px-4 py-2 font-bold text-blue-700 text-center">{{ totalProportion * 100 | number: '1.0-3' }} %</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <div style="text-align: center;" *ngFor="let detail of detailRecipe2" class="info-row">
-      <div class="info-cell">{{ detail?.ingredient?.name }}</div>
-      <div class="info-cell text-center">{{ detail?.proportion }} %</div>
-      <div class="info-cell">{{ detail?.preparationIngredient }}</div>
-    </div>
-
-    <div class="info-row">
-      <div class="info-cell label text-center">Total Proportion</div>
-      <div class="info-cell value text-center">{{ totalProportion | number: '1.0-3' }} %</div>
-      <div class="info-cell label text-center">                  </div>
-    </div>
-  </div>-->
-
-  <p class="divider mt-4"></p>
-
-  <h3 class="dialog-title">DETAILS DE LA CUISINE</h3>
-  <div class="info-table">
-    <div class="info-row">
-      <div class="info-cell value">{{ recipe.detailCuisine }}</div>
+  <!-- DETAILS DE LA CUISINE -->
+  <div class="mb-4">
+    <h3 class="text-lg font-bold text-gray-800 mb-2">DETAILS DE LA CUISINE</h3>
+    <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-700">
+      {{ recipe.detailCuisine }}
     </div>
   </div>
 </div>
