@@ -113,7 +113,7 @@ export class PreparationrecipeComponent {
     console.log("data",this.data);
     
     this.utilisateurC = this.tokenService.getUser();
-    this.usercurrency = this.utilisateurC.compteUser.address.country.currency.name
+    this.usercurrency = this.utilisateurC.compteUser.address.country.currency.symbol
     
   
 

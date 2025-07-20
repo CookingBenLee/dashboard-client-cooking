@@ -1,85 +1,91 @@
-<div class="dialog-container">
-  <!--div class="dialog-containe">
-    <h3 class="dialog-title">DETAILS DU PLAT</h3>
-  </div-->
-
-  <div class="info-table">
-    <div class="info-header">
-      <!--div class="info-header-cell">Attribut</div>
-      <div class="info-header-cell">Valeur</div-->
-    </div>
-
-    <!---div class="info-row">
-      <div class="info-cell label">NOM</div>
-      <div class="info-cell value">{{ plat.name }}</div>
-    </div--->
-
-    <div class="info-row">
-      <div class="info-cell label">CATEGORIE</div>
-      <div class="info-cell value">{{ plat.categoryMenu.name }} ({{ plat.categoryMenu.code }})</div>
-    </div>
-
-    <div class="info-row">
-      <div class="info-cell label">COUT TOTAL</div>
-      <div class="info-cell value">{{ plat.cout | number: '1.0-3' }} {{ usercurrency }}</div>
-    </div>
-
-    <div class="info-row">
-      <div class="info-cell label">POIDS TOTAL</div>
-      <div class="info-cell value">{{ plat.poids | number: '1.0-3' }} KG</div>
-    </div>
-  </div>
-
-  <p class="divider mt-4"></p>
-
- 
-  <div class="dialog-containe">
-    <h3 class="dialog-title">COMPOSITION DU PLAT</h3>
-  </div>
+<div class="dialog-container p-4 bg-white rounded-xl shadow-lg space-y-8">
   
-    <!-- <h3 class="dialog-title" >Composition du Plat</h3> -->
- 
-  <div class="info-table">
-    <div class="info-header">
-      <div class="info-header-cell">RECETTE</div>
-      <div class="info-header-cell">QUANTITE</div>
-      <div class="info-header-cell">COUT</div>
-      <div class="info-header-cell">STOCK</div>
+  <!-- Titre Principal -->
+  <!-- <div>
+    <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <i class="pi pi-info-circle text-blue-500"></i> DETAILS 
+    </h3>
+  </div> -->
+
+  <!-- Informations principales -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="p-4 border rounded-lg shadow-sm bg-gray-50">
+      <h4 class="text-sm text-gray-500"><i class="pi pi-info-circle text-blue-500"></i></h4>
+    </div>
+    <div class="p-4 border rounded-lg shadow-sm bg-gray-50">
+      <h4 class="text-sm text-gray-500">PLAT</h4>
+      <p class="text-lg font-semibold text-gray-800">
+        {{ plat.name }}
+      </p>
+    </div>
+    <div class="p-4 border rounded-lg shadow-sm bg-gray-50">
+      <h4 class="text-sm text-gray-500">CATEGORIE</h4>
+      <p class="text-lg font-semibold text-gray-800">
+        {{ plat.categoryMenu.name }}
+      </p>
     </div>
 
-    <div *ngFor="let detail of compositionDishes" class="info-row">
-      <div class="info-cell">{{ detail?.recipe?.name }}</div>
-      <div class="info-cell">{{ detail?.quantity | number: '1.0-3' }} KG</div>
-      <div class="info-cell">{{ detail?.cout | number: '1.0-3' }} {{ usercurrency }}</div>
-      <div class="info-cell">{{ detail?.recipe?.stock | number: '1.0-3'}} KG</div>
-
+    <div class="p-4 border rounded-lg shadow-sm bg-gray-50">
+      <h4 class="text-sm text-gray-500">COUT TOTAL</h4>
+      <p class="text-lg font-semibold text-gray-800">
+        {{ plat.cout | number: '1.0-3':'fr-FR' }} {{ usercurrency }}
+      </p>
     </div>
 
-    <div class="info-row" *ngIf="compositionDishes.length == 0">
-      <div class="info-cell label" colspan="3">Aucune recette</div>
+    <div class="p-4 border rounded-lg shadow-sm bg-gray-50">
+      <h4 class="text-sm text-gray-500">POIDS TOTAL</h4>
+      <p class="text-lg font-semibold text-gray-800">
+        {{ plat.poids | number: '1.0-3' }} KG
+      </p>
     </div>
   </div>
 
-  <p class="divider mt-4"></p>
-
-  <div class="dialog-containe">
-    <h3 class="dialog-title">IMAGES DU PLAT</h3>
+  <!-- Composition -->
+  <div>
+    <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <i class="pi pi-list text-green-500"></i> COMPOSITION
+    </h3>
+    <div class="overflow-x-auto mt-4">
+      <table class="min-w-full table-auto border-collapse rounded-lg overflow-hidden">
+        <thead class="bg-green-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-2 text-left">RECETTE</th>
+            <th class="px-4 py-2 text-left">QUANTITE</th>
+            <th class="px-4 py-2 text-left">COUT</th>
+            <th class="px-4 py-2 text-left">STOCK</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of compositionDishes" class="border-b hover:bg-gray-50">
+            <td class="px-4 py-2">{{ detail?.recipe?.name }}</td>
+            <td class="px-4 py-2">{{ detail?.quantity | number: '1.0-3' }} KG</td>
+            <td class="px-4 py-2">{{ detail?.cout | number: '1.0-3':'fr-FR' }} {{ usercurrency }}</td>
+            <td class="px-4 py-2">{{ detail?.recipe?.stock | number: '1.0-3'}} KG</td>
+          </tr>
+          <tr *ngIf="compositionDishes.length == 0">
+            <td colspan="4" class="text-center text-gray-500 py-4">Aucune recette</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="info-table">
-    <div class="info-row" *ngFor="let picture of picturesDishes" (click)="showImage(picture, $event)">
-      <div class="info-cell label">{{ picture?.label }}</div>
-      <div class="info-cell">
-        <img style="height: 50px; width: 50px; object-fit:cover; cursor:pointer" 
+  <!-- Images -->
+  <div>
+    <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <i class="pi pi-image text-purple-500"></i> IMAGES DU PLAT
+    </h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+      <div *ngFor="let picture of picturesDishes" class="text-center cursor-pointer" (click)="showImage(picture, $event)">
+        <img class="w-24 h-24 rounded-lg shadow-md object-cover mx-auto" 
              [src]="'data:image/jpeg;base64,' + picture.file" 
              alt="{{ picture?.label }}">
+        <p class="text-sm text-gray-600 mt-2">{{ picture?.label }}</p>
+      </div>
+
+      <div *ngIf="picturesDishes.length == 0" class="text-gray-500 col-span-full text-center">
+        Aucune image
       </div>
     </div>
-
-    <div class="info-row" *ngIf="picturesDishes.length == 0">
-      <div class="info-cell label">Aucune image</div>
-    </div>
   </div>
-
-  <!-- <button pButton label="Modifier le plat" type="submit" class="p-button-vert mt-3" (click)="show($event, plat)"></button> -->
 </div>

@@ -132,7 +132,7 @@ export class DetailCourseComponent {
 
     console.log(date);
     this.data.datePurchase = new Date(this.data.datePurchase)
-    this.curren = this.data.currency.name;
+    this.curren = this.data.currency.symbol;
 
     console.log(this.data);
 

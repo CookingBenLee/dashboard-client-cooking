@@ -1,3 +1,4 @@
+
 <div class="loader " *ngIf="loadingPage">
     <div class="card flex  justify-content-center">
       <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
@@ -7,31 +8,57 @@
   
   
   <div class="bigContaint">
-    <h4 class="title">Simulation Economique</h4>
+    <div class="simulator-header">
+      <h1>SIMULATEUR ECONOMIQUE</h1>
+      <span class="devise">DEVISE : {{ userCurrency }}</span>
+    </div>
+   
+    
     <div class="container2">
       <div class="devise-div ">
-        <div class=""></div>
-        <label class="devise-head w-full" for="">Devise: FCFA</label>
-        <div class=""></div>
-  
+        <div class="">
+          <div class="lbl-estimation facteur-div col grid title-employe-situation child-align flex gap-3 align-items-end" >
+            <!-- <div class="facteur-lab border-1 bg-bleu-foncer col-12 sh">
+               <div class="fs-12" for="txtfacteur">
+                
+                <span class="mb-1 col-2" >PERIODE DU  </span>                     
+                <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateDebut" name="dateDebutEstimation" id="dateDebutEstimation" />
+                <span class="mb-1 col-2">AU </span> 
+                <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateFin" name="dateFinEstimation" id="dateFinEstimation" />
+                                
+              </div>
+            </div> -->
+          <!-- <div class=" entete-haut ml-4 grid flex gap-2" >    
+              <div class="flex flex-wrap gap-2 align-items-center">
+                <span class="font-bold">PERIODE DU</span>
+                <p-calendar [(ngModel)]="estimationVente.dateDebut" dateFormat="dd.mm.yy" />
+                <span class="font-bold">AU</span>
+                <p-calendar [(ngModel)]="estimationVente.dateFin" dateFormat="dd.mm.yy" />
+              </div>
+          </div> -->
+            
+          </div>
+        </div>
+        
       </div>
-  
+      
+      
   
       <div class="simulation-div grid">
         <div class="right-part w-full mt-5">
           <!--Situation des employes-->
-          <div class="employe-situation">
+          <!--div class="employe-situation">
               <div class="title-employe-situation entete-haut ml-3 bg-white  border-1">
-                <label class="" for="">Situation des Employés</label>
+                <label class="" for="">SITUATION DES EMPLOYES</label>
               </div>
   
               <div class="contenu-situation-employe contenu-situation grid gap-2">
                 <div class="plat-list grid gap-2 col-12">
-                  <div class="col-4 p-2 border-1 surface-border	 sh">Profil</div>
-                  <div class="col-2 p-2 border-1 surface-border	 sh">Slaire</div>
-                  <div class="col-3 p-2 border-1 surface-border	 sh">Nombre</div>
+                  <div class="col-4 p-2 border-1 surface-border	 sh">PROFIL</div>
+                  <div class="col-2 p-2 border-1 surface-border	 sh">SALAIRE</div>
+                  <div class="col-3 p-2 border-1 surface-border	 sh">NOMBRE</div>
   
-                  <div class="col-2  p-2 border-1 surface-border	 sh">Total</div>
+                  <div class="col-2  p-2 border-1 surface-border	 sh">TOTAL</div>
                 </div>
   
                 <div class="plat-list grid gap-2 col-12" *ngFor="let profil of profilList,let i=index">
@@ -49,148 +76,89 @@
                   </div>
                   <div class="col-2 p-2 border-1 sh">
                     <p-inputNumber  name="{{profil.libelle}}-total"  id="value{i}_total" mode="decimal" [maxFractionDigits]="2"  [(ngModel)]="profil.total"  class="sh w-full with-web-kit-number" (ngModelChange)="changeProfilDetail(i)"  [min]="0" ></p-inputNumber>
-                    <!--<input type="text"  name="{{plat.name}}-nbre" pInputText [(ngModel)]="plat.nbre" class="sh w-full" (ngModelChange)="changePlatDetail(i)"/>-->
+                  
                   </div>
                   
                 </div>
   
-                <!--<div class="salaire-brut-text border-1 col-5 grid">
-                  <label class="col-6 justify-content-center align-items-center m-auto	" for="">Salaire :</label>
-                  <div class="col-6">
-                    <p-inputNumber name="salaireBrut"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="salaireBrut" class="sh w-full with-web-kit-number" (ngModelChange)="updatetotalSalaire()"  ></p-inputNumber>
-  
-                  </div>
-                </div>
-  
-  
-                <div class="sliderCol col-6 grid border-1" pTooltip="Nombre Employé : 0-300">
-                  <label class="col-3 justify-content-center align-items-center m-auto	" for="">Nombre Employé :</label>
-  
-                  <p-slider name="sliderMois" [(ngModel)]="nbreEmploye" class="col-7 sh" [min]="1" [max]="300" (ngModelChange)="updatetotalSalaire()"/>
-  
-                  <input type="text"  name="nbreEmploye" pInputText [(ngModel)]="nbreEmploye" class="sh col-2" (ngModelChange)="updatetotalSalaire()"/>
-                </div>-->
+          
               </div>
   
   
   
-              <!---->
-              <!--<div class="grid p-2"  *ngFor="let passif of notOperationTypeOperations">
-                <div class="col-6 p-2 "> <span class="h-full col-12 border-1 justify-content-center align-items-center flex  sh">{{passif.libelle}}</span> </div>
-                <div class="col-6 p-2  sh">
-                  <span class="p-2 flex border-1">
-                    <p-inputNumber  name="{{passif.libelle}}"  id="value{i}" mode="decimal" [maxFractionDigits]="0"   [(ngModel)]="passif.montant" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses();updatetotalSalaire()" ></p-inputNumber>
+          
   
-                  </span>
-                </div>
-              </div>-->
-  
-              <!--Separator bar-->
-  
-              <!--Total Estimation Part -->
-              <!--
-                            <div class="bar_horizontal mt-3"></div>
-  
-                <div class="totalEstimationPart grid gap-2 mt-3" >
-                <div class="col-4"></div>
-                <div class="col-4 p-2 border-1 sh">Total Charge Employé</div>
-  
-                <div class="col-3  p-2 border-1 sh" appPriceFormater [priceValue]="totalSalaire | number: '1.0-0'"></div>
-              </div>-->
-  
-          </div>
-  
+          </div--->
+          
   
           <!--Estimation des ventes-->
           <div class="estimation-vente ">
-            <div class=" entete-haut ml-2 grid flex gap-2" >
-              <div class="lbl-estimation col-3 mr-1 title-estimation-situation  border-1 bg-white sh" >
-                <label for="">Estimation des ventes</label>
-              </div>
-              <div class="lbl-estimation facteur-div col grid title-employe-situation child-align flex gap-3 align-items-end" >
-                <div class="facteur-lab border-1 bg-bleu-foncer col-12 sh">
-                  <div class="fs-12" for="txtfacteur">
-                    <span >Période du  </span> 
-
-                    
-                    <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateDebut" name="dateDebutEstimation" id="dateDebutEstimation" />
-                    <span >Au </span> 
-                    <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateFin" name="dateFinEstimation" id="dateFinEstimation" />
-                    <span >Freq: </span> 
-                    <p-dropdown class="mb-1 col-3" 
-                    [options]="frequenceList" 
-                    [(ngModel)]="estimationVente.frequence" 
-                    placeholder="Selectionner une fréquence" />
-                    
-                  </div>
-                </div>
-                
-                <!--<<div class="facteur-lab border-1 bg-gray col-6 sh">
-                  <label class=" fs-12 " for="txtfacteur">Facteur multiplicatif: 0-20</label>
-  
-                </div>
-               div class="sliderCol col-6 grid border-1">
-                  <p-slider name="sliderMois" [(ngModel)]="facteurMultiplicatif" class="col-8 sh" [min]="1" [max]="20" (ngModelChange)="calculcoutDeRevient();updateAllDetail()" />
-                  <input type="text"  name="facteurMultiplicatif" pInputText [(ngModel)]="facteurMultiplicatif" (ngModelChange)="calculcoutDeRevient();updateAllDetail()" class="sh col-4"/>
-                </div>-->
-  
-              </div>
-              <p-button class="col-1"   icon="pi pi-eye" (click)="showDetailAllEstimation()" />
+            <div class=" entete-haut ml-1 grid flex gap-2" >
+                <span><i>ESTIMEZ VOTRE REVENU POUR UNE PERIODE DONNEE</i></span>
             </div>
-  
+            <div class="facteur-lab border-1 bg-bleu-foncer col-12 sh">
+              <div class="fs-12" for="txtfacteur">
+               
+               <span class="mb-1 col-2" >PERIODE DU  </span>                     
+               <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateDebut" name="dateDebutEstimation" id="dateDebutEstimation" />
+               <span class="mb-1 col-2">AU </span> 
+               <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateFin" name="dateFinEstimation" id="dateFinEstimation" />
+                               
+             </div>
+           </div>
             <div class="contenu-estimation-vente contenu-situation ">
-              <div class="plat-list grid gap-2">
-                <div class="col-2 p-2 border-1 surface-border	 sh">Plat</div>
-                <div class="col-2 p-1 border-1 surface-border	 sh">Prix de Vente Unitaire</div>
-                <div class="col-1 p-1 border-1 surface-border	 sh">Facteur Multiplicatif</div>
-  
-                <div class="col-2 p-1 border-1 surface-border	 sh">Prix de Revient</div>
-  
-                <div class="col-1 p-1 border-1 surface-border	 sh">Quantité</div>
-  
-  
-                <!--<div class="col-1 p-1 border-1 surface-border	 sh">Stock</div>
-                <div class="col-1 p-1 border-1 surface-border	 sh">Qte Estimée</div>-->
-  
-                <div class="col-3  p-1 border-1 surface-border	 sh">Total</div>
-                <!--<div class="col-1">
-  
-                </div>-->
+              <!-- <div class="plat-list grid gap-2 header">
+                <div class="col-2">PLAT</div>
+                <div class="col-2">COUT DE PRODUCTION</div>
+                <div class="col-2">FACTEUR MULTIPLICATIF</div>
+                <div class="col-2">PRIX DE VENTE UNITAIRE</div>
+                <div class="col-1">NOMBRE</div>
+                <div class="col-2">TOTAL</div>
+              </div> -->
+              <div class="plat-list grid gap-2 header-modern">
+                <div class="col-2 flex align-items-center gap-2">
+                  <i class="pi pi-utensils"></i> PLAT
+                </div>
+                <div class="col-2 flex align-items-center gap-2">
+                  <i class="pi pi-dollar"></i> COÛT DE PRODUCTION
+                </div>
+                <div class="col-2 flex align-items-center gap-2">
+                  <i class="pi pi-sliders-h"></i> FACTEUR MULTIPLICATIF
+                </div>
+                <div class="col-2 flex align-items-center gap-2">
+                  <i class="pi pi-tag"></i> PRIX DE VENTE
+                </div>
+                <div class="col-1 flex align-items-center gap-2">
+                  <i class="pi pi-sort-numeric-up"></i> QTE
+                </div>
+                <div class="col-2 flex align-items-center gap-2">
+                  <i class="pi pi-calculator"></i> TOTAL
+                </div>
               </div>
               <div class="plat-list grid gap-2" *ngFor="let plat of dishesList,let i=index">
-                <div class="col-2 p-2 border-1 sh justify-content-center align-items-center flex">{{plat.name}}</div>
-                <div class="col-2 p-1 border-1 sh">
-                  <p-inputNumber name="{{plat.name}}-net"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="plat.cout" class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)" [disabled]="true"  ></p-inputNumber>
+                <div class="col-2  border-1 sh justify-content-center align-items-center flex">{{plat.name}}</div>
+                <div class="col-2  border-1 sh">
+                  <p-inputNumber name="{{plat.name}}-net"  id="value{i}" mode="decimal" [maxFractionDigits]="3"  [(ngModel)]="plat.cout" class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)" [disabled]="true"  ></p-inputNumber>
   
                   <!--<input type="text"  name="{{plat.name}}-net" pInputText  [(ngModel)]="plat.cout" class="sh w-full" (ngModelChange)="changePlatDetail(i)" />-->
                 </div>
   
-                <div class="col-1 p-1 border-1 sh">
+                <div class="col-2 p-1 border-1 sh">
                   <p-inputNumber  name="{{plat.name}}-facteur"  id="value{i}_facteur" mode="decimal" [maxFractionDigits]="2"  [(ngModel)]="plat.facteurMultiplicatif"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)"  [min]="0" ></p-inputNumber>
                   <!--<input type="text"  name="{{plat.name}}-nbre" pInputText [(ngModel)]="plat.nbre" class="sh w-full" (ngModelChange)="changePlatDetail(i)"/>-->
                 </div>
   
                 <div class="col-2 p-1 border-1 sh">
-                  <p-inputNumber  name="{{plat.name}}-prix_revient"  id="value{i}_prix_revient" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="plat.prixRevient"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)" [disabled]="true" [min]="0" ></p-inputNumber>
+                  <p-inputNumber  name="{{plat.name}}-prix_revient"  id="value{i}_prix_revient" mode="decimal" [maxFractionDigits]="3"  [(ngModel)]="plat.prixRevient"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)" [disabled]="true" [min]="0" ></p-inputNumber>
                 </div>
   
                 <div class="col-1 p-1 border-1 sh">
                   <p-inputNumber  name="{{plat.name}}-nbre"  id="value{i}_nbre"   [(ngModel)]="plat.nbre" mode="decimal" [maxFractionDigits]="2"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)"  [min]="0" ></p-inputNumber>
                   <!--<input type="text"  name="{{plat.name}}-nbre" pInputText [(ngModel)]="plat.nbre" class="sh w-full" (ngModelChange)="changePlatDetail(i)"/>-->
                 </div>
-  
-                <!--Stock et qte estimée-->
-                 <!--<div class="col-1 p-1 border-1 sh">
-                  <p-inputNumber  name="{{plat.name}}-stock"  id="value{i}_stock" mode="decimal" [maxFractionDigits]="2"  [(ngModel)]="plat.stock"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)"  [min]="0" ></p-inputNumber>
-                </div>
-  
-                <div class="col-1 p-1 border-1 sh">
-                  <p-inputNumber  name="{{plat.name}}-qte-estimee"  id="value{i}_qte_estimee" mode="decimal" [maxFractionDigits]="2"  [(ngModel)]="plat.qteEstimee"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)"  [min]="0" ></p-inputNumber>
-                </div>-->
-  
-  
-                <div class="col-3 p-1 border-1 sh">
-                  <p-inputNumber name="{{plat.name}}-total"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="plat.totalPrice" class="sh w-full with-web-kit-number" (ngModelChange)="updatPlatTotalPrice()" [disabled]="true" ></p-inputNumber>
+    
+                <div class="col-2 p-1 border-1 sh">
+                  <p-inputNumber name="{{plat.name}}-total"  id="value{i}" mode="decimal" [maxFractionDigits]="3"  [(ngModel)]="plat.totalPrice" class="sh w-full with-web-kit-number" (ngModelChange)="updatPlatTotalPrice()" [disabled]="true" ></p-inputNumber>
                   <!--<input type="text"  name="{{plat.name}}-total" pInputText [(ngModel)]="plat.totalPrice" class="sh w-full" (ngModelChange)="updatPlatTotalPrice()"/>-->
                 </div>
   
@@ -198,62 +166,74 @@
   
   
               </div>
+              <div class="plat-list grid gap-2 header-modern">
+                <div class="col-8 flex align-items-center gap-2">
+                  <i class="pi pi-utensils"></i> TOTAL ESTIMATION
+                </div>
+                <div class="col-2 flex align-items-center gap-2">
+                  <i class="pi pi-utensils"></i> {{ totalEstimation | number:'1.0-3':'fr-FR' }} {{ userCurrency }}
+                </div>
+              </div>
   
             </div>
   
   
             <!--Separator bar-->
+                  
             <div class="bar_horizontal mt-3"></div>
   
             <!--Total Estimation Part -->
-  
-            <div class="totalEstimationPart grid gap-2 mt-3" >
+            
+            <!-- <div class="totalEstimationPart grid gap-2 mt-3" >
               <div class="col-4">
               </div>
-                <!--<p-button class="col-3" label="Voir details"  icon="pi pi-eye" (click)="showDetailAllEstimation()" />-->
+                
   
               
-              <div class="col-4 p-2 border-1 sh">Total Estimation</div>
-  
-              <div class="col-3  p-2 border-1 sh" appPriceFormater [priceValue]="totalEstimation | number: '1.0-0'"></div>
-            </div>
+              <div class="col-3 p-2 border-1 sh">TOTAL ESTIMATION</div>
+              
+                <div class="col-2 p-2 border-1 sh">
+                  {{ totalEstimation | number:'1.0-3' }} {{ userCurrency }}
+                </div>
+              
+            </div> -->
           </div>
   
           <!--Btn part-->
   
-          <div class="col-12 gap-2 no-bg mt-1">
+          <!-- <div class="col-12 gap-2 no-bg mt-1">
   
             <button pButton label="Annuler" type="submit" [loading]="loadingSave" class="p-button-annuler  col-5"  ></button>
             <button pButton label="Enregistrer" type="submit" [loading]="loadingSave" [disabled]="totalRevenus <= 0 || totalDepenses <= 0" class="p-button-saved col-5" 
             (click)="saveEstimation()"
             ></button>
   
-          </div>
+          </div> -->
   
         </div>
   
         <div class="separator-part col-1">
-          <div id="separator"></div>
+          <!-- <div id="separator"></div> -->
         </div>
         <div class="left-part w-full  mt-5">
           <!--Bilan-->
           <div class="bilan bg-gray col-12 w-full border-1">
             <div class="entete-haut entete-center big-shadow entete-bilan bg-bilan  border-1">
-              <label class="" for="">Bilan</label>
+              <label class="" for="">BILAN</label>
             </div>
   
             <!--Situation Passifs-->
-            <div class="entete-passif entete-center bg-red big-shadow">
-              <label class="" for="">Liste des dépenses</label>
-            </div>
-  
+            <!-- <div class="entete-passif entete-center bg-red big-shadow">
+              <label class="" for="">LISTE DES DEPENSES</label>
+            </div> -->
+<!--   
             <div class="list-passifs mt-4" >
               <div class="grid mb-1" >
                 <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Totale Salaire</span> </div>
                 <div class="col-6 p-2  sh">
                   <span class="p-2 flex border-1">
                     <p-inputNumber  name="total-passif"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="totalSalaire" class="sh w-full with-web-kit-number"   ></p-inputNumber>
-                    <!--<input type="text"  name="total-salaire" pInputText [(ngModel)]="totalSalaire" class="sh w-full"/>-->
+                    
                   </span>
                 </div>
               </div>
@@ -263,7 +243,7 @@
                   <span class="p-2 flex border-1">
                     <p-inputNumber  name="{{passif.libelle}}"  id="value{i}" mode="decimal" [maxFractionDigits]="0"   [(ngModel)]="passif.montant" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
   
-                    <!--<input type="text"  name="{{passif.libelle}}" pInputText [(ngModel)]="passif.montant" class="sh w-full"/>-->
+                    
                   </span>
                 </div>
               </div>
@@ -277,14 +257,7 @@
                 </div>
               </div>
   
-              <!--<div class="grid mb-1" >
-                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Coût de Revient</span> </div>
-                <div class="col-6 p-2  sh">
-                  <span class="p-2 flex border-1">
-                    <p-inputNumber  name="coutDeRevient"  mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="coutDeRevient" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
-                  </span>
-                </div>
-              </div>-->
+              
   
               <div class="bar_horizontal w-2  mt-1"></div>
   
@@ -293,11 +266,11 @@
                 <div class="col-6 p-2  sh">
                   <span class="p-2 flex border-1">
                     <p-inputNumber  name="total-passif"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="totalDepenses" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
-                    <!--<input type="text"  name="total-passif" pInputText [(ngModel)]="totalDepenses" class="sh w-full" (ngModelChange)="calculTotalDepenses()"/>-->
+                   
                   </span>
                 </div>
               </div>
-            </div>
+            </div> -->
   
   
             <!--Situation Actifs-->
@@ -330,7 +303,7 @@
                 <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Total revenus</span> </div>
                 <div class="col-6 p-2  sh">
                   <span class="p-2 flex border-1">
-                    <p-inputNumber  name="total-actif"  id="value{i}" mode="decimal" [maxFractionDigits]="0"   [(ngModel)]="totalRevenus" class="sh w-full with-web-kit-number" [showButtons]="true"  ></p-inputNumber>
+                    <p-inputNumber  name="total-actif"  id="value{i}" mode="decimal" [maxFractionDigits]="3"   [(ngModel)]="totalRevenus" class="sh w-full with-web-kit-number" [showButtons]="true"  ></p-inputNumber>
   
                     <!--<input type="text"  name="total-actif" pInputText [(ngModel)]="totalRevenus" class="sh w-full"/>-->
                   </span>
@@ -345,15 +318,13 @@
              <!--Bilan final-->
   
              <div class="bilan-final big-shadow entete-center bg-bilan mt-3">
-                <p>Bilan = <span appPriceFormater [priceValue]="totalRevenus-totalDepenses | number: '1.0-0'"></span></p>
+                <p>Bilan = <span appPriceFormater [priceValue]="totalRevenus-totalDepenses | number: '1.0-3':'fr-FR'"></span></p>
              </div>
           </div>
         </div>
       </div>
   
-    </div>
-  
-  
+    </div> 
   
   </div>
   

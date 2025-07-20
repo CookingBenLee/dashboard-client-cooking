@@ -1,3 +1,5 @@
+import { TypeCompte } from "src/app/entity/TypeCompte";
+
 export interface NavItem {
     displayName?: string;
     disabled?: boolean;
@@ -14,4 +16,5 @@ export interface NavItem {
     children?: NavItem[];
     ddType?: string;
     subItemIcon?: boolean;
+    typeCompte?:number[];
 }

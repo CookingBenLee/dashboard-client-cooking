@@ -232,7 +232,8 @@ export class DetaildishesComponent {
         console.log(detail.net);
         console.log(detail.proportion);
 
-        detail.net = (brut * (detail.proportion)) / 100
+        // detail.net = (brut * (detail.proportion)) / 100
+        detail.net = (brut * (detail.proportion))
         ////
         var perte = detail.ingredient.lossPercentage
 
@@ -250,7 +251,8 @@ export class DetaildishesComponent {
         } else detail.cout = 0
         ///
         console.log(detail.cout);
-        recipe.cout = (recipe.cout + detail.cout)*100
+        // recipe.cout = (recipe.cout + detail.cout)*100
+        recipe.cout = (recipe.cout + detail.cout)
       }
 
 

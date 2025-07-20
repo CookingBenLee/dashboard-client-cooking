@@ -134,7 +134,7 @@
                   id="totalPrice{{detailPurchasesForms.length-1}}"
                   [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice" [showButtons]="true"
                   [min]="0"
-                  (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].totalPrice,detailPurchasesForms.length-1)"></p-inputNumber>
+                  (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].totalPrice,detailPurchasesForms.length-1)" [locale]="'fr-FR'" ></p-inputNumber>
               </div>
             </div>
 

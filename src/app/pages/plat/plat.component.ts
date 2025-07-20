@@ -295,8 +295,8 @@ export class PlatComponent {
 
   showDishesDetail(e: any, dishe: Dishes) {
     this.ref = this.dialogService.open(DetaildishesComponent, {
-      header: 'DETAILS DU PLAT : ' + dishe?.name,
-      width: '90%',
+      header: 'DETAILS DU PLAT ',
+      width: '60%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,

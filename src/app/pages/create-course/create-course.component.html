@@ -8,14 +8,14 @@
 
 
         <div class="field col-2">
-          <label htmlFor="datePurchase">Date</label>
+          <label class="entete-label" htmlFor="datePurchase">DATE</label>
           <input type="text" class="d-none">
           <p-calendar [(ngModel)]="datePurchase" dateFormat="dd-mm-yy" name="datePurchase"
             id="datePurchase"></p-calendar>
         </div>
 
         <div class="field col-5">
-          <label htmlFor="shop">Fournisseur</label>
+          <label class="entete-label" htmlFor="shop">FOURNISSEUR</label>
           <p-dropdown [options]="shops" optionLabel="name" name="shop" [(ngModel)]="shop" (onChange)="changeShop()">
             <ng-template let-shop pTemplate="item">
               <div class="flex align-items-center operatingSystems-item">
@@ -30,17 +30,18 @@
 
         <div class="col-3">
           <div class="field">
-            <label htmlFor="montant">Montant</label>
-            <p-inputNumber mode="decimal" [disabled]="true" [minFractionDigits]="2" name="montant" id="montant"
-              [(ngModel)]="montant" [showButtons]="true" [min]="0"></p-inputNumber>
+            <label class="entete-label" htmlFor="montant">MONTANT</label>
+            <p-inputNumber mode="decimal" [disabled]="true" [minFractionDigits]="0" [maxFractionDigits]="3" name="montant" id="montant"
+              [(ngModel)]="montant" [showButtons]="true" [min]="0" [locale]="'fr-FR'"></p-inputNumber>
           </div>
         </div>
 
         <div class="col-2">
           <div class="field ">
-            <label htmlFor="currency">Devise</label>
-            <p-dropdown [options]="currencys" optionLabel="name" name="currency"
-              [(ngModel)]="usercurrency"></p-dropdown>
+            <!-- <label class="entete-label" htmlFor="currency">DEVISE</label> -->
+            <span class="devise">DEVISE : {{ usercurrency?.symbol }}</span>
+            <!-- <p-dropdown [options]="currencys" optionLabel="name" name="currency"
+              [(ngModel)]="usercurrency"></p-dropdown> -->
           </div>
         </div>
         <!--</div>-->
@@ -63,7 +64,7 @@
 
               <div class="col-3">
                 <div style="margin-top: -12px;" class="field flex align-items-center gap-2">
-                  <label htmlFor="product{{detailPurchasesForms.length-1}}" class="w-6rem">Produit</label>
+                  <label htmlFor="product{{detailPurchasesForms.length-1}}" class="w-6rem">PRODUIT</label>
                   <button style="margin-top: -15px;" pButton pRipple type="button" icon="pi pi-plus"  pTooltip="Ajouter un produit non existant" 
                   tooltipPosition="top"
                     class="p-button-rounded p-button-success small-button p-mr-2 h-full"  (click)="openDialogAdd()">
@@ -85,7 +86,7 @@
 
               <div class="col">
                 <div class="field">
-                  <label htmlFor="quantity{{detailPurchasesForms.length-1}}">Quantité</label>
+                  <label htmlFor="quantity{{detailPurchasesForms.length-1}}">QUANTITE</label>
                   <p-inputNumber mode="decimal" [minFractionDigits]="2" name="quantity{{detailPurchasesForms.length-1}}"
                     id="quantity{i}" [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].quantity"
                     (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].quantity,detailPurchasesForms.length-1)"
@@ -94,7 +95,7 @@
               </div>
               <div class="col">
                 <div class="field ">
-                  <label htmlFor="unit{{detailPurchasesForms.length-1}}">Unité</label>
+                  <label htmlFor="unit{{detailPurchasesForms.length-1}}">UNITE</label>
                   <p-dropdown [options]="units" optionLabel="name" name="unit{{detailPurchasesForms.length-1}}"
                     [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].unit"
                     (ngModelChange)="changeUnit(detailPurchasesForms.length-1)"></p-dropdown>
@@ -105,29 +106,29 @@
 
               <div class="col-2">
                 <div class="field">
-                  <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">Prix total</label>
-                  <p-inputNumber mode="decimal" [minFractionDigits]="2"
+                  <label htmlFor="totalPrice{{detailPurchasesForms.length-1}}">PRIX TOTAL</label>
+                  <p-inputNumber mode="decimal" [minFractionDigits]="3" [maxFractionDigits]="3"
                     name="totalPrice{{detailPurchasesForms.length-1}}" id="totalPrice{{detailPurchasesForms.length-1}}"
                     [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].totalPrice" [showButtons]="true"
                     [min]="0"
-                    (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].totalPrice,detailPurchasesForms.length-1)"></p-inputNumber>
+                    (ngModelChange)="changeValue(detailPurchasesForms[detailPurchasesForms.length-1].totalPrice,detailPurchasesForms.length-1)" [locale]="'fr-FR'"></p-inputNumber>
                 </div>
               </div>
 
 
               <div class="col">
                 <div class="field">
-                  <label htmlFor="price{{detailPurchasesForms.length-1}}">Prix à l'unité</label>
-                  <p-inputNumber mode="decimal" [minFractionDigits]="2" name="value{{detailPurchasesForms.length-1}}"
+                  <label htmlFor="price{{detailPurchasesForms.length-1}}">PRIX UNITAIRE</label>
+                  <p-inputNumber mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="3" name="value{{detailPurchasesForms.length-1}}"
                     id="value{i}" [disabled]="true"
                     [(ngModel)]="detailPurchasesForms[detailPurchasesForms.length-1].value" [showButtons]="true"
-                    [min]="0"></p-inputNumber>
+                    [min]="0" [locale]="'fr-FR'"></p-inputNumber>
                 </div>
               </div>
               <div class="col mt-5">
                 <div class="field">
                   <label htmlFor="price{{detailPurchasesForms.length-1}}"> </label>
-                  <button pButton pRipple label="Ajouter"
+                  <button pButton pRipple label="AJOUTER"
                     [disabled]="detailPurchasesForms[detailPurchasesForms.length-1].value <= 0 || !detailPurchasesForms[detailPurchasesForms.length-1].product" type="button"
                     class="col p-button p-button-success p-component"
                     (click)="firstSaveForDetail(detailPurchasesForms[detailPurchasesForms.length-1])">
@@ -162,10 +163,10 @@
 
           </div> -->
         </div>
-        <div class="ml-auto btnspart col-6 center mt-3 center-button" style="margin-right: 560px;">
-          <button pButton label="Enregistrer mes courses" type="submit" [loading]="loading" class="p-button-orange"
+        <div class="ml-auto btnspart col-6 center mt-3 center-button" style="margin-right: 350px;">
+          <button pButton label="ENREGISTRER" type="submit" [loading]="loading" class="p-button-orange"
             [disabled]="!f.valid || detailPurchasesForms2.length==0"></button>
-          <button pButton type="button" (click)="confirm2($event)" label="Annuler" class="p-button-danger mt-2 mb-2"></button>
+          <button pButton type="button" (click)="confirm2($event)" label="ANNULER" class="p-button-danger mt-2 mb-2"></button>
         </div>
         
         
@@ -175,7 +176,7 @@
         <!-- Liste des produits créés -->
         <div class="ListProduct">
           <div class="flex-1 mb-2 mt-4">
-            <h5>Liste des produits</h5>
+            <h5><i>LISTE DES PRODUITS</i></h5>
             <!-- <button  pButton label="Ajouter un produit" type="button" [loading]="loading" class="p-button-newline mt-2" (click)="showAddProductForm()" ></button> -->
           </div>
           <p *ngIf="detailPurchasesForms2.length == 0">
@@ -188,13 +189,13 @@
             <table class="table" *ngIf="detailPurchasesForms2.length != 0">
               <thead>
                 <tr>
-                  <th>Produit</th>
-                  <th>Catégorie</th>
-                  <th>Conditionnement</th>
-                  <th>Quantité (unité)</th>
+                  <th>PRODUIT</th>
+                  <th>CATEGORIE</th>
+                  <th>CONDITIONNELENT</th>
+                  <th>QUANTITE (UNITE)</th>
                   <!-- <th>Prix/unité</th> -->
-                  <th>Prix Total</th>
-                  <th>Action</th>
+                  <th>PRIX TOTAL</th>
+                  <th>ACTION</th>
                 </tr>
               </thead>
               <tbody>
@@ -203,11 +204,11 @@
                   <td>{{ detail?.product?.category?.name }}</td>
                   <td>{{ detail?.product?.conditioning?.name }}</td>
                   <!--<td>{{detail.quantity}} ({{detail?.realUnit}})</td>-->
-                  <td>{{detail?.realQ || detail?.quantity}} ({{detail?.realUnit || detail?.unit?.code}})</td>
+                  <td>{{detail?.realQ || detail?.quantity | number:'1.0-3'}} ({{detail?.realUnit || detail?.unit?.code}})</td>
 
                   <!-- <td>{{ detail?.value | number:'1.2-2' }}
                       /{{ detail?.unit?.code }}</td> -->
-                  <td>{{detail?.totalPrice}} ({{curenn}})</td>
+                  <td>{{detail?.totalPrice | number:'1.0-3':'fr-FR'}} ({{curenn}})</td>
                   <td>
                     <button pButton pRipple type="button" icon="pi pi-trash" style="width: 15px; height: 15px; font-size: 12px;"
                       class="p-button p-component p-button-text p-button-icon-only"

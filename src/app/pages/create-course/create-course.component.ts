@@ -209,7 +209,7 @@ detailPurchasesForms2:any=[]
   this.usercurrency = this.utilisateurC.compteUser.address.country.currency
   this.currencys.push(this.usercurrency)
   console.log("currency", this.usercurrency);
-  this.curenn = this.utilisateurC.compteUser.address.country.currency.name
+  this.curenn = this.utilisateurC.compteUser.address.country.currency.symbol
   // console.log("courrency",.name);
   
   

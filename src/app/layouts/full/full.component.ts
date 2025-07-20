@@ -21,6 +21,8 @@ import { AppHorizontalSidebarComponent } from './horizontal/sidebar/sidebar.comp
 import { AppBreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { CustomizerComponent } from './shared/customizer/customizer.component';
 import { BrandingComponent } from './vertical/sidebar/branding.component';
+import { TokenService } from 'src/app/services/token/token.service';
+import { NavItem } from './vertical/sidebar/nav-item/nav-item';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -68,7 +70,7 @@ interface quicklinks {
 })
 export class FullComponent implements OnInit {
   navItems = navItems;
-
+  filteredNavItems: NavItem[] = [];
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
   resView = false;
@@ -80,6 +82,8 @@ export class FullComponent implements OnInit {
   private isContentWidthFixed = true;
   private isCollapsedWidthFixed = false;
   private htmlElement!: HTMLHtmlElement;
+  
+  
 
   get isOver(): boolean {
     return this.isMobileScreen;
@@ -193,7 +197,7 @@ export class FullComponent implements OnInit {
       link: '/apps/todo',
     },
   ];
-  fixedDateTime: string = 'N° de version : 2025/07/03_15:11'; 
+  fixedDateTime: string = 'N° de version : 2025/07/20_14:00'; 
 
   //YYYYMMDD_HH:MM "2025/01/16_18:47"
 
@@ -202,7 +206,8 @@ export class FullComponent implements OnInit {
     private mediaMatcher: MediaMatcher,
     private router: Router,
     private breakpointObserver: BreakpointObserver,
-    private navService: NavService
+    private navService: NavService,
+    private tokenService:TokenService
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -229,7 +234,31 @@ export class FullComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const user = this.tokenService.getUser();
+    const userTypeCompte = Number(user?.compteUser?.typeCompte?.id) || 1;
+    console.log("Type de Compte : ", userTypeCompte);
+        
+    this.filteredNavItems = this.filterNavItems(navItems, userTypeCompte);
+    console.log("Comparaison : ", this.filteredNavItems);
+
+  }
+
+  filterNavItems(items: NavItem[], userTypeCompte: number): NavItem[] {
+    return items
+      .filter(item => {
+        if (item.typeCompte && !item.typeCompte.includes(userTypeCompte)) {
+          return false;
+        }
+        return true;
+      })
+      .map(item => {
+        if (item.children) {
+          return { ...item, children: this.filterNavItems(item.children, userTypeCompte) };
+        }
+        return item;
+      });
+  }
 
   ngOnDestroy() {
     this.layoutChangesSubscription.unsubscribe();

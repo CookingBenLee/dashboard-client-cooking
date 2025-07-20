@@ -1,55 +1,62 @@
-<div class="dialog-container">
+<div class="dialog-container p-4 rounded-xl shadow-lg bg-white text-sm">
   <!-- Titre de la boîte de dialogue -->
-  <h2 class="dialog-title">Détails du Produit: {{ data.name }}</h2>
+  <h2 class="dialog-title text-xl font-semibold mb-4 text-gray-800">
+    <i class="pi pi-book text-green-600 mr-2"></i>
+    {{ data.name }}
+  </h2>
 
   <!-- Tableau élégant -->
-  <div class="info-table">
-    <!-- En-tête des colonnes -->
-    <div class="info-header">
-      <div class="info-header-cell">Attribut</div>
-      <div class="info-header-cell">Valeur</div>
+  <div class="info-table space-y-2">
+    <!-- Lignes d'information -->
+    <div class="info-row flex items-center">
+      <div class="info-cell label w-1/2 font-bold uppercase flex items-center gap-2 text-gray-600">
+        <i class="pi pi-database text-blue-500"></i> STOCK
+      </div>
+      <div class="info-cell value w-1/2">{{ product?.quantity }} {{ data.unit.code }}</div>
     </div>
 
-    <!-- Ligne Stock -->
-    <div class="info-row">
-      <div class="info-cell label">Stock</div>
-      <div class="info-cell value">{{ product?.quantity }} {{ data.unit.code }}</div>
+    <div class="info-row flex items-center">
+      <div class="info-cell label w-1/2 font-bold uppercase flex items-center gap-2 text-gray-600">
+        <i class="pi pi-dollar text-amber-600"></i> PRIX UNITAIRE
+      </div>
+      <div class="info-cell value w-1/2">
+        {{ data.price | number: '1.0-3':'fr-FR' }} {{ product.user.compteUser.address.country.currency.symbol }}
+      </div>
     </div>
 
-    <!-- Ligne Prix -->
-    <div class="info-row">
-      <div class="info-cell label">Prix</div>
-      <div class="info-cell value">{{ data.price }} {{ product.user.compteUser.address.country.currency.symbol }}</div>
+    <div class="info-row flex items-center">
+      <div class="info-cell label w-1/2 font-bold uppercase flex items-center gap-2 text-gray-600">
+        <i class="pi pi-tags text-pink-600"></i> MARQUE
+      </div>
+      <div class="info-cell value w-1/2">{{ data.brand?.name }}</div>
     </div>
 
-    <!-- Ligne Marque -->
-    <div class="info-row">
-      <div class="info-cell label">Marque</div>
-      <div class="info-cell value">{{ data.brand?.name }}</div>
+    <div class="info-row flex items-center">
+      <div class="info-cell label w-1/2 font-bold uppercase flex items-center gap-2 text-gray-600">
+        <i class="pi pi-sitemap text-purple-600"></i> CATEGORIE
+      </div>
+      <div class="info-cell value w-1/2">{{ data.category?.name }}</div>
     </div>
 
-    <!-- Ligne Catégorie -->
-    <div class="info-row">
-      <div class="info-cell label">Catégorie</div>
-      <div class="info-cell value">{{ data.category?.name }}</div>
+    <div class="info-row flex items-center">
+      <div class="info-cell label w-1/2 font-bold uppercase flex items-center gap-2 text-gray-600">
+        <i class="pi pi-box text-yellow-600"></i> CONDITIONNEMENT
+      </div>
+      <div class="info-cell value w-1/2">{{ data.conditioning?.name }}</div>
     </div>
 
-    <!-- Ligne Conditionnement -->
-    <div class="info-row">
-      <div class="info-cell label">Conditionnement</div>
-      <div class="info-cell value">{{ data.conditioning?.name }}</div>
+    <div class="info-row flex items-center">
+      <div class="info-cell label w-1/2 font-bold uppercase flex items-center gap-2 text-gray-600">
+        <i class="pi pi-percentage text-red-600"></i> POURCENTAGE DE PERTE
+      </div>
+      <div class="info-cell value w-1/2">{{ (data?.lossPercentage ?? 0) * 100 }}%</div>
     </div>
 
-    <!-- Ligne Pourcentage de perte -->
-    <div class="info-row">
-      <div class="info-cell label">Pourcentage de perte</div>
-      <div class="info-cell value">{{ data.lossPercentage }}%</div>
-    </div>
-
-    <!-- Ligne Description -->
-    <div class="info-row">
-      <div class="info-cell label">Description</div>
-      <div class="info-cell value">{{ data.description }}</div>
+    <div class="info-row flex items-start">
+      <div class="info-cell label w-1/2 font-bold uppercase flex items-center gap-2 text-gray-600">
+        <i class="pi pi-align-left text-gray-500"></i> DESCRIPTION
+      </div>
+      <div class="info-cell value w-1/2">{{ data.description }}</div>
     </div>
   </div>
 </div>

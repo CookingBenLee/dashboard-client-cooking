@@ -1,120 +1,204 @@
-// Couleurs principales
-$orange: #ff7900;
-$vert: #50be87;
-$jaune: #ffd200;
-$rose: #ffb4e6;
-$violet: #a885d8;
-$bleu: #4bb4e6;
-$noir: #000000;
-$blanc: #ffffff;
+// // Couleurs principales
+// $orange: #ff7900;
+// $vert: #50be87;
+// $jaune: #ffd200;
+// $rose: #ffb4e6;
+// $violet: #a885d8;
+// $bleu: #4bb4e6;
+// $noir: #000000;
+// $blanc: #ffffff;
 
-// Couleurs secondaires
-$color1: #c1853b;
-$color2: #cc1b1b;
-$color3: #2f0505;
-$color4: #85311b;
-$color5: #000000;
+// // Couleurs secondaires
+// $color1: #c1853b;
+// $color2: #cc1b1b;
+// $color3: #2f0505;
+// $color4: #85311b;
+// $color5: #000000;
 
-$color6: #cf4020;
-$color7: #a4ecdc;
-$color8: #bc2c14;
-$color9: #9e675b;
-$color10: #94c9b2;
-$color11: #2d674d;
+// $color6: #cf4020;
+// $color7: #a4ecdc;
+// $color8: #bc2c14;
+// $color9: #9e675b;
+// $color10: #94c9b2;
+// $color11: #2d674d;
 
-// Boutons
-.p-button-nouveau {
-  background: $color1;
-  color: $blanc;
-  border: 1px solid $color1;
+// // Boutons
+// .p-button-nouveau {
+//   background: $color1;
+//   color: $blanc;
+//   border: 1px solid $color1;
+// }
+
+// .p-button-saved {
+//   background: $color11;
+//   color: $blanc;
+//   border: 1px solid $color11;
+// }
+
+// .p-button-annuler {
+//   background: $color2;
+//   color: $blanc;
+//   border: 1px solid $color2;
+// }
+
+// .p-button-newline {
+//   margin: auto;
+//   background: $blanc;
+//   color: #3b82f6;
+//   border: 1px solid #3b82f6;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: auto;
+// }
+
+// // Carte et flexibilité
+// .card {
+//   border: none !important;
+// }
+
+// .cardnew {
+//   padding: 10px;
+//   border-radius: 5px;
+//   border: 5px solid #3b82f6;
+// }
+
+// .flex-1 {
+//   justify-content: center;
+//   align-items: center;
+//   display: flex;
+//   text-align: center;
+
+//   h5,
+//   button {
+//     margin: auto;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   h5 {
+//     margin-left: 0;
+//   }
+
+//   button {
+//     margin-right: 0;
+//   }
+// }
+
+// // Tableau
+// .table {
+//   width: 100%;
+//   border-collapse: collapse;
+
+//   thead {
+//     background-color: $bleu;
+//     color: $blanc;
+//   }
+
+//   th,
+//   td {
+//     border: 1px solid $noir;
+//     padding: 5px;
+//     text-align: left;
+//   }
+
+//   tr:nth-child(even) {
+//     background-color: rgba(185, 181, 181, 0.2);
+//   }
+
+//   tr:hover {
+//     background-color: rgba(185, 181, 181, 0.5);
+//   }
+// }
+
+// .divtableau {
+//   // max-height: 160px;
+//   padding: 5px;
+//   overflow: auto;
+//   border: 1px solid $noir;
+// }
+
+//---------------------------------------------------------//
+
+.cardWithShadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: #fff;
 }
 
-.p-button-saved {
-  background: $color11;
-  color: $blanc;
-  border: 1px solid $color11;
+.theme-card mat-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #1f2937;
 }
 
-.p-button-annuler {
-  background: $color2;
-  color: $blanc;
-  border: 1px solid $color2;
+.mat-form-field {
+  background: #f9fafb;
+  border-radius: 8px;
 }
 
-.p-button-newline {
-  margin: auto;
-  background: $blanc;
-  color: #3b82f6;
-  border: 1px solid #3b82f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: #cbd5e1;
 }
 
-// Carte et flexibilité
-.card {
-  border: none !important;
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  border-width: 1px;
 }
 
-.cardnew {
-  padding: 10px;
-  border-radius: 5px;
-  border: 5px solid #3b82f6;
+.p-button {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
 }
 
-.flex-1 {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  text-align: center;
-
-  h5,
-  button {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  h5 {
-    margin-left: 0;
-  }
-
-  button {
-    margin-right: 0;
-  }
+.p-button-icon-only {
+  border-radius: 50%;
 }
 
-// Tableau
-.table {
-  width: 100%;
-  border-collapse: collapse;
-
-  thead {
-    background-color: $bleu;
-    color: $blanc;
-  }
-
-  th,
-  td {
-    border: 1px solid $noir;
-    padding: 5px;
-    text-align: left;
-  }
-
-  tr:nth-child(even) {
-    background-color: rgba(185, 181, 181, 0.2);
-  }
-
-  tr:hover {
-    background-color: rgba(185, 181, 181, 0.5);
-  }
+.table-header th {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #6b7280;
+  background-color: #f3f4f6;
 }
 
-.divtableau {
-  // max-height: 160px;
-  padding: 5px;
-  overflow: auto;
-  border: 1px solid $noir;
+.table-body td {
+  font-size: 0.875rem;
+  color: #111827;
+}
+
+.icon-20 {
+  font-size: 20px;
+}
+
+p-table ::ng-deep .p-datatable-thead > tr > th {
+  background-color: #f9fafb !important;
+  font-weight: 600;
+}
+
+p-table ::ng-deep .p-datatable-tbody > tr {
+  transition: background 0.2s ease-in-out;
+}
+
+p-table ::ng-deep .p-datatable-tbody > tr:hover {
+  background: #f3f4f6;
+}
+
+label#error, label#success {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+label#error {
+  color: #dc2626;
+}
+
+label#success {
+  color: #16a34a;
 }

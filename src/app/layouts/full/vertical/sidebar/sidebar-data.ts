@@ -8,18 +8,22 @@ export const navItems: NavItem[] = [
     displayName: "ACCUEIL",
     iconName: 'solar:widget-add-line-duotone',
     route: 'home/acceuil',
+    
   },
   {
     navCap: 'SIMULATEUR ECONOMIQUE',
+    typeCompte:[2,3]
   },
   {
     displayName: 'Nouvelle Simulation',
     iconName: 'tabler:point',
     route: 'home/simulateur',
-
+    typeCompte:[2,3]
+    
   },
   {
     navCap: 'PLANIFICATION DE REPAS',
+    
   },
   {
     displayName: 'Mes Recettes',

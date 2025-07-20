@@ -38,7 +38,8 @@
 
 /* En-tête */
 .entete {
-  background-color: #d1d1d1 !important; /* Gris clair au lieu de bleu */
+  // background-color: #d1d1d1 !important; /* Gris clair au lieu de bleu */
+  background: linear-gradient(90deg, #075858, #4caf50) !important;
   padding: 10px;
   border-radius: 6px;
 }
@@ -64,7 +65,9 @@ select,
   background: #f0f0f0;
   color: #333;
 }
-
+.entete-label {
+  color: #ffffff;
+}
 /* Tableau */
 .divtableau {
   overflow-x: auto;
@@ -149,4 +152,20 @@ tr:nth-child(even) {
   border: 1px solid #bbb;
   border-radius: 6px;
   color: #333;
+}
+.devise {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #22c55e;
+  background: #f0fdf4;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid #bbf7d0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #dcfce7;
+    border-color: #86efac;
+  }
 }

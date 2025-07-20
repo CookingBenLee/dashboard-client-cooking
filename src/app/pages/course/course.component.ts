@@ -242,7 +242,7 @@ export class CourseComponent implements OnInit {
   dialogAdd() {
     this.ref = this.dialogService.open(CreateCourseComponent, {
       focusOnShow: false,
-      header: "Enregistrement d'une course ",
+      header: "ENREGISTREMENT D'UNE NOUVELLE COURSE ",
       width: '90%',
       height: '90%',
       // contentStyle: { overflow: 'auto' },
@@ -561,7 +561,7 @@ export class CourseComponent implements OnInit {
     ].filter(Boolean).join(' , ');
 
     this.ref = this.dialogService.open(DetailCourseComponent, {
-      header: 'Details de la course ' + purchase.reference,
+      header: 'DETAILS DE LA COURSE N°' + purchase.reference,
       width: '90%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,

@@ -1,10 +1,11 @@
 <div class="dialog-container">
-  <!---h2 class="dialog-title">Détails de l'Approvisionnement</h2--->
+  <!-- Titre -->
+  <!-- <h2 class="dialog-title">DÉTAILS DE L'APPROVISIONNEMENT</h2> -->
 
   <div class="info-table">
     <div class="info-header">
-      <div class="info-header-cell">Attribut</div>
-      <div class="info-header-cell">Valeur</div>
+      <div class="info-header-cell">ATTRIBUT</div>
+      <div class="info-header-cell">VALEUR</div>
     </div>
 
     <div class="info-row">
@@ -19,33 +20,33 @@
 
     <div class="info-row">
       <div class="info-cell label">MONTANT</div>
-      <div class="info-cell value">{{ data.montant }} {{ data.currency.name }}</div>
+      <div class="info-cell value">{{ data.montant | number:'1.0-3':'fr-FR' }} {{ data.currency.symbol }}</div>
     </div>
 
-    <div class="info-row">
-      <div class="info-cell label">Devise</div>
+    <!-- <div class="info-row">
+      <div class="info-cell label">DEVISE</div>
       <div class="info-cell value">{{ data.currency.name }}</div>
-    </div>
+    </div> -->
   </div>
 
   <p class="divider mt-4"></p>
 
-  <h3 class="dialog-title">Liste des Produits</h3>
+  <h3 class="dialog-title">LISTE DES PRODUITS</h3>
   <div class="info-table">
     <div class="info-header">
-      <div class="info-header-cell">Produit</div>
-      <div class="info-header-cell">Catégorie</div>
-      <div class="info-header-cell">Conditionnement</div>
-      <div class="info-header-cell">Quantité (unité)</div>
-      <div class="info-header-cell">Prix Total</div>
+      <div class="info-header-cell">PRODUIT</div>
+      <div class="info-header-cell">CATÉGORIE</div>
+      <div class="info-header-cell">CONDITIONNEMENT</div>
+      <div class="info-header-cell">QUANTITÉ (UNITÉ)</div>
+      <div class="info-header-cell">PRIX TOTAL</div>
     </div>
 
     <div *ngFor="let detail of detailPurchasesForms2" class="info-row">
       <div class="info-cell">{{ detail?.product?.name }}</div>
       <div class="info-cell">{{ detail.product?.category?.name }}</div>
       <div class="info-cell">{{ detail.product.conditioning?.name }}</div>
-      <div class="info-cell">{{ detail?.realQ || detail?.quantity | number:'1.2-5' }} ({{ detail?.realUnit || detail?.unit?.code }})</div>
-      <div class="info-cell">{{ detail.totalPrice }} {{ curren }}</div>
+      <div class="info-cell">{{ detail?.realQ || detail?.quantity | number:'1.0-3' }} ({{ detail?.realUnit || detail?.unit?.code }})</div>
+      <div class="info-cell">{{ detail.totalPrice | number:'1.0-3':'fr-FR' }} {{ curren }}</div>
     </div>
   </div>
 </div>

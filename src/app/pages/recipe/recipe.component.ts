@@ -239,7 +239,7 @@ export class RecipeComponent {
   showPrepa(dishes: Dishes) {
     this.ref = this.dialogService.open(PreparationrecipeComponent, {
       header: 'PREPARATION DE LA RECETTE',
-      width: '80%',
+      width: '70%',
       height: '100%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -738,7 +738,7 @@ export class RecipeComponent {
   showDishesDetail(e: any, recipe: Recipe) {
     this.ref = this.dialogService.open(DetailrecipeComponent, {
       header: 'DETAILS DE LA RECETTE ',
-      width: '90%',
+      width: '60%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
