@@ -144,6 +144,7 @@ export class RecipeComponent {
   async ngOnInit(): Promise<void> {
 
     this.getAll()
+    
     //this.getAllAdress()
     await this.getAllCategory()
     //this.getProductCategory(this.category)
@@ -160,8 +161,11 @@ export class RecipeComponent {
     ];
     this.getConditioning();
     this.base = this.reciss[0];
+    this.showAddDetailRecipe = true;
+    this.detailRecipesProvisoire = [new DetailsRecipe()];
   }
   reciss: { name: string }[] = [];
+
   //recuperation de valeurs
   getAll() {
     const params = this.paginateService.getRequestParams(this.page, this.rows)
@@ -190,6 +194,7 @@ export class RecipeComponent {
         console.log(data)
 
       }
+      
     }, error => {
       //console.log(error)
     })
