@@ -7,49 +7,46 @@
   <p-toast position="top-center" key="tc"></p-toast>
   
   
-  <div class="bigContaint">
-    <div class="simulator-header">
+  <div class="bigContaint w-full max-w-none">
+    <div class="simulator-header flex justify-between items-center w-full">
       <h1>SIMULATEUR ECONOMIQUE</h1>
+      <span><i style="color: white;">ESTIMEZ VOTRE REVENU POUR UNE PERIODE DONNEE</i></span>
       <span class="devise">DEVISE : {{ userCurrency }}</span>
+      
     </div>
-   
     
-    <div class="container2">
-      <div class="devise-div ">
-        <div class="">
-          <div class="lbl-estimation facteur-div col grid title-employe-situation child-align flex gap-3 align-items-end" >
-            <!-- <div class="facteur-lab border-1 bg-bleu-foncer col-12 sh">
-               <div class="fs-12" for="txtfacteur">
-                
-                <span class="mb-1 col-2" >PERIODE DU  </span>                     
-                <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateDebut" name="dateDebutEstimation" id="dateDebutEstimation" />
-                <span class="mb-1 col-2">AU </span> 
-                <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateFin" name="dateFinEstimation" id="dateFinEstimation" />
-                                
-              </div>
-            </div> -->
-          <!-- <div class=" entete-haut ml-4 grid flex gap-2" >    
-              <div class="flex flex-wrap gap-2 align-items-center">
-                <span class="font-bold">PERIODE DU</span>
-                <p-calendar [(ngModel)]="estimationVente.dateDebut" dateFormat="dd.mm.yy" />
-                <span class="font-bold">AU</span>
-                <p-calendar [(ngModel)]="estimationVente.dateFin" dateFormat="dd.mm.yy" />
-              </div>
-          </div> -->
-            
-          </div>
+    <!-- <div class=" entete-haut ml-1 grid flex gap-2" >
+      <span><i>ESTIMEZ VOTRE REVENU POUR UNE PERIODE DONNEE</i></span>
+    </div> -->
+    <div class="bar_horizontal mt-3"></div>
+    <div class="container2 w-full">
+      <div class="devise-div">
+        <!-- Période -->
+        <div class="facteur-lab border-1 bg-bleu-foncer col-12 sh flex gap-2 align-items-center">
+          <span>PERIODE DU</span>
+          <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="estimationVente.dateDebut" name="dateDebutEstimation" id="dateDebutEstimation"></p-calendar>
+          <span>AU</span>
+          <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="estimationVente.dateFin" name="dateFinEstimation" id="dateFinEstimation"></p-calendar>
         </div>
-        
+      
+        <!-- Bilan -->
+        <div class="title-employe-situation entete-haut bg-white border-1 flex align-items-center justify-content-center">
+          <p>BILAN (ENTREES - SORTIES) = 
+            <span appPriceFormater [priceValue]="totalRevenus-totalDepenses | number: '1.0-3':'fr-FR'"></span>
+          </p>
+        </div>
       </div>
-      
-      
+      <div class="bar_horizontal mt-3"></div>      
+      <div class="title-employe-situation entete-haut bg-white  border-1">
+        <label class="" for="">SITUATION DES SORTIES : DEPENSES</label>
+      </div>
   
-      <div class="simulation-div grid">
+      <div class="simulation-div grid w-full">
         <div class="right-part w-full mt-5">
           <!--Situation des employes-->
-          <!--div class="employe-situation">
+          <div class="employe-situation">
               <div class="title-employe-situation entete-haut ml-3 bg-white  border-1">
-                <label class="" for="">SITUATION DES EMPLOYES</label>
+                <label class="" for="">SECTION DES SALARIES</label>
               </div>
   
               <div class="contenu-situation-employe contenu-situation grid gap-2">
@@ -80,41 +77,41 @@
                   </div>
                   
                 </div>
-  
-          
+                <div class="grid mb-1" class="hidden">
+                  <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">TOTAL SALAIRE</span> </div>
+                  <div class="col-6 p-2  sh">
+                    <span class="p-2 flex border-1">
+                      <p-inputNumber  name="total-passif"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="totalSalaire" class="sh w-full with-web-kit-number"   ></p-inputNumber>
+                      
+                    </span>
+                  </div>
+                </div>
+              </div> 
+              <div class="bar_horizontal mt-3"></div>
+              <div class="title-employe-situation entete-haut ml-3 bg-white  border-1">
+                <label class="" for="">SECTION DES CHARGES </label>
               </div>
-  
-  
-  
-          
-  
-          </div--->
+              <!--Liste des operations de depenses-->
+              <div class="grid"  *ngFor="let passif of passifTypeOperations">
+                <div class="col-6 p-2 "> <span class="h-full col-12 border-1 justify-content-center align-items-center flex  sh">{{passif.libelle}}</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1">
+                    <p-inputNumber  name="{{passif.libelle}}"  id="value{i}" mode="decimal" [maxFractionDigits]="0"   [(ngModel)]="passif.montant" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
+                      
+                  </span>
+                </div>
+              </div>
+          </div>
           
   
           <!--Estimation des ventes-->
           <div class="estimation-vente ">
-            <div class=" entete-haut ml-1 grid flex gap-2" >
-                <span><i>ESTIMEZ VOTRE REVENU POUR UNE PERIODE DONNEE</i></span>
+            <div class="title-employe-situation entete-haut ml-3 bg-white  border-1">
+              <label class="" for="">SITUATION DES ENTREES : VENTES</label>
             </div>
-            <div class="facteur-lab border-1 bg-bleu-foncer col-12 sh">
-              <div class="fs-12" for="txtfacteur">
-               
-               <span class="mb-1 col-2" >PERIODE DU  </span>                     
-               <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateDebut" name="dateDebutEstimation" id="dateDebutEstimation" />
-               <span class="mb-1 col-2">AU </span> 
-               <p-calendar class="mb-1 col-3" dateFormat="dd.mm.yy"  [(ngModel)]="estimationVente.dateFin" name="dateFinEstimation" id="dateFinEstimation" />
-                               
-             </div>
-           </div>
+            
             <div class="contenu-estimation-vente contenu-situation ">
-              <!-- <div class="plat-list grid gap-2 header">
-                <div class="col-2">PLAT</div>
-                <div class="col-2">COUT DE PRODUCTION</div>
-                <div class="col-2">FACTEUR MULTIPLICATIF</div>
-                <div class="col-2">PRIX DE VENTE UNITAIRE</div>
-                <div class="col-1">NOMBRE</div>
-                <div class="col-2">TOTAL</div>
-              </div> -->
+              
               <div class="plat-list grid gap-2 header-modern">
                 <div class="col-2 flex align-items-center gap-2">
                   <i class="pi pi-utensils"></i> PLAT
@@ -139,8 +136,7 @@
                 <div class="col-2  border-1 sh justify-content-center align-items-center flex">{{plat.name}}</div>
                 <div class="col-2  border-1 sh">
                   <p-inputNumber name="{{plat.name}}-net"  id="value{i}" mode="decimal" [maxFractionDigits]="3"  [(ngModel)]="plat.cout" class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)" [disabled]="true"  ></p-inputNumber>
-  
-                  <!--<input type="text"  name="{{plat.name}}-net" pInputText  [(ngModel)]="plat.cout" class="sh w-full" (ngModelChange)="changePlatDetail(i)" />-->
+                
                 </div>
   
                 <div class="col-2 p-1 border-1 sh">
@@ -182,103 +178,34 @@
                   
             <div class="bar_horizontal mt-3"></div>
   
-            <!--Total Estimation Part -->
             
-            <!-- <div class="totalEstimationPart grid gap-2 mt-3" >
-              <div class="col-4">
-              </div>
-                
-  
-              
-              <div class="col-3 p-2 border-1 sh">TOTAL ESTIMATION</div>
-              
-                <div class="col-2 p-2 border-1 sh">
-                  {{ totalEstimation | number:'1.0-3' }} {{ userCurrency }}
-                </div>
-              
-            </div> -->
           </div>
-  
-          <!--Btn part-->
-  
-          <!-- <div class="col-12 gap-2 no-bg mt-1">
-  
-            <button pButton label="Annuler" type="submit" [loading]="loadingSave" class="p-button-annuler  col-5"  ></button>
-            <button pButton label="Enregistrer" type="submit" [loading]="loadingSave" [disabled]="totalRevenus <= 0 || totalDepenses <= 0" class="p-button-saved col-5" 
-            (click)="saveEstimation()"
-            ></button>
-  
-          </div> -->
-  
-        </div>
-  
-        <div class="separator-part col-1">
-          <!-- <div id="separator"></div> -->
-        </div>
-        <div class="left-part w-full  mt-5">
-          <!--Bilan-->
-          <div class="bilan bg-gray col-12 w-full border-1">
-            <div class="entete-haut entete-center big-shadow entete-bilan bg-bilan  border-1">
-              <label class="" for="">BILAN</label>
+          <!--Situation Passifs-->
+          <div class="list-passifs mt-4" class="hidden">
+            
+            <div class="grid mb-1" >
+              <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Coût Achats de produits</span> </div>
+              <div class="col-6 p-2  sh">
+                <span class="p-2 flex border-1">
+                  <p-inputNumber  name="coutPlat"  mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="coutPlat" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
+                </span>
+              </div>
+            </div>         
+
+            <div class="bar_horizontal mt-3"></div>
+
+            <div class="grid mb-1" >
+              <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Total dépenses</span> </div>
+              <div class="col-6 p-2  sh">
+                <span class="p-2 flex border-1">
+                  <p-inputNumber  name="total-passif"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="totalDepenses" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
+                 
+                </span>
+              </div>
             </div>
-  
-            <!--Situation Passifs-->
-            <!-- <div class="entete-passif entete-center bg-red big-shadow">
-              <label class="" for="">LISTE DES DEPENSES</label>
-            </div> -->
-<!--   
-            <div class="list-passifs mt-4" >
-              <div class="grid mb-1" >
-                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Totale Salaire</span> </div>
-                <div class="col-6 p-2  sh">
-                  <span class="p-2 flex border-1">
-                    <p-inputNumber  name="total-passif"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="totalSalaire" class="sh w-full with-web-kit-number"   ></p-inputNumber>
-                    
-                  </span>
-                </div>
-              </div>
-              <div class="grid"  *ngFor="let passif of passifTypeOperations">
-                <div class="col-6 p-2 "> <span class="h-full col-12 border-1 justify-content-center align-items-center flex  sh">{{passif.libelle}}</span> </div>
-                <div class="col-6 p-2  sh">
-                  <span class="p-2 flex border-1">
-                    <p-inputNumber  name="{{passif.libelle}}"  id="value{i}" mode="decimal" [maxFractionDigits]="0"   [(ngModel)]="passif.montant" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
-  
-                    
-                  </span>
-                </div>
-              </div>
-  
-              <div class="grid mb-1" >
-                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Coût Achats de produits</span> </div>
-                <div class="col-6 p-2  sh">
-                  <span class="p-2 flex border-1">
-                    <p-inputNumber  name="coutPlat"  mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="coutPlat" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
-                  </span>
-                </div>
-              </div>
-  
-              
-  
-              <div class="bar_horizontal w-2  mt-1"></div>
-  
-              <div class="grid mb-1" >
-                <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Total dépenses</span> </div>
-                <div class="col-6 p-2  sh">
-                  <span class="p-2 flex border-1">
-                    <p-inputNumber  name="total-passif"  id="value{i}" mode="decimal" [maxFractionDigits]="0"  [(ngModel)]="totalDepenses" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
-                   
-                  </span>
-                </div>
-              </div>
-            </div> -->
-  
-  
             <!--Situation Actifs-->
-            <div class="entete-passif entete-center bg-bleu-foncer big-shadow mb-2">
-              <label class="" for="">Liste des revenus</label>
-            </div>
-  
-            <!--<div class="grid mb-1 mt-4"  >
+              
+            <div class="grid mb-1 mt-4"  >
               <div class="col-6 p-2 "> <span class="flex col-12 border-1 justify-content-center align-items-center h-full sh">Total Plat</span> </div>
               <div class="col-6 p-2  sh">
                 <span class="p-2 flex border-1">
@@ -286,7 +213,7 @@
   
                 </span>
               </div>
-            </div>-->
+            </div>
   
             <div class="list-actifs " >
               <div class="grid"  *ngFor="let actif of actifTypeOperations">
@@ -310,20 +237,20 @@
                 </div>
               </div>
             </div>
-  
-             <!--Separator bar-->
-             <div class="bar_horizontal w-7  mt-3"></div>
-  
-  
-             <!--Bilan final-->
-  
-             <div class="bilan-final big-shadow entete-center bg-bilan mt-3">
-                <p>Bilan = <span appPriceFormater [priceValue]="totalRevenus-totalDepenses | number: '1.0-3':'fr-FR'"></span></p>
-             </div>
           </div>
-        </div>
-      </div>
+          <!--Btn part-->
   
+          <!-- <div class="col-12 gap-2 no-bg mt-1">
+  
+            <button pButton label="Annuler" type="submit" [loading]="loadingSave" class="p-button-annuler  col-5"  ></button>
+            <button pButton label="Enregistrer" type="submit" [loading]="loadingSave" [disabled]="totalRevenus <= 0 || totalDepenses <= 0" class="p-button-saved col-5" 
+            (click)="saveEstimation()"
+            ></button>
+  
+          </div> -->
+  
+        </div>
+    
     </div> 
   
   </div>

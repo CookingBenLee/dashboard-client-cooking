@@ -248,6 +248,7 @@ export class CourseComponent implements OnInit {
       // contentStyle: { overflow: 'auto' },
       // baseZIndex: 10000,
       maximizable: true,
+      closable: false // 🔹 désactive le bouton de fermeture (croix)
     });
 
   }

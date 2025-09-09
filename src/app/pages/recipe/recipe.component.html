@@ -139,64 +139,62 @@
 
               <h5 class="dialog-title">COMPOSITION DES INGREDIENTS LA RECETTE</h5>
              
-                <button pButton label="AJOUTER UN INGREDIENT" type="button" [loading]="loading"
+                <button *ngIf="false" pButton label="AJOUTER UN INGREDIENT" type="button" [loading]="loading"
                   class="p-button-primary mt-2" (click)="showAddDetailDishesForm()"></button>
        
 
-              <div *ngIf="showAddDetailRecipe" class="cardnew mt-5">
-                <form class="p-fluid">
-                  <div class="grid single-line">
-                    <!-- Produit dropdown -->
-                    <div class="field col">
-                      <label htmlFor="product{{detailRecipesProvisoire.length-1}}">INGREDIENT</label>
-                      <p-dropdown [options]="products" optionLabel="name" [filter]="true" filterBy="name"
-                        name="product{{detailRecipesProvisoire.length-1}}"
-                        [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient"
-                        (ngModelChange)="changeProduct(detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient,detailRecipesProvisoire.length-1)">
-                        <ng-template let-product pTemplate="item">
-                          <div class="flex align-items-center gap-2">
-                            <div>{{product.name}} ({{product?.category?.name}} / {{product?.conditioning?.name}})</div>
-                          </div>
-                        </ng-template>
-                      </p-dropdown>
-                    </div>
-
-                    <!-- Proportion input -->
-                    <div class="field col">
-                      <label htmlFor="quantity{{detailRecipesProvisoire.length-1}}">PROPORTION %</label>
-                      <p-inputNumber mode="decimal" [minFractionDigits]="2"
-                        name="quantity{{detailRecipesProvisoire.length-1}}" id="quantity{i}"
-                        [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion"
-                        (ngModelChange)="changeDetailQuantite(detailRecipesProvisoire[detailRecipesProvisoire.length-1],detailRecipesProvisoire.length-1,true)"
-                        [showButtons]="true" [min]="0"></p-inputNumber>
-                    </div>
-
-                    <!-- Preparation textarea -->
-                    <div class="field col">
-                      <label htmlFor="preparationIngredient">COMMENT PREPARER CET INGREDIENT ?</label>
-                      <textarea rows="1" cols="30" name="preparationIngredient" pInputTextarea
-                        [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].preparationIngredient"></textarea>
-                    </div>
-
-                    <!-- Save Button -->
-                    <div class="field col-1">
-                      <label htmlFor="savee" class="button-label"></label>
-                      <button pButton pRipple icon="pi pi-check"
-                        [disabled]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion <= 0"
-                        type="button" class="p-button-saved p-button p-component"
-                        (click)="firstSaveForDetail(detailRecipesProvisoire[detailRecipesProvisoire.length-1])"></button>
-                    </div>
-
-                    <!-- Reset Button -->
-                    <div class="field col-1">
-                      <label htmlFor="del" class="button-label"></label>
-                      <button pButton pRipple icon="pi pi-times" type="reset"
-                        class="p-button-annuler p-button p-component" (click)="RemoveLastDetail()"></button>
-                    </div>
-
+                  <div *ngIf="showAddDetailRecipe" class="cardnew mt-5">
+                    <form class="p-fluid">
+                      <div class="grid align-items-center">
+                  
+                        <!-- Produit dropdown -->
+                        <div class="field col-3">
+                          <label for="product{{detailRecipesProvisoire.length-1}}">INGRÉDIENT</label>
+                          <p-dropdown [options]="products" optionLabel="name" [filter]="true" filterBy="name"
+                            name="product{{detailRecipesProvisoire.length-1}}"
+                            [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient"
+                            (ngModelChange)="changeProduct(detailRecipesProvisoire[detailRecipesProvisoire.length-1].ingredient,detailRecipesProvisoire.length-1)">
+                            <ng-template let-product pTemplate="item">
+                              <div class="flex align-items-center gap-2">
+                                <div>{{product.name}} ({{product?.category?.name}} / {{product?.conditioning?.name}})</div>
+                              </div>
+                            </ng-template>
+                          </p-dropdown>
+                        </div>
+                  
+                        <!-- Proportion input -->
+                        <div class="field col-2">
+                          <label for="quantity{{detailRecipesProvisoire.length-1}}">PROPORTION %</label>
+                          <p-inputNumber mode="decimal" [minFractionDigits]="2"
+                            name="quantity{{detailRecipesProvisoire.length-1}}"
+                            [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion"
+                            (ngModelChange)="changeDetailQuantite(detailRecipesProvisoire[detailRecipesProvisoire.length-1],detailRecipesProvisoire.length-1,true)"
+                            [showButtons]="true" [min]="0"></p-inputNumber>
+                        </div>
+                  
+                        <!-- Preparation textarea -->
+                        <div class="field col-6">
+                          <label for="preparationIngredient">PRÉPARATION</label>
+                          <textarea rows="2" cols="30" name="preparationIngredient" pInputTextarea
+                            [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].preparationIngredient"
+                            placeholder="Décrivez la préparation..."></textarea>
+                        </div>
+                  
+                        <!-- Save Button (icône seule, centré verticalement) -->
+                        <div class="field col-1 ">
+                          <label for="preparationIngredient">AJOUTER</label>
+                          <button class="flex align-items-center justify-content-center" pButton pRipple icon="pi pi-check"
+                            [disabled]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion <= 0"
+                            type="button" class="p-button-success"
+                            (click)="firstSaveForDetail(detailRecipesProvisoire[detailRecipesProvisoire.length-1])">
+                          </button>
+                          
+                        </div>
+                  
+                      </div>
+                    </form>
                   </div>
-                </form>
-              </div>
+                  
 
 
               

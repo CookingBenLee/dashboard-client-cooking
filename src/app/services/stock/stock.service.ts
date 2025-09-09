@@ -39,6 +39,7 @@ export class StockService {
         .then(data => data);
   }
 
+
   //update
   update(idstock:number |undefined, stock:Stock){
     return this.http.put<any>(`${this.env.apiUrl}/stock/update/${idstock}`,stock)
