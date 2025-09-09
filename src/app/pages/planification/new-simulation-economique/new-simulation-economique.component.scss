@@ -64,16 +64,32 @@ $vertClair:#32ff34;
 //   }
 // }
 
-.devise-div{
-  display: grid;
-  grid-template-columns: 60% 18% 22%;
+// .devise-div{
+//   display: grid;
+//   grid-template-columns: 50% 50%;
 
+// }
+.devise-div {
+  display: grid;
+  grid-template-columns: 70% 30%; /* Période prend plus de place que le bilan */
+  // align-items: center; /* Aligne verticalement */
+  gap: 1rem; /* Espacement entre les deux */
+  align-items: baseline;
+}
+
+.facteur-lab {
+  padding: 0.5rem;
+}
+
+.title-employe-situation {
+  text-align: center;
+  font-weight: bold;
 }
 
 .simulation-div{
 
   display:grid !important;
-  grid-template-columns: 68% 2% 30%;
+  // grid-template-columns: 68% 2% 30%;
   // grid-template-column:75%
 
 
@@ -248,7 +264,7 @@ $vertClair:#32ff34;
 
   .devise-div{
     display: grid;
-    grid-template-columns: 30% 40% 30%;
+    // grid-template-columns: 30% 40% 30%;
 
   }
   .simulation-div{
