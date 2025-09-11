@@ -81,7 +81,10 @@
             <td class="px-4 py-2">{{ detail?.net | number: '1.0-3' }} {{ detail?.ingredient?.unit?.code }}</td>
             <td class="px-4 py-2">{{ detail?.brut | number: '1.0-3' }} {{ detail?.ingredient?.unit?.code }}</td>
             <td class="px-4 py-2">{{ detail?.cout | number: '1.0-3':'fr-FR' }} {{ usercurrency }}</td>
-            <td class="px-4 py-2">{{ detail?.ingredient?.stockList?.quantity | number: '1.0-3' }} {{ detail?.ingredient?.unit?.code }}</td>
+            <td class="px-4 py-2">
+              {{ detail?.ingredient?.stock?.[0]?.quantity | number: '1.0-3' }}
+              {{ detail?.ingredient?.unit?.code }}
+            </td>
             <td class="px-4 py-2">{{ detail?.ingredient?.stockList?.quantity | number: '1.0-3'}}-{{detail?.brut | number: '1.0-3'}} {{ detail?.ingredient?.unit?.code }}</td>
           </tr>
           <tr *ngIf="!detailsDishes || detailsDishes.length == 0">

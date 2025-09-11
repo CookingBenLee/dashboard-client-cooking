@@ -121,8 +121,9 @@ export class DetailEstimationComponent implements OnInit {
         console.log('DetailList for recipe:', x.recipe.detailList);
         x.recipe.detailList.forEach(detail=>{
           detail.brut*=1000
-          const totalQuantity = detail.ingredient.stock.reduce((acc, s) => acc + (s.quantity || 0), 0);
-          detail.stockApres = totalQuantity - detail.brut;
+          // const totalQuantity = detail.ingredient.stock.reduce((acc, s) => acc + (s.quantity || 0), 0);
+          const totalQuantity = detail.ingredient?.stockList.quantity;
+          detail.stockApres = detail.stockApres = (totalQuantity ?? 0) - detail.brut;
 
           if(detail.stockApres<0 && x.recipe.stockApres < 0){
             const detailRecipe: DetailsRecipe = new DetailsRecipe();

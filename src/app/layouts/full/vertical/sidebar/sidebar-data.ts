@@ -26,45 +26,23 @@ export const navItems: NavItem[] = [
     
   },
   {
+    displayName: 'Mes Planififcations',
+    iconName: 'solar:calendar-mark-outline',
+    route: 'home/planning',
+  }
+  ,
+  {
+    displayName: 'Mes Plats',
+    iconName: 'material-symbols:dining',
+    route: 'home/plat',
+  }
+  ,
+  {
     displayName: 'Mes Recettes',
     iconName: 'arcticons:reciper',
     route: 'home/recette',
 
   },
-  {
-    displayName: 'Mes Plats',
-    iconName: 'material-symbols:dining',
-    route: 'home/plat',
-  },
-  // {
-  //   displayName: 'Planifier un repas',
-  //   iconName: 'tabler:point',
-  //   route: 'home/planifier',
-  // },
-  {
-    displayName: 'Mes Planififcations',
-    iconName: 'solar:calendar-mark-outline',
-    route: 'home/planning',
-  },
-  // {
-  //   displayName: 'Planification de Repas',
-  //   iconName: 'solar:calendar-mark-outline',
-  //   route: '',
-  //   children: [
-  //     {
-  //       displayName: 'Planifier un repas',
-  //       iconName: 'tabler:point',
-  //       route: 'home/repas',
-  //     },
-  //     {
-  //       displayName: 'Liste des planifications',
-  //       iconName: 'tabler:point',
-  //       route: 'home/planification',
-  //     }
-  //   ],
-  // },
-  
- 
   {
     navCap: 'MES INGREDIENTS',
   },
