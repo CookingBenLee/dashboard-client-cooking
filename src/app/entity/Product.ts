@@ -21,6 +21,7 @@ export class Product{
   conditioning?:Conditioning;
   unit:Unit;
   stock: Stock[];
+  stockProduct: Stock = new Stock();
   productList?:Product[];
   priceList:PristineChangeEvent[]
   stockList:Stock;

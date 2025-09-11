@@ -186,6 +186,8 @@ export class PreparationrecipeComponent {
       
       this.detailsDishes = data
       console.log(this.detailsDishes);
+      console.log("Stock ingrédient :", data.map(d => ({ name: d.ingredient.name, stock: d.ingredient.stock })));
+      console.log("Réponse API brute :", JSON.stringify(data, null, 2));
 
       this.detailsDishes = this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));
       
@@ -206,7 +208,7 @@ export class PreparationrecipeComponent {
       this.recetteSelectione = new Recipe()
       console.log("Pas de brut");
       //this.loadingPage=true
-      this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: "Veuillez sélectionné un plat " });
+      this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: "Veuillez sélectionner un plat " });
       //this.loadingPage=false
     } else {
       this.loadingPage = true
@@ -453,6 +455,8 @@ export class PreparationrecipeComponent {
 
     // Vérification des stocks
     const ingredientsEnRupture = this.detailsDishes.filter(detail => {
+      // const stocks = detail.ingredient.stock.reduce((acc, s) => acc + (s.quantity || 0), 0);
+          // detail.stockApres = totalQuantity - detail.brut;
       const stocks = detail.ingredient.stock;
       const poidsBrut = detail.brut;
       console.log("Stock --- ",stocks,poidsBrut)
