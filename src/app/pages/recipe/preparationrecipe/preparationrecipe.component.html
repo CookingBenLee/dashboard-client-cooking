@@ -56,8 +56,8 @@
     <!-- Tableau des ingrédients -->
     <div class="overflow-x-auto mt-4">
        <!-- Bouton au-dessus et à gauche -->
-        <div class="flex justify-start mb-3">
-          <p-button 
+        <div class="flex justify-start mb-3" class="hidden" >
+          <p-button pTooltip="Cliquer pour generer le pdf" tooltipPosition="top" class="btn" [disabled]="!recetteSelectione.name" (click)="generate()"
             label="GÉNÉRER FEUILLE DE COURSE" 
             icon="pi pi-eye">
           </p-button>

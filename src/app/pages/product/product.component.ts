@@ -180,6 +180,7 @@ export class ProductComponent implements OnInit {
     params['baseRecipe'] = baseRecipe;
     console.log(params);
     this.productService.getActivePageStock(params, user.id).then(data => {
+      console.log("-------LES PRODUITS-----------------")
       console.log(data)
       //this.menus=data
       // console.log(data)

@@ -25,6 +25,7 @@
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">NOM</th>
           <td (click)="show($event,product)" mat-cell *matCellDef="let product">
             {{ product?.product?.name }}
+            
           </td>
         </ng-container>
         <ng-container matColumnDef="category">

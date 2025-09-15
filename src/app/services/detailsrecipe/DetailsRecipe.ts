@@ -5,6 +5,7 @@ export class DetailsRecipe{
   id: number;
 
   ingredient: Product;
+  product: Product;
 
 
   proportion: number=0;
