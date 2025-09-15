@@ -19,7 +19,7 @@
       <!-- </div> -->
       <span class="devise" style="font-size: 25px;">BILAN (ENTREES - SORTIES) = 
         <!-- <span appPriceFormater [priceValue]="totalRevenus-totalDepenses | number: '1.0-3':'fr-FR'"></span> DEVISE : {{ userCurrency }}</span> -->
-        <span appPriceFormater [priceValue]="totalRevenus-totalDepenses | number: '1.0-3':'fr-FR'"></span> {{ userCurrency }}</span>
+        <span>{{totalRevenus-totalDepenses | number: '1.3-3':'fr-FR'}}</span> {{ userCurrency }}</span>
       
     </div>
     
@@ -45,15 +45,15 @@
         </div> -->
       </div>
       <!-- <div class="bar_horizontal mt-3"></div>       -->
-      <div class="title-employe-situation entete-haut bg-white  border-1" class="hidden">
-        <label class="" for="">SITUATION DES SORTIES : DEPENSES</label>
-      </div>
-  
+           
       <div class="simulation-div grid w-full">
-        <div class="right-part w-full mt-5">
+        <div class="right-part w-full ">
+          <div class="title-employe-situation entete-haut-sortie ml-3 bg-white  border-1 surface-border">
+            <label class="" for="">SITUATION DES SORTIES : DEPENSES</label>
+          </div>
           <!--Situation des employes-->
           <div class="employe-situation">
-              <div class="title-employe-situation entete-haut ml-3 bg-white  border-1">
+              <div class="title-employe-situation entete-haut-sortie ml-3 bg-white  border-1">
                 <label class="" for="">SECTION DES SALARIES</label>
               </div>
   
@@ -95,8 +95,8 @@
                   </div>
                 </div>
               </div> 
-              <div class="bar_horizontal mt-3"></div>
-              <div class="title-employe-situation entete-haut ml-3 bg-white  border-1 surface-border">
+              
+              <div class="title-employe-situation entete-haut-sortie ml-3 bg-white  border-1 surface-border">
                 <label class="" for="">SECTION DES CHARGES </label>
               </div>
               <!--Liste des operations de depenses-->
@@ -109,14 +109,34 @@
                   </span>
                 </div>
               </div>
+
+              <div class="grid mb-1" >
+                <div class="col-6 p-2 "> <span class="flex col-12 border-1 surface-border justify-content-center align-items-center h-full sh">Coût de Production</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1 surface-border">
+                    <p-inputNumber  name="coutPlat"  mode="decimal" [maxFractionDigits]="3"  [(ngModel)]="coutPlat" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" [readonly]="true"></p-inputNumber>
+                  </span>
+                </div>
+              </div>  
+              <div class="bar_horizontal mt-3"></div>
+              <div class="grid mb-1" >
+                <div class="col-6 p-2 "> <span class="flex col-12 border-1 surface-border justify-content-center align-items-center h-full sh">TOTAL SORTIES</span> </div>
+                <div class="col-6 p-2  sh">
+                  <span class="p-2 flex border-1 surface-border ">
+                    <p-inputNumber  name="total-passif"  id="value{i}" mode="decimal" [maxFractionDigits]="3"  [(ngModel)]="totalDepenses" class="sh w-full with-web-kit-number"  (ngModelChange)="calculTotalDepenses()" ></p-inputNumber>
+                   
+                  </span>
+                </div>
+              </div>
           </div>
-          
-  
+          &nbsp;
           <!--Estimation des ventes-->
+          <div class="title-employe-situation entete-haut ml-3 bg-white  border-1 surface-border">
+            <label class="" for="">SITUATION DES ENTREES : VENTES</label>
+          </div>
           <div class="estimation-vente ">
-            <div class="title-employe-situation entete-haut ml-3 bg-white  border-1 surface-border">
-              <label class="" for="">SITUATION DES ENTREES : VENTES</label>
-            </div>
+            <div class="bar_horizontal mt-3"></div>
+            
             
             <div class="contenu-estimation-vente contenu-situation ">
               
@@ -148,7 +168,7 @@
                 </div>
   
                 <div class="col-2 p-1 border-1 surface-border sh">
-                  <p-inputNumber  name="{{plat.name}}-facteur"  id="value{i}_facteur" mode="decimal" [maxFractionDigits]="2"  [(ngModel)]="plat.facteurMultiplicatif"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)"  [min]="3" ></p-inputNumber>
+                  <p-inputNumber  name="{{plat.name}}-facteur"  id="value{i}_facteur" mode="decimal" [maxFractionDigits]="2"  [(ngModel)]="plat.facteurMultiplicatif"  class="sh w-full with-web-kit-number" (ngModelChange)="changePlatDetail(i)"  [min]="0" ></p-inputNumber>
                   <!--<input type="text"  name="{{plat.name}}-nbre" pInputText [(ngModel)]="plat.nbre" class="sh w-full" (ngModelChange)="changePlatDetail(i)"/>-->
                 </div>
   
@@ -171,8 +191,8 @@
   
               </div>
               <div class="plat-list grid gap-2 header-modern">
-                <div class="col-8 flex align-items-center gap-2">
-                  <i class="pi pi-utensils"></i> TOTAL ESTIMATION
+                <div class="col-9 flex align-items-center gap-2">
+                  <i class="pi pi-utensils"></i> TOTAL ENTREES
                 </div>
                 <div class="col-2 flex align-items-center gap-2">
                   <i class="pi pi-utensils"></i> {{ totalEstimation | number:'1.0-3':'fr-FR' }} {{ userCurrency }}
