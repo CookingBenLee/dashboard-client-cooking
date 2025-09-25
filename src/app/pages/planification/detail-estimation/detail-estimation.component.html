@@ -56,7 +56,10 @@
         <th colspan="12">{{ rec.product.name }}</th>
         <td>{{ rec?.initialStock ?? 0 | number:'1.0-3' }} KG</td>
         <td>{{ rec?.qtePlanifie | number:'1.0-3' }} KG</td>
-        <td class="{{ rec?.currentStock < 0 ? 'insufficient' : '' }}">
+        <!-- <td class="{{ rec?.currentStock < 0 ? 'insufficient' : '' }}">
+          {{ rec?.currentStock | number:'1.0-3' }} KG
+        </td> -->
+        <td [class.insufficient]="rec?.currentStock < -0.999">
           {{ rec?.currentStock | number:'1.0-3' }} KG
         </td>
       </tr>
