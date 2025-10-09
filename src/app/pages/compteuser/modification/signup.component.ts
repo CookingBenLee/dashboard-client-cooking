@@ -1,4 +1,3 @@
-import { label } from './../apps/contact-app/listening/categories';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
@@ -10,50 +9,18 @@ import { CountryService } from 'src/app/services/country/country.service';
 import { TypeAccountService } from 'src/app/services/type-account/type-account.service';
 import { UserService } from 'src/app/services/user/user.service';
 // prime
-import { PanelModule } from 'primeng/panel';
 import { InputTextModule } from 'primeng/inputtext';
-import { TreeSelectModule } from 'primeng/treeselect';
 import { DropdownModule } from 'primeng/dropdown';
-import { CardModule } from 'primeng/card';
-import { PasswordModule } from 'primeng/password';
-import { SidebarModule } from 'primeng/sidebar';
-import { MenuModule } from 'primeng/menu';
-import { TableModule } from 'primeng/table';
-import { CheckboxModule } from 'primeng/checkbox';
-import { TabViewModule } from 'primeng/tabview';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
-import { SliderModule } from 'primeng/slider';
-import { RatingModule } from 'primeng/rating';
-import { ListboxModule } from 'primeng/listbox';
-import { CalendarModule } from 'primeng/calendar';
-import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
-import { EditorModule } from 'primeng/editor';
-import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
-import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FieldsetModule } from 'primeng/fieldset';
-import { TreeModule } from 'primeng/tree';
-import { AccordionModule } from 'primeng/accordion';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { ChipModule } from 'primeng/chip';
-import { FileUploadModule } from 'primeng/fileupload';
-import { RippleModule } from 'primeng/ripple';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SplitButtonModule } from 'primeng/splitbutton';
 import { AddressService } from 'src/app/services/address/address.service';
 import { Address } from 'src/app/services/address/Address';
 import { Shop } from 'src/app/services/shop/Shop';
 import { Country } from 'src/app/services/country/Country';
 import { MessageService } from 'primeng/api';
-import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
-
+import { TokenService } from 'src/app/services/token/token.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -71,21 +38,12 @@ import { ButtonModule } from 'primeng/button';
 })
 export class SignupComponent implements OnInit{
 
+  user : any
   countries: any[] | undefined;
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   loading: boolean = false;
-  ngOnInit(): void {
-    this.getAllAccountType();
-    this.getCountry();
-    this.getAllAdress();
-  }
-  constructor( private userService: UserService, private typeAccountService: TypeAccountService,
-    private router: Router, private countryService: CountryService, private adresseService: AddressService,
-    private messageService: MessageService,
-  ){}
-
-
+  env: any;
   id: number;
   nom: String;
   prenom: String;
@@ -107,47 +65,98 @@ export class SignupComponent implements OnInit{
 
   adresseS: any = {}
   compteUser: any = {}
+  constructor( private userService: UserService, private typeAccountService: TypeAccountService,
+    private router: Router, private countryService: CountryService, private adresseService: AddressService,
+    private messageService: MessageService,private tokenService :TokenService
+  ){}
 
-  addUserAccount(form: NgForm) {
-    if (form.valid) {
-      if (this.compteUser.password === this.compteUser.confirmation) {
-        
-        this.adresseService.create(this.adresseS).then(
-          (response: any) => {
-            const formData = new FormData();
-            delete this.compteUser.confirmation;
-            console.log('Compte User : ',this.compteUser);
-            // Ajouter le fichier
-            if (this.selectedFile) {
-              formData.append('photo', this.selectedFile);
-            }
-              this.compteUser.photo = this.selectedFile?.name;
-              this.compteUser.address = response.data;
-            
-            // Ajouter le JSON du compteUser en tant que string
-            formData.append('compteUser', new Blob([JSON.stringify(this.compteUser)], { type: 'application/json' }));
-    
-            console.log('Form Data : ',formData);
-            this.userService.createUserWithFile(formData).subscribe(
-              (data: any) => {
-                console.log('Utilisateur créé:', data);
-                this.router.navigate(['/login'], {
-                  queryParams: { success: `Compte ${this.compteUser.prenom} ${this.compteUser.nom} créé avec succès !` }
-                });
-              },
-              (error) => {
-                console.error('Erreur lors de la création de l\'utilisateur:', error);
-              }
-            );
-          }
-        );
-      } else {
-        this.errorMessage = "Les mots de passe ne correspondent pas.";
-        console.error('Les mots de passe ne correspondent pas');
-      }
+  ngOnInit(): void {
+    this.getAllAccountType();
+    this.getCountry();
+    this.getAllAdress();
+  
+    this.user = this.tokenService.getUser();
+    console.log('Utilisateur récupéré :', this.user); // Vérifiez si toutes les propriétés sont là
+  
+    if (this.user && this.user.nom !== undefined) {
+      this.loadUserDataAll(this.user);
     }
   }
   
+
+
+  
+  // 🔹 Charger les infos du compte et de l’adresse à modifier
+  loadUserDataAll(user: any) {
+    console.log('Données utilisateur pour chargement:', user);
+    this.compteUser = user.compteUser;
+    this.adresseS = this.compteUser.address;
+    // Assurez-vous que user a bien les propriétés attendues
+    this.nom = user.nom;
+    this.prenom = user.users.prenom;
+    this.login = user.users.login;
+    this.password = user.users.password;
+    this.confirmation = user.users.password;
+    this.denomination = user.compteUser?.denomination;
+    this.photo = user.compteUser?.photo;
+  
+    // Gestion du type de compte et pays si présents
+    if (this.typeAccounts && user.compteUser?.typeCompte) {
+      const foundType = this.typeAccounts.find(t => t.id === user.compteUser.typeCompte.id);
+      this.compteUser.typeCompte = foundType || user.compteUser.typeCompte;
+    }
+  
+    if (this.pays && user.compteUser?.address?.country) {
+      const foundCountry = this.pays.find((p: any) => p.name === user.compteUser.address.country.name);
+      this.adresseS.country = foundCountry || user.compteUser.address.country;
+    }
+  
+    // Log pour vérifier
+    console.log('Loaded user data:', this);
+  }
+  
+  // 🔹 Méthode de mise à jour du compte utilisateur
+  
+  updateUserAccount(form: NgForm) {
+    if (form.valid) {
+      const formData = new FormData();
+      if (this.selectedFile) {
+        formData.append('photo', this.selectedFile);
+        this.compteUser.photo = this.selectedFile.name;
+      }
+
+      formData.append('compteUser', new Blob([JSON.stringify(this.compteUser)], { type: 'application/json' }));
+
+      // 🔹 Mise à jour de l'adresse avant utilisateur
+      this.adresseService.update(this.adresseS.id, this.adresseS).then(
+        (response: any) => {
+          this.compteUser.address = response.data;
+          console.log('ID COMPTE :',this.compteUser.id);
+          console.log('Form Data :',formData);
+
+          this.userService.updateUserWithFile(this.compteUser.id, formData).subscribe(
+            (res: any) => {
+              this.messageService.add({
+                key: 'tc',
+                severity: 'success',
+                summary: 'Mise à jour réussie',
+                detail: 'Le compte a été modifié avec succès.'
+              });
+            },
+            (error : any) => {
+              this.messageService.add({
+                key: 'tc',
+                severity: 'error',
+                summary: 'Erreur',
+                detail: "La mise à jour du compte a échoué."
+              });
+            }
+          );
+        }
+      );
+    }
+  }
+
 
   saveme(){
     console.log("passeeeeee");
@@ -177,7 +186,10 @@ export class SignupComponent implements OnInit{
       }
     );
   }
-
+  onCancel() {
+    window.history.back(); // ou ferme le dialog si c’est une popup
+  }
+  
   getAllAdress(){
     this.adresseService.getAll().then(data=>{
       this.adresse=data
@@ -193,10 +205,6 @@ export class SignupComponent implements OnInit{
 
   positionModalConfirm:any
   motRecherche=''
-
-  // longitude?:number;
-  // latitude?:number;
-
   label?:string;
   streetNumber?:string;
   streetName?:string;
@@ -308,27 +316,6 @@ export class SignupComponent implements OnInit{
     }
   }
 
-  // // Exemple : envoi du fichier au backend lors de la création du compte
-  // addUserAccount(form: any) {
-  //   if (!form.valid) {
-  //     return;
-  //   }
-
-  //   const formData = new FormData();
-  //   formData.append('nom', this.compteUser.nom);
-  //   formData.append('prenom', this.compteUser.prenom);
-  //   formData.append('email', this.compteUser.login);
-  //   formData.append('password', this.compteUser.password);
-  //   formData.append('typeCompte', this.compteUser.typeCompte?.id || '');
-    
-  //   // Si un fichier est sélectionné, l’ajouter
-  //   if (this.selectedFile) {
-  //     formData.append('logo', this.selectedFile);
-  //   }
-
-  //   // Exemple : appel backend
-  //   // this.http.post('/api/users', formData).subscribe(...)
-  // }
 }
   
 

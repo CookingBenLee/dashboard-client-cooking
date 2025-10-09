@@ -43,9 +43,20 @@
                   Le type de compte est requis.
                 </div>
               </div>
+              <div class="form-group">
+                <label for="denomination">Dénomination :</label> 
+                <div class="input-container">
+                  <input type="text" name="denomination" id="denomination" required [(ngModel)]="compteUser.denomination"
+                    noWhitespace #denominationInput="ngModel" [ngClass]="{'ng-invalid': denominationInput.invalid && denominationInput.touched}" />
+                  <div *ngIf="denominationInput.invalid && denominationInput.touched" class="error-message">
+                    Le nom du compte est requis.
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="information">
+              
               <div class="form-group" style="flex: 1;">
                 <label for="nom">Nom :</label> 
                 <div class="input-container">
@@ -186,185 +197,31 @@
                 </div>
               </div>
             </fieldset>
+          
+
+            <fieldset>
+              <legend>LOGO DU COMPTE</legend>
+              
+              <div class="form-group" style="text-align: center;">
+                <label for="fileInput" class="file-label">Sélectionnez votre logo :</label>
+                <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden>
+                
+                <!-- Bouton stylisé pour ouvrir le sélecteur -->
+                <button type="button" class="btn-upload" (click)="clickFileSelector()">Choisir une image</button>
+                        <!-- Aperçu de l'image -->
+                <div class="preview-container" *ngIf="previewUrl">
+                  <p>Aperçu :</p>
+                  <img [src]="previewUrl" alt="Aperçu du logo" class="preview-image" style="{width:512px;Heigth:512px;}">
+                </div>
+              </div>
+            </fieldset>
+            
+
 
           </fieldset>
 
 
-          <!-- Section Email -->
-
-          <!-- Section Mot de Passe -->
-
-
-
-          <!-- Section localisation -->
-          <!-- <div class="information">
-            <div class="form-group">
-              <label for="user-role">Pays :</label>
-              <div class="input-container">
-                <select
-                name="user-role"
-                id="user-role"
-                [(ngModel)]="country"
-                required
-                #paysInput="ngModel"
-                [ngClass]="{'ng-invalid': paysInput.invalid && paysInput.touched}">
-                <option value="" disabled selected>Choisissez le Pays</option>
-                <option *ngFor="let pay of pays" [ngValue]="pay">
-                  {{ pay.name }}
-                </option>
-              </select>
-                <div *ngIf="paysInput.invalid && paysInput.touched" class="error-message">
-                  Le pays est requis.
-                </div>
-              </div>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label for="password">Ville :</label>
-              <div class="input-container password-container">
-                <input
-                  type="text"
-                  name="adresse"
-                  id="adresse"
-                  placeholder="adresse"
-                  required
-                  [(ngModel)]="adresseS"
-                  noWhitespace
-                  #adresseInput="ngModel"
-                  [ngClass]="{'ng-invalid': adresseInput.invalid && adresseInput.touched}" />
-                <div *ngIf="adresseInput.invalid && adresseInput.touched" class="error-message">
-                  La ville est requis.
-                </div>
-                <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- <div class="information">
-            <div class="form-group" style="flex: 1;">
-              <label for="password">Numero Rue :</label>
-              <div class="input-container password-container">
-                <input
-                  type="text"
-                  name="adresse"
-                  id="adresse"
-                  placeholder="mumero de la rue"
-                  required
-                  [(ngModel)]="adresseS"
-                  noWhitespace
-                  #adresseInput="ngModel"
-                  [ngClass]="{'ng-invalid': adresseInput.invalid && adresseInput.touched}" />
-                <div *ngIf="adresseInput.invalid && adresseInput.touched" class="error-message">
-                  La numero de la rue est requis.
-                </div>
-                <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
-              </div>
-            </div>
-
-            <div class="form-group" style="flex: 1;">
-              <label for="password">Nom Rue :</label>
-              <div class="input-container password-container">
-                <input
-                  type="text"
-                  name="adresse"
-                  id="adresse"
-                  placeholder="nom de la rue"
-                  required
-                  [(ngModel)]="adresseS"
-                  noWhitespace
-                  #adresseInput="ngModel"
-                  [ngClass]="{'ng-invalid': adresseInput.invalid && adresseInput.touched}" />
-                <div *ngIf="adresseInput.invalid && adresseInput.touched" class="error-message">
-                  Le nom de la rue est requis.
-                </div>
-                <small style="color: red; margin-top: 20px;margin-bottom: 20px;">{{ errorMessage }}</small>
-              </div>
-            </div>
-          </div> -->
-          <!-- Section Type de Compte -->
-          <!-- <div class="form-group">
-            <p-dropdown required="true" [options]="typeAccounts" name="countries" [style]="{ width: '100%' }"
-              [(ngModel)]="typeCompte" optionLabel="libelle" [filter]="true" filterBy="libelle" [showClear]="true"
-              placeholder="Selectionnez un type de compte">
-              <ng-template pTemplate="selectedItem" let-selectedOption>
-                <div class="flex align-items-center gap-2">
-                  <div>{{ selectedOption.libelle }}</div>
-                </div>
-              </ng-template>
-              <ng-template let-homeee pTemplate="item">
-                <div class="flex align-items-center gap-2">
-                  <div>{{ homeee.libelle }}</div>
-                </div>
-              </ng-template>
-            </p-dropdown>
-          </div> -->
-
-          <!-- <div class="form-group">
-            <div class="dropdown-with-button">
-
-              <p-dropdown required="true" [options]="adresse" name="countries" [style]="{ width: '100%' }"
-                [(ngModel)]="addressesSelected" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true"
-                placeholder="Selectionnez votre adresse">
-                <ng-template pTemplate="selectedItem" let-selectedOption>
-                  <div class="flex align-items-center gap-2">
-                    <div>{{ selectedOption.country.name }},{{ selectedOption.city }}, {{ selectedOption.label }}, {{
-                      selectedOption.streetName }}</div>
-                  </div>
-                </ng-template>
-                <ng-template let-homeee pTemplate="item">
-                  <div class="flex align-items-center gap-2">
-                    <div>{{ homeee.country.name }}, {{ homeee.city}}, {{ homeee.label}}, {{ homeee.streetName}}</div>
-                  </div>
-                </ng-template>
-              </p-dropdown>
-              <button type="button" (click)="addNewAddress()" class="btn-dropdown-action">+</button>
-            </div>
-          </div> -->
-
-
-
-          <!-- Ligne 5 -->
-          <!-- <div class="field col-6">
-              <label htmlFor="longitude">Longitude</label>
-              <p-inputNumber
-                name="longitude"
-                [style]="{ width: '100%' }"
-                id="longitude"
-                [(ngModel)]="longitude"
-                [showButtons]="true"
-                [min]="0"
-                required
-                #longitudeInput="ngModel"
-                [ngClass]="{'ng-invalid': longitudeInput.invalid && longitudeInput.touched}"
-              ></p-inputNumber>
-              <div *ngIf="longitudeInput.invalid && longitudeInput.touched" class="error-message">
-                La longitude est requise.
-              </div>
-            </div>
-            <div class="field col-6">
-              <label htmlFor="latitude">Latitude</label>
-              <p-inputNumber
-                name="latitude"
-                [style]="{ width: '100%' }"
-                id="latitude"
-                [(ngModel)]="latitude"
-                [showButtons]="true"
-                [min]="0"
-                required
-                #latitudeInput="ngModel"
-                [ngClass]="{'ng-invalid': latitudeInput.invalid && latitudeInput.touched}"
-              ></p-inputNumber>
-              <div *ngIf="latitudeInput.invalid && latitudeInput.touched" class="error-message">
-                La latitude est requise.
-              </div>
-            </div> -->
-
-
-
-          <!-- <div class="remember">
-            <input type="checkbox" name="remember" id="remember" />
-            <label for="remember">Accepter les termes et conditions</label>
-          </div> -->
-
+          
           <!-- Bouton de Soumission -->
           <div class="form-group">
             <button type="submit" [disabled]="!fCreate.valid" class="btn-login">Créer un compte</button>

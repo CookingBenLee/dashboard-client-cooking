@@ -20,16 +20,23 @@ import { LoginGuard } from './guards/login.guard';
 import { NewSimulationEconomiqueComponent } from './pages/planification/new-simulation-economique/new-simulation-economique.component';
 import { ListSimulationEconomiqueComponent } from './pages/planification/list-simulation-economique/list-simulation-economique.component';
 import { PlanningComponent } from './pages/planning/planning.component';
+import { UnderConstruction } from './pages/underconstruction/underconstruction.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'underconstruction',
     pathMatch: 'full',
   },
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [LoginGuard],
+
+  },
+  {
+    path: 'underconstruction',
+    component:UnderConstruction ,
     canActivate: [LoginGuard],
 
   },

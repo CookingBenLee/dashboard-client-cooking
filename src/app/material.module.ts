@@ -42,8 +42,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
+// import { MaterialModule } from './material.module'; // <== ton fichier que tu as montré
+
 @NgModule({
   declarations: [],
+   
   exports: [
     MatAutocompleteModule,
     MatCheckboxModule,

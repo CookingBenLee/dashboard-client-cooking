@@ -17,7 +17,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TokenService } from 'src/app/services/token/token.service';
-
+import { UpdateCompteUserDialogComponent } from 'src/app/pages/compteuser/update-compteuser-dialog/update-compteuser-dialog.component'
+import { SignupComponent } from 'src/app/pages/compteuser/modification/signup.component';
+import { number } from 'echarts';
 interface notifications {
   id: number;
   icon: string;
@@ -67,6 +69,7 @@ interface quicklinks {
     NgScrollbarModule,
     TablerIconsModule,
     MaterialModule,
+    UpdateCompteUserDialogComponent
   ],
   templateUrl: './header.component.html',
   encapsulation: ViewEncapsulation.None,
@@ -81,6 +84,7 @@ export class HeaderComponent implements OnInit{
   user: any
 
   fixedDateTime: string = '20/01/2025'; 
+  compteuserService: any;
   //fixedDateTime: string = '20/01/2025, 00:40:00'; 
 
   
@@ -94,14 +98,44 @@ export class HeaderComponent implements OnInit{
     this.tokenService.signOut();
     this.router.navigate(['/login']);
   }
+  updateCompte() {
+    const dialogRef = this.dialog.open(UpdateCompteUserDialogComponent, {
+      width: '500px',
+      data: this.user
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.compteuserService.updateCompteUser(this.user.compteUser.id, result).subscribe({
+          next: (res : any) => alert('Compte mis à jour ✅'),
+          error: (err : any) => alert('Erreur lors de la mise à jour ❌')
+        });
+      }
+    });
+  }
+  updateCompteUser() {
+    const dialogRef = this.dialog.open(SignupComponent, {
+      width: '50%',
+      height : '100%',
+      data: this.user
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.compteuserService.updateCompteUser(this.user.compteUser.id, result).subscribe({
+          next: (res : any) => alert('Compte mis à jour ✅'),
+          error: (err : any) => alert('Erreur lors de la mise à jour ❌')
+        });
+      }
+    });
+  }
   showFiller = false;
 
   public selectedLanguage: any = {
-    language: 'English',
-    code: 'en',
-    type: 'US',
-    icon: '/assets/images/flag/icon-flag-en.svg',
+    language: 'Français',
+    code: 'fr',
+    type: 'FR',
+    icon: '/assets/images/flag/icon-flag-fr.svg',
   };
 
   public languages: any[] = [

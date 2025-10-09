@@ -16,6 +16,8 @@ export class Recipe{
 
   createdDate: Date;
   isDeleted: boolean;
+  share: boolean;
+  owner: boolean;
 
   detailCuisine: string;
 
