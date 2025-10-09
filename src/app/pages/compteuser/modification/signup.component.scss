@@ -1,0 +1,231 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Conteneur principal centré */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  max-width: 1100px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 30px;
+  overflow: hidden;
+}
+
+/* Section du formulaire */
+.login-form-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Structure horizontale des deux colonnes */
+.form-horizontal {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-left,
+.form-right {
+  flex: 1;
+  min-width: 320px;
+}
+
+/* Fieldsets */
+fieldset.nested {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  background-color: #fafafa;
+}
+
+legend {
+  background-color: #007BFF;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Champs de saisie */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-row.double {
+  display: flex;
+  gap: 10px;
+}
+
+.form-row.double > div {
+  flex: 1;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+}
+
+input:focus, select:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Logo */
+.logo-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.preview-image {
+  max-width: 150px;
+  max-height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.btn-upload {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-upload:hover {
+  background-color: #45a049;
+}
+
+/* Boutons d’action */
+.submit-btn, .cancel-btn {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.btn-login, .btn-cancel {
+  width: 200px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.btn-login {
+  background-color: green;
+}
+.btn-login:hover {
+  background-color: #056105;
+}
+.btn-login:disabled {
+  background-color: #a0c4f3;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background-color: red;
+}
+.btn-cancel:hover {
+  background-color: #c30000;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .login-container {
+    width: 100%;
+    margin: 10px;
+  }
+  .form-horizontal {
+    flex-direction: column;
+    align-items: center;
+  }
+  .form-left, .form-right {
+    width: 100%;
+  }
+  .btn-login, .btn-cancel {
+    width: 100%;
+  }
+}
+.btn-login,
+.btn-cancel {
+  padding: 12px 30px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-login {
+  background-color: green;
+}
+
+.btn-cancel {
+  background-color: red;
+}
+
+.btn-login:hover {
+  background-color: #016701;
+}
+
+.btn-cancel:hover {
+  background-color: #cc0000;
+}
+/* Rendre le contenu scrollable si le contenu dépasse la hauteur du modal */
+.mat-dialog-content {
+  max-height: 70vh; /* Limite à 70% de la hauteur de la fenêtre */
+  overflow-y: auto; /* Active le défilement vertical */
+  padding-right: 10px; /* Ajout d’un petit espace à droite pour le scroll */
+}
+
+/* Optionnel : centrer le contenu et donner un peu d’air */
+.mat-dialog-container {
+  border-radius: 10px;
+  padding: 20px;
+}

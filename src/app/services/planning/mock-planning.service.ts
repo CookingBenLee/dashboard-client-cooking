@@ -325,6 +325,9 @@ export class MockPlanningService implements IPlanningService {
         principaleRecipe: true,
         createdDate: new Date(),
         isDeleted: false,
+        share: false,
+        owner: true,
+
         detailCuisine: `Ingrédient pour ${dishData.name}`,
         categoryRecipe: {
           id: index + 1,

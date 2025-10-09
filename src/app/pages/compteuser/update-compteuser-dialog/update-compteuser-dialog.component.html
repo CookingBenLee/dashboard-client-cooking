@@ -1,0 +1,146 @@
+
+<div class="dialog-container">
+  <form [formGroup]="compteForm" (ngSubmit)="onSave()" class="grid newform">
+    <div class="col-12 card p-fluid">
+
+      <h4 class="dialog-title">MODIFIER SON COMPTE</h4>
+
+      <!-- DÉNOMINATION -->
+      <div class="field col-12 md:col-6">
+        <label for="denomination">DENOMINATION</label>
+        <input pInputText id="denomination" formControlName="denomination"
+               type="text" placeholder="Nom du compte" required />
+        <small *ngIf="compteForm.get('denomination')?.invalid && compteForm.get('denomination')?.touched"
+               class="p-error">Ce champ est requis</small>
+      </div>
+
+      <!-- TYPE DE COMPTE -->
+      <div class="field col-12 md:col-6">
+        <label for="typeCompte">TYPE DE COMPTE</label>
+        <p-dropdown id="typeCompte"
+                    formControlName="typeCompte"
+                    [options]="data?.typeCompteList"
+                    optionLabel="name"
+                    optionValue="id"
+                    placeholder="Sélectionner un type de compte">
+        </p-dropdown>
+        <small *ngIf="compteForm.get('typeCompte')?.invalid && compteForm.get('typeCompte')?.touched"
+               class="p-error">Veuillez sélectionner un type de compte</small>
+      </div>
+
+      <!-- ADRESSE -->
+      
+      <fieldset class="nested">
+        <legend>ADRESSE</legend>
+        <div class="information">
+
+          <div class="form-group" style="flex: 2;">
+            <label for="streetName">Rue :</label>
+            <div class="input-container">
+              <input type="text" name="streetName" id="streetName" required
+                noWhitespace #streetNameInput=""
+                />
+              <!-- <div *ngIf="streetNameInput.invalid && streetNameInput.touched" class="error-message">
+                Le nom de la rue est requis.
+              </div> -->
+            </div>
+          </div>
+
+          <div class="form-group" style="flex: 1;">
+            <label for="streetNumber">Numéro de la rue :</label>
+            <div class="input-container">
+              <input type="number" name="streetNumber" id="streetNumber" required
+                 noWhitespace #streetNumberInput=""
+                 />
+              <!-- <div *ngIf="streetNumberInput.invalid && streetNumberInput.touched" class="error-message">
+                Le numéro de rue est requis.
+              </div> -->
+            </div>
+          </div>
+
+
+        </div>
+        <!-- Ligne 2 -->
+        <div class="information">
+          <div class="form-group" style="flex: 1;">
+            <label for="label">Code postal :</label>
+            <div class="input-container">
+              <input type="text" name="label" id="label"  required
+                noWhitespace #labelInput=""
+                />
+              <!-- <div *ngIf="labelInput.invalid && labelInput.touched" class="error-message">
+                Le code postal est requis.
+              </div> -->
+            </div>
+          </div>
+          <div class="form-group" style="flex: 2;">
+            <label for="city">Ville :</label>
+            <div class="input-container">
+              <input type="text" name="city" id="city" required 
+                noWhitespace #cityInput=""
+               />
+              <!-- <div *ngIf="cityInput.invalid && cityInput.touched" class="error-message">
+                La ville est requise..
+              </div> -->
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="form-group" style="flex: 1;">
+
+          <label for="country">Pays :</label>
+          <div class="input-container">
+            <select name="country" id="country"  required #countryInput="">
+              <option value="" disabled selected>Choisissez le pays</option>
+
+              <!-- Liez l'objet de compte complet, pas seulement l'ID -->
+              <!-- <option *ngFor="let pay of pays" [ngValue]="pay">
+                {{ pay.name }}
+              </option> -->
+            </select>
+            <!-- <div *ngIf="countryInput.invalid && countryInput.touched" class="error-message">
+              Le pays est requis.
+            </div> -->
+          </div>
+        </div>
+      </fieldset>
+      <!-- PHOTO -->
+      <div class="field col-12 md:col-6">
+        <label for="photo">LOGO DU COMPTE</label>
+        <input id="photo" type="file" (change)="onFileSelected($event)" accept="image/*" />
+        <div class="image-preview mt-3" *ngIf="imagePreview">
+          <img [src]="imagePreview" alt="Aperçu" width="120" height="120" class="rounded shadow" />
+        </div>
+      </div>
+
+      <!-- MESSAGES -->
+      <div class="col-12">
+        <label id="erreur" *ngIf="isError" class="p-error">{{ erreur }}</label>
+        <label id="success" *ngIf="isSuccess" class="p-success">{{ sucess }}</label>
+      </div>
+
+      <!-- BOUTONS D'ACTION -->
+      <div class="col-12 flex justify-content-end gap-3 mt-3">
+        <button pButton type="button" label="ANNULER" icon="pi pi-times"
+                class="p-button-outlined p-button-danger"
+                (click)="onCancel()"></button>
+
+        <button pButton type="submit" label="ENREGISTRER" icon="pi pi-check"
+                class="p-button-success"
+                [disabled]="!compteForm.valid || loading"
+                [loading]="loading"></button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<!-- Toast & ConfirmDialog -->
+<p-toast position="top-center" key="tc"></p-toast>
+<p-confirmDialog [style]="{ width: '40vw' }"
+                 key="confirmDialog"
+                 [position]="'top'"
+                 rejectButtonStyleClass="p-button-outlined">
+</p-confirmDialog>

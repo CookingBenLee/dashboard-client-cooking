@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site en construction - You Cook Network</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .login-container {
+      display: flex;
+      width: 100%;
+    }
+
+    .login-image-section {
+      flex: 1;
+      background-image: url('assets/images/cook.jpeg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .login-form-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f9f9f9;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .footer h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .footer a {
+      color: #e74c3c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer p {
+      font-style: italic;
+      color: #666;
+    }
+
+    .construction-image {
+      width: 80%;
+      max-width: 80%;
+      margin-top: 30px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .login-image-section {
+        height: 40vh;
+      }
+
+      .login-form-section {
+        height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <!-- SECTION IMAGE DE DROITE -->
+    <div class="login-image-section"></div>
+
+    <!-- SECTION GAUCHE AVEC PAGE EN CONSTRUCTION -->
+    <div class="login-form-section">
+      <div class="footer">
+        <h1>You Cook Network</h1>
+        <a href="https://you-cook.net" target="_blank">(you-cook.net)</a>
+        <p>“Tasty healthy meal, cooked and shared by anyone in the world”</p>
+      </div>
+
+      <img src="assets/images/site-construction.png" alt="Site en construction" class="construction-image" />
+
+      <h2 style="margin-top: 20px; color: #e74c3c;">Site en cours de construction</h2>
+      <p style="color: #666;">Nous travaillons activement pour vous offrir une meilleure expérience.<br>Revenez bientôt !</p>
+    </div>
+  </div>
+</body>
+</html>

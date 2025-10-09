@@ -967,5 +967,32 @@ export class RecipeComponent {
     await this.changeDetailPrepaInit(null, null, false)
   }
 
+  onShareToggle(dish: any) {
+    // Annule le changement visuel temporairement
+    const previousValue = !dish.jepartage;
+
+    this.confirmationService.confirm({
+      key: 'confirmShare',
+      message: dish.jepartage
+        ? 'Voulez-vous partager cette recette ?'
+        : 'Voulez-vous retirer le partage de cette recette ?',
+      acceptLabel: 'Oui',
+      rejectLabel: 'Non',
+      accept: () => {
+        // ✅ Action confirmée
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Partage mis à jour',
+          detail: dish.jepartage
+            ? `La recette "${dish.name}" est maintenant partagée.`
+            : `La recette "${dish.name}" n’est plus partagée.`
+        });
+      },
+      reject: () => {
+        // ❌ Annuler le changement
+        dish.jepartage = previousValue;
+      }
+    });
+  }
 
 }

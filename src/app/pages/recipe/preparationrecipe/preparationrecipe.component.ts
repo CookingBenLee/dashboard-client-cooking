@@ -73,6 +73,7 @@ export class PreparationrecipeComponent {
   recetteSelectione: Recipe = new Recipe();
   poidNet = 1
   poidBrut: number = 0
+  stockIngredient: number = 0
   prix: number = 0
   rows = 5
   totalRows = 0
@@ -186,7 +187,7 @@ export class PreparationrecipeComponent {
       
       this.detailsDishes = data
       console.log(this.detailsDishes);
-      console.log("Stock ingrédient :", data.map(d => ({ name: d.ingredient.name, stock: d.ingredient.stock })));
+      console.log("Stock ingrédient :", data.map(d => ({ name: d.ingredient.name, stock: d.ingredient.stock.findIndex })));
       console.log("Réponse API brute :", JSON.stringify(data, null, 2));
 
       this.detailsDishes = this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));

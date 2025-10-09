@@ -102,9 +102,9 @@
     <i class="iconify icon-20 d-flex" data-icon="solar:magnifer-outline"></i>
   </button>-->
 
-  <button mat-mini-fab color="inherit" aria-label="lightdark" class="d-flex justify-content-center" (click)="setDark()">
+  <!-- <button mat-mini-fab color="inherit" aria-label="lightdark" class="d-flex justify-content-center" (click)="setDark()">
     <i-tabler class="d-flex icon-22" [name]="options.theme === 'dark'? 'sun': 'moon'"></i-tabler>
-  </button>
+  </button> -->
 
   <!-- --------------------------------------------------------------- -->
   <!-- Inbox Dropdown -->
@@ -205,7 +205,7 @@
   <!-- --------------------------------------------------------------- -->
   <!-- langugage Dropdown -->
   <!-- --------------------------------------------------------------- -->
-  <button [matMenuTriggerFor]="flags" mat-mini-fab color="inherit">
+  <!-- <button [matMenuTriggerFor]="flags" mat-mini-fab color="inherit">
     <img [src]="selectedLanguage.icon" class="rounded-circle object-cover icon-20" />
   </button>
   <mat-menu #flags="matMenu" class="cardWithShadow" xPosition="before">
@@ -217,7 +217,7 @@
       </div>
     </button>
     }
-  </mat-menu>
+  </mat-menu> -->
 
   <!-- --------------------------------------------------------------- -->
   <!-- profile Dropdown -->
@@ -241,23 +241,17 @@
       </div>
     </div>
     <div class="p-x-32 p-b-16">
-      <!-- @for(profile of profiledd; track profile.title) {
-      <a class="p-8 text-decoration-none d-block text-hover-primary" (click)="doProfileAction(profile.title)" [routerLink]="[profile.link]">
-        <div class="d-flex align-items-center">
-          <h5 class="f-s-14 f-w-600 m-0 textprimary mat-subtitle-1 hover-text">
-            {{ profile.title }}
-          </h5>
-          @if(profile.new) {
-          <span class="bg-light-error text-error rounded-sm p-x-8 p-y-4 f-w-500 f-s-12 m-l-4">5</span>
-          }
-        </div>
-      </a>
-      } -->
-
+     
+      <a class="text-decoration-none d-block text-hover-primary" (click)="updateCompteUser()">
+       
+        <h5 class="f-s-14 f-w-600 m-0 textprimary mat-subtitle-1 hover-text">
+         Modifier son profil
+        </h5>
+    </a>
       <a class="text-decoration-none d-block text-hover-primary" (click)="logout()">
        
           <h5 class="f-s-14 f-w-600 m-0 textprimary mat-subtitle-1 hover-text">
-            Deconnexion
+            Se Déconnecter
           </h5>
       </a>
     </div>
