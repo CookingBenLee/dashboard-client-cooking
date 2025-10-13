@@ -11,6 +11,8 @@ import { Recipe } from 'src/app/services/recipe/Recipe';
 import { RecipeService } from 'src/app/services/recipe/recipe.service';
 import { TableShortService } from 'src/app/services/tableShort/table-short.service';
 import { TokenService } from 'src/app/services/token/token.service';
+import { StockService } from 'src/app/services/stock/stock.service';
+import { Stock } from 'src/app/services/stock/Stock';
 
 // prime
 import { PanelModule } from 'primeng/panel';
@@ -68,6 +70,7 @@ export class PreparationrecipeComponent {
 
   recettes: Recipe[] = []
   detailsDishes: DetailsRecipe[] = []
+  stocks: any[] = []
   loading = false
 
   recetteSelectione: Recipe = new Recipe();
@@ -97,8 +100,8 @@ export class PreparationrecipeComponent {
     private dialogService: DialogService, private preparationRecipeService: PreparationRecipeService,
     private paginateService: PaginateService, private tokenService: TokenService, public config: DynamicDialogConfig,
     private recipeService: RecipeService, private detailRecipeService: DetailsrecipeService,
+    private stockService: StockService, private productService: ProductService,
     public tableShort: TableShortService,public ref: DynamicDialogRef ) { 
-      productService: ProductService
       this.data = this.config.data
       this.recetteSelectione = this.data;
       this.recetteSelectione.net = 0.0;
@@ -123,9 +126,23 @@ export class PreparationrecipeComponent {
     this.recetteSelectione = this.config.data;
     // console.log(this.recetteSelectione);
     
+    // Récupérer les stocks de l'utilisateur
+    await this.getStocks();
+    
     this.changePlat();
     this.getAll();
     this.recetteSelectione.net = 0;
+  }
+
+  async getStocks() {
+    const user = this.tokenService.getUser();
+    try {
+      this.stocks = await this.productService.getActiveStock(user.id);
+      console.log('Stocks récupérés:', this.stocks);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des stocks:', error);
+      this.stocks = [];
+    }
   }
 
   getAll() {
@@ -187,7 +204,7 @@ export class PreparationrecipeComponent {
       
       this.detailsDishes = data
       console.log(this.detailsDishes);
-      console.log("Stock ingrédient :", data.map(d => ({ name: d.ingredient.name, stock: d.ingredient.stock.findIndex })));
+      // console.log("Stock ingrédient :", data.map(d => ({ name: d.ingredient.name, stock: d.ingredient.stock.findIndex })));
       console.log("Réponse API brute :", JSON.stringify(data, null, 2));
 
       this.detailsDishes = this.detailsDishes.sort((a, b) => (a.ingredient.name < b.ingredient.name ? -1 : 1));
@@ -447,6 +464,38 @@ export class PreparationrecipeComponent {
   }
 
 
+  // Méthodes utilitaires pour gérer l'affichage du stock
+  hasStock(detail: DetailsRecipe): boolean {
+    console.log('=== DEBUG STOCK ===');
+    console.log('Detail:', detail);
+    console.log('Ingredient ID:', detail?.ingredient?.id);
+    console.log('Available stocks:', this.stocks);
+    
+    // Chercher le stock correspondant à l'ingrédient
+    // Les stocks ont une structure {id, quantity, product: {id, ...}}
+    const stock = this.stocks.find(s => s.product?.id === detail?.ingredient?.id);
+    console.log('Found stock:', stock);
+    
+    const hasStock = !!(stock && stock.quantity !== undefined && stock.quantity !== null && stock.quantity > 0);
+    console.log('Has stock result:', hasStock, 'Quantity:', stock?.quantity || 0);
+    return hasStock;
+  }
+
+  getStockQuantity(detail: DetailsRecipe): number {
+    const stock = this.stocks.find(s => s.product?.id === detail?.ingredient?.id);
+    const quantity = stock?.quantity || 0;
+    console.log('Stock quantity for ingredient', detail?.ingredient?.name, ':', quantity);
+    return quantity;
+  }
+
+  getStockAfter(detail: DetailsRecipe): number {
+    const stockQuantity = this.getStockQuantity(detail);
+    const brutQuantity = detail.brut || 0;
+    const result = stockQuantity - brutQuantity;
+    console.log('Stock after calculation for', detail?.ingredient?.name, ':', stockQuantity, '-', brutQuantity, '=', result);
+    return result;
+  }
+
   savePreparation() {
 
     this.loadingPreparation = true
@@ -456,14 +505,13 @@ export class PreparationrecipeComponent {
 
     // Vérification des stocks
     const ingredientsEnRupture = this.detailsDishes.filter(detail => {
-      // const stocks = detail.ingredient.stock.reduce((acc, s) => acc + (s.quantity || 0), 0);
-          // detail.stockApres = totalQuantity - detail.brut;
       const stocks = detail.ingredient.stock;
       const poidsBrut = detail.brut;
       console.log("Stock --- ",stocks,poidsBrut)
-      // Si stock n’est pas défini ou vide, ou que quantité insuffisante
-      if (!stocks || stocks.length === 0 || stocks[0].quantity === undefined) {
-        return false; // considéré comme rupture
+      
+      // Si stock n'est pas défini ou vide, ou que quantité insuffisante
+      if (!stocks || stocks.length === 0 || stocks[0].quantity === undefined || stocks[0].quantity === null) {
+        return true; // considéré comme rupture
       }
 
       return (stocks[0].quantity - poidsBrut) < 0;

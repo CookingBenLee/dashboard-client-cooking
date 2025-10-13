@@ -115,9 +115,13 @@ export class HeaderComponent implements OnInit{
   }
   updateCompteUser() {
     const dialogRef = this.dialog.open(SignupComponent, {
-      width: '50%',
-      height : '100%',
-      data: this.user
+      
+      width: '80%',
+      height: '90%',
+      data: this.user,
+      // contentStyle: { 'overflow': 'auto' }, // pour le scroll
+      // baseZIndex: 10000,
+      // closable: true
     });
 
     dialogRef.afterClosed().subscribe((result) => {

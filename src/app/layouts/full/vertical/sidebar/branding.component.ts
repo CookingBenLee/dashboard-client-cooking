@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CoreService } from 'src/app/services/core.service';
 import { TokenService } from 'src/app/services/token/token.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-branding',
@@ -14,7 +15,7 @@ import { TokenService } from 'src/app/services/token/token.service';
           <img
             
             width="20%"
-            [src]="'./assets/images/' + (user?.compteUser?.photo || 'logo.png')"
+            [src]="getUserImageUrl()"
             
             alt="logo du compte"
           />
@@ -65,10 +66,23 @@ export class BrandingComponent {
   options = this.settings.getOptions();
   fixedDateTime: string = '20/01/2025, 00:40:00';
   user: any;
-
+  private baseUrl = `${environment.apiUrl}/compteuser/uploaddir/`;
   constructor(private settings: CoreService, private tokenService: TokenService) {}
 
   ngOnInit() {
     this.user = this.tokenService.getUser();
+  }
+  /**
+   * Construit l’URL de l’image utilisateur.
+   * Si aucune photo n’est définie, retourne le logo par défaut.
+   */
+  getUserImageUrl(): string {
+    const photo = this.user?.compteUser?.photo;
+    console.log('photo', `${this.baseUrl}${photo}`);
+    if (photo) {
+      return `${this.baseUrl}${photo}`;
+    } else {
+      return './assets/images/logo.png';
+    }
   }
 }

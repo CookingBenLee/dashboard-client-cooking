@@ -75,6 +75,7 @@ export class SignupComponent implements OnInit{
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   loading: boolean = false;
+  successMessage: string;
   ngOnInit(): void {
     this.getAllAccountType();
     this.getCountry();
@@ -109,42 +110,65 @@ export class SignupComponent implements OnInit{
   compteUser: any = {}
 
   addUserAccount(form: NgForm) {
+    this.errorMessage = ''; // Réinitialiser le message à chaque soumission
+    this.successMessage = ''; // Optionnel : pour un message de succès
+  
     if (form.valid) {
       if (this.compteUser.password === this.compteUser.confirmation) {
-        
+  
         this.adresseService.create(this.adresseS).then(
           (response: any) => {
             const formData = new FormData();
             delete this.compteUser.confirmation;
-            console.log('Compte User : ',this.compteUser);
+            console.log('Compte User : ', this.compteUser);
+  
             // Ajouter le fichier
             if (this.selectedFile) {
               formData.append('photo', this.selectedFile);
-            }
               this.compteUser.photo = this.selectedFile?.name;
-              this.compteUser.address = response.data;
-            
+            }
+            this.compteUser.address = response.data;
+  
             // Ajouter le JSON du compteUser en tant que string
             formData.append('compteUser', new Blob([JSON.stringify(this.compteUser)], { type: 'application/json' }));
-    
-            console.log('Form Data : ',formData);
+  
+            console.log('Form Data : ', formData);
+  
             this.userService.createUserWithFile(formData).subscribe(
               (data: any) => {
                 console.log('Utilisateur créé:', data);
+                this.successMessage = `Compte ${this.compteUser.prenom} ${this.compteUser.nom} créé avec succès !`;
                 this.router.navigate(['/login'], {
-                  queryParams: { success: `Compte ${this.compteUser.prenom} ${this.compteUser.nom} créé avec succès !` }
+                  queryParams: { success: this.successMessage }
                 });
               },
               (error) => {
                 console.error('Erreur lors de la création de l\'utilisateur:', error);
+  
+                // Gestion des erreurs côté interface
+                if (error.status === 0) {
+                  this.errorMessage = "Impossible de joindre le serveur. Vérifiez votre connexion.";
+                } else if (error.status >= 400 && error.status < 500) {
+                  this.errorMessage = "Erreur côté client : " + (error.error?.message || "Données invalides.");
+                } else if (error.status >= 500) {
+                  this.errorMessage = "Erreur serveur. Veuillez réessayer plus tard.";
+                } else {
+                  this.errorMessage = "Une erreur inattendue est survenue.";
+                }
               }
             );
           }
-        );
+        ).catch((err) => {
+          console.error('Erreur lors de la création de l\'adresse:', err);
+          this.errorMessage = "Impossible de créer l'adresse. Vérifiez les informations saisies.";
+        });
+  
       } else {
         this.errorMessage = "Les mots de passe ne correspondent pas.";
         console.error('Les mots de passe ne correspondent pas');
       }
+    } else {
+      this.errorMessage = "Veuillez remplir correctement tous les champs du formulaire.";
     }
   }
   
