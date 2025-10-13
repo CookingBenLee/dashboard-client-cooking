@@ -4,12 +4,14 @@
         "Cout",
         "Feuille",
         "getallpagebyuserandbaserecipe",
+        "iduser",
         "Montant",
         "PLANIFICATION",
         "PLANIFIEE",
         "Prévisualisation",
         "quantite",
         "SELECTIONNEZ",
-        "Underconstruction"
+        "Underconstruction",
+        "uploaddir"
     ]
 }

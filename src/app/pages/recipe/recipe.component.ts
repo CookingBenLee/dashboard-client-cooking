@@ -967,13 +967,78 @@ export class RecipeComponent {
     await this.changeDetailPrepaInit(null, null, false)
   }
 
-  onShareToggle(dish: any) {
-    // Annule le changement visuel temporairement
-    const previousValue = !dish.jepartage;
+  onShareClick(recipe: Recipe) {
+    // Vérifier si l'utilisateur est le propriétaire
+    if (!recipe.owner) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Action non autorisée',
+        detail: 'Seul le propriétaire de la recette peut modifier le partage.'
+      });
+      return;
+    }
+
+    // Créer le message de confirmation
+    const message = recipe.share
+      ? 'Voulez-vous arrêter de partager cette recette ?'
+      : 'Voulez-vous partager cette recette ?';
 
     this.confirmationService.confirm({
       key: 'confirmShare',
-      message: dish.jepartage
+      message: message,
+      header: 'Confirmation de partage',
+      icon: 'pi pi-info-circle',
+      acceptLabel: 'Oui',
+      rejectLabel: 'Non',
+      accept: () => {
+        // Inverser la valeur du partage
+        recipe.share = !recipe.share;
+        
+        // Mettre à jour via l'API
+        this.updateRecipeShare(recipe);
+      },
+      reject: () => {
+        // Aucune action nécessaire, la valeur reste inchangée
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Action annulée',
+          detail: 'Le partage n\'a pas été modifié.'
+        });
+      }
+    });
+  }
+
+  updateRecipeShare(recipe: Recipe) {
+    this.loading = true;
+    
+    this.recipeService.update(recipe.id, recipe).then(data => {
+      this.loading = false;
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Partage mis à jour',
+        detail: recipe.share
+          ? `La recette "${recipe.name}" est maintenant partagée.`
+          : `La recette "${recipe.name}" n'est plus partagée.`
+      });
+    }, error => {
+      this.loading = false;
+      // Revenir à la valeur précédente en cas d'erreur
+      recipe.share = !recipe.share;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erreur',
+        detail: 'Impossible de mettre à jour le partage de la recette.'
+      });
+    });
+  }
+
+  onShareToggle(dish: any) {
+    // Annule le changement visuel temporairement
+    const previousValue = !dish.share;
+
+    this.confirmationService.confirm({
+      key: 'confirmShare',
+      message: dish.share
         ? 'Voulez-vous partager cette recette ?'
         : 'Voulez-vous retirer le partage de cette recette ?',
       acceptLabel: 'Oui',
@@ -983,14 +1048,14 @@ export class RecipeComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Partage mis à jour',
-          detail: dish.jepartage
+          detail: dish.share
             ? `La recette "${dish.name}" est maintenant partagée.`
-            : `La recette "${dish.name}" n’est plus partagée.`
+            : `La recette "${dish.name}" n'est plus partagée.`
         });
       },
       reject: () => {
         // ❌ Annuler le changement
-        dish.jepartage = previousValue;
+        dish.share = previousValue;
       }
     });
   }

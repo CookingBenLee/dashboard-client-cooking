@@ -23,16 +23,16 @@
                 <th pSortableColumn="youcooker" pColumnFilter="youcooker">YOU COOKER <p-sortIcon field="youcooker"></p-sortIcon></th>
                 <th pSortableColumn="name" pColumnFilter="name">NOM <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="stock" pColumnFilter="stock">STOCK <p-sortIcon field="stock"></p-sortIcon></th>
-                <th pSortableColumn="jepartage" pColumnFilter="jepartage">JE PARTAGE ? <p-sortIcon field="jepartage"></p-sortIcon></th>
+                <th pSortableColumn="share" pColumnFilter="share">JE PARTAGE ? <p-sortIcon field="share"></p-sortIcon></th>
                 <th style="justify-content: center; text-align: center;">ACTIONS</th>
               </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-dishes>
-              <tr class="cursor-pointer">
+              <tr class="cursor-pointer" (click)="showDishesDetail('top-right', dishes)">
                 <!-- Colonne YOU COOKER -->
                 <td style="width: 15%; min-width: 8rem;">
-                  {{ dishes.jepartage ? 'MOI' : '' }}
+                  {{ dishes.owner ? 'MOI' : '' }}
                 </td>
 
                 <!-- Nom -->
@@ -43,26 +43,26 @@
                   {{ dishes?.stock }} <span *ngIf="dishes.stock">Kg</span>
                 </td>
 
-                <!-- Je partage (checkbox + confirmation dialog) -->
-                <td style="width: 20%; min-width: 8rem; text-align: center;">
-                  <p-checkbox
-                    binary="true"
-                    [(ngModel)]="dishes.jepartage"
-                    (onChange)="onShareToggle(dishes)">
-                  </p-checkbox>
+                <!-- Je partage (cliquable avec dialogue de confirmation) -->
+                <td style="width: 20%; min-width: 8rem; text-align: center; cursor: pointer;" 
+                    (click)="onShareClick(dishes); $event.stopPropagation()"
+                    [ngClass]="dishes.owner ? 'clickable-share' : 'disabled-share'">
+                  <span [ngClass]="dishes.share ? 'text-green-600 font-semibold' : 'text-red-500 font-semibold'">
+                    {{ dishes.share ? 'OUI' : 'NON' }}
+                  </span>
                 </td>
 
                 <!-- Actions -->
                 <td style="width: 30%; text-align: center;">
-                  <button pButton pRipple type="button" (click)="show('top-right', dishes)" icon="pi pi-pencil"
+                  <button pButton pRipple type="button" (click)="show('top-right', dishes); $event.stopPropagation()" icon="pi pi-pencil"
                     class="p-button p-component p-button-text p-button-icon-only"></button>
 
-                  <button pButton pRipple type="button" (click)="showPrepa(dishes)"
+                  <button pButton pRipple type="button" (click)="showPrepa(dishes); $event.stopPropagation()"
                     class="p-button p-component p-button-text p-button-icon-only">
                     <i class="pi pi-cog text-blue-500"></i>
                   </button>
 
-                  <button pButton pRipple type="button" (click)="delete('top-right', dishes)" icon="pi pi-trash"
+                  <button pButton pRipple type="button" (click)="delete('top-right', dishes); $event.stopPropagation()" icon="pi pi-trash"
                     class="p-button p-component p-button-text p-button-icon-only"></button>
                 </td>
               </tr>

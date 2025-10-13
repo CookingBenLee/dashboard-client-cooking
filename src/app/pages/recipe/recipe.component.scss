@@ -136,3 +136,20 @@
   display: block; 
   height: 12px;
 }
+
+.clickable-share {
+  transition: background-color 0.2s ease;
+}
+
+.clickable-share:hover {
+  background-color: #f0f0f0;
+}
+
+.disabled-share {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabled-share:hover {
+  background-color: transparent;
+}

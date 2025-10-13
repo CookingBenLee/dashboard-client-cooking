@@ -71,8 +71,14 @@
             <th class="px-4 py-2 text-left">POIDS NET (KG)</th>
             <th class="px-4 py-2 text-left">POIDS BRUT (KG)</th>
             <th class="px-4 py-2 text-left">COUT</th>
-            <th class="px-4 py-2 text-left">STOCK AVANT</th>
-            <th class="px-4 py-2 text-left">STOCK APRES</th>
+            <th class="px-4 py-2 text-center">
+              <div class="font-bold">STOCK AVANT</div>
+              <div class="text-xs font-normal">Quantité disponible</div>
+            </th>
+            <th class="px-4 py-2 text-center">
+              <div class="font-bold">STOCK APRÈS</div>
+              <div class="text-xs font-normal">Quantité restante</div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -82,10 +88,33 @@
             <td class="px-4 py-2">{{ detail?.brut | number: '1.0-3' }} {{ detail?.ingredient?.unit?.code }}</td>
             <td class="px-4 py-2">{{ detail?.cout | number: '1.0-3':'fr-FR' }} {{ usercurrency }}</td>
             <td class="px-4 py-2">
-              {{ detail?.ingredient?.stock?.[0]?.quantity | number: '1.0-3' }}
-              {{ detail?.ingredient?.unit?.code }}
+              <div *ngIf="hasStock(detail); else noStock" class="text-center">
+                <div [ngClass]="getStockQuantity(detail) > 0 ? 'text-green-600 font-bold text-lg' : 'text-red-500 font-bold text-lg'">
+                  {{ getStockQuantity(detail) | number: '1.0-3' }}
+                </div>
+                <div class="text-xs text-gray-500">{{ detail?.ingredient?.unit?.code }}</div>
+              </div>
+              <ng-template #noStock>
+                <div class="text-center">
+                  <div class="text-red-500 font-bold text-lg">0.000</div>
+                  <div class="text-xs text-gray-500">RUPTURE</div>
+                </div>
+              </ng-template>
             </td>
-            <td class="px-4 py-2">{{ detail?.ingredient?.stockList?.quantity | number: '1.0-3'}}-{{detail?.brut | number: '1.0-3'}} {{ detail?.ingredient?.unit?.code }}</td>
+            <td class="px-4 py-2">
+              <div *ngIf="hasStock(detail); else noStockAfter" class="text-center">
+                <div [ngClass]="getStockAfter(detail) >= 0 ? 'text-green-600 font-bold text-lg' : 'text-red-500 font-bold text-lg'">
+                  {{ getStockAfter(detail) | number: '1.0-3' }}
+                </div>
+                <div class="text-xs text-gray-500">{{ detail?.ingredient?.unit?.code }}</div>
+              </div>
+              <ng-template #noStockAfter>
+                <div class="text-center">
+                  <div class="text-red-500 font-bold text-lg">0.000</div>
+                  <div class="text-xs text-gray-500">RUPTURE</div>
+                </div>
+              </ng-template>
+            </td>
           </tr>
           <tr *ngIf="!detailsDishes || detailsDishes.length == 0">
             <td colspan="4" class="text-center py-4 text-gray-500">AUCUN INGRÉDIENT DISPONIBLE</td>

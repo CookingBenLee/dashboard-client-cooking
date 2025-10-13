@@ -1,1 +1,136 @@
-<img src="assets/images/im.png" class="image" width="100%" height="250px">
+<div class="home-container">
+    <!-- Section 1: Liste des pays -->
+    <div class="section countries-section">
+      <div class="section-header">
+        <h2>PAYS</h2>
+      </div>
+      
+      <!-- Champ de recherche pour les pays -->
+      <div class="search-container">
+        <input type="text" 
+               [(ngModel)]="searchCountry" 
+               (input)="onCountrySearch()"
+               placeholder="Rechercher un pays..."
+               class="search-input">
+        <i class="pi pi-search search-icon"></i>
+      </div>
+      
+      <div class="countries-grid">
+        <div *ngFor="let country of filteredCountries" class="country-card">
+          <input type="checkbox" 
+                 [id]="'country-' + country.id" 
+                 [value]="country.id"
+                 (change)="onCountryFilterChange($event)"
+                 class="country-checkbox">
+          <label [for]="'country-' + country.id" class="country-label">
+            <div class="country-flag">🏳️</div>
+            <span class="country-name">{{ country.name }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  <!-- Section 2: Liste des You Cookers -->
+  <div class="section cookers-section">
+    <div class="section-header">
+      <h2>YOU COOKERS</h2>
+    </div>
+    
+    <!-- Champ de recherche pour les You Cookers -->
+    <div class="search-container">
+      <input type="text" 
+             [(ngModel)]="searchCooker" 
+             (input)="onCookerSearch()"
+             placeholder="Rechercher un You Cooker..."
+             class="search-input">
+      <i class="pi pi-search search-icon"></i>
+    </div>
+    
+    <div class="cookers-grid">
+      <div *ngFor="let compte of filteredComptes" class="cooker-card">
+        <input type="checkbox" 
+               [id]="'cooker-' + compte.id" 
+               [value]="compte.id"
+               (change)="onCookerFilterChange($event)"
+               class="cooker-checkbox">
+        <label [for]="'cooker-' + compte.id" class="cooker-label">
+          <div class="cooker-logo">
+            <img *ngIf="compte.photo" 
+                 [src]="getImageUrl(compte.photo)" 
+                 [alt]="compte.denomination"
+                 class="logo-image"
+                 (error)="onImageError($event)">
+            <div *ngIf="!compte.photo" class="logo-placeholder">
+              <i class="pi pi-user"></i>
+            </div>
+          </div>
+          <div class="cooker-info">
+            <h4 class="cooker-name">{{ compte.denomination }}</h4>
+            <p class="cooker-country">{{ compte.country?.name || 'N/A' }}</p>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Liste des recettes -->
+  <div class="section recipes-section">
+    <div class="section-header">
+      <h2>RECETTES</h2>
+      <div class="recipe-category">
+        <button class="category-btn active">Recettes Populaires</button>
+      </div>
+    </div>
+    
+    <!-- Champ de recherche pour les recettes -->
+    <div class="search-container">
+      <input type="text" 
+             [(ngModel)]="searchRecipe" 
+             (input)="onRecipeSearch()"
+             placeholder="Rechercher une recette..."
+             class="search-input">
+      <i class="pi pi-search search-icon"></i>
+    </div>
+    
+    <div class="recipes-grid">
+      <div *ngFor="let recipe of filteredRecipes" class="recipe-card" (click)="openRecipeDetail(recipe)">
+        <div class="recipe-image">
+          <img [src]="getRecipeImage(recipe)" [alt]="recipe.name" class="dish-image">
+        </div>
+        <div class="recipe-info">
+          <h3 class="recipe-title">{{ recipe.name }}</h3>
+          <p class="recipe-details">
+            Préparation : {{ getPreparationTime(recipe) }} min – 
+            {{ getDifficulty(recipe) }}
+          </p>
+          <div class="recipe-meta">
+            <span class="recipe-author">Par: {{ recipe.user?.nom || 'Anonyme' }}</span>
+          </div>
+          <div class="recipe-compte">
+            <span class="compte-name">{{ getCompteName(recipe) }}</span>
+          </div>
+        </div>
+        <button class="add-button" (click)="duplicateRecipe(recipe); $event.stopPropagation()" title="Ajouter à mes recettes">
+          <i class="pi pi-plus"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Message si aucune recette -->
+    <div *ngIf="filteredRecipes.length === 0" class="no-recipes">
+      <p>Aucune recette trouvée avec les filtres sélectionnés.</p>
+    </div>
+
+    <!-- Bouton voir toutes les recettes -->
+    <div class="view-all-section">
+      <button class="view-all-btn" (click)="viewAllRecipes()">
+        Voir toutes les recettes populaires
+      </button>
+    </div>
+  </div>
+
+  <!-- Bouton d'action flottant -->
+  <button class="floating-action-btn" (click)="openSettings()">
+    <i class="pi pi-cog"></i>
+  </button>
+</div>

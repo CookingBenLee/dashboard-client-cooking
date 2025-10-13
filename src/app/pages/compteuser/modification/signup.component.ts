@@ -21,6 +21,7 @@ import { Country } from 'src/app/services/country/Country';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TokenService } from 'src/app/services/token/token.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -63,6 +64,8 @@ export class SignupComponent implements OnInit{
   adresse: Address[] = []
   addressesSelected: any
 
+  private baseUrl = `${environment.apiUrl}/compteuser/uploaddir/`;
+  imageUrl: string | null = null;
   adresseS: any = {}
   compteUser: any = {}
   constructor( private userService: UserService, private typeAccountService: TypeAccountService,
@@ -71,19 +74,21 @@ export class SignupComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.getAllAccountType();
-    this.getCountry();
-    this.getAllAdress();
-  
-    this.user = this.tokenService.getUser();
-    console.log('Utilisateur récupéré :', this.user); // Vérifiez si toutes les propriétés sont là
-  
-    if (this.user && this.user.nom !== undefined) {
+  this.user = this.tokenService.getUser();
+  console.log('Utilisateur recuperate :', this.user);
+
+  // Charger les données dépendantes avant de remplir le formulaire
+  Promise.all([
+    this.getAllAccountType(),
+    this.getCountry(),
+    this.getAllAdress()
+  ]).then(() => {
+    if (this.user) {
       this.loadUserDataAll(this.user);
     }
-  }
+  });
+}
   
-
 
   
   // 🔹 Charger les infos du compte et de l’adresse à modifier
@@ -91,14 +96,15 @@ export class SignupComponent implements OnInit{
     console.log('Données utilisateur pour chargement:', user);
     this.compteUser = user.compteUser;
     this.adresseS = this.compteUser.address;
+    
+    // this.country = this.adresseS.country.id;
     // Assurez-vous que user a bien les propriétés attendues
+    this.prenom = user.prenom ;
     this.nom = user.nom;
-    this.prenom = user.users.prenom;
-    this.login = user.users.login;
-    this.password = user.users.password;
-    this.confirmation = user.users.password;
+    // this.login = user.users.login;
+    
     this.denomination = user.compteUser?.denomination;
-    this.photo = user.compteUser?.photo;
+    this.photo = this.compteUser.picture;
   
     // Gestion du type de compte et pays si présents
     if (this.typeAccounts && user.compteUser?.typeCompte) {
@@ -107,10 +113,14 @@ export class SignupComponent implements OnInit{
     }
   
     if (this.pays && user.compteUser?.address?.country) {
-      const foundCountry = this.pays.find((p: any) => p.name === user.compteUser.address.country.name);
+      const foundCountry = this.pays.find((p: any) => p.id === user.compteUser.address.country.id);
       this.adresseS.country = foundCountry || user.compteUser.address.country;
+      this.country = foundCountry.id;
     }
-  
+    if (this.compteUser?.photo) {
+      this.imageUrl = `${this.baseUrl}${this.compteUser.photo}`;
+      console.log('URL de la photo utilisateur :', this.imageUrl);
+    }
     // Log pour vérifier
     console.log('Loaded user data:', this);
   }
@@ -119,22 +129,33 @@ export class SignupComponent implements OnInit{
   
   updateUserAccount(form: NgForm) {
     if (form.valid) {
+      // 🔹 Met à jour les champs utilisateur depuis le formulaire
+      this.compteUser.nom = this.user.nom;
+      this.compteUser.prenom = this.user.prenom;
+  
+      // 🔹 Création du FormData
       const formData = new FormData();
+  
+      
+  
+      // 🔸 Ajout du fichier s’il existe
       if (this.selectedFile) {
-        formData.append('photo', this.selectedFile);
+        formData.append('photo', this.selectedFile, this.selectedFile.name);
         this.compteUser.photo = this.selectedFile.name;
       }
-
-      formData.append('compteUser', new Blob([JSON.stringify(this.compteUser)], { type: 'application/json' }));
-
+      
+      // 🔸 Ajout du JSON (en texte brut, pas en Blob)
+      formData.append('compteUser', JSON.stringify(this.compteUser));
+      console.log('🧾 FormData envoyé :', this.compteUser);
+      console.log('🖼️ Fichier sélectionné :', this.selectedFile?.name);
+  
       // 🔹 Mise à jour de l'adresse avant utilisateur
       this.adresseService.update(this.adresseS.id, this.adresseS).then(
         (response: any) => {
           this.compteUser.address = response.data;
-          console.log('ID COMPTE :',this.compteUser.id);
-          console.log('Form Data :',formData);
-
-          this.userService.updateUserWithFile(this.compteUser.id, formData).subscribe(
+  
+          // 🔹 Appel du service de mise à jour utilisateur
+          this.userService.updateUserWithFile(this.compteUser.id,this.user.id, formData).subscribe(
             (res: any) => {
               this.messageService.add({
                 key: 'tc',
@@ -142,8 +163,14 @@ export class SignupComponent implements OnInit{
                 summary: 'Mise à jour réussie',
                 detail: 'Le compte a été modifié avec succès.'
               });
+              setTimeout(() => {
+                this.onCancel();
+                this.tokenService.signOut(); // efface le token JWT
+                this.router.navigate(['/login']);
+              }, 2000);
             },
-            (error : any) => {
+            (error: any) => {
+              console.error('Erreur backend :', error);
               this.messageService.add({
                 key: 'tc',
                 severity: 'error',
@@ -156,45 +183,62 @@ export class SignupComponent implements OnInit{
       );
     }
   }
-
+  
 
   saveme(){
     console.log("passeeeeee");
 
   }
 
-  getAllAccountType(): void {
-    this.typeAccountService.getAllTypeAccount().subscribe(
-      (data: any) => {
-        this.typeAccounts = data.data;
-        console.log(this.typeAccounts);
-      },
-      (error) => {
-        console.error('Error fetching account types:', error);
-      }
-    );
+  getAllAccountType(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.typeAccountService.getAllTypeAccount().subscribe(
+        (data: any) => {
+          this.typeAccounts = data.data;
+          resolve();
+        },
+        (error) => {
+          console.error('Erreur typeCompte:', error);
+          reject(error);
+        }
+      );
+    });
+  }
+  
+  getCountry(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.countryService.getAll().then(
+        (data: any) => {
+          this.pays = data;
+          resolve();
+        },
+        (error: any) => {
+          console.error('Erreur pays:', error);
+          reject(error);
+        }
+      );
+    });
+  }
+  
+  getAllAdress(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.adresseService.getAll().then(
+        (data) => {
+          this.adresse = data;
+          resolve();
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
   }
 
-  getCountry() {
-    this.countryService.getAll().then(
-      (data: any) => {
-        this.pays = data
-        console.log(data);
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
-  }
   onCancel() {
     window.history.back(); // ou ferme le dialog si c’est une popup
   }
   
-  getAllAdress(){
-    this.adresseService.getAll().then(data=>{
-      this.adresse=data
-    })
-  }
+  
   visibleAdd: boolean = false;
   addNewAddress(){
     this.visibleAdd = true;

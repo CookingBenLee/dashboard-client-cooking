@@ -1,8 +1,556 @@
-.image{
+.home-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background-color: white;
+  font-family: 'Arial', sans-serif;
+  gap: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Sections communes */
+.section {
+  background-color: white;
+  border-radius: 0; /* Suppression du border-radius pour remplir le container */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Hauteur complète */
+  border: 2px solid rgba(76, 175, 80, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Section 1 et 2: Pays et You Cookers - à droite */
+.countries-section,
+.cookers-section {
+  flex: 0 0 280px; /* Largeur fixe pour les sections latérales */
+  min-width: 280px;
+  margin: 0; /* Suppression des marges pour remplir le container */
+  position: relative;
+  z-index: 2;
+  height: 100vh; /* Hauteur complète */
+}
+
+/* Section 3: Recettes - remplit le reste */
+.recipes-section {
+  flex: 1; /* Prend tout l'espace restant */
+  margin: 0; /* Suppression des marges pour remplir le container */
+  min-width: 400px;
+  height: 100vh; /* Hauteur complète */
+}
+
+.section-header {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #4caf50 100%);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0; /* Suppression du border-radius pour remplir le container */
+  height: 80px; /* Hauteur fixe pour tous les en-têtes */
+  
+  h2 {
+    margin: 0;
+    font-size: 20px; /* Taille uniforme pour tous les titres */
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    width: 100%; /* Prend toute la largeur */
+  }
+}
+
+/* Styles pour les champs de recherche */
+.search-container {
+  position: relative;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  font-size: 14px;
+  background-color: white;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  }
+  
+  &::placeholder {
+    color: #6c757d;
+    font-style: italic;
+  }
+}
+
+.search-icon {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Section 1: Pays */
+.countries-section {
+  .countries-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+}
+
+.country-card {
+  position: relative;
+  
+  .country-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .country-label {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    
+    &:hover {
+      border-color: #007bff;
+      background-color: #e3f2fd;
+    }
+  }
+  
+  .country-checkbox:checked + .country-label {
+    border-color: #007bff;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .country-flag {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .country-name {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+/* Section 2: You Cookers */
+.cookers-section {
+  .cookers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+}
+
+.cooker-card {
+  position: relative;
+  
+  .cooker-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .cooker-label {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    
+    &:hover {
+      border-color: #28a745;
+      background-color: #e8f5e8;
+    }
+  }
+  
+  .cooker-checkbox:checked + .cooker-label {
+    border-color: #28a745;
+    background-color: #28a745;
+    color: white;
+  }
+}
+
+.cooker-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 15px;
+  position: relative;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.logo-placeholder {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  
+  i {
+    font-size: 24px;
+  }
+}
+
+.cooker-info {
+  flex: 1;
+  
+  .cooker-name {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: inherit;
+  }
+  
+  .cooker-country {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.8;
+    color: inherit;
+  }
+}
+
+/* Section 3: Recettes */
+.recipes-section {
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes par ligne */
+    gap: 15px;
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+}
+
+.recipe-category {
+  .category-btn {
+    background-color: white;
+    border: 2px solid #e9ecef;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #495057;
+    transition: all 0.2s ease;
+    
+    &.active {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    
+    &:hover {
+      border-color: #007bff;
+      color: #007bff;
+    }
+  }
+}
+
+.recipe-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 100%);
+  border: 2px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Layout vertical pour 3 colonnes */
+  padding: 15px;
+  min-height: 200px; /* Hauteur ajustée pour le layout vertical */
+  cursor: pointer; /* Curseur pour indiquer que c'est cliquable */
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2);
+    border-color: #4caf50;
+    background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  }
+}
+
+.recipe-image {
+  width: 100%;
+  height: 120px; /* Hauteur fixe pour l'image */
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px; /* Marge en bas au lieu de droite */
+  flex-shrink: 0;
+  
+  .dish-image {
     width: 100%;
-    height: 500px; /* Hauteur définie */
-    background-size: cover; /* Couvre toute la div */
-    background-position: center; /* Centre l'image */
-    background-attachment: fixed; /* Fixe l'image lors du scroll */
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.recipe-info {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  
+  .recipe-title {
+    margin: 0 0 6px 0;
+    font-size: 16px; /* Taille réduite pour le layout vertical */
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1.2;
+  }
+  
+  .recipe-details {
+    margin: 0 0 6px 0;
+    font-size: 12px; /* Taille réduite */
+    color: #6c757d;
+    line-height: 1.3;
+  }
+  
+  .recipe-meta {
+    margin-bottom: 4px;
+    
+    .recipe-author {
+      font-size: 11px; /* Taille réduite */
+      color: #999;
+      font-style: italic;
+    }
+  }
+  
+  .recipe-compte {
+    margin-top: 4px;
+    
+    .compte-name {
+      font-size: 10px; /* Taille réduite */
+      color: #4caf50;
+      font-weight: 600;
+      background-color: rgba(76, 175, 80, 0.1);
+      padding: 2px 6px; /* Padding réduit */
+      border-radius: 10px;
+      display: inline-block;
+    }
+  }
+}
+
+.add-button {
+  width: 35px; /* Taille réduite */
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px; /* Taille réduite */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  flex-shrink: 0;
+  position: absolute; /* Position absolue */
+  bottom: 10px; /* En bas */
+  right: 10px; /* À droite */
+  
+  &:hover {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+  }
+  
+  i {
+    font-size: 14px; /* Taille réduite */
+  }
+}
+
+.no-recipes {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.view-all-section {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.view-all-btn {
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+  
+  &:hover {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+  }
+}
+
+.floating-action-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  
+  &:hover {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.6);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .countries-section,
+  .cookers-section {
+    flex: 0 0 250px; /* Largeur réduite pour les écrans moyens */
+    min-width: 250px;
+  }
+  
+  .recipes-section {
+    flex: 1; /* Continue de remplir l'espace restant */
+    min-width: 350px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .home-container {
+    flex-direction: column; /* Stack vertically on smaller screens */
+    gap: 0;
+    padding: 0;
+  }
+  
+  .countries-section,
+  .cookers-section {
+    flex: 1;
+    margin: 0;
+    min-width: auto;
+    height: 33.33vh; /* Hauteur égale pour chaque section */
+  }
+  
+  .recipes-section {
+    flex: 1;
+    margin: 0;
+    min-width: auto;
+    height: 33.33vh; /* Hauteur égale pour chaque section */
+  }
+  
+  .section {
+    height: 33.33vh; /* Hauteur égale pour chaque section */
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .section {
+    max-height: 300px;
+  }
+  
+  .recipe-card {
+    padding: 10px;
+  }
+  
+  .recipe-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .recipe-title {
+    font-size: 14px;
+  }
+  
+  .recipe-details {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 5px;
+    gap: 8px;
+  }
+  
+  .section {
+    max-height: 250px;
+  }
+  
+  .floating-action-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
   }
   

@@ -29,19 +29,18 @@ export class UserService {
     return this.http.post(`${this.API_URL}${this.END_POINT_ADD}`, formData);
   }
   //Modification d'un utilisateur
-  updateUserWithFile(id: number, formData: FormData): Observable<any> {
-    return this.http.put(`${this.API_URL}${this.END_POINT_UPD}${id}`, formData);
+  updateUserWithFile(id: number,iduser: number, formData: FormData): Observable<any> {
+    return this.http.put(`${this.API_URL}${this.END_POINT_UPD}${id}/${iduser}`, formData);
     
   }
-
+  
+  
    login(login: string, password: string): Observable<any> {
     const user = { "password": password, "login": login };
     return this.http.post(this.API_URL + this.END_POINT_LOGIN, user);
   }
 
-  // getFile(fichier: string): Observable<any> {
-  //   return this.http.get<any>(`${this.API_URL}${this.END_POINT_FILE}`+fichier);
-  // }
+  
 
   logout(): Observable<any>{
     this.tokenService.signOut();

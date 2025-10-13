@@ -1,3 +1,4 @@
+<div class="scroll-container">
 <div class="login-container">
   <div class="login-form-section">
     <div class="form-container">
@@ -31,18 +32,18 @@
               <div class="form-row double">
                 <div>
                   <label for="nom">Nom :</label>
-                  <input type="text" id="nom" [(ngModel)]="compteUser.nom" name="nom" required />
+                  <input type="text" id="nom" [(ngModel)]="user.nom" name="nom" required />
                 </div>
                 <div>
                   <label for="prenom">Prénom :</label>
-                  <input type="text" id="prenom" [(ngModel)]="compteUser.prenom" name="prenom" required />
+                  <input type="text" id="prenom" [(ngModel)]="user.prenom" name="prenom" required />
                 </div>
               </div>
 
-              <div class="form-row">
+              <!-- <div class="form-row">
                 <label for="login">Email :</label>
                 <input type="email" id="login" [(ngModel)]="compteUser.login" name="login" required />
-              </div>
+              </div> -->
             </fieldset>
             <!-- Bouton de Mise à Jour -->
             <div class="form-group submit-btn form-left">
@@ -82,9 +83,11 @@
 
               <div class="form-row">
                 <label for="country">Pays :</label>
+                
                 <select id="country" [(ngModel)]="adresseS.country" name="country" required>
                   <option *ngFor="let pay of pays" [ngValue]="pay">{{ pay.name }}</option>
                 </select>
+                
               </div>
             </fieldset>
             
@@ -93,11 +96,22 @@
               <div class="form-row logo-row">
                 <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden>
                 <button type="button" class="btn-upload" (click)="clickFileSelector()">Choisir une image</button>
-
-                <div class="preview-container" *ngIf="previewUrl">
-                  <img [src]="previewUrl" alt="Aperçu du logo" class="preview-image">
+              
+                <div class="preview-container">
+                  <!-- 🟢 Image actuelle du compte -->
+                  <img *ngIf="!previewUrl && imageUrl"
+                       [src]="imageUrl"
+                       alt="Logo actuel"
+                       class="preview-image">
+              
+                  <!-- 🟠 Image sélectionnée (preview) -->
+                  <img *ngIf="previewUrl"
+                       [src]="previewUrl"
+                       alt="Aperçu du nouveau logo"
+                       class="preview-image">                  
                 </div>
               </div>
+              
             </fieldset>
           </div>
 
@@ -106,6 +120,6 @@
       </form>
     </div>
   </div>
-</div>
+</div>  
 
 <p-toast position="top-center" key="tc"></p-toast>
