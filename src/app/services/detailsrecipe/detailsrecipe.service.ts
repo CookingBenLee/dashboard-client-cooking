@@ -40,10 +40,22 @@ export class DetailsrecipeService {
   }
 
   byRecipe(id:number |undefined) {
+    console.log('🔍 Recherche des ingrédients pour la recette ID:', id);
+    
     return this.http.get<any>(`${this.env.apiUrl}/detailrecipe/byrecipe?idRecipe=${id}`)
         .toPromise()
-        .then(res => res.data as DetailsRecipe[])
-        .then(data => data);
+        .then(res => {
+          console.log('📊 Réponse du serveur - Nombre d\'ingrédients:', res.data?.length || 0);
+          return res.data as DetailsRecipe[];
+        })
+        .then(data => {
+          console.log('✅ Ingrédients récupérés:', data.length);
+          return data;
+        })
+        .catch(error => {
+          console.error('❌ Erreur lors de la récupération des ingrédients:', error);
+          throw error;
+        });
   }
 
   recherche(mot:String) {

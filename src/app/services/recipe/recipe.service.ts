@@ -83,4 +83,16 @@ export class RecipeService {
         .then()
         .then();
   }
+
+  // Upload photo
+  uploadPhoto(photo: File, recipeId: number) {
+    const formData = new FormData();
+    formData.append('photo', photo);
+    formData.append('recipeId', recipeId.toString());
+    
+    return this.http.post<any>(`${this.env.apiUrl}/recipe/upload-photo`, formData)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
+  }
 }

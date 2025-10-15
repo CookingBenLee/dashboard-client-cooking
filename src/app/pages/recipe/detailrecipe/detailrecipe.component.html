@@ -1,40 +1,67 @@
 <div class="dialog-container p-4 bg-white rounded-2xl shadow-md max-w-6xl mx-auto">
-  <!-- TITRE DE LA RECETTE -->
-  <div class="flex items-center mb-4">
-    <i class="pi pi-cog text-orange-500 mr-2 text-xl"></i>
-    <h2 class="text-2xl font-bold text-gray-800">RECETTE : <span class="text-indigo-600">{{ recipe.name }}</span></h2>
-  </div>
+  <!-- GRILLE DES DEUX SECTIONS -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <!-- PREMIÈRE SECTION : INFORMATIONS DE LA RECETTE (GAUCHE) -->
+    <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+      <!-- TITRE DE LA RECETTE -->
+      <div class="flex items-center mb-6">
+        <i class="pi pi-cog text-orange-500 mr-2 text-xl"></i>
+        <h2 class="text-2xl font-bold text-gray-800">RECETTE : <span class="text-indigo-600">{{ recipe.name }}</span></h2>
+      </div>
 
-  <!-- INFOS PRINCIPALES DE LA RECETTE -->
-  <div class="grid grid-cols-3 gap-4 mb-6">
-    <div>
-      <div class="text-sm text-gray-500">POURCENTAGE DE PERTE</div>
-      <div class="text-lg font-semibold text-gray-800">{{ (recipe.ratio-1)*100 | number:'1.0-0' }}%</div>
-    </div>
-    <div>
-      <div class="text-sm text-gray-500">STOCK</div>
-      <div class="text-lg font-semibold text-gray-800">{{ recipe.stock | number: '1.1-3' }} KG</div>
-    </div>
-    <div>
-      <div class="text-sm text-gray-500">RECETTE PRINCIPALE</div>
-      <div class="text-lg font-semibold" [ngClass]="recipe.principaleRecipe ? 'text-green-600' : 'text-red-600'">
-        {{ recipe.principaleRecipe ? 'OUI' : 'NON' }}
+      <!-- INFORMATIONS DE LA RECETTE -->
+      <div class="space-y-4">
+        <!-- PREMIÈRE LIGNE : POURCENTAGE, STOCK, RECETTE PRINCIPALE -->
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <div class="text-sm text-gray-500 mb-1">POURCENTAGE DE PERTE</div>
+            <div class="text-xl font-bold text-gray-800">{{ (recipe.ratio-1)*100 | number:'1.0-0' }}%</div>
+          </div>
+          <div>
+            <div class="text-sm text-gray-500 mb-1">STOCK</div>
+            <div class="text-xl font-bold text-gray-800">{{ recipe.stock | number: '1.1-3' }} KG</div>
+          </div>
+          <div>
+            <div class="text-sm text-gray-500 mb-1">RECETTE PRINCIPALE</div>
+            <div class="text-xl font-bold" [ngClass]="recipe.principaleRecipe ? 'text-green-600' : 'text-red-600'">
+              {{ recipe.principaleRecipe ? 'OUI' : 'NON' }}
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <!-- DEUXIÈME LIGNE : PROPRIETAIRE, PARTAGE -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <div class="text-sm text-gray-500 mb-1">PROPRIETAIRE</div>
+            <div class="text-xl font-bold" [ngClass]="recipe.owner ? 'text-blue-600' : 'text-gray-500'">
+              {{ recipe.owner ? 'MOI' : 'AUTRE' }}
+            </div>
+          </div>
+          <div>
+            <div class="text-sm text-gray-500 mb-1">PARTAGE</div>
+            <div class="text-xl font-bold" [ngClass]="recipe.share ? 'text-green-600' : 'text-red-600'">
+              {{ recipe.share ? 'OUI' : 'NON' }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- INFOS SUPPLEMENTAIRES DE LA RECETTE -->
-  <div class="grid grid-cols-2 gap-4 mb-6">
-    <div>
-      <div class="text-sm text-gray-500">PROPRIETAIRE</div>
-      <div class="text-lg font-semibold" [ngClass]="recipe.owner ? 'text-blue-600' : 'text-gray-500'">
-        {{ recipe.owner ? 'MOI' : 'AUTRE' }}
-      </div>
-    </div>
-    <div>
-      <div class="text-sm text-gray-500">PARTAGE</div>
-      <div class="text-lg font-semibold" [ngClass]="recipe.share ? 'text-green-600' : 'text-red-600'">
-        {{ recipe.share ? 'OUI' : 'NON' }}
+    <!-- DEUXIÈME SECTION : PHOTO DE LA RECETTE (DROITE) -->
+    <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-sm flex flex-col items-center justify-center">
+      <h3 class="text-lg font-bold text-crimson-700 mb-4 text-center">PHOTO DE LA RECETTE</h3>
+      <div class="border-4 border-gray-300 rounded-lg shadow-lg overflow-hidden bg-gray-100 flex items-center justify-center" 
+           style="width: 300px; height: 300px;">
+        <img [src]="getRecipeImage()" [alt]="recipe.name" 
+             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+             (error)="onImageError($event)"
+             (load)="onImageLoad($event)">
+        <!-- Message si pas de photo -->
+        <div *ngIf="!recipe.photo" class="text-center text-gray-500">
+          <i class="pi pi-image text-4xl mb-2 block"></i>
+          <p class="text-sm font-medium">Aucune photo disponible</p>
+        </div>
       </div>
     </div>
   </div>
@@ -61,6 +88,12 @@
             </td>
             <td class="px-4 py-2 text-center">{{ detail?.preparationIngredient }}</td>
           </tr>
+          <tr *ngIf="detailRecipe2.length === 0" class="border-t border-gray-200">
+            <td colspan="3" class="px-4 py-8 text-center text-gray-500">
+              <i class="pi pi-info-circle mr-2"></i>
+              Aucun ingrédient trouvé pour cette recette
+            </td>
+          </tr>
           <tr class="border-t-2 border-indigo-400">
             <td class="px-4 py-2 font-bold text-blue-700">PROPORTION TOTALE</td>
             <td class="px-4 py-2 font-bold text-blue-700 text-center">{{ totalProportion * 100 | number: '1.0-3' }} %</td>
@@ -72,10 +105,11 @@
   </div>
 
   <!-- DETAILS DE LA CUISINE -->
-  <div class="mb-4">
+  <div class="mb-6">
     <h3 class="text-lg font-bold text-gray-800 mb-2">DETAILS DE LA CUISINE</h3>
     <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-700">
       {{ recipe.detailCuisine }}
     </div>
   </div>
+
 </div>

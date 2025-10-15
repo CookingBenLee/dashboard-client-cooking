@@ -1,101 +1,343 @@
+<!-- Composant pour afficher les messages -->
+<p-toast></p-toast>
+
 <div class="home-container">
-    <!-- Section 1: Liste des pays -->
-    <div class="section countries-section">
-      <div class="section-header">
-        <h2>PAYS</h2>
-      </div>
-      
-      <!-- Champ de recherche pour les pays -->
-      <div class="search-container">
-        <input type="text" 
-               [(ngModel)]="searchCountry" 
-               (input)="onCountrySearch()"
-               placeholder="Rechercher un pays..."
-               class="search-input">
-        <i class="pi pi-search search-icon"></i>
-      </div>
-      
-      <div class="countries-grid">
-        <div *ngFor="let country of filteredCountries" class="country-card">
-          <input type="checkbox" 
-                 [id]="'country-' + country.id" 
-                 [value]="country.id"
-                 (change)="onCountryFilterChange($event)"
-                 class="country-checkbox">
-          <label [for]="'country-' + country.id" class="country-label">
-            <div class="country-flag">🏳️</div>
-            <span class="country-name">{{ country.name }}</span>
-          </label>
+  <div class="main-grid">
+    <!-- Colonne 1: Pays (20%) -->
+    <div class="column countries-column">
+      <div class="section countries-section">
+        <div class="section-header">
+          <h2>PAYS</h2>
+        </div>
+        
+        <!-- Champ de recherche pour les pays -->
+        <div class="search-container">
+          <input type="text" 
+                 [(ngModel)]="searchCountry" 
+                 (input)="onCountrySearch()"
+                 placeholder="Rechercher un pays..."
+                 class="search-input">
+          <i class="pi pi-search search-icon"></i>
+        </div>
+        
+        <div class="countries-grid">
+          <div *ngFor="let country of filteredCountries" class="country-card">
+            <input type="checkbox" 
+                   [id]="'country-' + country.id" 
+                   [value]="country.id"
+                   (change)="onCountryFilterChange($event)"
+                   class="country-checkbox">
+            <label [for]="'country-' + country.id" class="country-label">
+              <div class="country-flag">🏳️</div>
+              <span class="country-name">{{ country.name }}</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
 
-  <!-- Section 2: Liste des You Cookers -->
-  <div class="section cookers-section">
-    <div class="section-header">
-      <h2>YOU COOKERS</h2>
+    <!-- Colonne 2: You Cookers (20%) -->
+    <div class="column cookers-column">
+      <div class="section cookers-section">
+        <div class="section-header">
+          <h2>YOU COOKERS</h2>
+        </div>
+        
+        <!-- Champ de recherche pour les You Cookers -->
+        <div class="search-container">
+          <input type="text" 
+                 [(ngModel)]="searchCooker" 
+                 (input)="onCookerSearch()"
+                 placeholder="Rechercher un You Cooker..."
+                 class="search-input">
+          <i class="pi pi-search search-icon"></i>
+        </div>
+        
+        <div class="cookers-grid">
+          <div *ngFor="let compte of filteredComptes" class="cooker-card">
+            <input type="checkbox" 
+                   [id]="'cooker-' + compte.id" 
+                   [value]="compte.id"
+                   (change)="onCookerFilterChange($event)"
+                   class="cooker-checkbox">
+            <label [for]="'cooker-' + compte.id" class="cooker-label">
+              <div class="cooker-logo">
+                <img *ngIf="compte.photo" 
+                     [src]="getImageUrl(compte.photo)" 
+                     [alt]="compte.denomination"
+                     class="logo-image"
+                     (error)="onImageError($event)">
+                <div *ngIf="!compte.photo" class="logo-placeholder">
+                  <i class="pi pi-user"></i>
+                </div>
+              </div>
+              <div class="cooker-info">
+                <h4 class="cooker-name">{{ compte.denomination }}</h4>
+                <p class="cooker-country">{{ getCompteCountry(compte) }}</p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <!-- Champ de recherche pour les You Cookers -->
-    <div class="search-container">
-      <input type="text" 
-             [(ngModel)]="searchCooker" 
-             (input)="onCookerSearch()"
-             placeholder="Rechercher un You Cooker..."
-             class="search-input">
-      <i class="pi pi-search search-icon"></i>
-    </div>
-    
-    <div class="cookers-grid">
-      <div *ngFor="let compte of filteredComptes" class="cooker-card">
-        <input type="checkbox" 
-               [id]="'cooker-' + compte.id" 
-               [value]="compte.id"
-               (change)="onCookerFilterChange($event)"
-               class="cooker-checkbox">
-        <label [for]="'cooker-' + compte.id" class="cooker-label">
-          <div class="cooker-logo">
-            <img *ngIf="compte.photo" 
-                 [src]="getImageUrl(compte.photo)" 
-                 [alt]="compte.denomination"
-                 class="logo-image"
-                 (error)="onImageError($event)">
-            <div *ngIf="!compte.photo" class="logo-placeholder">
-              <i class="pi pi-user"></i>
+
+    <!-- Colonne 3: Recettes (60%) -->
+    <div class="column recipes-column">
+      <div class="section recipes-section">
+        <div class="section-header">
+          <h2>RECETTES</h2>
+          <div class="recipe-category">
+            <button class="category-btn active">Recettes Populaires</button>
+          </div>
+        </div>
+        
+        <!-- Champ de recherche pour les recettes -->
+        <div class="search-container">
+          <input type="text" 
+                 [(ngModel)]="searchRecipe" 
+                 (input)="onRecipeSearch()"
+                 placeholder="Rechercher une recette..."
+                 class="search-input">
+          <i class="pi pi-search search-icon"></i>
+        </div>
+        
+        <div class="recipes-grid">
+          <div *ngFor="let recipe of filteredRecipes" class="recipe-card" (click)="openRecipeDetail(recipe)">
+            <div class="recipe-image">
+              <img [src]="getRecipeImage(recipe)" [alt]="recipe.name" class="dish-image">
             </div>
+            <div class="recipe-info">
+              <h3 class="recipe-title">{{ recipe.name }}</h3>
+              <p class="recipe-details">
+                {{ getPreparationTime(recipe) }}
+              </p>
+              <p class="recipe-difficulty">
+                Difficulté : {{ getDifficulty(recipe) }}
+              </p>
+              <div class="recipe-meta">
+                <span class="recipe-author">Par: {{ getCompteName(recipe) }}</span>
+              </div>
+            </div>
+            <button class="add-button" (click)="duplicateRecipe(recipe); $event.stopPropagation()" title="Ajouter à mes recettes">
+              <i class="pi pi-plus"></i>
+            </button>
           </div>
-          <div class="cooker-info">
-            <h4 class="cooker-name">{{ compte.denomination }}</h4>
-            <p class="cooker-country">{{ compte.country?.name || 'N/A' }}</p>
-          </div>
-        </label>
+        </div>
+
+        <!-- Message si aucune recette -->
+        <div *ngIf="filteredRecipes.length === 0" class="no-recipes">
+          <p>Aucune recette trouvée avec les filtres sélectionnés.</p>
+        </div>
+
+        <!-- Bouton voir toutes les recettes -->
+        <div class="view-all-section">
+          <button class="view-all-btn" (click)="viewAllRecipes()">
+            Voir toutes les recettes populaires
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Section 3: Liste des recettes -->
-  <div class="section recipes-section">
-    <div class="section-header">
-      <h2>RECETTES</h2>
-      <div class="recipe-category">
-        <button class="category-btn active">Recettes Populaires</button>
+  <!-- Bouton d'action flottant -->
+  <button class="floating-action-btn" (click)="openSettings()">
+    <i class="pi pi-cog"></i>
+  </button>
+</div>
+
+      <!-- Popup pour les détails de recette -->
+      <div *ngIf="showRecipeDetail" class="recipe-detail-overlay" (click)="closeRecipeDetail()">
+        <div class="recipe-detail-container" (click)="$event.stopPropagation()">
+          <!-- En-tête -->
+          <div class="recipe-detail-header">
+            <h2>
+              <i class="pi pi-book mr-2"></i>
+              Détails de la recette: {{ selectedRecipe?.name }}
+            </h2>
+            <button class="close-btn" (click)="closeRecipeDetail()" title="Fermer">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+
+          <!-- Contenu de la popup -->
+          <div class="recipe-detail-content">
+            <!-- GRILLE DES DEUX SECTIONS -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <!-- PREMIÈRE SECTION : INFORMATIONS DE LA RECETTE (GAUCHE) -->
+              <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                <!-- TITRE DE LA RECETTE -->
+                <div class="flex items-center mb-6">
+                  <i class="pi pi-book text-blue-500 mr-3 text-2xl"></i>
+                  <h2 class="text-2xl font-bold text-gray-800">
+                    RECETTE : <span class="text-indigo-600">{{ selectedRecipe?.name }}</span>
+                  </h2>
+                </div>
+
+          <!-- INFORMATIONS DE LA RECETTE -->
+          <div class="space-y-4">
+            <!-- PREMIÈRE LIGNE : POURCENTAGE, STOCK, RECETTE PRINCIPALE -->
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <div class="text-sm text-gray-500 mb-1">POURCENTAGE DE PERTE</div>
+                <div class="text-xl font-bold text-gray-800">{{ ((selectedRecipe?.ratio || 1) - 1) * 100 | number:'1.0-0' }}%</div>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500 mb-1">STOCK</div>
+                <div class="text-xl font-bold text-gray-800">{{ selectedRecipe?.stock | number: '1.1-3' }} KG</div>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500 mb-1">RECETTE PRINCIPALE</div>
+                <div class="text-xl font-bold" [ngClass]="selectedRecipe?.principaleRecipe ? 'text-green-600' : 'text-red-600'">
+                  {{ selectedRecipe?.principaleRecipe ? 'OUI' : 'NON' }}
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <!-- DEUXIÈME LIGNE : PROPRIETAIRE, PARTAGE -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <div class="text-sm text-gray-500 mb-1">PROPRIETAIRE</div>
+                <div class="text-xl font-bold" [ngClass]="selectedRecipe?.owner ? 'text-blue-600' : 'text-gray-500'">
+                  {{ selectedRecipe?.owner ? 'MOI' : 'AUTRE' }}
+                </div>
+              </div>
+              <div>
+                <div class="text-sm text-gray-500 mb-1">PARTAGE</div>
+                <div class="text-xl font-bold" [ngClass]="selectedRecipe?.share ? 'text-green-600' : 'text-red-600'">
+                  {{ selectedRecipe?.share ? 'OUI' : 'NON' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+              <!-- DEUXIÈME SECTION : PHOTO DE LA RECETTE (DROITE) -->
+              <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-sm flex flex-col items-center justify-center">
+                <div class="flex items-center mb-4">
+                  <i class="pi pi-image text-red-500 mr-2 text-xl"></i>
+                  <h3 class="text-lg font-bold text-crimson-700">PHOTO DE LA RECETTE</h3>
+                </div>
+                <div class="border-4 border-gray-300 rounded-lg shadow-lg overflow-hidden bg-gray-100 flex items-center justify-center" 
+                     style="width: 280px; height: 280px;">
+                  <img [src]="getRecipeImageForPopup()" [alt]="selectedRecipe?.name" 
+                       class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                       (error)="onImageErrorPopup($event)"
+                       (load)="onImageLoadPopup($event)">
+                  <!-- Message si pas de photo -->
+                  <div *ngIf="!selectedRecipe?.photo" class="text-center text-gray-500">
+                    <i class="pi pi-image text-4xl mb-2 block"></i>
+                    <p class="text-sm font-medium">Aucune photo disponible</p>
+                  </div>
+                </div>
+              </div>
+      </div>
+
+            <!-- DETAILS DES INGREDIENTS -->
+            <div class="mb-6">
+              <div class="flex items-center mb-4">
+                <i class="pi pi-list text-green-500 mr-2 text-xl"></i>
+                <h3 class="text-lg font-bold text-crimson-700">DETAILS DES INGREDIENTS</h3>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left border border-gray-200 rounded-lg overflow-hidden">
+                  <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                      <th class="px-4 py-3 text-center font-semibold">
+                        <i class="pi pi-tag mr-1"></i>INGRÉDIENT
+                      </th>
+                      <th class="px-4 py-3 text-center font-semibold">
+                        <i class="pi pi-percentage mr-1"></i>PROPORTION
+                      </th>
+                      <th class="px-4 py-3 text-center font-semibold">
+                        <i class="pi pi-cog mr-1"></i>DETAILS PREPARATION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Message de débogage -->
+                    <tr *ngIf="recipeDetails.length === 0" class="border-t border-gray-200">
+                      <td colspan="3" class="px-4 py-3 text-center text-gray-500">
+                        <i class="pi pi-info-circle mr-2"></i>
+                        Aucun ingrédient trouvé pour cette recette
+                      </td>
+                    </tr>
+                    
+                    <tr *ngFor="let detail of recipeDetails; let i = index" class="border-t border-gray-200 hover:bg-gray-50 transition-colors duration-200">
+                      <td class="px-4 py-3 text-center font-medium text-gray-800">
+                        {{ detail?.ingredient?.name || 'Ingrédient inconnu' }}
+                        <small class="block text-gray-400">#{{ i + 1 }}</small>
+                      </td>
+                      <td class="px-4 py-3 text-center">
+                        <span *ngIf="detail?.proportion != null" class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold">
+                          {{ detail.proportion * 100 | number: '1.0-2' }} %
+                        </span>
+                        <span *ngIf="detail?.proportion == null" class="text-gray-400 text-xs">N/A</span>
+                      </td>
+                      <td class="px-4 py-3 text-center text-gray-600">{{ detail?.preparationIngredient || 'Aucun détail' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- DETAILS DE LA CUISINE -->
+            <div class="mb-6">
+              <div class="flex items-center mb-4">
+                <i class="pi pi-home text-purple-500 mr-2 text-xl"></i>
+                <h3 class="text-lg font-bold text-gray-800">DETAILS DE LA CUISINE</h3>
+              </div>
+              <div class="p-6 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg">
+                <div class="text-gray-700 leading-relaxed">
+                  <i class="pi pi-quote-left text-purple-400 mr-2"></i>
+                  {{ selectedRecipe?.detailCuisine || 'Aucun détail de cuisine disponible' }}
+                  <i class="pi pi-quote-right text-purple-400 ml-2"></i>
+                </div>
+              </div>
+            </div>
+    </div>
+  </div>
+</div>
+
+<!-- Interface pour toutes les recettes partagées -->
+<div *ngIf="showAllRecipes" class="all-recipes-overlay" (click)="closeAllRecipes()">
+  <div class="all-recipes-container" (click)="$event.stopPropagation()">
+    <!-- En-tête -->
+    <div class="all-recipes-header">
+      <h2>Toutes les Recettes Populaires</h2>
+      <button class="close-btn" (click)="closeAllRecipes()" title="Fermer">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+
+    <!-- Champ de recherche -->
+    <div class="search-section">
+      <div class="search-wrapper">
+        <input type="text" 
+               [(ngModel)]="searchAllRecipes" 
+               (input)="onAllRecipesSearch()"
+               placeholder="Rechercher une recette ou un auteur..."
+               class="search-input">
+        <i class="pi pi-search search-icon"></i>
       </div>
     </div>
-    
-    <!-- Champ de recherche pour les recettes -->
-    <div class="search-container">
-      <input type="text" 
-             [(ngModel)]="searchRecipe" 
-             (input)="onRecipeSearch()"
-             placeholder="Rechercher une recette..."
-             class="search-input">
-      <i class="pi pi-search search-icon"></i>
+
+    <!-- Indicateur de chargement -->
+    <div *ngIf="loading" class="loading-container">
+      <i class="pi pi-spin pi-spinner"></i>
+      <p>Chargement des recettes...</p>
     </div>
-    
-    <div class="recipes-grid">
-      <div *ngFor="let recipe of filteredRecipes" class="recipe-card" (click)="openRecipeDetail(recipe)">
+
+    <!-- Grille des recettes -->
+    <div *ngIf="!loading && filteredAllRecipes.length > 0" class="all-recipes-grid">
+      <div *ngFor="let recipe of filteredAllRecipes; trackBy: trackByRecipeId" 
+           class="recipe-card" 
+           (click)="openRecipeDetail(recipe)">
         <div class="recipe-image">
-          <img [src]="getRecipeImage(recipe)" [alt]="recipe.name" class="dish-image">
+          <img [src]="getRecipeImage(recipe)" 
+               [alt]="recipe.name" 
+               class="dish-image"
+               (error)="onImageError($event)">
         </div>
         <div class="recipe-info">
           <h3 class="recipe-title">{{ recipe.name }}</h3>
@@ -104,33 +346,30 @@
             {{ getDifficulty(recipe) }}
           </p>
           <div class="recipe-meta">
-            <span class="recipe-author">Par: {{ recipe.user?.nom || 'Anonyme' }}</span>
-          </div>
-          <div class="recipe-compte">
-            <span class="compte-name">{{ getCompteName(recipe) }}</span>
+            <span class="recipe-author">Par: {{ getCompteName(recipe) }}</span>
+            <button class="add-button" 
+                    (click)="duplicateRecipe(recipe); $event.stopPropagation()" 
+                    title="Ajouter à mes recettes">
+              <i class="pi pi-plus"></i>
+            </button>
           </div>
         </div>
-        <button class="add-button" (click)="duplicateRecipe(recipe); $event.stopPropagation()" title="Ajouter à mes recettes">
-          <i class="pi pi-plus"></i>
-        </button>
       </div>
     </div>
 
     <!-- Message si aucune recette -->
-    <div *ngIf="filteredRecipes.length === 0" class="no-recipes">
-      <p>Aucune recette trouvée avec les filtres sélectionnés.</p>
+    <div *ngIf="!loading && filteredAllRecipes.length === 0" class="no-recipes">
+      <i class="pi pi-search no-recipes-icon"></i>
+      <p class="no-recipes-title">Aucune recette trouvée</p>
+      <p class="no-recipes-subtitle">Essayez avec d'autres mots-clés</p>
     </div>
 
-    <!-- Bouton voir toutes les recettes -->
-    <div class="view-all-section">
-      <button class="view-all-btn" (click)="viewAllRecipes()">
-        Voir toutes les recettes populaires
-      </button>
+    <!-- Statistiques -->
+    <div *ngIf="!loading" class="recipes-stats">
+      <p>
+        <i class="pi pi-info-circle stats-icon"></i>
+        {{ filteredAllRecipes.length }} recette(s) trouvée(s) sur {{ allSharedRecipes.length }} recettes populaires
+      </p>
     </div>
   </div>
-
-  <!-- Bouton d'action flottant -->
-  <button class="floating-action-btn" (click)="openSettings()">
-    <i class="pi pi-cog"></i>
-  </button>
 </div>

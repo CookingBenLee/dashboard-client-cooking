@@ -48,6 +48,7 @@ import { Conditioning } from 'src/app/services/conditioning/Conditioning';
 import { ConditioningService } from 'src/app/services/conditioning/conditioning.service';
 import { DishesPriceService } from 'src/app/services/dishes/dishes-price.service';
 import { tr } from 'date-fns/locale';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-recipe',
@@ -114,6 +115,11 @@ export class RecipeComponent {
 
   recipe: Recipe = new Recipe();
   baserecipe: boolean
+  
+  // Propriétés pour la gestion des photos
+  selectedPhoto: File | null = null;
+  photoPreview: string | null = null;
+  
   isError: boolean
   isSuccess: boolean
   erreur: string
@@ -133,6 +139,8 @@ export class RecipeComponent {
   maxRatio = 100
   // this.totalProportion+=detail.proportion
   totalProportion = 0
+  
+  
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private priceService: PriceService,
     private paginateService: PaginateService, private unitService: UnitService, private productService: ProductService, private cdref: ChangeDetectorRef,
     private dialogService: DialogService, private currencyService: CurrencyService, private tokenService: TokenService,
@@ -292,36 +300,44 @@ export class RecipeComponent {
   }
 
   async firstSaveForDetail(detail: DetailsRecipe) {
-    //var oldMax=this.maxRatio;
-
-    //this.maxRatio=1000000000000;
-
+    console.log('Ajout d\'un ingrédient:', detail.ingredient?.name, 'avec proportion:', detail.proportion);
     
-    // let somme = 0
-    // await this.detailRecipesProvisoire.forEach(detail => {
-      
-    //   somme += Number(detail.proportion)
-    // })
-    let somme : number = 0;
-      for (let d of this.detailRecipesProvisoire) {
-        console.log("Proportion avant : "+d.proportion/100+" Somme avant"+somme); // devrait afficher 'number'
-        somme += Number(d.proportion); // Forçage sûr
-        console.log(d.proportion/100+" "+somme); // devrait afficher 'number'
-
-      }
-    if (somme > 100.10) {
-      // if (somme > 1.10) {
-      this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Impossible d\'ajouter ce détail, la proportion totale est dépassée.' });
+    // Vérifier si l'ingrédient existe déjà dans la liste
+    const existingIndex = this.detailRecipes.findIndex(d => 
+      d.ingredient && detail.ingredient && d.ingredient.id === detail.ingredient.id
+    );
+    
+    if (existingIndex !== -1) {
+      // Mettre à jour l'ingrédient existant
+      this.detailRecipes[existingIndex] = detail;
+      console.log("Ingrédient mis à jour à l'index:", existingIndex);
     } else {
-      
-      this.detailRecipes.push(detail)
-      this.detailRecipesProvisoire.push(new DetailsRecipe())
-      this.totalProportion = somme
-      console.log("tOTAL pROP "+this.totalProportion); // devrait afficher 'number'
-
+      // Ajouter un nouvel ingrédient
+      this.detailRecipes.push(detail);
+      console.log("Nouvel ingrédient ajouté");
     }
-
-
+    
+    // Synchroniser avec detailRecipesProvisoire
+    this.detailRecipesProvisoire = [...this.detailRecipes];
+    this.detailRecipesProvisoire.push(new DetailsRecipe());
+    
+    // Recalculer la proportion totale
+    this.totalProportion = 0;
+    this.detailRecipes.forEach(d => {
+      if (d.proportion && d.proportion > 0) {
+        this.totalProportion += d.proportion;
+      }
+    });
+    
+    console.log("Total proportion après ajout:", this.totalProportion);
+    console.log("Nombre d'ingrédients dans detailRecipes:", this.detailRecipes.length);
+    
+    // Message de succès
+    this.messageService.add({ 
+      severity: 'success', 
+      summary: 'Succès', 
+      detail: 'Ingrédient ajouté. Total: ' + this.totalProportion.toFixed(2) + '%' 
+    });
   }
 
   confirmDeleteDetail(detail: DetailsRecipe, i: number) {
@@ -338,10 +354,18 @@ export class RecipeComponent {
 
         this.detailRecipes = this.detailRecipes.filter((item: any) => item !== detail)
         this.detailRecipesProvisoire = this.detailRecipesProvisoire.filter((item: any) => item !== detail)
-        this.messageService.add({ severity: 'success', summary: 'Confirm', detail: 'Detail de commande supprimé' });
+        
+        // Recalculer la proportion totale après suppression
+        this.totalProportion = 0;
+        this.detailRecipes.forEach(d => {
+          if (d.proportion && d.proportion > 0) {
+            this.totalProportion += d.proportion;
+          }
+        });
+        
+        this.messageService.add({ severity: 'success', summary: 'Confirm', detail: 'Ingrédient supprimé' });
         console.log(this.detailRecipes);
         console.log(this.detailRecipesProvisoire);
-        this.calculInfo()
 
       },
       reject: (type: any) => {
@@ -363,9 +387,13 @@ export class RecipeComponent {
   async save() {
     //console.log(this.reference)
 
-    if(this.totalProportion > 100.10 || this.totalProportion < 99.90){
-      // if(this.totalProportion > 1.10 || this.totalProportion < 0.99){
-      this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Impossible d\'ajouter cette recette, la proportion doit être comprise entre 99.90 et 100.10.' });
+    // Validation des proportions
+    if(this.totalProportion < 99 || this.totalProportion > 110){
+      this.messageService.add({ 
+        severity: 'error', 
+        summary: 'Erreur de proportion', 
+        detail: 'La proportion totale doit être comprise entre 99% et 110%. Total actuel: ' + this.totalProportion.toFixed(2) + '%' 
+      });
       return;
     }
     this.isError = false
@@ -400,15 +428,30 @@ export class RecipeComponent {
       return;
     }*/
     else if(this.base.name === "NON") this.recipe.principaleRecipe = false;
-    // ✅ 🔁 Conversion des proportions en décimal
-      this.detailRecipes.forEach(detail => {
-        detail.proportion = Number(detail.proportion) / 100;
+    // ✅ 🔁 Conversion des proportions en décimal (seulement une fois)
+      this.detailRecipesProvisoire.forEach(detail => {
+        if (detail.proportion && detail.proportion > 0) {
+          detail.proportion = Number(detail.proportion) / 100;
+          console.log('Conversion proportion:', detail.ingredient?.name, 'de', detail.proportion * 100, '% vers', detail.proportion);
+        }
       });  
 
       this.recipeService.create(this.recipe).then(async (data) => {
         //this.getAll();
         this.loading = false
         console.log(data);
+        
+        // Gérer l'upload de photo si une photo a été sélectionnée
+        if (this.selectedPhoto && data.data && data.data.id) {
+          try {
+            await this.recipeService.uploadPhoto(this.selectedPhoto, data.data.id);
+            console.log('Photo uploadée avec succès');
+          } catch (error) {
+            console.error('Erreur lors de l\'upload de la photo:', error);
+            this.messageService.add({key:'tc', severity: 'warn', summary: 'Attention', detail: 'Erreur lors de l\'upload de la photo'});
+          }
+        }
+        
         this.code = ""
         this.name = ""
         this.ratio = 0
@@ -427,7 +470,9 @@ export class RecipeComponent {
 
         if(this.base.name === "NON") this.openDialogProduct(await this.dishesPriceService.getDetailRecipeWithRecipeInfos(data.data));
 
-        //this.ngOnInit()
+        // Rafraîchir la liste des recettes après l'enregistrement
+        this.getAll();
+        
         this.activeIndex = 0
         this.resetFields();
         this.recipe = new Recipe()
@@ -716,11 +761,16 @@ export class RecipeComponent {
     this.ratio = 0;
     this.detailCuisine = "";
     this.detailRecipes = [];
-    this.detailRecipesProvisoire = [];
+    this.detailRecipesProvisoire = [new DetailsRecipe()];
     this.showAddDetailRecipe = false;
     this.base = {}; // Réinitialiser la sélection
     this.recipe = new Recipe();
     this.totalProportion = 0;
+    
+    // Réinitialiser les champs photo
+    this.selectedPhoto = null;
+    this.photoPreview = null;
+    this.recipe.photo = '';
   }
   
   reset() {
@@ -743,7 +793,7 @@ export class RecipeComponent {
   showDishesDetail(e: any, recipe: Recipe) {
     this.ref = this.dialogService.open(DetailrecipeComponent, {
       header: 'DETAILS DE LA RECETTE ',
-      width: '60%',
+      width: '70%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
@@ -767,40 +817,78 @@ export class RecipeComponent {
 
 
   saveAllDetail(recipe: Recipe) {
-    this.detailRecipes.forEach(detail => {
+    console.log('=== DÉBUT SAUVEGARDE DÉTAILS ===');
+    console.log('Recette ID:', recipe.id);
+    console.log('Nombre d\'ingrédients dans detailRecipes:', this.detailRecipes.length);
+    
+    // Afficher tous les ingrédients avant filtrage
+    this.detailRecipes.forEach((detail, index) => {
+      console.log(`Ingrédient ${index + 1}:`, {
+        ingredient: detail.ingredient?.name,
+        proportion: detail.proportion,
+        hasIngredient: !!detail.ingredient,
+        hasProportion: !!detail.proportion,
+        proportionValue: detail.proportion
+      });
+    });
+    
+    // Filtrer les ingrédients valides (ceux qui ont un ingredient et une proportion)
+    const validDetails = this.detailRecipes.filter(detail => 
+      detail.ingredient && detail.proportion && detail.proportion > 0
+    );
+    
+    console.log('Ingrédients valides après filtrage:', validDetails.length);
+    
+    if (validDetails.length === 0) {
+      console.log('❌ Aucun ingrédient valide à sauvegarder');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Attention',
+        detail: 'Aucun ingrédient valide trouvé pour la sauvegarde'
+      });
+      return;
+    }
+    
+    console.log('=== SAUVEGARDE DES INGRÉDIENTS ===');
+    validDetails.forEach((detail, index) => {
+      console.log(`Sauvegarde ingrédient ${index + 1}/${validDetails.length}:`, {
+        name: detail.ingredient?.name,
+        proportion: detail.proportion,
+        proportionPercent: detail.proportion * 100 + '%',
+        recipeId: recipe.id
+      });
+      
       detail.recipe = recipe;
+      // Les proportions ont déjà été converties en décimal plus haut
+      
       this.detailRecipeService.create(detail).then(async data => {
-
-        this.getAll();
-        console.log(data);
-
-        this.loading = false
-        //this.isSuccess=true
-        this.sucess = "detailPurchase created !"
-        // this.price=0
-        // this.geolocation=0
-        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: detail?.ingredient?.name + ' ' + detail.proportion + ' ' + detail.ingredient.code + ' creer' });
-        this.showAddDetailRecipe = !this.showAddDetailRecipe
-        this.detailRecipesProvisoire.push(new DetailsRecipe());
-
-        //open dialog 
-        this.recipe.principaleRecipe = true;
-        //this.productDialog = true;
-
+        console.log('✅ Ingrédient sauvegardé avec succès:', data);
+        this.messageService.add({ 
+          key: 'tc', 
+          severity: 'success', 
+          summary: 'Success', 
+          detail: detail?.ingredient?.name + ' (' + (detail.proportion * 100).toFixed(2) + '%) créé' 
+        });
         
-        return;
+        // Rafraîchir la liste après la sauvegarde de chaque ingrédient
+        this.getAll();
       }, (error: any) => {
-        //this.isError=true
-        if (error.error.message == 'ko') {
+        console.error('❌ Erreur lors de la sauvegarde de l\'ingrédient:', error);
+        if (error.error && error.error.message == 'ko') {
           this.erreur = error.error.data
         } else {
-          this.erreur = "Server related error"
+          this.erreur = "Erreur serveur"
         }
-        this.loading = false
-        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: this.erreurEdit + detail?.ingredient?.name + ' ' + detail.proportion + ' ' + detail.ingredient.code });
+        this.messageService.add({ 
+          key: 'tc', 
+          severity: 'error', 
+          summary: 'Error', 
+          detail: this.erreur + ' - ' + detail?.ingredient?.name + ' (' + (detail.proportion * 100).toFixed(2) + '%)' 
+        });
       });
-
-    })
+    });
+    
+    console.log('=== FIN SAUVEGARDE DÉTAILS ===');
   }
 
 
@@ -897,58 +985,20 @@ export class RecipeComponent {
   }
   async changeDetailQuantite(detail: any, i: any, edit: Boolean) {
     this.quantite = 0
-    this.detailRecipesProvisoire.forEach(detail => {
-      this.quantite += detail.proportion
+    this.totalProportion = 0
+    
+    this.detailRecipes.forEach(detail => {
+      if (detail.proportion && detail.proportion > 0) {
+        this.quantite += detail.proportion
+        this.totalProportion += detail.proportion
+      }
     })
 
-    if (edit) {
-      //verification de la somme des details sa doit etre <= 100
-      var somme = 0
-      //this.totalProportion=0
-      await this.detailRecipesProvisoire.forEach(detail => {
-        somme += detail.proportion
-        // this.totalProportion+=detail.proportion
-      })
-
-      if (somme > 100) {
-        this.messageService.add({ severity: 'info', summary: 'Total Proportion', detail: "La somme des proportions ne doit pas depassé 100." });
-        //this.maxRatio=Math.abs(100-somme%100)
-      }
-
-      if (detail.proportion < 100) {
-        this.maxRatio = 100 - (somme - detail.proportion)
-      } else {
-        somme -= detail.proportion
-        var m = detail.proportion % 100
-        somme += m
-        this.maxRatio = 100 - (somme - m)
-        //this.detailDishesProvisoire[this.detailDishesProvisoire.length-1].proportion=this.maxRatio
-      }
-
-
-      //calcul du net
-      //  var poids=this.detailDishesProvisoire[i].poids
-      //  var qte=this.detailDishesProvisoire[i].proportion
-      //  this.detailDishesProvisoire[i].net=poids*qte/100
-
-      ///////
-      var p = this.detailRecipesProvisoire[i].ingredient
-      console.log(p);
-      // if(p?.stock?.quantity <=0){
-      //   this.messageService.add({ severity: 'info', summary: 'Cancel', detail: "Ce produit n'a pas de stock disponible" });
-      // }
-      // if(this.detailDishesProvisoire[i].quantite>p?.stock?.quantity){
-      //   this.messageService.add({ severity: 'info', summary: 'Cancel', detail: "Stock du produit insufisant !" });
-      // }
+    console.log("Recalcul de la proportion totale:", this.totalProportion);
+    
+    if (edit && detail && i !== null) {
+      this.changeDetailNet(detail, i, true);
     }
-    this.changeDetailNet(detail, i, true)
-
-
-
-
-    //this.unit=product.unit
-    ////this.totalPrice=value*this.quantity
-    //this.detailDishesProvisoire[i].unit=this.detailDishesProvisoire[i].ingredient?.unit
   }
   changeDetailPrepaInit(detail: any, i: any, edit: Boolean) {
     // this.preparationInitial=0
@@ -1058,6 +1108,46 @@ export class RecipeComponent {
         dish.share = previousValue;
       }
     });
+  }
+
+  // Méthodes pour la gestion des photos
+  onPhotoSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedPhoto = file;
+      
+      // Créer un aperçu de l'image
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.photoPreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      
+      // Stocker le nom du fichier dans la recette
+      this.recipe.photo = file.name;
+    }
+  }
+
+  getPhotoUrl(): string {
+    if (this.photoPreview) {
+      return this.photoPreview;
+    }
+    if (this.recipe.photo) {
+      return `${environment.apiUrl}/recipe/uploaddir/${this.recipe.photo}`;
+    }
+    return '';
+  }
+
+  removePhoto(): void {
+    this.selectedPhoto = null;
+    this.photoPreview = null;
+    this.recipe.photo = '';
+    
+    // Réinitialiser l'input file
+    const fileInput = document.getElementById('photo') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
 }

@@ -39,5 +39,6 @@ export class Recipe{
   stockApres:number
   qteEstimee:number
   user: any
+  photo?: string
 
 }
