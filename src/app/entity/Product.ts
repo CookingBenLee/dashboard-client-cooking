@@ -26,5 +26,6 @@ export class Product{
   priceList:PristineChangeEvent[]
   stockList:Stock;
   isActive?:boolean;
-  currency?: Currency[]
+  currency?: Currency[];
+  user?: any; // Utilisateur propriétaire du produit
 }

@@ -97,6 +97,10 @@ motRecherche=''
 
 recipe: Recipe=new Recipe();
 
+// Propriétés pour la gestion des photos
+selectedPhoto: File | null = null;
+photoPreview: string | null = null;
+
 isError:boolean
 isSuccess:boolean
 erreur:string
@@ -362,6 +366,18 @@ openDialogProduct(event: any){
     console.log(this.recipe)
     this.recipe.categoryRecipe=this.categorySelected
     var success=false
+    
+    // Gérer l'upload de photo si une photo a été sélectionnée
+    if (this.selectedPhoto && this.recipe.id) {
+      try {
+        await this.recipeService.uploadPhoto(this.selectedPhoto, this.recipe.id);
+        console.log('Photo uploadée avec succès');
+      } catch (error) {
+        console.error('Erreur lors de l\'upload de la photo:', error);
+        this.messageService.add({key:'tc', severity: 'warn', summary: 'Attention', detail: 'Erreur lors de l\'upload de la photo'});
+      }
+    }
+    
     if (this.base.name === "OUI") {
       this.recipe.principaleRecipe = true;
       this.productDialog = true;
@@ -626,6 +642,46 @@ openDialogProduct(event: any){
     // await this.changeDetailNet()
     //await this.changeDetailQuantite()
     //await this.changeDetailPrepaInit()
+  }
+
+  // Méthodes pour la gestion des photos
+  onPhotoSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedPhoto = file;
+      
+      // Créer un aperçu de l'image
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.photoPreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      
+      // Stocker le nom du fichier dans la recette
+      this.recipe.photo = file.name;
+    }
+  }
+
+  getPhotoUrl(): string {
+    if (this.photoPreview) {
+      return this.photoPreview;
+    }
+    if (this.recipe.photo) {
+      return `http://localhost:8080/recipe/uploaddir/${this.recipe.photo}`;
+    }
+    return '';
+  }
+
+  removePhoto(): void {
+    this.selectedPhoto = null;
+    this.photoPreview = null;
+    this.recipe.photo = '';
+    
+    // Réinitialiser l'input file
+    const fileInput = document.getElementById('photo') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
 }

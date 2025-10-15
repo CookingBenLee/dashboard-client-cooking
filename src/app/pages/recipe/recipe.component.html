@@ -103,6 +103,30 @@
                 </div>
               </div>
 
+              <!-- Champ photo -->
+              <div class="field col-12">
+                <label for="photo">PHOTO DE LA RECETTE</label>
+                <div class="photo-upload-container">
+                  <input type="file" 
+                         id="photo" 
+                         name="photo" 
+                         accept="image/*" 
+                         (change)="onPhotoSelected($event)"
+                         class="photo-input"
+                         #photoInput>
+                  <div class="photo-preview" *ngIf="recipe.photo">
+                    <img [src]="getPhotoUrl()" [alt]="name" class="photo-image">
+                    <button type="button" class="remove-photo-btn" (click)="removePhoto()">
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+                  <div class="photo-placeholder" *ngIf="!recipe.photo">
+                    <i class="pi pi-image"></i>
+                    <span>Cliquez pour sélectionner une photo</span>
+                  </div>
+                </div>
+              </div>
+
               <h5 class="dialog-title">COMPOSITION DES INGREDIENTS LA RECETTE</h5>
              
                 <button *ngIf="false" pButton label="AJOUTER UN INGREDIENT" type="button" [loading]="loading"
@@ -135,7 +159,7 @@
                             name="quantity{{detailRecipesProvisoire.length-1}}"
                             [(ngModel)]="detailRecipesProvisoire[detailRecipesProvisoire.length-1].proportion"
                             (ngModelChange)="changeDetailQuantite(detailRecipesProvisoire[detailRecipesProvisoire.length-1],detailRecipesProvisoire.length-1,true)"
-                            [showButtons]="true" [min]="0"></p-inputNumber>
+                            [showButtons]="true" [min]="0" [max]="110"></p-inputNumber>
                         </div>
                   
                         <!-- Preparation textarea -->
@@ -188,7 +212,17 @@
                 <!-- Total Row -->
                 <div class="info-row total-row">
                   <div class="info-cell">TOTAL</div>
-                  <div class="info-cell">{{ totalProportion }}%</div>
+                  <div class="info-cell" 
+                       [ngClass]="{
+                         'text-green-600': totalProportion >= 99 && totalProportion <= 110,
+                         'text-orange-500': totalProportion < 99,
+                         'text-red-600': totalProportion > 110
+                       }">
+                    {{ totalProportion }}%
+                    <span *ngIf="totalProportion < 99" class="text-xs ml-2">(Ajoutez des ingrédients)</span>
+                    <span *ngIf="totalProportion > 110" class="text-xs ml-2">(Réduisez les proportions)</span>
+                    <span *ngIf="totalProportion >= 99 && totalProportion <= 110" class="text-xs ml-2">(✓ Valide)</span>
+                  </div>
                   <div class="info-cell"></div> <!-- Empty cell for "Préparation" -->
                   <div class="info-cell"></div> <!-- Empty cell for "Actions" -->
                 </div>

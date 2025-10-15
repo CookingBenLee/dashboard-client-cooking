@@ -170,10 +170,22 @@ export class DetailrecipeComponent {
     }
 
   async ngOnInit(): Promise<void> {
+    console.log('Recipe dans ngOnInit:', this.recipe);
+    console.log('Recipe ID:', this.recipe.id);
+    
     await this.getAllCategory()
 
-
-    await this.getAll(this.recipe.id)
+    if (this.recipe && this.recipe.id) {
+      await this.getAll(this.recipe.id)
+    } else {
+      console.error('Recipe ID non défini');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erreur',
+        detail: 'ID de la recette non défini'
+      });
+    }
+    
     //for details
     await this.getProducts()
     this.getUnits()
@@ -184,15 +196,52 @@ export class DetailrecipeComponent {
 
      //recuperation de valeurs
      async getAll(id:any){
-      await this.detailRecipeService.byRecipe(this.recipe.id).then(data =>{
-        console.log(data)
-
-        data.forEach(detail => {
-          this.detailRecipe2.push(detail)
-          this.detailRecipeProvisoire2.push(detail)
-          this.totalProportion+=detail.proportion
+      console.log('Chargement des détails pour la recette ID:', id);
+      console.log('Recipe ID utilisé:', this.recipe.id);
+      
+      if (!this.recipe.id) {
+        console.error('Recipe ID est undefined');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'ID de la recette non défini pour charger les détails'
         });
+        return;
+      }
+      
+      await this.detailRecipeService.byRecipe(this.recipe.id).then(data =>{
+        console.log('Données reçues du service:', data);
+        console.log('Type de données:', typeof data);
+        console.log('Longueur des données:', data ? data.length : 'undefined');
+        
+        // Vider les tableaux avant de les remplir
+        this.detailRecipe2 = [];
+        this.detailRecipeProvisoire2 = [];
+        this.totalProportion = 0;
+
+        if (data && data.length > 0) {
+          console.log('Traitement de', data.length, 'détails');
+          data.forEach((detail, index) => {
+            console.log(`Détail ${index + 1}:`, detail);
+            this.detailRecipe2.push(detail)
+            this.detailRecipeProvisoire2.push(detail)
+            this.totalProportion += detail.proportion || 0
+          });
+        } else {
+          console.log('Aucun détail trouvé pour cette recette');
+        }
+        
         this.detailRecipeProvisoire2.push(new DetailsRecipe())
+        console.log('Tableau final detailRecipe2:', this.detailRecipe2);
+        console.log('Nombre d\'éléments dans detailRecipe2:', this.detailRecipe2.length);
+        console.log('Total proportion:', this.totalProportion);
+      }).catch(error => {
+        console.error('Erreur lors du chargement des détails:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Impossible de charger les détails de la recette'
+        });
       })
     }
 
@@ -414,5 +463,30 @@ export class DetailrecipeComponent {
       await this.changeDetailNet()
       await this.changeDetailQuantite()
       await this.changeDetailPrepaInit()
+    }
+
+    // Méthode pour obtenir l'URL de l'image de la recette
+    getRecipeImage(): string {
+      console.log('Recipe photo:', this.recipe.photo);
+      if (this.recipe.photo && this.recipe.photo.trim() !== '') {
+        const imageUrl = `http://localhost:5000/recipe/uploaddir/${this.recipe.photo}`;
+        console.log('Image URL:', imageUrl);
+        return imageUrl;
+      }
+      console.log('Utilisation de l\'image par défaut');
+      // Utiliser une image SVG en base64 comme fallback
+      return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNTAgMTAwTDEyMCA3MEgxODBMMTUwIDEwMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHN2ZyB4PSIxNDAiIHk9IjkwIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiPgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSI4IiBmaWxsPSIjNkI3MjgwIi8+Cjwvc3ZnPgo8dGV4dCB4PSIxNTAiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNkI3MjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BdWN1bmUgaW1hZ2U8L3RleHQ+Cjwvc3ZnPgo=';
+    }
+
+    // Gestion des événements d'image
+    onImageError(event: any) {
+      console.error('Erreur lors du chargement de l\'image:', event);
+      console.log('Tentative de fallback vers une image par défaut');
+      // Utiliser une image de fallback en base64 ou une URL publique
+      event.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNTAgMTAwTDEyMCA3MEgxODBMMTUwIDEwMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHN2ZyB4PSIxNDAiIHk9IjkwIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiPgo8Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSI4IiBmaWxsPSIjNkI3MjgwIi8+Cjwvc3ZnPgo8dGV4dCB4PSIxNTAiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNkI3MjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BdWN1bmUgaW1hZ2U8L3RleHQ+Cjwvc3ZnPgo=';
+    }
+
+    onImageLoad(event: any) {
+      console.log('Image chargée avec succès:', event.target.src);
     }
 }
