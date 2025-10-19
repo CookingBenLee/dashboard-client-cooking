@@ -75,7 +75,7 @@ export class UpdateCompteUserDialogComponent implements OnInit {
 
     // Prévisualisation de l'image si déjà existante
     this.imagePreview = this.data?.photo
-      ? 'http://localhost:5000/uploads/logos/' + this.data.photo
+      ? `${environment.apiUrl}/uploads/logos/` + this.data.photo
       : null;
   }
 

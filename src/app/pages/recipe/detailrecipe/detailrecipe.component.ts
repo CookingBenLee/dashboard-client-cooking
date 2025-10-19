@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
@@ -479,7 +480,7 @@ export class DetailrecipeComponent {
     getRecipeImage(): string {
       console.log('Recipe photo:', this.recipe.photo);
       if (this.recipe.photo && this.recipe.photo.trim() !== '') {
-        const imageUrl = `http://localhost:5000/recipe/uploaddir/${this.recipe.photo}`;
+        const imageUrl = `${environment.apiUrl}/recipe/uploaddir/${this.recipe.photo}`;
         console.log('Image URL:', imageUrl);
         return imageUrl;
       }

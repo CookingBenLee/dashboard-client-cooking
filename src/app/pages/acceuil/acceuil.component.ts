@@ -198,7 +198,7 @@ export class AcceuilComponent implements OnInit {
     console.log('Chargement des comptes avec mapping des utilisateurs...');
     
     // Appeler le nouvel endpoint backend
-    this.http.get<any>('http://localhost:5000/compteuser/with-users').subscribe({
+    this.http.get<any>(`${environment.apiUrl}/compteuser/with-users`).subscribe({
       next: (response: any) => {
         console.log('Réponse du serveur:', response);
         
@@ -355,7 +355,7 @@ export class AcceuilComponent implements OnInit {
   getImageUrl(filename: string): string {
     // Utiliser la route uploaddir du backend
     if (filename && filename.trim() !== '') {
-      return `http://localhost:5000/compteuser/uploaddir/${filename}`;
+      return `${environment.apiUrl}/compteuser/uploaddir/${filename}`;
     }
     return 'assets/images/default-logo.png'; // Image par défaut si pas de photo
   }
