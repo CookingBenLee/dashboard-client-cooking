@@ -13,10 +13,9 @@ export class PreparationRecipeService {
 
   //create
   create(preparation_recipe:PreparationRecipe){
-    return this.http.post<any>(`${this.env.apiUrl}/preparation_recipe/new`,preparation_recipe)
-    .toPromise()
-    .then()
-    .then();
+    console.log('📤 Envoi de la préparation au backend:', preparation_recipe);
+    return this.http.post<any>(`${this.env.apiUrl}/preparation_recipe/new`, preparation_recipe)
+    .toPromise();
   }
   //read
 
@@ -50,17 +49,15 @@ export class PreparationRecipeService {
 
   //update
   update(idpreparation_recipe:number |undefined, preparation_recipe:PreparationRecipe){
-    return this.http.put<any>(`${this.env.apiUrl}/preparation_recipe/update/${idpreparation_recipe}`,preparation_recipe)
-    .toPromise()
-    .then()
-    .then();
+    console.log('📤 Mise à jour de la préparation:', preparation_recipe);
+    return this.http.put<any>(`${this.env.apiUrl}/preparation_recipe/update/${idpreparation_recipe}`, preparation_recipe)
+    .toPromise();
   }
 
   ///delete
   delete(id:number | undefined) {
-  return this.http.delete<any>(`${this.env.apiUrl}/preparation_recipe/delete/${id}`)
-  .toPromise()
-        .then()
-        .then();
+    console.log('🗑️ Suppression de la préparation ID:', id);
+    return this.http.delete<any>(`${this.env.apiUrl}/preparation_recipe/delete/${id}`)
+    .toPromise();
   }
 }

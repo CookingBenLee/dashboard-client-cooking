@@ -170,15 +170,17 @@ export class DetailrecipeComponent {
     }
 
   async ngOnInit(): Promise<void> {
-    console.log('Recipe dans ngOnInit:', this.recipe);
-    console.log('Recipe ID:', this.recipe.id);
+    console.log('🔍 Recipe dans ngOnInit:', this.recipe);
+    console.log('🔍 Recipe ID:', this.recipe.id);
+    console.log('🔍 Recipe name:', this.recipe.name);
     
     await this.getAllCategory()
 
     if (this.recipe && this.recipe.id) {
+      console.log('🚀 Chargement des ingrédients pour la recette:', this.recipe.name);
       await this.getAll(this.recipe.id)
     } else {
-      console.error('Recipe ID non défini');
+      console.error('❌ Recipe ID non défini');
       this.messageService.add({
         severity: 'error',
         summary: 'Erreur',
@@ -196,11 +198,13 @@ export class DetailrecipeComponent {
 
      //recuperation de valeurs
      async getAll(id:any){
+      console.log('🔍 === DÉBUT CHARGEMENT DÉTAILS ===');
       console.log('Chargement des détails pour la recette ID:', id);
       console.log('Recipe ID utilisé:', this.recipe.id);
+      console.log('Recipe object:', this.recipe);
       
       if (!this.recipe.id) {
-        console.error('Recipe ID est undefined');
+        console.error('❌ Recipe ID est undefined');
         this.messageService.add({
           severity: 'error',
           summary: 'Erreur',
@@ -209,6 +213,7 @@ export class DetailrecipeComponent {
         return;
       }
       
+      console.log('📡 Appel du service byRecipe avec ID:', this.recipe.id);
       await this.detailRecipeService.byRecipe(this.recipe.id).then(data =>{
         console.log('Données reçues du service:', data);
         console.log('Type de données:', typeof data);
@@ -228,7 +233,12 @@ export class DetailrecipeComponent {
             this.totalProportion += detail.proportion || 0
           });
         } else {
-          console.log('Aucun détail trouvé pour cette recette');
+          console.log('⚠️ Aucun ingrédient trouvé pour cette recette');
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Information',
+            detail: 'Cette recette n\'a pas encore d\'ingrédients associés'
+          });
         }
         
         this.detailRecipeProvisoire2.push(new DetailsRecipe())
@@ -489,4 +499,5 @@ export class DetailrecipeComponent {
     onImageLoad(event: any) {
       console.log('Image chargée avec succès:', event.target.src);
     }
+
 }

@@ -13,10 +13,9 @@ export class DetailsrecipeService {
 
   //create
   create(detailrecipe:DetailsRecipe){
-    return this.http.post<any>(`${this.env.apiUrl}/detailrecipe/new`,detailrecipe)
-    .toPromise()
-    .then()
-    .then();
+    console.log('📤 Création d\'un détail de recette:', detailrecipe);
+    return this.http.post<any>(`${this.env.apiUrl}/detailrecipe/new`, detailrecipe)
+    .toPromise();
   }
   //read
   getAll() {
@@ -67,17 +66,15 @@ export class DetailsrecipeService {
 
   //update
   update(iddetailrecipe:number |undefined, detailrecipe:DetailsRecipe){
-    return this.http.put<any>(`${this.env.apiUrl}/detailrecipe/update/${iddetailrecipe}`,detailrecipe)
-    .toPromise()
-    .then()
-    .then();
+    console.log('📤 Mise à jour d\'un détail de recette:', detailrecipe);
+    return this.http.put<any>(`${this.env.apiUrl}/detailrecipe/update/${iddetailrecipe}`, detailrecipe)
+    .toPromise();
   }
 
   ///delete
   delete(id:number | undefined) {
-  return this.http.delete<any>(`${this.env.apiUrl}/detailrecipe/delete/${id}`)
-  .toPromise()
-        .then()
-        .then();
+    console.log('🗑️ Suppression d\'un détail de recette ID:', id);
+    return this.http.delete<any>(`${this.env.apiUrl}/detailrecipe/delete/${id}`)
+    .toPromise();
   }
 }

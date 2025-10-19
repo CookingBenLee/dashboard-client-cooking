@@ -103,6 +103,7 @@ export class AcceuilComponent implements OnInit {
   allSharedRecipes: Recipe[] = [];
   filteredAllRecipes: Recipe[] = [];
   searchAllRecipes: string = '';
+  selectedRecipeForDetail: Recipe | null = null;
 
   // Popup pour les détails de recette
   showRecipeDetail = false;
@@ -205,6 +206,14 @@ export class AcceuilComponent implements OnInit {
           this.allComptes = response.data.comptes;
           this.filteredComptes = response.data.comptes;
           
+          // Log pour déboguer la structure des données
+          console.log('🔍 Structure des comptes chargés:', this.allComptes);
+          if (this.allComptes.length > 0) {
+            console.log('🔍 Premier compte:', this.allComptes[0]);
+            console.log('🔍 Premier compte - country:', this.allComptes[0].country);
+            console.log('🔍 Premier compte - address:', this.allComptes[0].address);
+          }
+          
           // Charger le mapping des utilisateurs
           if (response.data.userMapping) {
             this.userMapping.clear();
@@ -286,12 +295,9 @@ export class AcceuilComponent implements OnInit {
     // Filtrage par pays sélectionnés (seulement si des pays sont sélectionnés)
     if (this.selectedCountries.length > 0) {
       filteredComptes = this.allComptes.filter(compte => {
-        // Vérifier si le compte appartient à l'un des pays sélectionnés
-        // Utiliser directement le champ country du service
-        if (compte.country && compte.country.id) {
-          return this.selectedCountries.includes(compte.country.id);
-        }
-        return false;
+        const countryId = this.getCompteCountryId(compte);
+        console.log('🔍 Filtrage compte:', compte.denomination, 'Country ID:', countryId, 'Pays sélectionnés:', this.selectedCountries);
+        return countryId ? this.selectedCountries.includes(countryId) : false;
       });
       console.log('Pays sélectionnés:', this.selectedCountries);
       console.log('Comptes filtrés par pays:', filteredComptes.length);
@@ -316,9 +322,11 @@ export class AcceuilComponent implements OnInit {
     
     // Filtrage par cuisiniers sélectionnés
     if (this.selectedCookers.length > 0) {
-      recipesToFilter = recipesToFilter.filter(recipe => 
-        this.selectedCookers.includes(recipe.user?.id || 0)
-      );
+      recipesToFilter = recipesToFilter.filter(recipe => {
+        // Utiliser compteuser_id en priorité, puis user.id en fallback
+        const compteUserId = recipe.compteuser_id || recipe.user?.id;
+        return this.selectedCookers.includes(compteUserId || 0);
+      });
     }
     
     // Filtrage par recherche de recettes
@@ -354,44 +362,121 @@ export class AcceuilComponent implements OnInit {
 
 
   getCompteName(recipe: Recipe): string {
-    if (!recipe.user?.id) {
-      return 'Utilisateur inconnu';
-    }
-    
-    // Méthode 1: Utiliser le mapping des utilisateurs
-    for (const [compteId, userIds] of this.userMapping.entries()) {
-      if (userIds.includes(recipe.user.id)) {
-        const compte = this.allComptes.find(c => c.id === compteId);
-        if (compte) {
-          console.log('Recette:', recipe.name, 'User ID:', recipe.user.id, 'Compte trouvé via mapping:', compte.denomination);
-          return compte.denomination || 'Compte inconnu';
-        }
+    // Utiliser directement le champ compteuser_id si disponible
+    if (recipe.compteuser_id) {
+      const compte = this.allComptes.find(c => c.id === recipe.compteuser_id);
+      if (compte) {
+        console.log('Recette:', recipe.name, 'CompteUser ID:', recipe.compteuser_id, 'Compte trouvé:', compte.denomination);
+        return compte.denomination || 'Compte inconnu';
       }
     }
     
-    // Méthode 2: Chercher par user (relation directe) - fallback
-    let compte = this.allComptes.find(c => {
-      return c.user && c.user.id === recipe.user?.id;
-    });
-    
-    // Méthode 3: Fallback si aucune relation trouvée
-    if (!compte) {
-      console.log('Aucun compte trouvé pour l\'utilisateur:', recipe.user?.id);
+    // Fallback: utiliser l'ancienne logique avec user.id
+    if (recipe.user?.id) {
+      // Méthode 1: Utiliser le mapping des utilisateurs
+      for (const [compteId, userIds] of this.userMapping.entries()) {
+        if (userIds.includes(recipe.user.id)) {
+          const compte = this.allComptes.find(c => c.id === compteId);
+          if (compte) {
+            console.log('Recette:', recipe.name, 'User ID:', recipe.user.id, 'Compte trouvé via mapping:', compte.denomination);
+            return compte.denomination || 'Compte inconnu';
+          }
+        }
+      }
+      
+      // Méthode 2: Chercher par user (relation directe) - fallback
+      let compte = this.allComptes.find(c => {
+        return c.user && c.user.id === recipe.user?.id;
+      });
+      
+      if (compte) {
+        console.log('Recette:', recipe.name, 'User ID:', recipe.user?.id, 'Compte trouvé via user:', compte.denomination);
+        return compte.denomination || 'Compte inconnu';
+      }
     }
     
-    console.log('Recette:', recipe.name, 'User ID:', recipe.user?.id, 'Compte trouvé:', compte?.denomination);
-    console.log('Mapping disponible:', Array.from(this.userMapping.entries()));
-    
-    return compte?.denomination || 'Compte inconnu';
+    console.log('Aucun compte trouvé pour la recette:', recipe.name, 'CompteUser ID:', recipe.compteuser_id, 'User ID:', recipe.user?.id);
+    return 'Compte inconnu';
+  }
+
+  getCompteCountryId(compte: CompteUserModel): number | null {
+    // Cas 1: country est un objet avec id
+    if (compte.country && typeof compte.country === 'object' && compte.country.id) {
+      return compte.country.id;
+    }
+    // Cas 2: country est directement un id
+    else if (compte.country && typeof compte.country === 'number') {
+      return compte.country;
+    }
+    // Cas 3: address contient country
+    else if (compte.address && typeof compte.address === 'object' && (compte.address as any).country) {
+      const addressCountry = (compte.address as any).country;
+      if (addressCountry.id) {
+        return addressCountry.id;
+      } else if (typeof addressCountry === 'number') {
+        return addressCountry;
+      }
+    }
+    return null;
   }
 
   getCompteCountry(compte: CompteUserModel): string {
-    // Dans le service, address est un string, pas un objet
-    // Utiliser directement le champ country
-    if (compte.country) {
-      return compte.country.name || 'N/A';
+    console.log('🔍 getCompteCountry - Compte:', compte.denomination, 'Country:', compte.country, 'Type:', typeof compte.country);
+    
+    // Vérifier si country existe et a une propriété name
+    if (compte.country && typeof compte.country === 'object') {
+      console.log('🔍 Country object:', compte.country);
+      return compte.country.name || compte.country || 'N/A';
     }
-    return 'N/A';
+    // Si country est directement une string
+    if (compte.country && typeof compte.country === 'string') {
+      console.log('🔍 Country string:', compte.country);
+      return compte.country;
+    }
+    
+    // Vérifier si address existe et contient country
+    if (compte.address && typeof compte.address === 'object' && (compte.address as any).country) {
+      console.log('🔍 Address country:', (compte.address as any).country);
+      return (compte.address as any).country.name || (compte.address as any).country || 'N/A';
+    }
+    
+    console.log('🔍 Aucun pays trouvé pour:', compte.denomination);
+    return 'Pays non défini';
+  }
+
+  getRecipeCountry(recipe: Recipe): string {
+    // Utiliser directement le champ compteuser_id si disponible
+    if (recipe.compteuser_id) {
+      const compte = this.allComptes.find(c => c.id === recipe.compteuser_id);
+      if (compte) {
+        console.log('🔍 Compte trouvé pour le pays:', compte.denomination, 'Country:', compte.country);
+        return this.getCompteCountry(compte);
+      }
+    }
+    
+    // Fallback: utiliser l'ancienne logique avec user.id
+    if (recipe.user?.id) {
+      // Méthode 1: Utiliser le mapping des utilisateurs
+      for (const [compteId, userIds] of this.userMapping.entries()) {
+        if (userIds.includes(recipe.user.id)) {
+          const compte = this.allComptes.find(c => c.id === compteId);
+          if (compte) {
+            return this.getCompteCountry(compte);
+          }
+        }
+      }
+      
+      // Méthode 2: Chercher par user (relation directe) - fallback
+      let compte = this.allComptes.find(c => {
+        return c.user && c.user.id === recipe.user?.id;
+      });
+      
+      if (compte) {
+        return this.getCompteCountry(compte);
+      }
+    }
+    
+    return 'Pays inconnu';
   }
 
   getRecipeImage(recipe: Recipe): string {
@@ -491,209 +576,51 @@ export class AcceuilComponent implements OnInit {
         return;
       }
 
-      console.log('Création de la recette dupliquée...');
+      console.log('Utilisation du nouvel endpoint de copie...');
+      console.log('URL de copie:', `${environment.apiUrl}/recipe/copy/${recipe.id}/${user.id}`);
+      console.log('Utilisateur ID:', user.id);
+      console.log('Recette ID:', recipe.id);
       
-      // Créer une copie de la recette avec tous les champs requis
-      const duplicatedRecipe = new Recipe();
-      duplicatedRecipe.name = recipe.name; // Garder le nom original sans "(Copie)"
-      duplicatedRecipe.code = recipe.code; // Garder le même code unique
-      duplicatedRecipe.detailCuisine = recipe.detailCuisine || '';
-      duplicatedRecipe.ratio = recipe.ratio || 1;
-      duplicatedRecipe.principaleRecipe = false;
-      duplicatedRecipe.createdDate = new Date();
-      duplicatedRecipe.isDeleted = false;
-      duplicatedRecipe.share = false;
-      duplicatedRecipe.owner = false; // Toujours false pour une recette copiée
-      duplicatedRecipe.user = { id: user.id };
-      duplicatedRecipe.categoryRecipe = recipe.categoryRecipe;
-      duplicatedRecipe.cout = recipe.cout || 0;
-      duplicatedRecipe.brut = recipe.brut || 0;
-      duplicatedRecipe.net = recipe.net || 0;
-      duplicatedRecipe.stock = 0; // Stock à 0 comme demandé
-      duplicatedRecipe.stockApres = 0; // Stock après à 0
-      duplicatedRecipe.qteEstimee = recipe.qteEstimee || 0;
-      duplicatedRecipe.lossPercentage = recipe.lossPercentage || 0;
-      duplicatedRecipe.photo = recipe.photo; // Copier la photo de la recette
+      // Utiliser le nouvel endpoint de copie qui gère automatiquement compteuser_id
+      const copyResult = await this.http.post<any>(
+        `${environment.apiUrl}/recipe/copy/${recipe.id}/${user.id}`,
+        {}
+      ).toPromise().catch(error => {
+        console.error('Erreur HTTP lors de la copie:', error);
+        console.error('Status:', error.status);
+        console.error('Message:', error.message);
+        console.error('URL:', error.url);
+        throw new Error(`Erreur de connexion: ${error.message || 'Serveur inaccessible'}`);
+      });
       
-      // Forcer explicitement owner à false AVANT la création
-      console.log('Valeur de owner AVANT création:', duplicatedRecipe.owner);
-      duplicatedRecipe.owner = false;
-      console.log('Valeur de owner APRÈS forçage:', duplicatedRecipe.owner);
-
-      console.log('Recette à créer:', duplicatedRecipe);
-      console.log('Vérification du champ owner avant création:', duplicatedRecipe.owner);
-
-      // Créer la recette principale
-      const createdRecipe = await this.recipeService.create(duplicatedRecipe);
-      console.log('Recette créée avec succès:', createdRecipe);
+      console.log('Résultat de la copie:', copyResult);
       
-      // Le backend retourne {data: {...}, status: 202, message: 'ok'}
-      // Il faut extraire l'ID de la réponse
-      let recipeId = null;
-      if (createdRecipe && createdRecipe.data && createdRecipe.data.id) {
-        recipeId = createdRecipe.data.id;
-        console.log('ID de la recette créée:', recipeId);
+      // Le backend retourne directement les données ou une structure avec data
+      let createdRecipe;
+      if (copyResult && copyResult.data) {
+        createdRecipe = copyResult.data;
+      } else if (copyResult && copyResult.id) {
+        createdRecipe = copyResult;
       } else {
-        console.error('Impossible de récupérer l\'ID de la recette créée');
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erreur',
-          detail: 'Impossible de récupérer l\'ID de la recette créée'
-        });
-        return;
+        throw new Error('Erreur lors de la copie de la recette - format de réponse inattendu');
       }
-
-      // Forcer la mise à jour du champ owner à false
-      try {
-        console.log('Forçage du champ owner à false...');
-        
-        // Récupérer la recette complète d'abord
-        const recipeToUpdate = await this.recipeService.getById(recipeId);
-        if (recipeToUpdate) {
-          console.log('Recette récupérée avant mise à jour:', recipeToUpdate);
-          console.log('Valeur owner avant mise à jour:', recipeToUpdate.owner);
-          
-          // Modifier seulement le champ owner
-          recipeToUpdate.owner = false;
-          console.log('Valeur owner après modification locale:', recipeToUpdate.owner);
-          
-          // Mettre à jour la recette
-          const updateResult = await this.recipeService.update(recipeId, recipeToUpdate);
-          console.log('Résultat de la mise à jour:', updateResult);
-          
-          // Vérifier que la mise à jour a bien fonctionné
-          const updatedRecipe = await this.recipeService.getById(recipeId);
-          console.log('Recette après mise à jour owner:', updatedRecipe);
-          console.log('Valeur du champ owner après mise à jour:', updatedRecipe?.owner);
-          
-          if (updatedRecipe?.owner === false) {
-            console.log('✅ Champ owner correctement défini à false');
-          } else {
-            console.log('❌ Champ owner toujours à true, nouvelle tentative...');
-            
-            // Nouvelle tentative avec une approche différente
-            const retryRecipe = await this.recipeService.getById(recipeId);
-            retryRecipe.owner = false;
-            await this.recipeService.update(recipeId, retryRecipe);
-            
-            const finalRecipe = await this.recipeService.getById(recipeId);
-            console.log('Valeur finale du champ owner:', finalRecipe?.owner);
-          }
-        }
-      } catch (error) {
-        console.error('Erreur lors de la mise à jour du champ owner:', error);
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'Avertissement',
-          detail: 'Impossible de définir la recette comme non-propriétaire'
-        });
-      }
-
-      // Récupérer les détails complets de la recette originale
-      console.log('📋 Récupération des ingrédients de la recette originale:', recipe.name);
+      console.log('Recette copiée avec succès:', createdRecipe);
       
-      const originalRecipeDetails = await this.detailsrecipeService.byRecipe(recipe.id);
-      console.log('📊 Ingrédients trouvés dans la recette originale:', originalRecipeDetails?.length || 0);
+      // Le nouvel endpoint gère automatiquement la copie complète
+      const recipeId = createdRecipe.id;
+      console.log('ID de la recette copiée:', recipeId);
       
-      if (!originalRecipeDetails || originalRecipeDetails.length === 0) {
-        console.log('⚠️ Aucun ingrédient trouvé dans la recette originale');
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'Attention',
-          detail: 'La recette originale ne contient aucun ingrédient'
-        });
-      }
-
-      // Copier les détails de la recette (ingrédients/produits)
-      if (originalRecipeDetails && originalRecipeDetails.length > 0) {
-        console.log('Copie des détails de la recette...');
-        
-        for (const detail of originalRecipeDetails) {
-          try {
-            // Créer ou récupérer le produit pour l'utilisateur
-            let userProduct = await this.findOrCreateProductForUser(detail.ingredient || detail.product, user.id);
-            console.log('Produit pour utilisateur trouvé/créé:', userProduct);
-            
-            // Créer le détail de recette
-            const newDetail = new DetailsRecipe();
-            newDetail.ingredient = userProduct;
-            newDetail.product = userProduct;
-            newDetail.proportion = detail.proportion;
-            newDetail.preparationIngredient = detail.preparationIngredient;
-            newDetail.recipe = { id: recipeId } as any;
-            newDetail.isDeleted = false;
-            newDetail.brut = 0; // Brut à 0 pour la nouvelle recette
-            newDetail.net = 0; // Net à 0 pour la nouvelle recette
-            newDetail.cout = 0; // Coût à 0 pour la nouvelle recette
-            newDetail.stockApres = 0; // Stock après à 0
-            newDetail.totalPrice = 0; // Prix total à 0
-            newDetail.stock = 0; // Stock à 0
-
-            console.log('Création du détail de recette:', newDetail);
-            const createdDetail = await this.detailsrecipeService.create(newDetail);
-            console.log('✅ Détail de recette créé avec succès:', createdDetail);
-            
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Ingrédient copié',
-              detail: `${userProduct.name} (${(detail.proportion * 100).toFixed(2)}%) copié avec succès`
-            });
-          } catch (error) {
-            console.error('❌ Erreur lors de la copie de l\'ingrédient:', error);
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Erreur copie ingrédient',
-              detail: `Impossible de copier l'ingrédient: ${detail.ingredient?.name || 'Inconnu'}`
-            });
-          }
-        }
-      } else {
-        console.log('Aucun détail de recette trouvé pour la recette originale');
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'Attention',
-          detail: 'Aucun ingrédient trouvé dans la recette originale'
-        });
-      }
-
-      // Récupérer les compositions de plats de la recette originale
-      console.log('Récupération des compositions de plats de la recette originale...');
-      const originalCompositions = await this.compositiondishesService.byRecipe(recipe.id);
-      console.log('Compositions de la recette originale:', originalCompositions);
-
-      // Copier les compositions de plats
-      if (originalCompositions && originalCompositions.length > 0) {
-        console.log('Copie des compositions de plats...');
-        
-        for (const composition of originalCompositions) {
-          const newComposition = new CompositionDishes();
-          newComposition.code = composition.code;
-          newComposition.detail = composition.detail;
-          newComposition.quantity = composition.quantity;
-          newComposition.proportion = composition.proportion;
-          newComposition.dishe = composition.dishe;
-          newComposition.recipe = { id: recipeId } as any;
-          newComposition.isDeleted = false;
-          newComposition.cout = 0; // Coût à 0 pour la nouvelle recette
-          newComposition.quantityKg = composition.quantityKg || 0;
-          newComposition.qt = composition.qt || 0;
-
-          await this.compositiondishesService.create(newComposition);
-          console.log('Composition de plat créée:', newComposition);
-        }
-      }
-
-      // Vérification finale de l'owner
+      // Vérification finale
       const finalCheck = await this.recipeService.getById(recipeId);
-      const ownerStatus = finalCheck?.owner === false ? 'false' : 'true';
+      const ownerStatus = finalCheck?.owner === true ? 'propriétaire' : 'copie';
       
       this.messageService.add({
         severity: 'success',
         summary: 'Recette copiée avec succès',
-        detail: `La recette "${recipe.name}" a été copiée dans vos recettes. Statut propriétaire: ${ownerStatus}`
+        detail: `La recette "${recipe.name}" a été copiée dans vos recettes avec tous ses ingrédients. Type: ${ownerStatus}`
       });
       
-      console.log('Vérification finale - Owner de la recette copiée:', finalCheck?.owner);
+      console.log('✅ Copie terminée - Recette ID:', recipeId, 'Owner:', finalCheck?.owner);
 
     } catch (error: any) {
       console.error('Erreur lors de la duplication:', error);
@@ -800,10 +727,14 @@ export class AcceuilComponent implements OnInit {
       this.filteredAllRecipes = [...this.allSharedRecipes];
     } else {
       const searchTerm = this.searchAllRecipes.toLowerCase();
-      this.filteredAllRecipes = this.allSharedRecipes.filter(recipe => 
-        recipe.name.toLowerCase().includes(searchTerm) ||
-        this.getCompteName(recipe).toLowerCase().includes(searchTerm)
-      );
+      this.filteredAllRecipes = this.allSharedRecipes.filter(recipe => {
+        const recipeName = recipe.name.toLowerCase().includes(searchTerm);
+        const compteName = this.getCompteName(recipe).toLowerCase().includes(searchTerm);
+        const compteUserId = recipe.compteuser_id ? recipe.compteuser_id.toString().includes(searchTerm) : false;
+        const countryName = this.getRecipeCountry(recipe).toLowerCase().includes(searchTerm);
+        
+        return recipeName || compteName || compteUserId || countryName;
+      });
     }
   }
 
@@ -811,6 +742,22 @@ export class AcceuilComponent implements OnInit {
     this.showAllRecipes = false;
     this.searchAllRecipes = '';
     this.filteredAllRecipes = [];
+    this.selectedRecipeForDetail = null;
+  }
+
+  selectRecipeForDetail(recipe: Recipe) {
+    console.log('🔍 Sélection de la recette pour détail:', recipe.name);
+    this.selectedRecipeForDetail = recipe;
+  }
+
+  shareRecipe(recipe: Recipe) {
+    console.log('📤 Partage de la recette:', recipe.name);
+    // Ici vous pouvez implémenter la logique de partage
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Partage',
+      detail: `Fonctionnalité de partage pour "${recipe.name}" en cours de développement`
+    });
   }
 
   trackByRecipeId(index: number, recipe: Recipe): any {

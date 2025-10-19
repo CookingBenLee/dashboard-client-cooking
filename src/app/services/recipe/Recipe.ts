@@ -40,5 +40,6 @@ export class Recipe{
   qteEstimee:number
   user: any
   photo?: string
+  compteuser_id?: number
 
 }

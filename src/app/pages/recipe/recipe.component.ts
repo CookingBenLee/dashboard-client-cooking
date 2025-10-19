@@ -500,22 +500,21 @@ export class RecipeComponent {
   openDialogProduct(recipe: Recipe){
     console.log("*****************recipe*****************");
     console.log(recipe);
+    console.log("Base selection:", this.base.name);
+    
+    // Le dialogue s'ouvre seulement quand principaleRecipe = false (base.name === 'NON')
     if (this.base.name === 'NON') {
+      console.log("🔧 Ouverture du dialogue de création de produit (recette non principale)");
       this.productData.name = recipe.name;
-      this.productData.price=recipe.cout
-      //this.productData.
-      // console.log("product name",this.productData.name);
+      this.productData.price = recipe.cout;
       this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
-      // console.log("Product unit:", this.productData.unit);
       this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
-      // console.log("Product category:", this.productData.category);
       this.productData.lossPercentage = 0.1;
-      this.productDialog = true;
       this.productData.secondaryRecipe = true;
-      //this.recipe.baseRecipe = false;
-    }
-    if (this.base.name === 'OUI') {
-      this.recipe.principaleRecipe = false;
+      this.productDialog = true;
+    } else if (this.base.name === 'OUI') {
+      console.log("✅ Recette principale - pas de création de produit associé");
+      this.recipe.principaleRecipe = true;
     }
   }
   

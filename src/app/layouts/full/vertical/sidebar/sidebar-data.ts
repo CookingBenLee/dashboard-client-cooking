@@ -7,7 +7,7 @@ export const navItems: NavItem[] = [
   {
     displayName: "ACCUEIL",
     iconName: 'solar:widget-add-line-duotone',
-    route: 'home/acceuil',
+    route: 'acceuil',
     
   },
   {
@@ -17,7 +17,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Nouvelle Simulation',
     iconName: 'tabler:point',
-    route: 'home/simulateur',
+    route: 'simulateur',
     typeCompte:[2,3]
     
   },
@@ -28,19 +28,19 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Mes Planififcations',
     iconName: 'solar:calendar-mark-outline',
-    route: 'home/planning',
+    route: 'planning',
   }
   ,
   {
     displayName: 'Mes Plats',
     iconName: 'material-symbols:dining',
-    route: 'home/plat',
+    route: 'plat',
   }
   ,
   {
     displayName: 'Mes Recettes',
     iconName: 'arcticons:reciper',
-    route: 'home/recette',
+    route: 'recette',
 
   },
   {
@@ -49,22 +49,22 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Mes Produits',
     iconName: 'tabler:point',
-    route: '/home/product',
+    route: 'product',
   },
   {
     displayName: 'Mes courses',
     iconName: 'tabler:point',
-    route: '/home/course',
+    route: 'course',
   },
   {
     displayName: 'Catalogue de prix',
     iconName: 'tabler:point',
-    route: '/home/catalogue-de-prix',
+    route: 'catalogue-de-prix',
   },
   {
     displayName: 'Mes Fournisseurs',
     iconName: 'solar:user-hands-bold',
-    route: 'home/fournisseur',
+    route: 'fournisseur',
   },
   // {
   //   displayName: 'Mes Ingrédients',

@@ -87,7 +87,7 @@
         <div class="section-header">
           <h2>RECETTES</h2>
           <div class="recipe-category">
-            <button class="category-btn active">Recettes Populaires</button>
+            <button class="category-btn active" (click)="viewAllRecipes()">Recettes Populaires</button>
           </div>
         </div>
         
@@ -299,77 +299,228 @@
   </div>
 </div>
 
-<!-- Interface pour toutes les recettes partagées -->
-<div *ngIf="showAllRecipes" class="all-recipes-overlay" (click)="closeAllRecipes()">
-  <div class="all-recipes-container" (click)="$event.stopPropagation()">
-    <!-- En-tête -->
-    <div class="all-recipes-header">
-      <h2>Toutes les Recettes Populaires</h2>
-      <button class="close-btn" (click)="closeAllRecipes()" title="Fermer">
+<!-- Interface pour toutes les recettes partagées - Style Moderne -->
+<div *ngIf="showAllRecipes" class="modern-recipes-overlay" (click)="closeAllRecipes()">
+  <div class="modern-recipes-container" (click)="$event.stopPropagation()">
+    
+    <!-- Header moderne -->
+    <div class="modern-header">
+      <div class="header-left">
+        <div class="header-icon">
+          <i class="pi pi-heart"></i>
+        </div>
+        <div class="header-text">
+          <h1>Recettes Populaires</h1>
+          <p>{{ allSharedRecipes.length }} recettes disponibles</p>
+        </div>
+      </div>
+      <button class="modern-close-btn" (click)="closeAllRecipes()">
         <i class="pi pi-times"></i>
       </button>
     </div>
 
-    <!-- Champ de recherche -->
-    <div class="search-section">
-      <div class="search-wrapper">
+    <!-- Barre de recherche moderne -->
+    <div class="modern-search-section">
+      <div class="search-box">
+        <i class="pi pi-search"></i>
         <input type="text" 
                [(ngModel)]="searchAllRecipes" 
                (input)="onAllRecipesSearch()"
-               placeholder="Rechercher une recette ou un auteur..."
-               class="search-input">
-        <i class="pi pi-search search-icon"></i>
+               placeholder="Rechercher une recette, un auteur ou un pays..."
+               class="modern-search-input">
+        <button *ngIf="searchAllRecipes" 
+                (click)="searchAllRecipes = ''; onAllRecipesSearch()" 
+                class="clear-btn">
+          <i class="pi pi-times"></i>
+        </button>
       </div>
     </div>
 
-    <!-- Indicateur de chargement -->
-    <div *ngIf="loading" class="loading-container">
-      <i class="pi pi-spin pi-spinner"></i>
-      <p>Chargement des recettes...</p>
-    </div>
-
-    <!-- Grille des recettes -->
-    <div *ngIf="!loading && filteredAllRecipes.length > 0" class="all-recipes-grid">
-      <div *ngFor="let recipe of filteredAllRecipes; trackBy: trackByRecipeId" 
-           class="recipe-card" 
-           (click)="openRecipeDetail(recipe)">
-        <div class="recipe-image">
-          <img [src]="getRecipeImage(recipe)" 
-               [alt]="recipe.name" 
-               class="dish-image"
-               (error)="onImageError($event)">
+    <!-- Contenu principal -->
+    <div class="modern-content">
+      
+      <!-- Indicateur de chargement -->
+      <div *ngIf="loading" class="modern-loading">
+        <div class="loading-circle">
+          <i class="pi pi-spin pi-spinner"></i>
         </div>
-        <div class="recipe-info">
-          <h3 class="recipe-title">{{ recipe.name }}</h3>
-          <p class="recipe-details">
-            Préparation : {{ getPreparationTime(recipe) }} min – 
-            {{ getDifficulty(recipe) }}
-          </p>
-          <div class="recipe-meta">
-            <span class="recipe-author">Par: {{ getCompteName(recipe) }}</span>
-            <button class="add-button" 
-                    (click)="duplicateRecipe(recipe); $event.stopPropagation()" 
-                    title="Ajouter à mes recettes">
+        <p>Chargement des recettes...</p>
+      </div>
+
+      <!-- Vue liste des recettes -->
+      <div *ngIf="!loading && filteredAllRecipes.length > 0 && !selectedRecipeForDetail" class="recipes-list">
+        <div *ngFor="let recipe of filteredAllRecipes; trackBy: trackByRecipeId" 
+             class="modern-recipe-item" 
+             (click)="selectRecipeForDetail(recipe)">
+          
+          <!-- Image miniature -->
+          <div class="recipe-thumbnail">
+            <img [src]="getRecipeImage(recipe)" 
+                 [alt]="recipe.name" 
+                 (error)="onImageError($event)">
+            <div class="recipe-overlay">
+              <button class="quick-add" 
+                      (click)="duplicateRecipe(recipe); $event.stopPropagation()">
+                <i class="pi pi-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Contenu de la recette -->
+          <div class="recipe-content">
+            <div class="recipe-header">
+              <h3 class="recipe-name">{{ recipe.name }}</h3>
+              <div class="recipe-badges">
+                <span class="difficulty-tag" [ngClass]="'level-' + getDifficulty(recipe).toLowerCase()">
+                  {{ getDifficulty(recipe) }}
+                </span>
+                <span class="owner-tag" [ngClass]="recipe.owner ? 'owned' : 'shared'">
+                  {{ recipe.owner ? 'Propriétaire' : 'Partagée' }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="recipe-info">
+              <div class="info-item">
+                <i class="pi pi-clock"></i>
+                <span>{{ getPreparationTime(recipe) }}</span>
+              </div>
+              <div class="info-item author-info">
+                <i class="pi pi-user"></i>
+                <div class="author-details">
+                  <span class="author-name">{{ getCompteName(recipe) }}</span>
+                  <span class="author-country">{{ getRecipeCountry(recipe) }}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="pi pi-calendar"></i>
+                <span>{{ recipe.createdDate | date:'dd/MM/yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="recipe-actions">
+            <button class="action-btn view-btn" 
+                    (click)="selectRecipeForDetail(recipe); $event.stopPropagation()">
+              <i class="pi pi-eye"></i>
+            </button>
+            <button class="action-btn add-btn" 
+                    (click)="duplicateRecipe(recipe); $event.stopPropagation()">
               <i class="pi pi-plus"></i>
             </button>
           </div>
         </div>
       </div>
+
+      <!-- Vue détail de la recette -->
+      <div *ngIf="!loading && selectedRecipeForDetail" class="recipe-detail-view">
+        <!-- Header du détail -->
+        <div class="detail-header">
+          <button class="back-btn" (click)="selectedRecipeForDetail = null">
+            <i class="pi pi-arrow-left"></i>
+            Retour à la liste
+          </button>
+          <div class="detail-title">
+            <h2>{{ selectedRecipeForDetail.name }}</h2>
+            <div class="detail-badges">
+              <span class="difficulty-tag" [ngClass]="'level-' + getDifficulty(selectedRecipeForDetail).toLowerCase()">
+                {{ getDifficulty(selectedRecipeForDetail) }}
+              </span>
+              <span class="owner-tag" [ngClass]="selectedRecipeForDetail.owner ? 'owned' : 'shared'">
+                {{ selectedRecipeForDetail.owner ? 'Propriétaire' : 'Partagée' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenu du détail -->
+        <div class="detail-content">
+          <!-- Image principale -->
+          <div class="detail-image">
+            <img [src]="getRecipeImage(selectedRecipeForDetail)" 
+                 [alt]="selectedRecipeForDetail.name" 
+                 (error)="onImageError($event)">
+          </div>
+
+          <!-- Informations détaillées -->
+          <div class="detail-info">
+            <div class="info-section">
+              <h3><i class="pi pi-clock"></i> Temps de préparation</h3>
+              <p>{{ getPreparationTime(selectedRecipeForDetail) }}</p>
+            </div>
+
+            <div class="info-section">
+              <h3><i class="pi pi-user"></i> Auteur</h3>
+              <div class="author-detail">
+                <p class="author-name">{{ getCompteName(selectedRecipeForDetail) }}</p>
+                <p class="author-country">{{ getRecipeCountry(selectedRecipeForDetail) }}</p>
+              </div>
+            </div>
+
+            <div class="info-section">
+              <h3><i class="pi pi-calendar"></i> Date de création</h3>
+              <p>{{ selectedRecipeForDetail.createdDate | date:'dd/MM/yyyy' }}</p>
+            </div>
+
+            <div class="info-section" *ngIf="selectedRecipeForDetail.detailCuisine">
+              <h3><i class="pi pi-book"></i> Description</h3>
+              <p>{{ selectedRecipeForDetail.detailCuisine }}</p>
+            </div>
+
+            <!-- Ingrédients -->
+            <div class="info-section" *ngIf="selectedRecipeForDetail.detailList && selectedRecipeForDetail.detailList.length > 0">
+              <h3><i class="pi pi-list"></i> Ingrédients</h3>
+              <div class="ingredients-list">
+                <div *ngFor="let detail of selectedRecipeForDetail.detailList" class="ingredient-item">
+                  <span class="ingredient-name">{{ detail.ingredient?.name || 'Ingrédient' }}</span>
+                  <span class="ingredient-quantity">{{ detail.proportion || 'Quantité non spécifiée' }}</span>
+                  <span *ngIf="detail.preparationIngredient" class="ingredient-prep">{{ detail.preparationIngredient }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions du détail -->
+        <div class="detail-actions">
+          <button class="action-btn add-btn" (click)="duplicateRecipe(selectedRecipeForDetail)">
+            <i class="pi pi-plus"></i>
+            Ajouter à mes recettes
+          </button>
+         
+        </div>
+      </div>
+
+      <!-- Message vide -->
+      <div *ngIf="!loading && filteredAllRecipes.length === 0" class="empty-state">
+        <div class="empty-icon">
+          <i class="pi pi-search"></i>
+        </div>
+        <h3>Aucune recette trouvée</h3>
+        <p>Essayez avec d'autres mots-clés</p>
+        <button class="reset-btn" (click)="searchAllRecipes = ''; onAllRecipesSearch()">
+          Réinitialiser
+        </button>
+      </div>
     </div>
 
-    <!-- Message si aucune recette -->
-    <div *ngIf="!loading && filteredAllRecipes.length === 0" class="no-recipes">
-      <i class="pi pi-search no-recipes-icon"></i>
-      <p class="no-recipes-title">Aucune recette trouvée</p>
-      <p class="no-recipes-subtitle">Essayez avec d'autres mots-clés</p>
-    </div>
-
-    <!-- Statistiques -->
-    <div *ngIf="!loading" class="recipes-stats">
-      <p>
-        <i class="pi pi-info-circle stats-icon"></i>
-        {{ filteredAllRecipes.length }} recette(s) trouvée(s) sur {{ allSharedRecipes.length }} recettes populaires
-      </p>
+    <!-- Footer avec statistiques -->
+    <div *ngIf="!loading" class="modern-footer">
+      <div class="footer-stats">
+        <span class="stat">
+          <i class="pi pi-list"></i>
+          {{ filteredAllRecipes.length }} affichées
+        </span>
+        <span class="stat">
+          <i class="pi pi-users"></i>
+          {{ allSharedRecipes.length }} au total
+        </span>
+        <span *ngIf="searchAllRecipes" class="stat search-stat">
+          <i class="pi pi-search"></i>
+          "{{ searchAllRecipes }}"
+        </span>
+      </div>
     </div>
   </div>
 </div>

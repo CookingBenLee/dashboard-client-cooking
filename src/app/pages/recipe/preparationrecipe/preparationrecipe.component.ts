@@ -496,26 +496,37 @@ export class PreparationrecipeComponent {
     return result;
   }
 
-  savePreparation() {
+  async savePreparation() {
+    console.log('🚀 Début de la sauvegarde de la préparation');
+    console.log('Recette sélectionnée:', this.recetteSelectione);
+    console.log('Préparation:', this.preparationRecipe);
 
-    this.loadingPreparation = true
-    this.loadingPage = true
+    this.loadingPreparation = true;
+    this.loadingPage = true;
+    
+    // Vérifier que les stocks sont chargés
+    if (!this.stocks || this.stocks.length === 0) {
+      console.log("⚠️ Aucun stock chargé, rechargement...");
+      await this.getStocks();
+    }
+    
+    console.log("📦 Stocks disponibles:", this.stocks.length);
     
     // Vérification des stocks
-
-    // Vérification des stocks
     const ingredientsEnRupture = this.detailsDishes.filter(detail => {
-      const stocks = detail.ingredient.stock;
+      const stockQuantity = this.getStockQuantity(detail);
       const poidsBrut = detail.brut;
-      console.log("Stock --- ",stocks,poidsBrut)
+      console.log("Stock vérification pour", detail.ingredient.name, "- Stock:", stockQuantity, "Poids brut:", poidsBrut);
       
-      // Si stock n'est pas défini ou vide, ou que quantité insuffisante
-      if (!stocks || stocks.length === 0 || stocks[0].quantity === undefined || stocks[0].quantity === null) {
+      // Si stock insuffisant
+      if (stockQuantity <= 0 || (stockQuantity - poidsBrut) < 0) {
+        console.log("❌ Stock insuffisant pour", detail.ingredient.name);
         return true; // considéré comme rupture
       }
 
-      return (stocks[0].quantity - poidsBrut) < 0;
+      return false;
     });
+    
     if (ingredientsEnRupture.length > 0) {
       const noms = ingredientsEnRupture.map(d => d.ingredient.name).join(', ');
       this.messageService.add({
@@ -524,32 +535,46 @@ export class PreparationrecipeComponent {
         summary: 'Stock insuffisant',
         detail: `Stock insuffisant pour : ${noms}`
       });
-      console.log("Echec !");
+      console.log("❌ Échec - Stock insuffisant");
       this.loadingPreparation = false;
       this.loadingPage = false;
       return; // Annuler la sauvegarde
     }
       
-    //
+    // Configuration de la préparation
     this.preparationRecipe.recipe = this.recetteSelectione;
-    this.preparationRecipe.poidsNet = this.recetteSelectione.net
+    this.preparationRecipe.poidsNet = this.recetteSelectione.net;
+    
+    console.log('📝 Données à sauvegarder:', this.preparationRecipe);
 
     this.preparationRecipeService.create(this.preparationRecipe).then(data => {
+      console.log('✅ Préparation enregistrée avec succès:', data);
       
-      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: "Preparation enregistrée !" });
+      this.messageService.add({ 
+        key: 'tc', 
+        severity: 'success', 
+        summary: 'Success', 
+        detail: "Préparation enregistrée !" 
+      });
 
-      this.recetteSelectione = new Recipe()
-      this.detailsDishes = []
+      this.recetteSelectione = new Recipe();
+      this.detailsDishes = [];
     
-      this.loadingPreparation = false
-      this.loadingPage = false
+      this.loadingPreparation = false;
+      this.loadingPage = false;
       this.ref.close(this.recetteSelectione);
-      this
     }).catch(error => {
-      this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Erreur lors de la sauvegarde.' });
-
-    })
-
+      console.error('❌ Erreur lors de la sauvegarde:', error);
+      this.messageService.add({ 
+        key: 'tc',
+        severity: 'error', 
+        summary: 'Erreur', 
+        detail: 'Erreur lors de la sauvegarde: ' + (error.error?.message || error.message || 'Erreur inconnue')
+      });
+      
+      this.loadingPreparation = false;
+      this.loadingPage = false;
+    });
   }
   
   

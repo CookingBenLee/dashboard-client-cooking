@@ -21,7 +21,14 @@
               "apexcharts",
               "bezier-easing",
               "moment",
-              "dropzone"
+              "dropzone",
+              "canvg",
+              "core-js",
+              "quill-delta",
+              "chance",
+              "html2canvas",
+              "raf",
+              "rgbcolor"
             ],
             "outputPath": "dist/MaterialM",
             "index": "src/index.html",

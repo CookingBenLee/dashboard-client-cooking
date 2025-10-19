@@ -65,8 +65,32 @@ export class AppNavItemComponent implements OnChanges {
   }
 
   onItemSelected(item: NavItem) {
+    console.log('🔗 Clic sur élément de navigation:', item);
+    console.log('🔗 Route demandée:', item.route);
+    console.log('🔗 A des enfants?', item.children && item.children.length);
+    
     if (!item.children || !item.children.length) {
-      this.router.navigate([item.route]);
+      console.log('🚀 Navigation vers:', item.route);
+      console.log('🚀 Router navigate appelé avec:', [item.route]);
+      
+      // Test de navigation avec URL complète
+      const fullRoute = `/home/${item.route}`;
+      console.log('🚀 Tentative avec URL complète:', fullRoute);
+      
+      this.router.navigate([fullRoute]).then(
+        (success) => {
+          console.log('✅ Navigation réussie avec URL complète:', success);
+        },
+        (error) => {
+          console.error('❌ Erreur navigation URL complète:', error);
+          // Fallback vers navigation relative
+          console.log('🔄 Fallback vers navigation relative...');
+          this.router.navigate([item.route]).then(
+            (success) => console.log('✅ Navigation relative réussie:', success),
+            (error) => console.error('❌ Erreur navigation relative:', error)
+          );
+        }
+      );
       
     }
     if (item.children && item.children.length) {
