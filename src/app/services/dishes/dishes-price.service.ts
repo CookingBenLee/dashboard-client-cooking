@@ -33,9 +33,9 @@ export class DishesPriceService {
     }).finally(async ()=>{
       plat.cout=0
       compoDishes.forEach(async detail=>{
-        detail.recipe.net=detail.quantity
-        detail.recipe=await this.getDetailRecipeWithRecipeInfos(detail.recipe)
-        plat.cout+=detail.recipe.cout
+        detail.recipe.net = detail.quantity
+        detail.recipe = await this.getDetailRecipeWithRecipeInfos(detail.recipe)
+        plat.cout += (detail.recipe.cout || 0)
         console.log(detail);
 
       })
@@ -56,7 +56,7 @@ export class DishesPriceService {
   async getDetailRecipeWithRecipeInfos(recette:Recipe):Promise<Recipe>{
     //calcul du brut
     if(recette.net==null || recette.net==0 || !recette.net) recette.net=1
-    recette.brut=(recette.net)*recette.ratio
+    recette.brut=(recette.net || 0)*(recette.ratio || 1)
 
     //
     var detailsRecepe:DetailsRecipe[]=[]
@@ -70,28 +70,28 @@ export class DishesPriceService {
     }).finally(async ()=>{
       //update detail net
       await detailsRecepe.forEach(detail=>{
-        // if(detail.proportion!=null) detail.net=(recette.brut*(detail.proportion))/100
-        if(detail.proportion!=null) detail.net=(recette.brut*(detail.proportion))
+        // if(detail.proportion!=null) detail.net =(recette.brut*(detail.proportion))/100
+        if(detail.proportion!=null) detail.net = ((recette.brut || 0)*(detail.proportion))
       })
 
       //update detail brut
       await detailsRecepe.forEach(detail=>{
         var perte=detail.ingredient.lossPercentage
-        //if (perte!=null)  detail.brut=detail.net/(1-(perte/100))
-        if (perte!=null)  detail.brut=detail.net/(1-(perte))
+        //if (perte!=null)  detail.brut =(detail.net || 0)/(1-(perte/100))
+        if (perte!=null)  detail.brut = (detail.net || 0)/(1-(perte))
 
       })
 
       //update detail cout
       await detailsRecepe.forEach(detail=>{
         var price=detail.ingredient.price
-        if (price!=null)  detail.cout=detail.brut*price
+        if (price!=null)  detail.cout = (detail.brut || 0)*price
       })
 
       //update recipe infos
       recette.cout=0
       await detailsRecepe.forEach(detail=>{
-        recette.cout+=detail.cout
+        recette.cout = (recette.cout || 0) + (detail.cout || 0)
       })
 
       recette.detailList=detailsRecepe;

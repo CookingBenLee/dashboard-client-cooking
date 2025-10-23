@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Recipe } from './Recipe';
 
 @Injectable({
@@ -12,11 +12,29 @@ export class RecipeService {
   constructor(private http: HttpClient) { }
 
   //create
-  create(recipe:Recipe){
-    return this.http.post<any>(`${this.env.apiUrl}/recipe/new`,recipe)
-    .toPromise()
-    .then()
-    .then();
+  create(recipe: Recipe) {
+    return this.http.post<any>(`${this.env.apiUrl}/recipe/new`, recipe)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
+  }
+
+  //create with photo
+  createWithPhoto(recipe: Recipe, photo?: File) {
+    const formData = new FormData();
+    
+    // Ajouter les données de la recette
+    formData.append('recipe', JSON.stringify(recipe));
+    
+    // Ajouter la photo si elle existe
+    if (photo) {
+      formData.append('photo', photo);
+    }
+    
+    return this.http.post<any>(`${this.env.apiUrl}/recipe/new-with-photo`, formData)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
   }
   //read
 
@@ -76,6 +94,15 @@ export class RecipeService {
     .then();
   }
 
+  //update only share field
+  updateShare(idrecipe:number |undefined, share:boolean){
+    const shareData = { share: share };
+    return this.http.put<any>(`${this.env.apiUrl}/recipe/update-share/${idrecipe}`, shareData)
+    .toPromise()
+    .then(res => res.data)
+    .then(data => data);
+  }
+
   ///delete
   delete(id:number | undefined) {
   return this.http.delete<any>(`${this.env.apiUrl}/recipe/delete/${id}`)
@@ -95,4 +122,50 @@ export class RecipeService {
       .then(res => res.data)
       .then(data => data);
   }
+
+  // Update photo
+  updatePhoto(photo: File, recipeId: number) {
+    const formData = new FormData();
+    formData.append('photo', photo);
+    formData.append('recipeId', recipeId.toString());
+    
+    return this.http.put<any>(`${this.env.apiUrl}/recipe/update-photo`, formData)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
+  }
+
+  // Add ingredient to recipe
+  addIngredient(recipeId: number, ingredient: any) {
+    return this.http.post<any>(`${this.env.apiUrl}/recipe/${recipeId}/ingredient`, ingredient)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
+  }
+
+  // Update ingredient in recipe
+  updateIngredient(recipeId: number, ingredientId: number, ingredient: any) {
+    return this.http.put<any>(`${this.env.apiUrl}/recipe/${recipeId}/ingredient/${ingredientId}`, ingredient)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
+  }
+
+  // Remove ingredient from recipe
+  removeIngredient(recipeId: number, ingredientId: number) {
+    return this.http.delete<any>(`${this.env.apiUrl}/recipe/${recipeId}/ingredient/${ingredientId}`)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
+  }
+
+  // Get recipe ingredients
+  getRecipeIngredients(recipeId: number) {
+    return this.http.get<any>(`${this.env.apiUrl}/recipe/${recipeId}/ingredients`)
+      .toPromise()
+      .then(res => res.data)
+      .then(data => data);
+  }
+
+
 }

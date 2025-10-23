@@ -246,7 +246,7 @@ openDialogProduct(event: any){
 openDialogProductForRecipe(recipe: any){
   console.log("🔧 Ouverture du dialogue de création de produit pour la recette:", recipe);
   this.productData.name = recipe.name;
-  this.productData.price = recipe.cout;
+  this.productData.price = (recipe.cout || 0);
   this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
   this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
   this.productData.lossPercentage = 0.1;
@@ -667,19 +667,19 @@ openDialogProductForRecipe(recipe: any){
   changeDetailCout(){
     this.recipe.cout=0
     this.detailRecipeProvisoire2.forEach(detail=>{
-      this.recipe.cout+=detail.cout
+      this.recipe.cout = (this.recipe.cout || 0) + (detail.cout || 0)
     })
   }
   changeDetailBrut(){
     this.recipe.brut=0
     this.detailRecipeProvisoire2.forEach(detail=>{
-      this.recipe.brut+=detail.brut
+      this.recipe.brut = (this.recipe.brut || 0) + (detail.brut || 0)
     })
   }
   changeDetailNet(){
     this.recipe.net=0
     this.detailRecipeProvisoire2.forEach(detail=>{
-      this.recipe.net+=detail.net
+      this.recipe.net = (this.recipe.net || 0) + (detail.net || 0)
     })
   }
   async changeDetailQuantite(detail:any,i:any,edit:Boolean){

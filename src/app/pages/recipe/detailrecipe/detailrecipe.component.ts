@@ -175,25 +175,37 @@ export class DetailrecipeComponent {
     console.log('🔍 Recipe ID:', this.recipe.id);
     console.log('🔍 Recipe name:', this.recipe.name);
     
-    await this.getAllCategory()
+    try {
+      await this.getAllCategory()
 
-    if (this.recipe && this.recipe.id) {
-      console.log('🚀 Chargement des ingrédients pour la recette:', this.recipe.name);
-      await this.getAll(this.recipe.id)
-    } else {
-      console.error('❌ Recipe ID non défini');
+      if (this.recipe && this.recipe.id) {
+        console.log('🚀 Chargement des ingrédients pour la recette:', this.recipe.name);
+        await this.getAll(this.recipe.id)
+      } else {
+        console.error('❌ Recipe ID non défini');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'ID de la recette non défini'
+        });
+        return;
+      }
+      
+      //for details
+      await this.getProducts()
+      this.getUnits()
+      
+      // Forcer la détection de changement à la fin
+      this.cdref.detectChanges();
+      
+    } catch (error) {
+      console.error('❌ Erreur dans ngOnInit:', error);
       this.messageService.add({
         severity: 'error',
         summary: 'Erreur',
-        detail: 'ID de la recette non défini'
+        detail: 'Erreur lors de l\'initialisation du composant'
       });
     }
-    
-    //for details
-    await this.getProducts()
-    this.getUnits()
-    this.cdref.detectChanges();
-
   }
 
 
@@ -204,7 +216,10 @@ export class DetailrecipeComponent {
       console.log('Recipe ID utilisé:', this.recipe.id);
       console.log('Recipe object:', this.recipe);
       
-      if (!this.recipe.id) {
+      // Utiliser l'ID passé en paramètre ou celui de la recette
+      const recipeId = id || this.recipe.id;
+      
+      if (!recipeId) {
         console.error('❌ Recipe ID est undefined');
         this.messageService.add({
           severity: 'error',
@@ -214,8 +229,13 @@ export class DetailrecipeComponent {
         return;
       }
       
-      console.log('📡 Appel du service byRecipe avec ID:', this.recipe.id);
-      await this.detailRecipeService.byRecipe(this.recipe.id).then(data =>{
+      // Activer l'indicateur de chargement
+      this.loading = true;
+      
+      console.log('📡 Appel du service byRecipe avec ID:', recipeId);
+      
+      try {
+        const data = await this.detailRecipeService.byRecipe(recipeId);
         console.log('Données reçues du service:', data);
         console.log('Type de données:', typeof data);
         console.log('Longueur des données:', data ? data.length : 'undefined');
@@ -242,18 +262,28 @@ export class DetailrecipeComponent {
           });
         }
         
+        // Ajouter un nouvel élément vide pour l'édition
         this.detailRecipeProvisoire2.push(new DetailsRecipe())
+        
         console.log('Tableau final detailRecipe2:', this.detailRecipe2);
         console.log('Nombre d\'éléments dans detailRecipe2:', this.detailRecipe2.length);
         console.log('Total proportion:', this.totalProportion);
-      }).catch(error => {
+        
+        // Forcer la détection de changement
+        this.cdref.detectChanges();
+        
+      } catch (error) {
         console.error('Erreur lors du chargement des détails:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Erreur',
           detail: 'Impossible de charger les détails de la recette'
         });
-      })
+      } finally {
+        // Désactiver l'indicateur de chargement
+        this.loading = false;
+        this.cdref.detectChanges();
+      }
     }
 
 
@@ -438,19 +468,19 @@ export class DetailrecipeComponent {
     changeDetailCout(){
       this.recipe.cout=0
       this.detailRecipeProvisoire2.forEach(detail=>{
-        this.recipe.cout+=detail.cout
+        this.recipe.cout = (this.recipe.cout || 0) + (detail.cout || 0)
       })
     }
     changeDetailBrut(){
       this.recipe.brut=0
       this.detailRecipeProvisoire2.forEach(detail=>{
-        this.recipe.brut+=detail.brut
+        this.recipe.brut = (this.recipe.brut || 0) + (detail.brut || 0)
       })
     }
     changeDetailNet(){
       this.recipe.net=0
       this.detailRecipeProvisoire2.forEach(detail=>{
-        this.recipe.net+=detail.net
+        this.recipe.net = (this.recipe.net || 0) + (detail.net || 0)
       })
     }
     changeDetailQuantite(){
@@ -500,5 +530,6 @@ export class DetailrecipeComponent {
     onImageLoad(event: any) {
       console.log('Image chargée avec succès:', event.target.src);
     }
+
 
 }

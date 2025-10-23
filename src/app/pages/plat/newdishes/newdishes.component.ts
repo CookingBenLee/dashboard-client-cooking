@@ -254,10 +254,10 @@ export class NewdishesComponent implements OnInit{
   async addNewComposition(){
     var cp:CompositionDishes=new CompositionDishes()
     this.loadingLine=true
-    cp.quantity=this.recetteSelectione.net
+    cp.quantity=this.recetteSelectione.net || 0
     if(this.unitSelectionne==this.units[2]){//Gramme
       console.log(this.recetteSelectione);
-      this.recetteSelectione.net=this.recetteSelectione.net/1000
+      this.recetteSelectione.net = (this.recetteSelectione.net || 0) / 1000
       //this.recetteSelectione.net=this.recetteSelectione.net*1000
     }
 
@@ -267,7 +267,7 @@ export class NewdishesComponent implements OnInit{
     this.recetteSelectione=await this.priceDishesService.getDetailRecipeWithRecipeInfos(this.recetteSelectione)
     this.loadingLine=false
     cp.recipe=this.recetteSelectione
-    cp.cout=this.recetteSelectione.cout
+    cp.cout=this.recetteSelectione.cout || 0
     console.log("--------------------------------{}",cp);
 
 
@@ -388,7 +388,7 @@ export class NewdishesComponent implements OnInit{
   async changePoid(){
     var net=this.recetteSelectione.net
     //if(this.unitSelectionne==this.units[]) net=this.recetteSelectione.net/1000
-    this.recetteSelectione.brut=net*this.recetteSelectione.ratio
+    this.recetteSelectione.brut = (net || 0) * (this.recetteSelectione.ratio || 1)
 
     //calcul des poid net des details
     await this.calculDetailNet()
@@ -405,11 +405,11 @@ export class NewdishesComponent implements OnInit{
 
   async calculDetailNet(){
     await this.detailsRecepeSelectione.forEach(detail=>{
-      //detail.floatingNet=(detail.net*this.poidNet)/this.recetteSelectione.net
+      //detail.floatingNet=((detail.net || 0)*this.poidNet)/this.recetteSelectione.net
       if(detail.proportion==null){
         this.messageService.add({key:'tc', severity: 'info', summary: 'Info', detail: `L'ingrédient '${detail.ingredient.name}' n'a pas de proportion spécifié.` });
       }
-      detail.net=(this.recetteSelectione.brut*(detail.proportion))/100
+      detail.net = ((this.recetteSelectione.brut || 0) * (detail.proportion || 0)) / 100
     })
   }
 
@@ -421,7 +421,7 @@ export class NewdishesComponent implements OnInit{
         console.log(perte);
 
         //detail.floatingBrut=detail.floatingNet/(1-(perte/100))
-        detail.brut=detail.net/(1-perte)
+        detail.brut =(detail.net || 0)/(1-perte)
 
       }
     })
@@ -432,7 +432,7 @@ export class NewdishesComponent implements OnInit{
       var price=detail.ingredient.price
       if (price!=null) {
         //detail.floatingCout=detail.floatingBrut*price
-        detail.cout=detail.brut*price
+        detail.cout =(detail.brut || 0)*price
       }
     })
   }
@@ -443,7 +443,7 @@ export class NewdishesComponent implements OnInit{
     this.recetteSelectione.cout=0
     await this.detailsRecepeSelectione.forEach(detail=>{
       //this.prix+=detail.floatingCout
-      this.recetteSelectione.cout+=detail.cout
+      this.recetteSelectione.cout+=(detail.cout || 0)
     })
     console.log(this.recetteSelectione);
   }

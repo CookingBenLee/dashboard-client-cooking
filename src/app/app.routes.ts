@@ -42,8 +42,7 @@ export const routes: Routes = [
   },
   {
     path: 'signup',
-    component: SignupComponent,
-    canActivate: [LoginGuard]
+    component: SignupComponent
   },
   {
     path: 'home',

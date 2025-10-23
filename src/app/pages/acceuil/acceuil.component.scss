@@ -1,5 +1,101 @@
 /* ===== STYLES PRINCIPAUX DE L'ACCUEIL ===== */
 
+/* ===== STYLES POUR LES INGRÉDIENTS ===== */
+.ingredients-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+
+.ingredient-item {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.ingredient-item:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.ingredient-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ingredient-number {
+  background: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.ingredient-name {
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.ingredient-quantity {
+  background: #28a745;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ingredient-details {
+  margin-top: 6px;
+  padding-left: 32px;
+}
+
+.ingredient-prep {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: #6c757d;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.ingredient-prep i {
+  color: #17a2b8;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.no-ingredients {
+  text-align: center;
+  padding: 20px;
+  color: #6c757d;
+}
+
+.no-ingredients i {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #ffc107;
+}
+
+.no-ingredients p {
+  margin: 0;
+  font-size: 14px;
+}
+
 .home-container {
   min-height: 100vh;
   background: #f8f9fa;
@@ -494,7 +590,7 @@
 
 /* ===== POPUP DÉTAIL DE RECETTE ===== */
 .recipe-detail-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;

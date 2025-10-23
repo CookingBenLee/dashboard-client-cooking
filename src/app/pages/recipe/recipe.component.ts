@@ -421,6 +421,17 @@ export class RecipeComponent {
     this.recipe.categoryRecipe = this.categorySelected
     const user = this.tokenService.getUser();
     this.recipe.user = { id: user.id }
+    
+    // Lier la recette au compteuser_id récupéré via le token
+    if (user.compteUser.id) {
+      this.recipe.compteuser_id = user.compteUser.id;
+      console.log('🔗 Recette liée au compteuser_id:', user.compteUser.id);
+    } 
+    
+    // Définir les propriétés de la recette
+    this.recipe.owner = true; // L'utilisateur qui crée la recette en est le propriétaire
+    this.recipe.share = false; // Par défaut, la recette n'est pas partagée
+    
   if (this.base.name === "OUI") this.recipe.principaleRecipe = true;
      /*  this.recipe.baseRecipe = true;
       this.productDialog = true;
@@ -442,9 +453,9 @@ export class RecipeComponent {
         console.log(data);
         
         // Gérer l'upload de photo si une photo a été sélectionnée
-        if (this.selectedPhoto && data.data && data.data.id) {
+        if (this.selectedPhoto && data && data.id) {
           try {
-            await this.recipeService.uploadPhoto(this.selectedPhoto, data.data.id);
+            await this.recipeService.uploadPhoto(this.selectedPhoto, data.id);
             console.log('Photo uploadée avec succès');
           } catch (error) {
             console.error('Erreur lors de l\'upload de la photo:', error);
@@ -466,9 +477,9 @@ export class RecipeComponent {
         this.activeIndex = 1
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: this.sucess });
   
-        await this.saveAllDetail(data.data)
+        await this.saveAllDetail(data)
 
-        if(this.base.name === "NON") this.openDialogProduct(await this.dishesPriceService.getDetailRecipeWithRecipeInfos(data.data));
+        if(this.base.name === "NON") this.openDialogProduct(await this.dishesPriceService.getDetailRecipeWithRecipeInfos(data));
 
         // Rafraîchir la liste des recettes après l'enregistrement
         this.getAll();
@@ -506,7 +517,7 @@ export class RecipeComponent {
     if (this.base.name === 'NON') {
       console.log("🔧 Ouverture du dialogue de création de produit (recette non principale)");
       this.productData.name = recipe.name;
-      this.productData.price = recipe.cout;
+      this.productData.price = (recipe.cout || 0);
       this.productData.unit = this.units.find(item => item.code === 'Kg') || null;
       this.productData.category = this.categorys.find(element => element.code === 'I017') || null;
       this.productData.lossPercentage = 0.1;
@@ -947,7 +958,7 @@ export class RecipeComponent {
   changeDetailCout(detail: any, i: any, edit: Boolean) {
     //this.cout=0
     this.detailRecipesProvisoire.forEach(detail => {
-      //this.cout+=detail.cout
+      //this.cout+=(detail.cout || 0)
     })
   }
   changeDetailBrut(detail: any, i: any, edit: Boolean) {
@@ -960,7 +971,7 @@ export class RecipeComponent {
     //    else this.detailDishesProvisoire[i].cout=brut
     //  }
     //   this.detailDishesProvisoire.forEach(detail=>{
-    //     //this.brut+=detail.brut
+    //     //this.brut+=(detail.brut || 0)
     //   })
     //   this.changeDetailCout(detail,i,true)
   }
@@ -976,7 +987,7 @@ export class RecipeComponent {
     //    else this.detailDishesProvisoire[i].brut=net/(1)
     //  }
     //   this.detailDishesProvisoire.forEach(detail=>{
-    //     this.net+=detail.net
+    //     this.net+=(detail.net || 0)
     //   })
     //   this.changeDetailBrut(detail,i,true)
 
@@ -1060,19 +1071,23 @@ export class RecipeComponent {
   updateRecipeShare(recipe: Recipe) {
     this.loading = true;
     
-    this.recipeService.update(recipe.id, recipe).then(data => {
+    // Vérifier que recipe.share n'est pas undefined
+    const shareValue = recipe.share ?? false;
+    
+    // Utiliser la méthode spécifique pour mettre à jour uniquement le champ share
+    this.recipeService.updateShare(recipe.id, shareValue).then(data => {
       this.loading = false;
       this.messageService.add({
         severity: 'success',
         summary: 'Partage mis à jour',
-        detail: recipe.share
+        detail: shareValue
           ? `La recette "${recipe.name}" est maintenant partagée.`
           : `La recette "${recipe.name}" n'est plus partagée.`
       });
     }, error => {
       this.loading = false;
       // Revenir à la valeur précédente en cas d'erreur
-      recipe.share = !recipe.share;
+      recipe.share = !shareValue;
       this.messageService.add({
         severity: 'error',
         summary: 'Erreur',

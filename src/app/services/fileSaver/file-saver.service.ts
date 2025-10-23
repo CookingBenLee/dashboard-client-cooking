@@ -25,7 +25,7 @@ export class FileSaverService {
 
   getFile(name:any){
     //const params = new HttpParams().append("name", name);
-    // http://92.222.10.20:9999/file/getfile
+    // ${this.env.apiUrl}/file/getfile
     return this.http.get<any>(`${this.env.apiUrl}/file/getfile?name=${name}`)
     .toPromise()
     .then(res => res as any)

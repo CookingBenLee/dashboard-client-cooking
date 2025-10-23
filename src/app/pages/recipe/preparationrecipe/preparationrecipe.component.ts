@@ -237,7 +237,7 @@ export class PreparationrecipeComponent {
 
       }
       this.poidNet = this.recetteSelectione.net
-      this.poidBrut = this.poidNet * this.recetteSelectione.ratio
+      this.poidBrut = this.poidNet * (this.recetteSelectione.ratio || 1)
       this.recetteSelectione.brut = this.poidBrut
 
       await this.getDetailDishes(this.recetteSelectione)
@@ -247,10 +247,10 @@ export class PreparationrecipeComponent {
   }
 
   getDetailPercet(detail: DetailsRecipe, recette: Recipe) {
-    var detailValue = detail.net
+    var detailValue = (detail.net || 0)
     var platValue = recette.net
 
-    var value = (detailValue * 100) / platValue
+    var value = (detailValue * 100) / (platValue || 1)
 
     return value;
   }
@@ -268,11 +268,11 @@ export class PreparationrecipeComponent {
 
   async calculDetailNet() {
     await this.detailsDishes.forEach(detail => {
-      //detail.floatingNet=(detail.net*this.poidNet)/this.recetteSelectione.net
+      //detail.floatingNet=((detail.net || 0)*this.poidNet)/this.recetteSelectione.net
       if (detail.proportion == null) {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: `L'ingrédient '${detail.ingredient.name}' n'a pas de proportion spécifié.` });
       }
-      detail.net = (this.recetteSelectione.brut * (detail.proportion))
+      detail.net = ((this.recetteSelectione.brut || 0) * (detail.proportion || 0))
     })
   }
 
@@ -284,7 +284,7 @@ export class PreparationrecipeComponent {
         console.log(perte);
 
         //detail.floatingBrut=detail.floatingNet/(1-(perte/100))
-        detail.brut = detail.net / (1 - perte)
+        detail.brut = (detail.net || 0) / (1 - perte)
 
       }
     })
@@ -295,7 +295,7 @@ export class PreparationrecipeComponent {
       var price = detail.ingredient.price
       if (price != null) {
         //detail.floatingCout=detail.floatingBrut*price
-        detail.cout = detail.brut * price
+        detail.cout = (detail.brut || 0) * price
       }
     })
   }
@@ -315,7 +315,7 @@ export class PreparationrecipeComponent {
 
     await this.detailsDishes.forEach(detail => {
       //this.prix+=detail.floatingCout
-      this.recetteSelectione.cout += detail.cout
+      this.recetteSelectione.cout = (this.recetteSelectione.cout || 0) + (detail.cout || 0)
     })
   }
 
@@ -490,7 +490,7 @@ export class PreparationrecipeComponent {
 
   getStockAfter(detail: DetailsRecipe): number {
     const stockQuantity = this.getStockQuantity(detail);
-    const brutQuantity = detail.brut || 0;
+    const brutQuantity = (detail.brut || 0) || 0;
     const result = stockQuantity - brutQuantity;
     console.log('Stock after calculation for', detail?.ingredient?.name, ':', stockQuantity, '-', brutQuantity, '=', result);
     return result;
@@ -515,7 +515,7 @@ export class PreparationrecipeComponent {
     // Vérification des stocks
     const ingredientsEnRupture = this.detailsDishes.filter(detail => {
       const stockQuantity = this.getStockQuantity(detail);
-      const poidsBrut = detail.brut;
+      const poidsBrut = (detail.brut || 0);
       console.log("Stock vérification pour", detail.ingredient.name, "- Stock:", stockQuantity, "Poids brut:", poidsBrut);
       
       // Si stock insuffisant
@@ -543,7 +543,7 @@ export class PreparationrecipeComponent {
       
     // Configuration de la préparation
     this.preparationRecipe.recipe = this.recetteSelectione;
-    this.preparationRecipe.poidsNet = this.recetteSelectione.net;
+    this.preparationRecipe.poidsNet = this.recetteSelectione.net || 0;
     
     console.log('📝 Données à sauvegarder:', this.preparationRecipe);
 

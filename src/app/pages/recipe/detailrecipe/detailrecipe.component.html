@@ -15,7 +15,7 @@
         <div class="grid grid-cols-3 gap-4">
           <div>
             <div class="text-sm text-gray-500 mb-1">POURCENTAGE DE PERTE</div>
-            <div class="text-xl font-bold text-gray-800">{{ (recipe.ratio-1)*100 | number:'1.0-0' }}%</div>
+            <div class="text-xl font-bold text-gray-800">{{ ((recipe.ratio || 1)-1)*100 | number:'1.0-0' }}%</div>
           </div>
           <div>
             <div class="text-sm text-gray-500 mb-1">STOCK</div>
@@ -68,10 +68,24 @@
 
   <!-- DETAILS DES INGREDIENTS -->
   <div class="mb-6">
-    <div class="mb-2">
+    <div class="mb-2 flex items-center justify-between">
       <h3 class="text-lg font-bold text-crimson-700">DETAILS DES INGREDIENTS</h3>
+      <div *ngIf="loading" class="flex items-center text-blue-600">
+        <i class="pi pi-spin pi-spinner mr-2"></i>
+        <span class="text-sm">Chargement...</span>
+      </div>
     </div>
-    <div class="overflow-x-auto">
+    
+    <!-- Indicateur de chargement -->
+    <div *ngIf="loading" class="flex justify-center items-center py-8">
+      <div class="flex flex-col items-center">
+        <i class="pi pi-spin pi-spinner text-2xl text-blue-600 mb-2"></i>
+        <p class="text-gray-600">Chargement des ingrédients...</p>
+      </div>
+    </div>
+    
+    <!-- Table des ingrédients -->
+    <div *ngIf="!loading" class="overflow-x-auto">
       <table class="w-full text-sm text-left border border-gray-200 rounded-lg overflow-hidden">
         <thead class="bg-gray-100 text-gray-700">
           <tr>
@@ -81,32 +95,58 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let detail of detailRecipe2" class="border-t border-gray-200 hover:bg-gray-50">
-            <td class="px-4 py-2 text-center font-medium">{{ detail?.ingredient?.name }}</td>
+          <tr *ngFor="let detail of detailRecipe2; let i = index" class="border-t border-gray-200 hover:bg-gray-50">
+            <td class="px-4 py-2 text-center font-medium">
+              <span *ngIf="detail?.ingredient?.name; else noIngredient">
+                {{ detail.ingredient.name }}
+              </span>
+              <ng-template #noIngredient>
+                <span class="text-gray-400 italic">Ingrédient non spécifié</span>
+              </ng-template>
+            </td>
             <td class="px-4 py-2 text-center">
-              <span *ngIf="detail?.proportion != null">
+              <span *ngIf="detail?.proportion != null && detail.proportion > 0" class="font-semibold text-blue-600">
                 {{ detail.proportion * 100 | number: '1.0-2' }} %
               </span>
+              <span *ngIf="!detail?.proportion || detail.proportion === 0" class="text-gray-400">
+                -
+              </span>
             </td>
-            <td class="px-4 py-2 text-center">{{ detail?.preparationIngredient }}</td>
+            <td class="px-4 py-2 text-center">
+              <span *ngIf="detail?.preparationIngredient; else noPreparation">
+                {{ detail.preparationIngredient }}
+              </span>
+              <ng-template #noPreparation>
+                <span class="text-gray-400 italic">Aucune préparation spécifiée</span>
+              </ng-template>
+            </td>
           </tr>
+          
+          <!-- Message si aucun ingrédient -->
           <tr *ngIf="detailRecipe2.length === 0" class="border-t border-gray-200">
             <td colspan="3" class="px-4 py-8 text-center text-gray-500">
-              <i class="pi pi-info-circle mr-2"></i>
-              Aucun ingrédient trouvé pour cette recette
+              <div class="flex flex-col items-center">
+                <i class="pi pi-info-circle text-2xl mb-2 text-gray-400"></i>
+                <p class="font-medium">Aucun ingrédient trouvé pour cette recette</p>
+                <p class="text-sm text-gray-400 mt-1">Cette recette n'a pas encore d'ingrédients associés</p>
+              </div>
             </td>
           </tr>
-          <tr class="border-t-2 border-indigo-400">
+          
+          <!-- Ligne de total -->
+          <tr *ngIf="detailRecipe2.length > 0" class="border-t-2 border-indigo-400 bg-blue-50">
             <td class="px-4 py-2 font-bold text-blue-700">PROPORTION TOTALE</td>
-            <td class="px-4 py-2 font-bold text-blue-700 text-center">{{ totalProportion * 100 | number: '1.0-3' }} %</td>
-            <td></td>
+            <td class="px-4 py-2 font-bold text-blue-700 text-center">
+              {{ totalProportion * 100 | number: '1.0-3' }} %
+            </td>
+            <td class="px-4 py-2"></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- DETAILS DE LA CUISINE -->
+  <!-- SECTION DÉTAILS DE LA CUISINE -->
   <div class="mb-6">
     <h3 class="text-lg font-bold text-gray-800 mb-2">DETAILS DE LA CUISINE</h3>
     <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-700">

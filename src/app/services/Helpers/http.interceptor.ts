@@ -12,10 +12,13 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenService,private routeur:Router) {}
 
     intercept(httpRequest:HttpRequest<any>,httpHandler: HttpHandler): Observable<HttpEvent<any>> {
-      // Exclure les routes de login et d'authentification
+      // Exclure les routes de login, d'authentification et de signup
       if (httpRequest.url.includes(`${this.env.apiUrl}/compteuser/login`) ||
           httpRequest.url.includes(`${this.env.apiUrl}/compteuser/register`) ||
-          httpRequest.url.includes(`${this.env.apiUrl}/api/auth/`)) {
+          httpRequest.url.includes(`${this.env.apiUrl}/api/auth/`) ||
+          httpRequest.url.includes(`${this.env.apiUrl}/country/getall`) ||
+          httpRequest.url.includes(`${this.env.apiUrl}/type_compte/getall`) ||
+          httpRequest.url.includes(`${this.env.apiUrl}/address/`)) {
         return httpHandler.handle(httpRequest);
       }
 

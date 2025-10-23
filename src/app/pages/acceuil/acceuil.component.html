@@ -470,13 +470,31 @@
 
             <!-- Ingrédients -->
             <div class="info-section" *ngIf="selectedRecipeForDetail.detailList && selectedRecipeForDetail.detailList.length > 0">
-              <h3><i class="pi pi-list"></i> Ingrédients</h3>
+              <h3><i class="pi pi-list"></i> Ingrédients ({{ selectedRecipeForDetail.detailList.length }})</h3>
               <div class="ingredients-list">
-                <div *ngFor="let detail of selectedRecipeForDetail.detailList" class="ingredient-item">
-                  <span class="ingredient-name">{{ detail.ingredient?.name || 'Ingrédient' }}</span>
-                  <span class="ingredient-quantity">{{ detail.proportion || 'Quantité non spécifiée' }}</span>
-                  <span *ngIf="detail.preparationIngredient" class="ingredient-prep">{{ detail.preparationIngredient }}</span>
+                <div *ngFor="let detail of selectedRecipeForDetail.detailList; let i = index" class="ingredient-item">
+                  <div class="ingredient-header">
+                    <span class="ingredient-number">{{ i + 1 }}.</span>
+                    <span class="ingredient-name">{{ detail.ingredient?.name || 'Ingrédient non spécifié' }}</span>
+                    <span class="ingredient-quantity" *ngIf="detail.proportion">
+                      {{ (detail.proportion * 100).toFixed(1) }}%
+                    </span>
+                  </div>
+                  <div class="ingredient-details" *ngIf="detail.preparationIngredient">
+                    <span class="ingredient-prep">
+                      <i class="pi pi-info-circle"></i>
+                      {{ detail.preparationIngredient }}
+                    </span>
+                  </div>
                 </div>
+              </div>
+            </div>
+            
+            <!-- Message si aucun ingrédient -->
+            <div class="info-section" *ngIf="selectedRecipeForDetail.detailList && selectedRecipeForDetail.detailList.length === 0">
+              <div class="no-ingredients">
+                <i class="pi pi-exclamation-triangle"></i>
+                <p>Aucun ingrédient trouvé pour cette recette</p>
               </div>
             </div>
           </div>

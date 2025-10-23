@@ -115,24 +115,24 @@ export class DetailEstimationComponent implements OnInit {
 
     const updatedList = await Promise.all(
       compositionList.map(async (x) => {
-        x.recipe.net=x.recipe.stockApres*-1
+        x.recipe.net = (x.recipe.stockApres || 0) * -1
         const recipeDetail = await this.dishesPriceService.getDetailRecipeWithRecipeInfos(x.recipe);
         x.recipe = recipeDetail;
-        console.log('DetailList for recipe:', x.recipe.detailList);
-        x.recipe.detailList.forEach(detail=>{
-          detail.brut*=1000
+        console.log('DetailList for recipe:', x.recipe.detailList || []);
+        (x.recipe.detailList || []).forEach(detail=>{
+          detail.brut = (detail.brut || 0) * 1000
           // const totalQuantity = detail.ingredient.stock.reduce((acc, s) => acc + (s.quantity || 0), 0);
           const totalQuantity = detail.ingredient?.stockList.quantity;
-          detail.stockApres = detail.stockApres = (totalQuantity ?? 0) - detail.brut;
+          detail.stockApres = detail.stockApres = (totalQuantity ?? 0) - (detail.brut || 0);
 
-          if(detail.stockApres<0 && x.recipe.stockApres < 0){
+          if(detail.stockApres<0 && (x.recipe.stockApres || 0) < 0){
             const detailRecipe: DetailsRecipe = new DetailsRecipe();
             detailRecipe.ingredient = detail.ingredient;
             detailRecipe.stockApres = detail.stockApres;
             this.updateOrAddToIngredientList(detailRecipe)
           }
         })
-        return x.recipe.stockApres < 0 ? x : null;
+        return (x.recipe.stockApres || 0) < 0 ? x : null;
       })
     );
 

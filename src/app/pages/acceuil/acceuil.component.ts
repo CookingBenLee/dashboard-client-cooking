@@ -295,17 +295,14 @@ export class AcceuilComponent implements OnInit {
     // Filtrage par pays sélectionnés (seulement si des pays sont sélectionnés)
     if (this.selectedCountries.length > 0) {
       filteredComptes = this.allComptes.filter(compte => {
+        // Optimisation: éviter les appels répétés pour les comptes invalides
+        if (!compte || !compte.denomination) {
+          return false;
+        }
+        
         const countryId = this.getCompteCountryId(compte);
-        console.log('🔍 Filtrage compte:', compte.denomination, 'Country ID:', countryId, 'Pays sélectionnés:', this.selectedCountries);
         return countryId ? this.selectedCountries.includes(countryId) : false;
       });
-      console.log('Pays sélectionnés:', this.selectedCountries);
-      console.log('Comptes filtrés par pays:', filteredComptes.length);
-      console.log('Détail des comptes filtrés:', filteredComptes.map(c => ({
-        id: c.id,
-        denomination: c.denomination,
-        country: c.country
-      })));
     }
     
     // Filtrage par recherche de cuisiniers
@@ -332,7 +329,7 @@ export class AcceuilComponent implements OnInit {
     // Filtrage par recherche de recettes
     if (this.searchRecipe.trim()) {
       recipesToFilter = recipesToFilter.filter(recipe => 
-        recipe.name.toLowerCase().includes(this.searchRecipe.toLowerCase())
+        (recipe.name || '').toLowerCase().includes(this.searchRecipe.toLowerCase())
       );
     }
     
@@ -421,26 +418,29 @@ export class AcceuilComponent implements OnInit {
   }
 
   getCompteCountry(compte: CompteUserModel): string {
-    console.log('🔍 getCompteCountry - Compte:', compte.denomination, 'Country:', compte.country, 'Type:', typeof compte.country);
+    console.log('🔍 getCompteCountry - Compte:', compte?.denomination, 'Country:', compte?.country, 'Type:', typeof compte?.country);
     
     // Vérifier si country existe et a une propriété name
-    if (compte.country && typeof compte.country === 'object') {
-      console.log('🔍 Country object:', compte.country);
-      return compte.country.name || compte.country || 'N/A';
+    if (compte?.country && typeof compte.country === 'object' && compte.country.name) {
+      return compte.country.name;
     }
     // Si country est directement une string
-    if (compte.country && typeof compte.country === 'string') {
-      console.log('🔍 Country string:', compte.country);
+    if (compte?.country && typeof compte.country === 'string') {
       return compte.country;
     }
     
     // Vérifier si address existe et contient country
-    if (compte.address && typeof compte.address === 'object' && (compte.address as any).country) {
-      console.log('🔍 Address country:', (compte.address as any).country);
-      return (compte.address as any).country.name || (compte.address as any).country || 'N/A';
+    if (compte?.address && typeof compte.address === 'object' && (compte.address as any).country) {
+      const addressCountry = (compte.address as any).country;
+      console.log('🔍 Address country:', addressCountry);
+      if (addressCountry.name) {
+        return addressCountry.name;
+      } else if (typeof addressCountry === 'string') {
+        return addressCountry;
+      }
     }
     
-    console.log('🔍 Aucun pays trouvé pour:', compte.denomination);
+    console.log('🔍 Aucun pays trouvé pour:', compte?.denomination);
     return 'Pays non défini';
   }
 
@@ -502,9 +502,9 @@ export class AcceuilComponent implements OnInit {
 
   getDifficulty(recipe: Recipe): string {
     // Utiliser une logique basée sur les propriétés existantes
-    if (recipe.detailList && recipe.detailList.length > 5) {
+    if ((recipe.detailList || []) && (recipe.detailList || []).length > 5) {
       return 'Difficile';
-    } else if (recipe.detailList && recipe.detailList.length > 2) {
+    } else if ((recipe.detailList || []) && (recipe.detailList || []).length > 2) {
       return 'Moyen';
     }
     return 'Facile'; // Valeur par défaut
@@ -512,13 +512,6 @@ export class AcceuilComponent implements OnInit {
 
   async duplicateRecipe(recipe: Recipe) {
     console.log('Début de la duplication de recette:', recipe);
-    
-    // Test des messages
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Test',
-      detail: 'Test des messages - fonction de copie démarrée'
-    });
     
     const user = this.tokenService.getUser();
     console.log('Utilisateur connecté:', user);
@@ -532,49 +525,83 @@ export class AcceuilComponent implements OnInit {
       return;
     }
 
-    // Afficher un dialogue de confirmation
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Confirmation de copie',
-      detail: `Voulez-vous copier la recette "${recipe.name}" dans vos recettes ? (Elle ne sera pas marquée comme propriétaire)`,
-      key: 'confirmDialog'
-    });
-
-    // Simuler une confirmation (vous pouvez remplacer par un vrai dialogue)
-    const confirmed = confirm(`Voulez-vous copier la recette "${recipe.name}" dans vos recettes ?\n\nNote: La recette copiée ne sera pas marquée comme propriétaire (owner: false).`);
-    
-    if (!confirmed) {
+    // Vérifier que la recette a un uniquecode
+    if (!recipe.uniquecode || recipe.uniquecode.trim() === '') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erreur',
+        detail: 'La recette sélectionnée n\'a pas de code unique valide'
+      });
       return;
     }
+
+    console.log('🔍 Vérification d\'existence - Recette uniquecode:', recipe.uniquecode, 'User ID:', user.id);
 
     try {
       // Message de début de processus
       this.messageService.add({
         severity: 'info',
-        summary: 'Copie en cours...',
-        detail: `Copie de la recette "${recipe.name}" en cours...`
+        summary: 'Vérification en cours...',
+        detail: `Vérification de l'existence de la recette "${recipe.name}"...`
       });
 
-      console.log('Vérification des recettes existantes...');
+      console.log('🔍 Contrôle d\'existence basé sur uniquecode et compteuser_id...');
       
-      // Vérifier si une recette avec le même code existe déjà chez l'utilisateur
+      // Récupérer toutes les recettes de l'utilisateur connecté
       const existingRecipes = await this.recipeService.getAll();
-      console.log('Toutes les recettes:', existingRecipes);
+      console.log('📋 Toutes les recettes disponibles:', existingRecipes.length);
       
-      const userRecipes = existingRecipes.filter(r => r.user?.id === user.id);
-      console.log('Recettes de l\'utilisateur:', userRecipes);
+      // Filtrer les recettes de l'utilisateur connecté
+      const userRecipes = existingRecipes.filter(r => {
+        // Vérifier par compteuser_id en priorité, puis par user.id en fallback
+        const userCompteId = r.compteuser_id || r.user?.id;
+        return userCompteId === user.id;
+      });
       
-      const duplicateExists = userRecipes.some(r => r.code === recipe.code);
-      console.log('Doublon trouvé:', duplicateExists);
+      console.log('👤 Recettes de l\'utilisateur connecté:', userRecipes.length);
+      console.log('🔍 Recettes de l\'utilisateur (détails):', userRecipes.map(r => ({
+        id: r.id,
+        name: r.name,
+        uniquecode: r.uniquecode,
+        compteuser_id: r.compteuser_id,
+        user_id: r.user?.id
+      })));
+      
+      // Vérifier si une recette avec le même uniquecode existe déjà
+      const duplicateExists = userRecipes.some(r => r.uniquecode === recipe.uniquecode);
+      console.log('🔍 Doublon trouvé (uniquecode):', duplicateExists);
       
       if (duplicateExists) {
+        const existingRecipe = userRecipes.find(r => r.uniquecode === recipe.uniquecode);
         this.messageService.add({
           severity: 'warn',
           summary: 'Recette déjà existante',
-          detail: `Vous avez déjà une recette avec le code "${recipe.code}" dans vos recettes. La copie a été annulée.`
+          detail: `Vous avez déjà une recette avec le code unique "${recipe.uniquecode}" dans vos recettes (${existingRecipe?.name}). La copie a été annulée.`
         });
         return;
       }
+
+      // Afficher un dialogue de confirmation
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Confirmation de copie',
+        detail: `Voulez-vous copier la recette "${recipe.name}" dans vos recettes ? (Elle ne sera pas marquée comme propriétaire)`,
+        key: 'confirmDialog'
+      });
+
+      // Simuler une confirmation (vous pouvez remplacer par un vrai dialogue)
+      const confirmed = confirm(`Voulez-vous copier la recette "${recipe.name}" dans vos recettes ?\n\nNote: La recette copiée ne sera pas marquée comme propriétaire (owner: false).`);
+      
+      if (!confirmed) {
+        return;
+      }
+
+      // Message de début de processus de copie
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Copie en cours...',
+        detail: `Copie de la recette "${recipe.name}" en cours...`
+      });
 
       console.log('Utilisation du nouvel endpoint de copie...');
       console.log('URL de copie:', `${environment.apiUrl}/recipe/copy/${recipe.id}/${user.id}`);
@@ -728,7 +755,7 @@ export class AcceuilComponent implements OnInit {
     } else {
       const searchTerm = this.searchAllRecipes.toLowerCase();
       this.filteredAllRecipes = this.allSharedRecipes.filter(recipe => {
-        const recipeName = recipe.name.toLowerCase().includes(searchTerm);
+        const recipeName = (recipe.name || '').toLowerCase().includes(searchTerm);
         const compteName = this.getCompteName(recipe).toLowerCase().includes(searchTerm);
         const compteUserId = recipe.compteuser_id ? recipe.compteuser_id.toString().includes(searchTerm) : false;
         const countryName = this.getRecipeCountry(recipe).toLowerCase().includes(searchTerm);
@@ -745,9 +772,37 @@ export class AcceuilComponent implements OnInit {
     this.selectedRecipeForDetail = null;
   }
 
-  selectRecipeForDetail(recipe: Recipe) {
+  async selectRecipeForDetail(recipe: Recipe) {
     console.log('🔍 Sélection de la recette pour détail:', recipe.name);
     this.selectedRecipeForDetail = recipe;
+    
+    // Charger les détails de la recette (ingrédients)
+    try {
+      this.loading = true;
+      const details = await this.detailsrecipeService.byRecipe(recipe.id);
+      console.log('✅ Détails de la recette chargés:', details);
+      
+      // Ajouter les détails à la recette sélectionnée
+      this.selectedRecipeForDetail.detailList = details;
+      
+      if (!details || details.length === 0) {
+        console.log('⚠️ Aucun ingrédient trouvé pour cette recette');
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Information',
+          detail: 'Aucun ingrédient trouvé pour cette recette'
+        });
+      }
+    } catch (error) {
+      console.error('❌ Erreur lors du chargement des détails:', error);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erreur',
+        detail: 'Impossible de charger les détails de la recette'
+      });
+    } finally {
+      this.loading = false;
+    }
   }
 
   shareRecipe(recipe: Recipe) {

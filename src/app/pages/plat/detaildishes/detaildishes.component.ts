@@ -212,11 +212,11 @@ export class DetaildishesComponent {
 
   async getCompoPrice(composition: CompositionDishes): Promise<number> {
 
-    var recipe: Recipe = composition.recipe
+    var recipe: Recipe = composition.recipe;
     recipe.cout = 0
-    var detailRecipes: DetailsRecipe[] = recipe.detailList;
-    // var brut = (composition.quantity / 1000) * recipe.ratio
-    var brut = (composition.quantity) * recipe.ratio
+    var detailRecipes: DetailsRecipe[] = (recipe.detailList || []);
+    // var brut = (composition.quantity / 1000) * (recipe.ratio || 1)
+    var brut = (composition.quantity) * (recipe.ratio || 1)
     console.log("----------------------------------------------------------------{}", composition);
     console.log("----------------------------------------------------------------{}", brut);
 
@@ -229,7 +229,7 @@ export class DetaildishesComponent {
       for (const detail of detailRecipes) {
         console.log(detail);
 
-        console.log(detail.net);
+        console.log((detail.net || 0));
         console.log(detail.proportion);
 
         // detail.net = (brut * (detail.proportion)) / 100
@@ -239,27 +239,27 @@ export class DetaildishesComponent {
 
         if (perte != null) {
           console.log(perte);
-          detail.brut = detail.net / (1 - (perte))
+          detail.brut = (detail.net || 0) / (1 - (perte))
         }
         ///
         var price = detail.ingredient.price
         if (price != null) {
           //detail.floatingCout=detail.floatingBrut*price
-          detail.cout = detail.brut * price
-          console.log(detail.brut);
+          detail.cout = (detail.brut || 0) * price
+          console.log((detail.brut || 0));
           console.log(price);
         } else detail.cout = 0
         ///
-        console.log(detail.cout);
-        // recipe.cout = (recipe.cout + detail.cout)*100
-        recipe.cout = (recipe.cout + detail.cout)
+        console.log((detail.cout || 0));
+        // recipe.cout = ((recipe.cout || 0) + (detail.cout || 0))*100
+        recipe.cout = ((recipe.cout || 0) + (detail.cout || 0))
       }
 
 
     })
-    console.log(recipe.cout);
+    console.log((recipe.cout || 0));
     console.log(detailRecipes);
-    return recipe.cout;
+    return (recipe.cout || 0);
 
   }
 
