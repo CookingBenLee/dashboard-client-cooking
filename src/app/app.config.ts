@@ -16,7 +16,6 @@ import {
   withInMemoryScrolling,
 } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideClientHydration } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -61,7 +60,6 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding()
     ),
     provideHttpClient(withInterceptorsFromDi()),
-    provideClientHydration(),
     provideAnimationsAsync(),
 
     importProvidersFrom(
@@ -85,7 +83,7 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       })
-    ), provideHttpClient(), provideTransloco({
+    ), provideTransloco({
         config: { 
           availableLangs: ['fr','en','es','de'],
           defaultLang: 'fr',

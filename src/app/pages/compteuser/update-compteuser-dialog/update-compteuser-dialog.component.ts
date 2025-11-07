@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
@@ -75,7 +76,7 @@ export class UpdateCompteUserDialogComponent implements OnInit {
 
     // Prévisualisation de l'image si déjà existante
     this.imagePreview = this.data?.photo
-      ? 'http://localhost:5000/uploads/logos/' + this.data.photo
+      ? `${environment.apiUrl}/uploads/logos/` + this.data.photo
       : null;
   }
 

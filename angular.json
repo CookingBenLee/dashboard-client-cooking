@@ -21,7 +21,14 @@
               "apexcharts",
               "bezier-easing",
               "moment",
-              "dropzone"
+              "dropzone",
+              "canvg",
+              "core-js",
+              "quill-delta",
+              "chance",
+              "html2canvas",
+              "raf",
+              "rgbcolor"
             ],
             "outputPath": "dist/MaterialM",
             "index": "src/index.html",
@@ -33,7 +40,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@angular/material/prebuilt-themes",
+                "output": "assets/"
+              }
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",

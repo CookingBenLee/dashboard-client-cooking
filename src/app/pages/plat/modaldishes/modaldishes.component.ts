@@ -306,7 +306,7 @@ export class ModaldishesComponent {
     console.log(this.recetteSelectione);
     console.log(this.unitSelectionne);
     var cp: CompositionDishes = new CompositionDishes()
-    cp.quantity = this.recetteSelectione.net
+    cp.quantity = this.recetteSelectione.net || 0
 
     if (this.unitSelectionne == this.units[1]) {//KiloGramme
       console.log(this.recetteSelectione);
@@ -314,7 +314,7 @@ export class ModaldishesComponent {
       // this.recetteSelectione.net = this.recetteSelectione.net * 1000
       this.recetteSelectione.net = this.recetteSelectione.net
       await this.changePoid()
-      cp.quantity = this.recetteSelectione.net
+      cp.quantity = this.recetteSelectione.net || 0
 
       // await this.calculPlat()
     } else {
@@ -326,7 +326,7 @@ export class ModaldishesComponent {
     await this.calculPlat()
     // this.calculPlat()
     cp.recipe = this.recetteSelectione
-    cp.cout = this.recetteSelectione.cout
+    cp.cout = this.recetteSelectione.cout || 0
 
     await this.compositionDishes.push(cp)
     this.recetteSelectione = new Recipe()
@@ -441,8 +441,8 @@ export class ModaldishesComponent {
 
   async changePoid() {
     var net = this.recetteSelectione.net
-    if (this.unitSelectionne == this.units[1]) net = this.recetteSelectione.net / 1000
-    this.recetteSelectione.brut = net * this.recetteSelectione.ratio
+    if (this.unitSelectionne == this.units[1]) net = (this.recetteSelectione.net || 0) / 1000
+    this.recetteSelectione.brut = (net || 0) * (this.recetteSelectione.ratio || 1)
 
     //calcul des poid net des details
     await this.calculDetailNet()
@@ -460,12 +460,12 @@ export class ModaldishesComponent {
 
   async calculDetailNet() {
     await this.detailsRecepeSelectione.forEach(detail => {
-      //detail.floatingNet=(detail.net*this.poidNet)/this.recetteSelectione.net
+      //detail.floatingNet=((detail.net || 0)*this.poidNet)/this.recetteSelectione.net
       if (detail.proportion == null) {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Info', detail: `L'ingrédient '${detail.ingredient.name}' n'a pas de proportion spécifié.` });
       }
       // detail.net = (this.recetteSelectione.brut * (detail.proportion)) / 100
-      detail.net = (this.recetteSelectione.brut * (detail.proportion))
+      detail.net = ((this.recetteSelectione.brut || 0) * (detail.proportion || 0))
     })
   }
 
@@ -477,7 +477,7 @@ export class ModaldishesComponent {
         console.log(perte);
 
         //detail.floatingBrut=detail.floatingNet/(1-(perte/100))
-        detail.brut = detail.net / (1 - perte)
+        detail.brut = (detail.net || 0) / (1 - perte)
 
       }
     })
@@ -488,7 +488,7 @@ export class ModaldishesComponent {
       var price = detail.ingredient.price
       if (price != null) {
         //detail.floatingCout=detail.floatingBrut*price
-        detail.cout = detail.brut * price
+        detail.cout = (detail.brut || 0) * price
       }
     })
   }
@@ -499,7 +499,7 @@ export class ModaldishesComponent {
     this.recetteSelectione.cout = 0
     await this.detailsRecepeSelectione.forEach(detail => {
       //this.prix+=detail.floatingCout
-      this.recetteSelectione.cout += detail.cout
+      this.recetteSelectione.cout += (detail.cout || 0)
     })
     console.log(this.recetteSelectione);
   }
@@ -591,12 +591,12 @@ export class ModaldishesComponent {
 
   async getCompoPrice(composition: CompositionDishes): Promise<number> {
 
-    var recipe: Recipe = composition.recipe
+    var recipe: Recipe = composition.recipe;
     recipe.cout = 0
-    var detailRecipes: DetailsRecipe[] = recipe.detailList;
+    var detailRecipes: DetailsRecipe[] = (recipe.detailList || []);
 
-    // var brut = (composition.quantity / 1000) * recipe.ratio
-    var brut = (composition.quantity) * recipe.ratio
+    // var brut = (composition.quantity / 1000) * (recipe.ratio || 1)
+    var brut = (composition.quantity) * (recipe.ratio || 1)
 
 
     await this.detailRecipeService.byRecipe(recipe.id).then(data => {
@@ -606,7 +606,7 @@ export class ModaldishesComponent {
       for (const detail of detailRecipes) {
         console.log(detail);
 
-        console.log(detail.net);
+        console.log((detail.net || 0));
         console.log(detail.proportion);
 
         // detail.net = await (brut * (detail.proportion)) / 100
@@ -616,24 +616,24 @@ export class ModaldishesComponent {
 
         if (perte != null) {
           console.log(perte);
-          detail.brut = await detail.net / (1 - perte)
+          detail.brut = await (detail.net || 0) / (1 - perte)
         }
         ///
         var price = await detail.ingredient.price
         if (price != null) {
           //detail.floatingCout=detail.floatingBrut*price
-          detail.cout = await detail.brut * price
+          detail.cout = await (detail.brut || 0) * price
         } else detail.cout = 0
         ///
-        console.log(detail.cout);
-        recipe.cout = await (recipe.cout + detail.cout)
+        console.log((detail.cout || 0));
+        recipe.cout = await ((recipe.cout || 0) + (detail.cout || 0))
       }
 
 
     })
-    console.log(recipe.cout);
+    console.log((recipe.cout || 0));
     console.log(detailRecipes);
-    return recipe.cout;
+    return (recipe.cout || 0);
 
   }
 

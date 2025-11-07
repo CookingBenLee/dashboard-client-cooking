@@ -197,9 +197,9 @@ export class FullComponent implements OnInit {
       link: '/apps/todo',
     },
   ];
-  fixedDateTime: string = 'N° de version : 2025/10/16_16:10'; 
+  fixedDateTime: string = 'N° de version : 2025/11/07_17:42';
 
-  //YYYYMMDD_HH:MM "2025/01/16_18:47"
+  //YYYYMMDD_HH:MM "2025/10/16_16:10"
 
   constructor(
     private settings: CoreService,
@@ -243,6 +243,7 @@ export class FullComponent implements OnInit {
     console.log("Comparaison : ", this.filteredNavItems);
 
   }
+
 
   filterNavItems(items: NavItem[], userTypeCompte: number): NavItem[] {
     return items

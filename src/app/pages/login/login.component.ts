@@ -53,12 +53,18 @@ export class LoginComponent implements OnInit {
 
 
    onSubmit(): void {
+    console.log('Tentative de connexion avec:', this.login);
     this.userService.login(this.login, this.password).subscribe(
       (response: any) => {
+        console.log('Réponse du serveur:', response);
+        console.log('Token reçu:', response.token);
+        
         this.tokenService.saveToken(response.token);
-        console.log(response);
+        console.log('Token sauvegardé:', this.tokenService.getToken());
 
         this.tokenService.saveUser(response);
+        console.log('Utilisateur sauvegardé:', this.tokenService.getUser());
+        
         this.router.navigate(['/home']);
       },
       (error) => {

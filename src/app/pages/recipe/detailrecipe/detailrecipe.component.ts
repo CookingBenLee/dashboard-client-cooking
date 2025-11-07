@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
@@ -170,37 +171,56 @@ export class DetailrecipeComponent {
     }
 
   async ngOnInit(): Promise<void> {
-    console.log('Recipe dans ngOnInit:', this.recipe);
-    console.log('Recipe ID:', this.recipe.id);
+    console.log('🔍 Recipe dans ngOnInit:', this.recipe);
+    console.log('🔍 Recipe ID:', this.recipe.id);
+    console.log('🔍 Recipe name:', this.recipe.name);
     
-    await this.getAllCategory()
+    try {
+      await this.getAllCategory()
 
-    if (this.recipe && this.recipe.id) {
-      await this.getAll(this.recipe.id)
-    } else {
-      console.error('Recipe ID non défini');
+      if (this.recipe && this.recipe.id) {
+        console.log('🚀 Chargement des ingrédients pour la recette:', this.recipe.name);
+        await this.getAll(this.recipe.id)
+      } else {
+        console.error('❌ Recipe ID non défini');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'ID de la recette non défini'
+        });
+        return;
+      }
+      
+      //for details
+      await this.getProducts()
+      this.getUnits()
+      
+      // Forcer la détection de changement à la fin
+      this.cdref.detectChanges();
+      
+    } catch (error) {
+      console.error('❌ Erreur dans ngOnInit:', error);
       this.messageService.add({
         severity: 'error',
         summary: 'Erreur',
-        detail: 'ID de la recette non défini'
+        detail: 'Erreur lors de l\'initialisation du composant'
       });
     }
-    
-    //for details
-    await this.getProducts()
-    this.getUnits()
-    this.cdref.detectChanges();
-
   }
 
 
      //recuperation de valeurs
      async getAll(id:any){
+      console.log('🔍 === DÉBUT CHARGEMENT DÉTAILS ===');
       console.log('Chargement des détails pour la recette ID:', id);
       console.log('Recipe ID utilisé:', this.recipe.id);
+      console.log('Recipe object:', this.recipe);
       
-      if (!this.recipe.id) {
-        console.error('Recipe ID est undefined');
+      // Utiliser l'ID passé en paramètre ou celui de la recette
+      const recipeId = id || this.recipe.id;
+      
+      if (!recipeId) {
+        console.error('❌ Recipe ID est undefined');
         this.messageService.add({
           severity: 'error',
           summary: 'Erreur',
@@ -209,7 +229,13 @@ export class DetailrecipeComponent {
         return;
       }
       
-      await this.detailRecipeService.byRecipe(this.recipe.id).then(data =>{
+      // Activer l'indicateur de chargement
+      this.loading = true;
+      
+      console.log('📡 Appel du service byRecipe avec ID:', recipeId);
+      
+      try {
+        const data = await this.detailRecipeService.byRecipe(recipeId);
         console.log('Données reçues du service:', data);
         console.log('Type de données:', typeof data);
         console.log('Longueur des données:', data ? data.length : 'undefined');
@@ -228,21 +254,36 @@ export class DetailrecipeComponent {
             this.totalProportion += detail.proportion || 0
           });
         } else {
-          console.log('Aucun détail trouvé pour cette recette');
+          console.log('⚠️ Aucun ingrédient trouvé pour cette recette');
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Information',
+            detail: 'Cette recette n\'a pas encore d\'ingrédients associés'
+          });
         }
         
+        // Ajouter un nouvel élément vide pour l'édition
         this.detailRecipeProvisoire2.push(new DetailsRecipe())
+        
         console.log('Tableau final detailRecipe2:', this.detailRecipe2);
         console.log('Nombre d\'éléments dans detailRecipe2:', this.detailRecipe2.length);
         console.log('Total proportion:', this.totalProportion);
-      }).catch(error => {
+        
+        // Forcer la détection de changement
+        this.cdref.detectChanges();
+        
+      } catch (error) {
         console.error('Erreur lors du chargement des détails:', error);
         this.messageService.add({
           severity: 'error',
           summary: 'Erreur',
           detail: 'Impossible de charger les détails de la recette'
         });
-      })
+      } finally {
+        // Désactiver l'indicateur de chargement
+        this.loading = false;
+        this.cdref.detectChanges();
+      }
     }
 
 
@@ -427,19 +468,19 @@ export class DetailrecipeComponent {
     changeDetailCout(){
       this.recipe.cout=0
       this.detailRecipeProvisoire2.forEach(detail=>{
-        this.recipe.cout+=detail.cout
+        this.recipe.cout = (this.recipe.cout || 0) + (detail.cout || 0)
       })
     }
     changeDetailBrut(){
       this.recipe.brut=0
       this.detailRecipeProvisoire2.forEach(detail=>{
-        this.recipe.brut+=detail.brut
+        this.recipe.brut = (this.recipe.brut || 0) + (detail.brut || 0)
       })
     }
     changeDetailNet(){
       this.recipe.net=0
       this.detailRecipeProvisoire2.forEach(detail=>{
-        this.recipe.net+=detail.net
+        this.recipe.net = (this.recipe.net || 0) + (detail.net || 0)
       })
     }
     changeDetailQuantite(){
@@ -469,7 +510,7 @@ export class DetailrecipeComponent {
     getRecipeImage(): string {
       console.log('Recipe photo:', this.recipe.photo);
       if (this.recipe.photo && this.recipe.photo.trim() !== '') {
-        const imageUrl = `http://localhost:5000/recipe/uploaddir/${this.recipe.photo}`;
+        const imageUrl = `${environment.apiUrl}/recipe/uploaddir/${this.recipe.photo}`;
         console.log('Image URL:', imageUrl);
         return imageUrl;
       }
@@ -489,4 +530,6 @@ export class DetailrecipeComponent {
     onImageLoad(event: any) {
       console.log('Image chargée avec succès:', event.target.src);
     }
+
+
 }

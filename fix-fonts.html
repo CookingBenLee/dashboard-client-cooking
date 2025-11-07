@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Polices</title>
+    <style>
+        /* Configuration pour corriger les problèmes de polices */
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://fonts.gstatic.com/s/materialicons/v145/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5fBBc4.woff2') format('woff2');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2') format('woff2');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU5fBBc4.woff2') format('woff2');
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+        }
+        
+        .test-font {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        
+        .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test de Configuration des Polices</h1>
+    
+    <div class="test-font">
+        <span class="material-icons">home</span> Test Material Icons
+    </div>
+    
+    <div class="test-font" style="font-weight: 300;">
+        Roboto Light - Test de police
+    </div>
+    
+    <div class="test-font" style="font-weight: 400;">
+        Roboto Regular - Test de police
+    </div>
+    
+    <div class="test-font" style="font-weight: 500;">
+        Roboto Medium - Test de police
+    </div>
+    
+    <script>
+        // Vérifier le chargement des polices
+        document.fonts.ready.then(() => {
+            console.log('✅ Toutes les polices sont chargées');
+        });
+        
+        // Vérifier les erreurs de polices
+        window.addEventListener('error', (e) => {
+            if (e.target.tagName === 'LINK' && e.target.rel === 'stylesheet') {
+                console.error('❌ Erreur de chargement de feuille de style:', e.target.href);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -122,7 +122,7 @@
         <!-- Loop to display details -->
         <div *ngFor="let detail of detailRecipe2; let i = index" class="info-row">
           <div class="info-cell">{{ detail?.ingredient?.name }}</div>
-          <div class="info-cell">{{ detail.proportion * 100 }}%</div>
+          <div class="info-cell">{{ detail.proportion }}%</div>
           <div class="info-cell">{{ detail.preparationIngredient }}</div>
           <div class="info-cell">
             <button pButton pRipple type="button" icon="pi pi-trash" style="width: 15px; height: 15px; font-size: 12px;"
@@ -134,7 +134,17 @@
         <!-- Total Row -->
         <div class="info-row total-row">
           <div class="info-cell">TOTAL</div>
-          <div class="info-cell">{{ totalProportion * 100 }}%</div>
+          <div class="info-cell" 
+               [ngClass]="{
+                 'text-green-600': totalProportion >= 99 && totalProportion <= 110,
+                 'text-orange-500': totalProportion < 99,
+                 'text-red-600': totalProportion > 110
+               }">
+            {{ totalProportion }}%
+            <span *ngIf="totalProportion < 99" class="text-xs ml-2">(Ajoutez des ingrédients)</span>
+            <span *ngIf="totalProportion > 110" class="text-xs ml-2">(Réduisez les proportions)</span>
+            <span *ngIf="totalProportion >= 99 && totalProportion <= 110" class="text-xs ml-2">(✓ Valide)</span>
+          </div>
           <div class="info-cell"></div> <!-- Empty cell for "Préparation" -->
           <div class="info-cell"></div> <!-- Empty cell for "Actions" -->
         </div>

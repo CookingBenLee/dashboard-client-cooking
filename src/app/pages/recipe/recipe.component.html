@@ -12,62 +12,115 @@
           <div class="card">
             <!--<h5>Purchase List</h5>-->
 
-          <p-table
-            #dt2
-            [value]="recipes"
-            responsiveLayout="scroll"
-            [globalFilterFields]="['code','name','stock','cout','brut','quantite','detailCuisine','preparationIngredient','unit','categorie']">
+            <!-- SECTION 1: MES RECETTES -->
+            <div class="recipe-section">
+              <h3 class="section-title">Mes Recettes</h3>
+              <p-table
+                #dt1
+                [value]="myRecipes"
+                responsiveLayout="scroll"
+                [globalFilterFields]="['code','name','stock','cout','brut','quantite','detailCuisine','preparationIngredient','unit','categorie']">
 
-            <ng-template pTemplate="header">
-              <tr>
-                <th pSortableColumn="youcooker" pColumnFilter="youcooker">YOU COOKER <p-sortIcon field="youcooker"></p-sortIcon></th>
-                <th pSortableColumn="name" pColumnFilter="name">NOM <p-sortIcon field="name"></p-sortIcon></th>
-                <th pSortableColumn="stock" pColumnFilter="stock">STOCK <p-sortIcon field="stock"></p-sortIcon></th>
-                <th pSortableColumn="share" pColumnFilter="share">JE PARTAGE ? <p-sortIcon field="share"></p-sortIcon></th>
-                <th style="justify-content: center; text-align: center;">ACTIONS</th>
-              </tr>
-            </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="name" pColumnFilter="name">NOM <p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="stock" pColumnFilter="stock">STOCK <p-sortIcon field="stock"></p-sortIcon></th>
+                    <th pSortableColumn="share" pColumnFilter="share">JE PARTAGE ? <p-sortIcon field="share"></p-sortIcon></th>
+                    <th style="justify-content: center; text-align: center;">ACTIONS</th>
+                  </tr>
+                </ng-template>
 
-            <ng-template pTemplate="body" let-dishes>
-              <tr class="cursor-pointer" (click)="showDishesDetail('top-right', dishes)">
-                <!-- Colonne YOU COOKER -->
-                <td style="width: 15%; min-width: 8rem;">
-                  {{ dishes.owner ? 'MOI' : '' }}
-                </td>
+                <ng-template pTemplate="body" let-dishes>
+                  <tr class="cursor-pointer" (click)="showDishesDetail('top-right', dishes)">
+                    <!-- Nom -->
+                    <td style="width: 25%; min-width: 8rem;">{{ dishes?.name }}</td>
 
-                <!-- Nom -->
-                <td style="width: 25%; min-width: 8rem;">{{ dishes?.name }}</td>
+                    <!-- Stock -->
+                    <td style="width: 15%; min-width: 8rem;">
+                      {{ dishes?.stock }} <span *ngIf="dishes.stock">Kg</span>
+                    </td>
 
-                <!-- Stock -->
-                <td style="width: 15%; min-width: 8rem;">
-                  {{ dishes?.stock }} <span *ngIf="dishes.stock">Kg</span>
-                </td>
+                    <!-- Je partage (cliquable avec dialogue de confirmation) -->
+                    <td style="width: 20%; min-width: 8rem; text-align: center; cursor: pointer;" 
+                        (click)="onShareClick(dishes); $event.stopPropagation()"
+                        [ngClass]="dishes.owner ? 'clickable-share' : 'disabled-share'">
+                      <span [ngClass]="dishes.share ? 'text-green-600 font-semibold' : 'text-red-500 font-semibold'">
+                        {{ dishes.share ? 'OUI' : 'NON' }}
+                      </span>
+                    </td>
 
-                <!-- Je partage (cliquable avec dialogue de confirmation) -->
-                <td style="width: 20%; min-width: 8rem; text-align: center; cursor: pointer;" 
-                    (click)="onShareClick(dishes); $event.stopPropagation()"
-                    [ngClass]="dishes.owner ? 'clickable-share' : 'disabled-share'">
-                  <span [ngClass]="dishes.share ? 'text-green-600 font-semibold' : 'text-red-500 font-semibold'">
-                    {{ dishes.share ? 'OUI' : 'NON' }}
-                  </span>
-                </td>
+                    <!-- Actions -->
+                    <td style="width: 30%; text-align: center;">
+                      <button pButton pRipple type="button" (click)="show('top-right', dishes); $event.stopPropagation()" icon="pi pi-pencil"
+                        class="p-button p-component p-button-text p-button-icon-only"></button>
 
-                <!-- Actions -->
-                <td style="width: 30%; text-align: center;">
-                  <button pButton pRipple type="button" (click)="show('top-right', dishes); $event.stopPropagation()" icon="pi pi-pencil"
-                    class="p-button p-component p-button-text p-button-icon-only"></button>
+                      <button pButton pRipple type="button" (click)="showPrepa(dishes); $event.stopPropagation()"
+                        class="p-button p-component p-button-text p-button-icon-only">
+                        <i class="pi pi-cog text-blue-500"></i>
+                      </button>
 
-                  <button pButton pRipple type="button" (click)="showPrepa(dishes); $event.stopPropagation()"
-                    class="p-button p-component p-button-text p-button-icon-only">
-                    <i class="pi pi-cog text-blue-500"></i>
-                  </button>
+                      <button pButton pRipple type="button" (click)="delete('top-right', dishes); $event.stopPropagation()" icon="pi pi-trash"
+                        class="p-button p-component p-button-text p-button-icon-only"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
 
-                  <button pButton pRipple type="button" (click)="delete('top-right', dishes); $event.stopPropagation()" icon="pi pi-trash"
-                    class="p-button p-component p-button-text p-button-icon-only"></button>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+            <!-- SECTION 2: RECETTES DES YOUCOOKERS -->
+            <div class="recipe-section" style="margin-top: 2rem;">
+              <h3 class="section-title">Recettes des YouCookers</h3>
+              <p-table
+                #dt2
+                [value]="sharedRecipes"
+                responsiveLayout="scroll"
+                [globalFilterFields]="['code','name','stock','cout','brut','quantite','detailCuisine','preparationIngredient','unit','categorie']">
+
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="name" pColumnFilter="name">NOM <p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="stock" pColumnFilter="stock">STOCK <p-sortIcon field="stock"></p-sortIcon></th>
+                    <th pSortableColumn="share" pColumnFilter="share">JE PARTAGE ? <p-sortIcon field="share"></p-sortIcon></th>
+                    <th style="justify-content: center; text-align: center;">ACTIONS</th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-dishes>
+                  <tr class="cursor-pointer" (click)="showDishesDetail('top-right', dishes)">
+                    <!-- Nom -->
+                    <td style="width: 25%; min-width: 8rem;">{{ dishes?.name }}</td>
+
+                    <!-- Stock -->
+                    <td style="width: 15%; min-width: 8rem;">
+                      {{ dishes?.stock }} <span *ngIf="dishes.stock">Kg</span>
+                    </td>
+
+                    <!-- Je partage (cliquable avec dialogue de confirmation) -->
+                    <td style="width: 20%; min-width: 8rem; text-align: center; cursor: pointer;" 
+                        (click)="onShareClick(dishes); $event.stopPropagation()"
+                        [ngClass]="dishes.owner ? 'clickable-share' : 'disabled-share'">
+                      <span [ngClass]="dishes.share ? 'text-green-600 font-semibold' : 'text-red-500 font-semibold'">
+                        {{ dishes.share ? 'OUI' : 'NON' }}
+                      </span>
+                    </td>
+
+                    <!-- Actions -->
+                    <td style="width: 30%; text-align: center;">
+                      <button pButton pRipple type="button" (click)="show('top-right', dishes); $event.stopPropagation()" icon="pi pi-pencil"
+                        class="p-button p-component p-button-text p-button-icon-only"></button>
+
+                      <button pButton pRipple type="button" (click)="showPrepa(dishes); $event.stopPropagation()"
+                        class="p-button p-component p-button-text p-button-icon-only">
+                        <i class="pi pi-cog text-blue-500"></i>
+                      </button>
+
+                      <button pButton pRipple type="button" (click)="delete('top-right', dishes); $event.stopPropagation()" icon="pi pi-trash"
+                        class="p-button p-component p-button-text p-button-icon-only"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
 
   <p-confirmDialog [style]="{ width: '400px' }" key="confirmShare" header="Confirmation"></p-confirmDialog>
 

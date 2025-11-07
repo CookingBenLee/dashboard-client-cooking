@@ -42,8 +42,7 @@ export const routes: Routes = [
   },
   {
     path: 'signup',
-    component: SignupComponent,
-    canActivate: [LoginGuard]
+    component: SignupComponent
   },
   {
     path: 'home',
@@ -57,52 +56,64 @@ export const routes: Routes = [
       },
       {
         path:"acceuil",
-        component: AcceuilComponent
+        component: AcceuilComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: "product",
-        component: ProductComponent
+        component: ProductComponent,
+        canActivate: [AuthGuard]
       },
       {
 
         path:"catalogue-de-prix",
-        component: CatalogueDePrixComponent
+        component: CatalogueDePrixComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:"course",
-        component: CourseComponent
+        component: CourseComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: "fournisseur",
-        component: FournisseurComponent
+        component: FournisseurComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'purchase/detailpurchase/:id',
         component:DetailpurchsaeComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'plat',
         component:PlatComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'repas',
         component:RepasComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'planification',
         component:ListSimulationEconomiqueComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'simulateur',
         component:NewSimulationEconomiqueComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'planning',
         component:PlanningComponent,
+        canActivate: [AuthGuard]
       },
       {
         path:'recette',
         component: RecipeComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'starter',
