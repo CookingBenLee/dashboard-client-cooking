@@ -97,6 +97,15 @@ export class RecipeComponent {
   positionModalConfirm: any
   motRecherche = ''
   onSearch = false
+  
+  // Getters pour séparer les recettes
+  get myRecipes(): Recipe[] {
+    return this.recipes.filter(r => r.owner === true);
+  }
+  
+  get sharedRecipes(): Recipe[] {
+    return this.recipes.filter(r => r.owner !== true);
+  }
 
   code: string;
   name: string;

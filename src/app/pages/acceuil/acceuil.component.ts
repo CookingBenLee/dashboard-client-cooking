@@ -547,19 +547,87 @@ export class AcceuilComponent implements OnInit {
 
       console.log('🔍 Contrôle d\'existence basé sur uniquecode et compteuser_id...');
       
-      // Récupérer toutes les recettes de l'utilisateur connecté
+      // Trouver le compte utilisateur (CompteUser) de l'utilisateur connecté
+      let userCompteId: number | null = null;
+      
+      // Méthode 1: Chercher via le mapping des utilisateurs
+      for (const [compteId, userIds] of this.userMapping.entries()) {
+        if (userIds.includes(user.id)) {
+          userCompteId = compteId;
+          console.log('✅ Compte utilisateur trouvé via mapping:', userCompteId);
+          break;
+        }
+      }
+      
+      // Méthode 2: Chercher directement dans allComptes par user.id (fallback)
+      if (!userCompteId) {
+        const userCompte = this.allComptes.find(c => {
+          // Vérifier si le compte a un user avec l'ID correspondant
+          if (c.user && typeof c.user === 'object' && c.user.id === user.id) {
+            return true;
+          }
+          // Vérifier si le compte a une liste d'utilisateurs (propriété dynamique)
+          const compteAny = c as any;
+          if (compteAny.userList && Array.isArray(compteAny.userList)) {
+            return compteAny.userList.some((u: any) => u.id === user.id);
+          }
+          return false;
+        });
+        
+        if (userCompte && userCompte.id) {
+          userCompteId = userCompte.id;
+          console.log('✅ Compte utilisateur trouvé via recherche directe:', userCompteId);
+        }
+      }
+      
+      // Méthode 3: Si user a directement un compteuser_id (cas où user contient cette info)
+      if (!userCompteId && user.compteuser_id) {
+        userCompteId = user.compteuser_id;
+        console.log('✅ Compte utilisateur trouvé via user.compteuser_id:', userCompteId);
+      }
+      
+      if (!userCompteId) {
+        console.error('❌ Impossible de trouver le compte utilisateur pour l\'utilisateur connecté');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Impossible de déterminer votre compte utilisateur. Veuillez vous reconnecter.'
+        });
+        return;
+      }
+      
+      console.log('🔍 Compte utilisateur ID pour la vérification:', userCompteId);
+      
+      // Récupérer toutes les recettes
       const existingRecipes = await this.recipeService.getAll();
       console.log('📋 Toutes les recettes disponibles:', existingRecipes.length);
       
-      // Filtrer les recettes de l'utilisateur connecté
+      // Filtrer les recettes du compte utilisateur connecté
       const userRecipes = existingRecipes.filter(r => {
-        // Vérifier par compteuser_id en priorité, puis par user.id en fallback
-        const userCompteId = r.compteuser_id || r.user?.id;
-        return userCompteId === user.id;
+        // Vérifier par compteuser_id en priorité
+        if (r.compteuser_id === userCompteId) {
+          return true;
+        }
+        // Fallback: vérifier par user.id si le compte correspond
+        if (r.user?.id === user.id) {
+          // Vérifier que cette recette appartient bien au compte utilisateur
+          const recipeCompte = this.allComptes.find(c => {
+            if (c.user && typeof c.user === 'object' && c.user.id === user.id) {
+              return c.id === userCompteId;
+            }
+            const compteAny = c as any;
+            if (compteAny.userList && Array.isArray(compteAny.userList)) {
+              return compteAny.userList.some((u: any) => u.id === user.id) && c.id === userCompteId;
+            }
+            return false;
+          });
+          return !!recipeCompte;
+        }
+        return false;
       });
       
-      console.log('👤 Recettes de l\'utilisateur connecté:', userRecipes.length);
-      console.log('🔍 Recettes de l\'utilisateur (détails):', userRecipes.map(r => ({
+      console.log('👤 Recettes du compte utilisateur connecté:', userRecipes.length);
+      console.log('🔍 Recettes du compte utilisateur (détails):', userRecipes.map(r => ({
         id: r.id,
         name: r.name,
         uniquecode: r.uniquecode,
