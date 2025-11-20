@@ -8,7 +8,7 @@ pipeline {
 
     // 🏷️ Nom et tag de l’image
     IMAGE_NAME = "cookingbenlee/client-dashboard-cooking-ben"
-    IMAGE_TAG = "mod-local"
+    IMAGE_TAG = "mod-localhost"
 
     // 📁 Dossier temporaire de build
     BUILD_DIR = "."
