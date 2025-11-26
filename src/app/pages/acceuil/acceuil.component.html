@@ -475,7 +475,7 @@
                 <div *ngFor="let detail of selectedRecipeForDetail.detailList; let i = index" class="ingredient-item">
                   <div class="ingredient-header">
                     <span class="ingredient-number">{{ i + 1 }}.</span>
-                    <span class="ingredient-name">{{ detail.ingredient?.name || 'Ingrédient non spécifié' }}</span>
+                    <span class="ingredient-name">{{ detail.ingredient.name || 'Ingrédient non spécifié' }}</span>
                     <span class="ingredient-quantity" *ngIf="detail.proportion">
                       {{ (detail.proportion * 100).toFixed(1) }}%
                     </span>
